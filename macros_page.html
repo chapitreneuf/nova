@@ -1,0 +1,49 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ * Appelle les dépendances communes et initialise les fonctions de base.
+ */
+<DEFMACRO NAME="PAGE_INIT">
+	<!--[ Dépendances communes ]-->
+	<USE MACROFILE="macros_base.html" />
+	<USE MACROFILE="macros_head.html" />
+	<USE MACROFILE="macros_menu.html" />
+	<USE MACROFILE="macros_header.html" />
+	<USE MACROFILE="macros_footer.html" />
+	<USE MACROFILE="macros_custom.html" />
+
+	<!--[ Initialisation des fonctions de base ]-->
+	<MACRO NAME="BASE_INIT" />
+</DEFMACRO>
+
+/**
+ * Markup début de page.
+ */
+<DEFMACRO NAME="PAGE_START">
+	<!DOCTYPE html>
+	<html lang="[%PAGELANG]">
+	<head>
+		<MACRO NAME="HEAD_MAIN" />
+	</head>
+	<body class="[%BODY_CLASS]">
+		<MACRO NAME="HEADER_MAIN" />
+		<article id="main-container" class="main-container container">
+			<div class="row">
+				<div class="col-md-3">
+					<MACRO NAME="MENU_MAIN" />
+				</div>
+				<div class="main-content col-md-8 col-md-offset-1">
+</DEFMACRO>
+
+/**
+ * Markup fin de page.
+ */
+<DEFMACRO NAME="PAGE_END">
+					</div><!-- col -->
+				</div><!-- row -->
+			</article>
+			<MACRO NAME="FOOTER_MAIN" />
+		</body>
+	</html>
+</DEFMACRO>

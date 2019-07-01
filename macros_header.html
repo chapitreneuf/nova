@@ -1,0 +1,44 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Macro principale d'affichage du menu appelée par les templates.
+ */
+<DEFMACRO NAME="HEADER_MAIN">
+	<header id="page-header" class="page-header">
+		<MACRO NAME="HEADER_ACCES" />
+		<MACRO NAME="HEADER_TITRE" />
+		<MACRO NAME="HEADER_LOGO" />
+	</header>
+</DEFMACRO>
+
+/**
+ * Lien "Aller au contenu".
+ */
+<DEFMACRO NAME="HEADER_ACCES">
+	<div class="skip-to-content">
+		<a href="#main-container">[@SKIP_TO_CONTENT]</a>
+	</div>
+</DEFMACRO>
+
+/**
+ * Titre du site.
+ */
+<DEFMACRO NAME="HEADER_TITRE">
+	<h1 id="site-title" class="site-title">[#OPTIONS.METADONNEESSITE.TITRESITE]</h1>
+</DEFMACRO>
+
+/**
+ * Logo du site.
+ */
+<DEFMACRO NAME="HEADER_LOGO">
+	<div id="site-logo-container" class="site-logo-container container-fluid">
+		<IF COND="[%SITE_LOGO_PATH]">
+			<a href="[#SITEINFOS.URL]" class="site-logo"><img src="[%SITE_LOGO_PATH]" alt="[#OPTIONS.METADONNEESSITE.TITRESITE]" /></a>
+		<ELSE />
+			<a href="[#SITEINFOS.URL]" class="site-logo">[#OPTIONS.METADONNEESSITE.TITRESITE]</a>
+			<IF COND="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]">
+				<p class="site-subtitle">[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]</p>
+			</IF>
+		</IF>
+	</div>
+</DEFMACRO>

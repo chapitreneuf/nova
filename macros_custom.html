@@ -1,0 +1,20 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+* ==========
+* Le template macros_custom est toujours appelé en fin d'inclusions. Il est ainsi possible de redéclarer ici les macros et fonctions des autres templates afin de les écraser. 
+* Cela permet de personnaliser les sites sans avoir à modifier la maquette de base. Toutes les personnalisations sont ainsi contenues dans le fichier macros_custom, ce qui facilite la maintenance et l'évolution des sites.
+* ==========
+*/
+
+/**
+ * Initialisation des macros spécifiques au site.
+ * Cette macro est appelée en dernier lors de l'initialisation des page. Elle permet donc d'écraser n'importe quelle variable.
+ */
+<DEFMACRO NAME="CUSTOM_INIT">
+	<!--[ Option : chemin vers le logo du site. Quand cette variable n'est pas définie le titre du site s'affiche à la place du logo ]-->
+	<!--[ <LET VAR="site_logo_path" GLOBAL="1">tpl/images/logo.svg</LET> ]-->
+
+	<!--[ Option : chemin vers la couverture par défaut pour les numéros ]-->
+	<LET VAR="publi_default_cover" GLOBAL="1">tpl/images/default-cover.png</LET>
+</DEFMACRO>

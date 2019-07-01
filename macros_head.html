@@ -1,0 +1,127 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Macro principale appelée par les templates pour consituer le head.
+ */
+<DEFMACRO NAME="HEAD_MAIN">
+	<MACRO NAME="HEAD_DEBUT" />
+	<title>[%TITRE_PAGE|trim()]</title>
+	<MACRO NAME="HEAD_METADONNEES" />
+	<MACRO NAME="HEAD_INSERT_CSS" />
+	<MACRO NAME="HEAD_INSERT_RSS" />
+	<MACRO NAME="HEAD_INSERT_JS" />
+</DEFMACRO>
+
+/**
+ * Charset et autres bidules.
+ */
+<DEFMACRO NAME="HEAD_DEBUT">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</DEFMACRO>
+
+/**
+ * Métadonnées.
+ */
+<DEFMACRO NAME="HEAD_METADONNEES">
+	<meta name="generator" content="Lodel [#VERSION]" />
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE]">
+		<meta name="description" content="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark]" />
+	</IF>
+
+	<meta name="URL" content="[#CURRENTURL]" />
+
+	<LOOP NAME="head_metadonnees_auteurs" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" ORDER="rank">
+		<meta name="author" content="[#NOMFAMILLE], [#PRENOM]" />
+	</LOOP>
+
+	<LOOP NAME="head_metadonnees_motscles" TABLE="relations, entries" WHERE="id1 = '[#ID]' AND id2 = entries.id">
+		<meta name="keywords" content="[#G_NAME]" />
+	</LOOP>
+
+	<!--[ schema.DC ]-->
+	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+
+	<!--[ DC.description ]-->
+	<IF COND="[#RESUME]">
+		<LET VAR="ML_DESCRIPTION">[#RESUME]</LET>
+	<ELSEIF COND="[#INTRODUCTION]" />
+		<LET VAR="ML_DESCRIPTION">[#INTRODUCTION]</LET>
+	</IF>
+	<IF COND="[#ML_DESCRIPTION] AND [#ML_DESCRIPTION] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+			<meta name="DC.description" xml:lang="[#VALUE]" lang="[#VALUE]" content="[#ML_DESCRIPTION:#VALUE|textebrut|replacequotationmark]" />
+		</LOOP>
+	<ELSEIF COND="[#TEXTE]" />
+		<meta name="DC.description" xml:lang="[#VALUE]" lang="fr" content="[(#TEXTE|textebrut|replacequotationmark|couper(1500))]" />
+	<ELSEIF COND="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE]" />
+		<meta name="DC.description" xml:lang="[#VALUE]" lang="fr" content="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark]" />
+	</IF>
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
+		<meta name="DC.publisher" content="[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark]" />
+	</IF>
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]">
+		<meta name="DC.rights" content="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR|textebrut|cleanBadChars|replacequotationmark]" />
+	</IF>
+
+	<meta name="DC.source" content="[#CURRENTURL|dirname]" />
+
+	<meta name="DC.type" content="text" />
+	<IF COND="[#CLASS] EQ 'publications'">
+		<meta name="DC.type" content="collection" />
+	<ELSEIF COND="[#CLASS] EQ 'textes'" />
+		<meta name="DC.type" content="journalArticle" />
+	</IF>
+
+	<meta name="DC.format" content="text/html" />
+	<meta name="DC.language" scheme="RFC3066" content="[%PAGELANG]" />
+
+	<meta name="DC.identifier" scheme="DCTERMS.URI" content="[#CURRENTURL]" />
+	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
+		<meta name="DC.identifier" scheme="DCTERMS.URI" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]" />
+  </IF>
+
+	<IF COND="[#TITRE]">
+		<meta name="DC.title" content="[#TITRE|textebrut|replacequotationmark] [#SOUSTITRE|replacequotationmark|textebrut]" />
+	</IF>
+
+	<LOOP NAME="head_metadonnees_dc_subject" TABLE="relations, entries" WHERE="id1 = '[#ID]' AND id2 = entries.id">
+		<meta name="DC.subject" content="[#G_NAME]" />
+	</LOOP>
+
+	<LOOP NAME="head_metadonnees_dc_creator" TABLE="auteurs" WHERE="type='auteur'"  WHERE="iddocument='[#ID]'" ORDER="rank">
+		<meta name="DC.creator" content="[#NOMFAMILLE], [#PRENOM]" />
+	</LOOP>
+
+	<IF COND="[#DATEPUBLI]">
+		<meta name="DC.date" scheme="W3CDTF" content="[#DATEPUBLI]" />
+	<ELSEIF COND="[#DATE]" />
+		<meta name="DC.date" scheme="W3CDTF" content="[#DATE]" />
+	</IF>
+</DEFMACRO>
+
+/**
+ * Insertion CSS.
+ */
+<DEFMACRO NAME="HEAD_INSERT_CSS">
+	TODO
+</DEFMACRO>
+
+/**
+ * Insertion Javascript.
+ */
+<DEFMACRO NAME="HEAD_INSERT_JS">
+	TODO
+</DEFMACRO>
+
+/**
+ * Insertion RSS.
+ */
+<DEFMACRO NAME="HEAD_INSERT_RSS">
+	<link rel="alternate" type="application/rss+xml" title="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark]" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss" />
+	<link rel="alternate" type="application/rss+xml" title="[%TITRE_PAGE|trim()]" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss&amp;identity=[#ID]" />
+</DEFMACRO>

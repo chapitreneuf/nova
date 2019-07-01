@@ -1,0 +1,277 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation des variables de base (communes à toutes les pages).
+ */
+<DEFMACRO NAME="BASE_INIT">
+	<!--[ Langue principale du site ]-->
+	<LET VAR="mainlang" GLOBAL="1">[#OPTIONS.METADONNEESSITE.LANGUEPRINCIPALE]</LET>
+
+	<!--[ Langue de la publication/du document ]-->
+	<LET VAR="pagelang" GLOBAL="1"><IF COND="[#LANGUE]">[#LANGUE]<ELSE/>[%MAINLANG]</IF></LET>
+
+	<!--[ class du body ]-->
+	<IF COND="[#TYPE]">
+		<IF COND="[#TYPE|is_array]">
+			<LET VAR="body_class" GLOBAL="1">class-indexes type-[#TYPE.TYPE] id-[#ID]</LET>
+		<ELSEIF COND="[#CLASS]"/>
+			<LET VAR="body_class" GLOBAL="1">class-[#CLASS] type-[#TYPE] id-[#ID]<IF COND="[#IDENTIFIER]"> identifier-[#IDENTIFIER|textebrut]</IF></LET>
+		</IF>
+	</IF>
+
+	<!--[ Titre par défaut ]-->
+	<LET VAR="titre_page" GLOBAL="1">
+		[#OPTIONS.METADONNEESSITE.TITRESITE]<IF COND="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]"> &ndash; [#OPTIONS.METADONNEESSITE.SOUSTITRESITE]</IF>
+	</LET>
+
+	<!--[ ID des parents de l'entité courante ]-->
+	<LOOP NAME="base_init_liste_parents" 
+		TABLE="publications, relations" 
+		SELECT="id" 
+		WHERE="id2 = '[#ID]' AND id1 = publications.identity" 
+		ORDER="degree">
+
+		<IF COND="[#NBRESULTS] EQ 1">
+			<LET VAR="idrealparent" GLOBAL="1">[#ID]</LET>
+		<ELSE/>
+			<IF COND="[#COUNT] EQ [#NBRESULTS|lmath('-',1)]"><LET VAR="idrealparent" GLOBAL="1">[#ID]</LET></IF>
+			<SWITCH TEST="[#TYPE]">
+				<DO CASE="numero"><LET VAR="idnumero" GLOBAL="1">[#ID]</LET></DO>
+				<DO CASE="rubrique"><LET VAR="idrubrique" GLOBAL="1">[#ID]</LET></DO>
+				<DO CASE="souspartie"><LET VAR="idsouspartie" GLOBAL="1">[#ID]</LET></DO>
+				<DO CASE="rubriqueannuelle"><LET VAR="idrubriqueannuelle" GLOBAL="1">[#ID]</LET></DO>
+			</SWITCH>
+		</IF>
+	</LOOP>
+
+	<!--[ Liste des ID des traductions de textes. Permet également de conditionner les boucles relatives aux traductions. ]-->
+	<LOOP NAME="base_init_relations_traduction" 
+		SELECT="id1" 
+		TABLE="relations" 
+		WHERE="nature = 'traduction'">
+		<LET ARRAY="relations_traduction[]" GLOBAL="1">[#ID1]</LET>
+	</LOOP>
+
+	<!--[ Usage dans une LOOP : WHERE="id [#NOT_IN_TRADUCTIONS]" ]-->
+	<LET VAR="not_in_traductions"><IF COND="![%RELATIONS_TRADUCTION]">IS NOT NULL<ELSE/>NOT IN ([%RELATIONS_TRADUCTION|implode(',')])</IF></LET>
+
+	<!--[ Liste des ID des traductions de textes qui se trouvent dans la même rubrique que l'origial. Permet également de conditionner les boucles relatives aux traductions. ]-->
+	<LOOP NAME="base_init_get_original_with_translation" 
+		SELECT="relations.id1, entities.idparent" 
+		TABLE="relations, entities" 
+		WHERE="relations.nature = 'traduction' AND entities.id = relations.id2">
+
+		<LOOP NAME="base_init_get_id_translation_same_parent" 
+			SELECT="entities.id" 
+			TABLE="entities" 
+			WHERE="idparent = '[#IDPARENT]' AND id = '[#ID1]'">
+			<LET ARRAY="relations_traduction_parent_unique[]" GLOBAL="1">[#ID]</LET>
+		</LOOP>
+	</LOOP>
+
+	<!--[ Usage dans une LOOP : WHERE="id [#NOT_IN_TRADUCTIONS_PARENT_UNIQUE]" ]-->
+	<LET VAR="not_in_traductions_parent_unique"><IF COND="![%RELATIONS_TRADUCTION_PARENT_UNIQUE]">IS NOT NULL<ELSE/>NOT IN ([%RELATIONS_TRADUCTION_PARENT_UNIQUE|implode(',')])</IF></LET>
+
+	<!--[ ID des collections contenant des numéros ]-->
+	<LET VAR="issues_collections_id">
+		<LOOP NAME="base_init_get_issues_collections_id" 
+			TABLE="publications" 
+			SELECT="distinct idparent as idcollection" 
+			WHERE="TYPE EQ 'numero'">
+		<DO>[#IDCOLLECTION],</DO>
+		<DOLAST>[#IDCOLLECTION]</DOLAST>
+		<ALTERNATIVE>-1</ALTERNATIVE><!--[ pour éviter les erreurs dans la boucle qui utilise "NOT IN ([#ISSUES_COLLECTIONS_ID])" lorsqu'il n'y a pas de numéro]-->
+		</LOOP>
+	</LET>
+</DEFMACRO>
+
+/**
+ * Affiche si disponible le titre traduit dans la langue de navigation, sinon le titre.
+ * @param {integer} [cut] - Longueur du titre coupé.
+ * @param {boolean} [index] - Il s'agit du titre d'un index (remplace ML_TITLE).
+ */
+<DEFFUNC NAME="BASE_ML_TITRE" OPTIONAL="index">
+	<IF COND="[#INDEX]">
+		<IF COND="[#ALTERTITLE:#SITELANG]">[#ALTERTITLE:#SITELANG]<ELSE/>[#TITLE]</IF>
+	<ELSE />
+		<IF COND="[#ALTERTITRE:#SITELANG]">[#ALTERTITRE:#SITELANG]<ELSE/>[#TITRE]</IF>
+	</IF>	
+</DEFFUNC>
+
+/**
+ * Afficher du texte multilingue.
+ * @param {string} ml_var - Variable contenant les traductions.
+ */
+<DEFFUNC NAME="BASE_ML_TEXTE" REQUIRED="ml_var">
+	<IF COND="[#ML_VAR|strpos('r2r:ml')] SNE false">
+		<IF COND="[#ML_VAR:#SITELANG]">[#ML_VAR:#SITELANG]<ELSE/>[#ML_VAR:#MAINLANG]</IF>
+	</IF>
+</DEFFUNC>
+
+/**
+* Affiche une icone parmi http://getbootstrap.com/components/#glyphicons
+* TODO: màj Bootstrap 4
+* @param {string} icon - Identifiant de l'icone.
+* @param {string} [classname] - Class à appliquer au span.
+* @param {string} [title] - Attribut title.
+*/
+<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title">
+	<IF COND="[#TITLE]">
+		<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
+	</IF>
+	<span class="glyphicon glyphicon-[#ICON] [#CLASSNAME]" aria-hidden="true" [#TITLE_ATTR]></span>
+</DEFFUNC>
+
+/**
+* Affiche un header de section.
+* @param {string} title - Titre.
+* @param {string} [icon] - Identifiant de l'icone à ajouter.
+* @param {boolean} [nav] - Ajouter un menu de nav.
+* @param {string} [section_id] - Id de la section (pour référence dans la nav).
+*/
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="icon, nav, section_id">
+	<IF COND="[#SECTION_ID]">
+		<LET VAR="DATA_ATTR"> data-section-id="[#SECTION_ID]"</LET>
+	</IF>
+	<nav class="section-header navbar navbar-default"[#DATA_ATTR]>
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<IF COND="[#ICON]">
+					<h2 class="section-header__title"><FUNC NAME="BASE_ICON" ICON="[#ICON]" /> [#TITLE]</h2>
+				<ELSE/>
+					<h2 class="section-header__title">[#TITLE]</h2>
+				</IF>
+			</div>
+			<IF COND="[#NAV]">
+				<!--[ Menus gérés en JS ]-->
+				<div class="section-header-nav"></div>
+			</IF>
+		</div>
+	</nav>
+</DEFFUNC>
+
+/**
+* Afficher un élément de sommaire.
+* @param {boolean} [afficher_datepubli] - Afficher la date de publication électronique du document (utilisé dans les
+rubriques).
+*/
+<DEFFUNC NAME="BASE_TOC_ITEM" OPTIONAL="afficher_datepubli">
+	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc-author" />
+	<IF COND="![%RELATIONS_TRADUCTION]">
+		<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+		<ELSE />
+		<!--[ Traductions ]-->
+		<!--[ Variable qui permet de connaitre les langues des traductions pour afficher les titres des autres langues à la fin ]-->
+		<LET ARRAY="langues_traductions_article" GLOBAL="1"></LET>
+		<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+		<!--[ Memoriser l'altertitre de la source ]-->
+		<LET VAR="altertitre_source" GLOBAL="1">[#ALTERTITRE]</LET>
+
+		<LOOP NAME="base_toc_item_traductions" TABLE="textes, relations"
+			SELECT="id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, datepubli, langue, type, nature, numerodocument"
+			WHERE="id2 = '[#ID]' AND nature = 'traduction' AND id1 = textes.identity" ORDER="rank">
+
+			<BEFORE>
+				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+			</BEFORE>
+
+			<DO>
+				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+			</DO>
+
+			<DOLAST>
+				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+
+				<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
+				<IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> <div
+					class="toc-altertitle toc-altertitle-sauf-traductions">
+					<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+						<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
+							<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
+						</IF>
+					</LOOP>
+					</div>
+				</IF>
+			</DOLAST>
+
+			<ALTERNATIVE>
+				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_TITRES_TRADUITS="1"
+					AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+			</ALTERNATIVE>
+		</LOOP>
+	</IF>
+</DEFFUNC>
+
+/**
+* Affiche le titre, le sous-titre d'un document avec la mention "texte intégral", et le numéro du doc.
+* @param {boolean} [afficher_titres_traduits] - Affichage des titres traduits.
+* @param {boolean} [afficher_datepubli] - Affichage de la date de publication.
+*/
+<DEFFUNC NAME="BASE_TOC_ITEM_DOCUMENT" OPTIONAL="afficher_titres_traduits, afficher_datepubli">
+	<!--[ Titre ]-->
+	<p class="toc-title">[#TITRE|removenotes]</p>
+	<!--[ Sous-titre ]-->
+	<IF COND="[#SOUSTITRE]">
+		<p class="toc-subtitle">[#SOUSTITRE|removenotes]</p>
+	</IF>
+	<!--[ Titres traduits]-->
+	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> <div
+		class="toc-altertitle">
+		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+			<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
+		</LOOP>
+		</div>
+	</IF>
+
+	<!--[ Date de publication si publié dans une rubrique électronique ]-->
+	<IF COND="[#AFFICHER_DATEPUBLI]">
+		<p class="toc-datepubli">[#DATEPUBLI|humandate]</p>
+	</IF>
+</DEFFUNC>
+
+/**
+* Affiche les personnes liées à l'entité en cours.
+* @param {string} type - Nom du type des personnes.
+* @param {string} [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.
+* @param {string} [prepend] - Texte à afficher avant la liste de personnes.
+* @param {string} [append] - Texte à afficher après la liste de personnes.
+* @param {string} [href] - Lien à wrapper.
+*/
+<DEFFUNC NAME="BASE_LISTER_PERSONNES" REQUIRED="type" OPTIONAL="wrap_class, prepend, append, href">
+	<IF COND="[#HREF]">
+		<LET VAR="LIEN_DEBUT"><a href="[#HREF]"></LET>
+		<LET VAR="LIEN_FIN"></a></LET>
+	</IF>
+	<LOOP NAME="base_lister_personnes" TABLE="relations, persons" SELECT="g_firstname,g_familyname"
+		WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'" ORDER="degree">
+
+		<BEFORE>
+			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">
+				<IF COND="[#WRAP_ID]">
+					<LET VAR="id_tag"> id="[#WRAP_ID]"</LET>
+				</IF>
+				<IF COND="[#WRAP_CLASS]">
+					<LET VAR="class_tag"> class="[#WRAP_CLASS]"</LET>
+				</IF>
+				<p[#ID_TAG][#CLASS_TAG]>
+			</IF>
+			[#PREPEND]
+		</BEFORE>
+		<DOFIRST>
+			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span
+					class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span>
+		</DOFIRST>
+		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span
+					class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DO>
+		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span
+					class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DOLAST>
+		<AFTER>
+			[#APPEND]
+			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">
+				</p>
+			</IF>
+		</AFTER>
+	</LOOP>
+</DEFFUNC>

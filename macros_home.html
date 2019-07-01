@@ -1,0 +1,114 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="HOME_INIT">
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="HOME_MAIN">
+	<MACRO NAME="HOME_BILLETS" />
+	<MACRO NAME="HOME_LATEST_ISSUE" />
+	<MACRO NAME="HOME_RUBRIQUES" />
+</DEFMACRO>
+
+/**
+ * Billets de présentation.
+ */
+<DEFMACRO NAME="HOME_BILLETS">
+	<LOOP NAME="home_billets" SELECT="titre, altertitre, texte, identifier" TABLE="textessimples" WHERE="type = 'billet' AND idparent = 0" ORDER="rank">
+		<BEFORE>
+			<section id="home-billets" class="home-billets">
+		</BEFORE>
+		<DO>
+			<div class="home-billet">
+				<LET VAR="ml_titre">
+					<FUNC NAME="BASE_ML_TITRE" />
+				</LET>
+				<IF COND="[#ML_TITRE] AND [#IDENTIFIER] NE 'presentation'">
+					<h2 class="home-billet__titre">[#ML_TITRE]</h2>
+				</IF>
+				<FUNC NAME="BASE_ML_TEXTE" ML_VAR="[#TEXTE]" />
+			</div>
+		</DO>
+		<AFTER>
+			</div>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affichage du dernier numéro.
+ */
+<DEFMACRO NAME="HOME_LATEST_ISSUE">
+	<section id="home-latest-issue" class="home-latest-issue">
+		TODO HOME_LATEST_ISSUE
+	</section>
+</DEFMACRO>
+
+/**
+ * Affichage des rubriques.
+ */
+<DEFMACRO NAME="HOME_RUBRIQUES">
+	<LET VAR="id_collection_rubriques">
+		<LOOP NAME="home_rubriques_get_id_collection_rubriques" TABLE="publications" SELECT="id" WHERE="type='collection' AND identifier='rubriques'">[#ID]</LOOP>
+	</LET>
+	<LOOP NAME="home_rubriques" 
+		TABLE="publications"
+		SELECT="id, titre, altertitre"
+		WHERE="idparent = '[#ID_COLLECTION_RUBRIQUES]' AND type = 'rubrique'"
+		ORDER="rank">
+
+		<BEFORE>
+			<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
+			<section id="home-rubriques" class="home-rubriques">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RUBRIQUES]" ICON="folder-open" SECTION_ID="home-rubriques" />
+				<div class="home-rubriques-contents">
+		</BEFORE>
+
+		<DO>
+			<MACRO NAME="HOME_CONTENU_RUBRIQUE" />
+		</DO>
+
+		<AFTER>
+				</div>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affichage des derniers documents de la rubrique.
+ */
+<DEFMACRO NAME="HOME_CONTENU_RUBRIQUE">
+	<!--[ FIX d'un bug Lodelscript où [#ID] dans le <AFTER> n'est plus l'id de la rubrique mais celui du dernier enfant rencontré ]-->
+	<LET VAR="id_rubrique">[#ID|makeurlwithid]</LET>
+
+	<LOOP NAME="home_contenu_rubrique"
+		TABLE="textes, relations"
+		SELECT="identity, idparent, id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, documentcliquable, datepubli, langue, numerodocument"
+		WHERE="id1 = '[#ID]' AND nature = 'P' AND id2 = textes.identity"
+		ORDER="datepubli">
+
+		<BEFORE>
+			<div class="home-rubrique">
+				<h3 class="home-rubrique__titre"><a href="[#ID_RUBRIQUE]">[#TITRE]</a></h3>
+				<ul class="toc-contents home-rubrique__contents">
+		</BEFORE>
+
+		<DO>
+			<li class="toc-contents__li toc-contents__li--class-[#CLASS]">
+				<FUNC NAME="BASE_TOC_ITEM" AFFICHER_DATEPUBLI="1" />
+			</li>
+		</DO>
+
+		<AFTER>
+				</ul>
+				<a class="btn home-rubrique__btn" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE] <FUNC NAME="BASE_ICON" ICON="chevron-right"/></a>
+			</div>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>

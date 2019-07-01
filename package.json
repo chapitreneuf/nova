@@ -1,0 +1,10 @@
+{
+  "name": "nova",
+  "version": "0.1.0",
+  "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true 
+}

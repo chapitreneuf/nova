@@ -4,12 +4,17 @@
   "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
   "main": "index.html",
   "scripts": {
+    "build": "npm run copy && npm run css",
+    "copy": "npm run copy:vendor && npm run copy:webfonts",
+    "copy:vendor": "frontend-dependencies",
+    "copy:webfonts": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts public",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
-    "vendor": "frontend-dependencies", 
-    "watch-css": "onchange \"less/**/*.less\" -- npm run css"
+    "postinstall": "npm run build",
+    "watch:css": "onchange \"less/**/*.less\" -- npm run css"
   },
   "private": true,
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "frontend-dependencies": "^1.1.7",
     "less": "^3.9.0",
     "less-plugin-autoprefix": "^2.0.0",
@@ -27,11 +32,6 @@
         "version": "3.4.1",
         "src": "dist/jquery.slim.min.js",
         "namespaced": true
-      },
-      "@fortawesome/fontawesome-free": {
-        "version": "5.9.0",
-        "target": "public/vendor/fontawesome",
-        "namespaced": false
       }
     }
   },

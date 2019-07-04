@@ -5,13 +5,15 @@
   "main": "index.html",
   "scripts": {
     "css": "lessc less/site.less public/css/site.css --autoprefix",
-    "vendor": "frontend-dependencies"
+    "vendor": "frontend-dependencies", 
+    "watch-css": "onchange \"less/**/*.less\" -- npm run css"
   },
   "private": true,
   "devDependencies": {
     "frontend-dependencies": "^1.1.7",
     "less": "^3.9.0",
-    "less-plugin-autoprefix": "^2.0.0"
+    "less-plugin-autoprefix": "^2.0.0",
+    "onchange": "^6.0.0"
   },
   "frontendDependencies": {
     "target": "public/vendor/",

@@ -1,0 +1,8 @@
+// Font-size safe rem
+// https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+.font-size(@size-value) {
+	@rem-value: @size-value;
+	@px-value: (@size-value * 10);
+	font-size: ~"@{px-value}px";
+	font-size: ~"@{rem-value}rem";
+}

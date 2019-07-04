@@ -4,13 +4,14 @@
   "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
   "main": "index.html",
   "scripts": {
-    "css": "lessc less/site.less public/css/site.css",
+    "css": "lessc less/site.less public/css/site.css --autoprefix",
     "vendor": "frontend-dependencies"
   },
   "private": true,
   "devDependencies": {
     "frontend-dependencies": "^1.1.7",
-    "less": "^3.9.0"
+    "less": "^3.9.0",
+    "less-plugin-autoprefix": "^2.0.0"
   },
   "frontendDependencies": {
     "target": "public/vendor/",
@@ -26,5 +27,8 @@
         "namespaced": true
       }
     }
-  }
+  },
+  "browserslist": [
+    "defaults"
+  ]
 }

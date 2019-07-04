@@ -5,6 +5,10 @@
  * Appelle les dépendances communes et initialise les fonctions de base.
  */
 <DEFMACRO NAME="PAGE_INIT">
+	<!--[ Chemins ]-->
+	<LET VAR="dir_public" GLOBAL="1">tpl/public</LET>
+	<LET VAR="dir_vendor" GLOBAL="1">[%DIR_PUBLIC]/vendor</LET>
+
 	<!--[ Dépendances communes ]-->
 	<USE MACROFILE="macros_base.html" />
 	<USE MACROFILE="macros_head.html" />
@@ -12,10 +16,6 @@
 	<USE MACROFILE="macros_header.html" />
 	<USE MACROFILE="macros_footer.html" />
 	<USE MACROFILE="macros_custom.html" />
-
-	<!--[ Chemins ]-->
-	<LET VAR="dir_public" GLOBAL="1">tpl/public</LET>
-	<LET VAR="dir_vendor" GLOBAL="1">[@DIR_PUBLIC]/vendor</LET>
 
 	<!--[ Initialisation des fonctions de base ]-->
 	<MACRO NAME="BASE_INIT" />

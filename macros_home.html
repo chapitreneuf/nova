@@ -47,10 +47,8 @@
  */
 <DEFMACRO NAME="HOME_LATEST_ISSUE">
 	<section id="home-latest-issue" class="home-latest-issue">
-		<LOOP NAME="home_latest_issue" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC"
-			LIMIT="0,1">
-			<MACRO NAME="PUBLICATION_INTRO" />
-			<MACRO NAME="PUBLICATION_TOC" />
+		<LOOP NAME="home_latest_issue" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC" LIMIT="0,1">
+			<MACRO NAME="PUBLICATION_PUBLI" />
 		</LOOP>
 	</section>
 </DEFMACRO>
@@ -72,7 +70,7 @@
 			<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
 			<section id="home-rubriques" class="home-rubriques">
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RUBRIQUES]" ICON="folder-open" SECTION_ID="home-rubriques" />
-				<div class="home-rubriques-contents">
+				<div class="home-rubriques__contents">
 		</BEFORE>
 
 		<DO>

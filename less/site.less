@@ -11,11 +11,37 @@
 // ELEMENTS STANDARD
 // =================
 
-body {
-	font-size: 62.5%;
+html {
+	font-size: 62.5%; // https://snook.ca/archives/html_and_css/font-size-with-rem
 	font-family: @font-1;
-	position: relative;
+}
+
+body {
 	background-color: @color-bg;
+	position: relative;
+	.font-size(1.8);
+}
+
+// LAYOUT
+// ======
+
+.main-header {
+	text-align: center;
+	margin: 50px auto;
+}
+
+// NAV
+// ===
+
+.skip-to-content {
+	display: none;
+}
+
+// PUBLICATIONS
+// ============
+
+.image_accroche {
+	max-width: 100%;
 }
 
 // INCLUSION DES STYLES DE PERSONNALISATION

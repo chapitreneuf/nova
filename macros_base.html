@@ -83,6 +83,12 @@
 		<ALTERNATIVE>-1</ALTERNATIVE><!--[ pour éviter les erreurs dans la boucle qui utilise "NOT IN ([#ISSUES_COLLECTIONS_ID])" lorsqu'il n'y a pas de numéro]-->
 		</LOOP>
 	</LET>
+
+	<!--[ Langue et direction de l'entitié en cours ]-->
+	<IF COND="[#LANGUE]">
+		<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
+		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] lang-[#LANGUE] dir-[#DIR]</LET>
+	</IF>
 </DEFMACRO>
 
 /**
@@ -109,11 +115,19 @@
 </DEFFUNC>
 
 /**
-* Affiche une icone parmi http://getbootstrap.com/components/#glyphicons
-* TODO: màj Bootstrap 4
-* @param {string} icon - Identifiant de l'icone.
-* @param {string} [classname] - Class à appliquer au span.
-* @param {string} [title] - Attribut title.
+ * Obtenir la direction d'une langue. Retourne ltr ou rtl.
+ * @param {string} lang - Langue à tester
+ */
+<DEFFUNC NAME="BASE_GET_LANG_DIR" REQUIRED="lang">
+	<IF COND="[#LANG|lang_is_rtl]">rtl<ELSE />ltr</IF>
+</DEFFUNC>
+
+/**
+ * Affiche une icone parmi http://getbootstrap.com/components/#glyphicons
+ * TODO: màj Bootstrap 4
+ * @param {string} icon - Identifiant de l'icone.
+ * @param {string} [classname] - Class à appliquer au span.
+ * @param {string} [title] - Attribut title.
 */
 <DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title">
 	<IF COND="[#TITLE]">
@@ -123,11 +137,11 @@
 </DEFFUNC>
 
 /**
-* Affiche un header de section.
-* @param {string} title - Titre.
-* @param {string} [icon] - Identifiant de l'icone à ajouter.
-* @param {boolean} [nav] - Ajouter un menu de nav.
-* @param {string} [section_id] - Id de la section (pour référence dans la nav).
+ * Affiche un header de section.
+ * @param {string} title - Titre.
+ * @param {string} [icon] - Identifiant de l'icone à ajouter.
+ * @param {boolean} [nav] - Ajouter un menu de nav.
+ * @param {string} [section_id] - Id de la section (pour référence dans la nav).
 */
 <DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="icon, nav, section_id">
 	<IF COND="[#SECTION_ID]">
@@ -151,101 +165,211 @@
 </DEFFUNC>
 
 /**
-* Afficher un élément de sommaire.
-* @param {boolean} [afficher_datepubli] - Afficher la date de publication électronique du document (utilisé dans les
-rubriques).
-*/
-<DEFFUNC NAME="BASE_TOC_ITEM" OPTIONAL="afficher_datepubli">
-	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc-author" />
-	<IF COND="![%RELATIONS_TRADUCTION]">
-		<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
-		<ELSE />
-		<!--[ Traductions ]-->
-		<!--[ Variable qui permet de connaitre les langues des traductions pour afficher les titres des autres langues à la fin ]-->
-		<LET ARRAY="langues_traductions_article" GLOBAL="1"></LET>
-		<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
-		<!--[ Memoriser l'altertitre de la source ]-->
-		<LET VAR="altertitre_source" GLOBAL="1">[#ALTERTITRE]</LET>
+ * Affiche le titre d'une publication.
+ * @param {string} [separator] - Caractère séparant le numéro et le titre d'une publication.
+ * @param {boolean} [textebrut] - Afficher sans balises HTML.
+ * @param {boolean} [cliquable] - Afficher avec un lien.
+ * @param {boolean} [ml] - Afficher le titre traduit s'il est disponible.
+ */
+<DEFFUNC NAME="BASE_TITRE_PUBLICATION" OPTIONAL="separator, textebrut, cliquable, ml">
+	<IF COND="[#TEXTEBRUT]">
+		<IF COND="[#NUMERO]">
+			[#NUMERO|textebrut]<FUNC NAME="BASE_PERIODE_PUBLI" TEXTEBRUT="1" PREPEND=" | " /><IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]"> - [#TITRE|textebrut]</IF>
+		<ELSEIF COND="[#TYPE] EQ 'rubriqueannuelle'"/>
+			<LOOP NAME="base_titre_publication_parent_title_brut" SELECT="titre" TABLE="publications" WHERE="id = '[#IDPARENT]'">[#TITRE|textebrut] | </LOOP>
+			[#TITRE|textebrut]
+		<ELSEIF COND="[#ML]"/>
+			<LET VAR="mlt"><FUNC NAME="BASE_ML_TITRE" /></LET>
+			[#MLT|textebrut]
+		<ELSE/>
+			[#TITRE|textebrut]
+		</IF>
+	<ELSE/>
+		<IF COND="[#CLIQUABLE]">
+			<a href="[#ID|makeurlwithid]">
+		</IF>
+		<IF COND="[#NUMERO]">
+			<!--[ Support de la direction du texte ]-->
+			<IF COND="[#TITRE|text_is_rtl]">
+				<LET VAR="dir_titre"><span dir="rtl">[#TITRE]</span></LET>
+			<ELSE />
+				<LET VAR="dir_titre">[#TITRE]</LET>
+			</IF>
 
-		<LOOP NAME="base_toc_item_traductions" TABLE="textes, relations"
-			SELECT="id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, datepubli, langue, type, nature, numerodocument"
-			WHERE="id2 = '[#ID]' AND nature = 'traduction' AND id1 = textes.identity" ORDER="rank">
-
-			<BEFORE>
-				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
-			</BEFORE>
-
-			<DO>
-				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
-				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
-			</DO>
-
-			<DOLAST>
-				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
-				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
-
-				<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
-				<IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> <div
-					class="toc-altertitle toc-altertitle-sauf-traductions">
-					<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-						<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
-							<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
-						</IF>
-					</LOOP>
-					</div>
-				</IF>
-			</DOLAST>
-
-			<ALTERNATIVE>
-				<FUNC NAME="BASE_TOC_ITEM_DOCUMENT" AFFICHER_TITRES_TRADUITS="1"
-					AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
-			</ALTERNATIVE>
-		</LOOP>
+			<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span>
+			<IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]">
+				<IF COND="[#SEPARATOR]"> [#SEPARATOR] </IF><span class="publi-title-text">[#DIR_TITRE]</span>
+			</IF>
+		<ELSEIF COND="[#TYPE] EQ 'rubriqueannuelle'"/>
+			<span class="publi-title-text"><LOOP NAME="base_titre_publication_parent_title" SELECT="titre" TABLE="publications" WHERE="id = '[#IDPARENT]'">[#TITRE] | </LOOP>[#TITRE]</span>
+		<ELSEIF COND="[#ML]"/>
+			<span class="publi-title-text"><FUNC NAME="BASE_ML_TITRE" /></span>
+		<ELSE/>
+			<span class="publi-title-text">[#TITRE]</span>
+		</IF>
+		<IF COND="[#CLIQUABLE]">
+			</a>
+		</IF>
 	</IF>
 </DEFFUNC>
 
 /**
-* Affiche le titre, le sous-titre d'un document avec la mention "texte intégral", et le numéro du doc.
-* @param {boolean} [afficher_titres_traduits] - Affichage des titres traduits.
-* @param {boolean} [afficher_datepubli] - Affichage de la date de publication.
-*/
-<DEFFUNC NAME="BASE_TOC_ITEM_DOCUMENT" OPTIONAL="afficher_titres_traduits, afficher_datepubli">
-	<!--[ Titre ]-->
-	<p class="toc-title">[#TITRE|removenotes]</p>
-	<!--[ Sous-titre ]-->
-	<IF COND="[#SOUSTITRE]">
-		<p class="toc-subtitle">[#SOUSTITRE|removenotes]</p>
+ * Affiche l'année de publication papier, ou de publication électronique, ou de création d'une publication.
+ * @param {string} [wrap_class] - Valeur de l'attribut class.
+ * @param {string} [prepend] - Texte à afficher avant la période.
+ * @param {boolean} [textebrut] - Appel au filtre textebrut.
+ */
+<DEFFUNC NAME="BASE_PERIODE_PUBLI" OPTIONAL="wrap_class, prepend, textebrut">
+	<IF COND="![#PERIODE]">
+		<IF COND="[#DATEPUBLIPAPIER|isadate]">
+			<LET VAR="periode">[#DATEPUBLIPAPIER|formateddate("%Y")]</LET>
+		<ELSEIF COND="[#DATEPUBLI|isadate]"/>
+			<LET VAR="periode">[#DATEPUBLI|formateddate("%Y")]</LET>
+		<ELSEIF COND="[#CREATIONDATE|isadate]"/>
+			<LET VAR="periode">[#CREATIONDATE|formateddate("%Y")]</LET>
+		</IF>
 	</IF>
-	<!--[ Titres traduits]-->
-	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> <div
-		class="toc-altertitle">
-		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-			<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
-		</LOOP>
+	<IF COND="[#PERIODE]">
+		<IF COND="[#PREPEND]">
+			<LET VAR="periode">[#PREPEND][#PERIODE]</LET>
+		</IF>
+		<IF COND="[#TEXTEBRUT]">
+			<LET VAR="periode">[#PERIODE|textebrut]</LET>
+		</IF>
+		<IF COND="[#WRAP_CLASS]"/>
+			<span class="[#WRAP_CLASS]">[#PERIODE]</span>
+		<ELSE/>
+			[#PERIODE]
+		</IF>
+	</IF>
+</DEFFUNC>
+
+/**
+ * Affiche un texte multilingue par onglets
+ * @param {string} tab_texte - Texte multilingue
+ * @param {string} tab_id - Préfixe pour l'attribut ID des DIV
+ */
+<DEFFUNC NAME="BASE_ML_ONGLETS" REQUIRED="tab_texte, tab_id">
+	<IF COND="[#TAB_TEXTE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+		<LET VAR="lang_exists">[#SITELANG|in_array([#MATCHES.1])]</LET>
+		<IF COND="[#MATCHES.0|count] GT 1">
+			<ul class="nav nav-tabs" role="tablist">
+				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+					<li<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> class="active"</IF>>
+						<a href="#[#TAB_ID]-[#VALUE]" aria-controls="#[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
+					</li>
+				</LOOP>
+			</ul>
+		</IF>
+		<div class="tab-content">
+			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+				<LET VAR="tab_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#VALUE]"/></LET>
+				<div role="tabpanel" id="[#TAB_ID]-[#VALUE]" class="tab-pane lang-[#VALUE] dir-[#TAB_DIR]<IF COND="!((![#LANG_EXISTS] AND [#KEY] GT 0) OR ([#LANG_EXISTS] AND [#VALUE] NE [#SITELANG]))"> active</IF>" lang="[#VALUE]" xml:lang="[#VALUE]">
+					[#TAB_TEXTE:#VALUE]
+				</div>
+			</LOOP>
 		</div>
+	<ELSE/>
+		[#TAB_TEXTE]
 	</IF>
+</DEFFUNC>
 
-	<!--[ Date de publication si publié dans une rubrique électronique ]-->
-	<IF COND="[#AFFICHER_DATEPUBLI]">
-		<p class="toc-datepubli">[#DATEPUBLI|humandate]</p>
+**
+ * Affiche l'image d'accroche d'une entité.
+ * @param {int} size - Taille maximale du plus grand côté de la vignette.
+ * @param {string} [classname] - Classe de l'image.
+ * @param {boolean} [notext] - Afficher lien + crédits.
+ * @param {string} [href] - Lien sur l'image.
+ * @param {string} [default_img] - Chemin vers l'image par défaut (si pas d'image d'accroche associée à l'entité).
+ */
+<DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href, default_img">
+	<LOOP NAME="base_accroche_publication" 
+		TABLE="fichiers" 
+		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'" 
+		ORDER="rank" 
+		LIMIT="1">
+
+		<DO>
+			<LET VAR="accroche"><IF COND="[#VIGNETTE]">[#VIGNETTE|vignette([#SIZE])]<ELSE/>[#DOCUMENT|vignette([#SIZE])]</IF></LET>
+			<IF COND="[#HREF]">
+				<a href="[#HREF]">
+			</IF>
+			<img <IF COND="[#CLASSNAME]">class="[#CLASSNAME]"</IF> alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
+			<IF COND="[#HREF]">
+				</a>
+			</IF>
+			<IF COND="![#NOTEXT]">
+				<p class="accroche-lien"><a href="[#ID|makeurlwithid]">[@LIEN_ACCROCHE]</a></p>
+				<IF COND="[#CREDITS]">
+					<p class="accroche-credits">[@CREDITS]&#160;: [#CREDITS]</p>
+				</IF>
+			</IF>
+		</DO>
+
+		<ALTERNATIVE>
+			<IF COND="[#DEFAULT_IMG]">
+				<IF COND="[#HREF]">
+					<a href="[#HREF]">
+				</IF>
+				<img class="publi-default-cover [#CLASSNAME]" src="[#DEFAULT_IMG]" />
+				<IF COND="[#HREF]">
+					</a>
+				</IF>
+			</IF>
+		</ALTERNATIVE>
+	</LOOP>
+</DEFFUNC>
+
+/**
+ * Affiche le titre d'une entité :
+ * - numero : NUMERO | PERIODE - TITRE
+ * - autres publications ou informations : ALTERTITRE ou TITRE
+ * @param {boolean} [textebrut] - Afficher seulement le texte.
+ * @param {boolean} [titrealter] - Afficher le titre traduit si disponible.
+ */
+<DEFFUNC NAME="BASE_TITRE_ENTITE" OPTIONAL="textebrut, titrealter">
+	<LET VAR="titre_entite">
+		<IF COND="[#TYPE] EQ 'numero'">
+			<LOOP NAME="base_titre_entite_numero" TABLE="publications"  SELECT="titre, numero, datepublipapier, datepubli" WHERE="identity = '[#ID]'">
+				<FUNC NAME="BASE_TITRE_PUBLICATION" SEPARATOR="&#8211;" />
+			</LOOP>
+		<ELSEIF COND="[#CLASS] EQ 'publications' OR [#CLASS] EQ 'textes'">
+			<LOOP NAME="base_titre_entite_autres" SELECT="titre, altertitre" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
+				<IF COND="[#TITREALTER] AND [#ALTERTITRE:#SITELANG] AND ([#TYPE] EQ 'informations' OR [#CLASS] EQ 'publications')">
+					[#ALTERTITRE:#SITELANG|removenotes]
+				<ELSE/>
+					[#TITRE|removenotes]
+				</IF>
+			</LOOP>
+		<ELSE/>
+			<LOOP NAME="base_titre_entite_dc_title" SELECT="name" TABLE="tablefields" WHERE="g_name = 'dc.title' AND tablefields.class = '[#CLASS]'">
+				<LOOP NAME="base_titre_entite_gtitle" SELECT="[#NAME] AS gtitle" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
+					[#GTITLE|removenotes]
+				</LOOP>
+			</LOOP>
+		</IF>
+	</LET>
+	<IF COND="[#TEXTEBRUT]">
+		[#TITRE_ENTITE|textebrut|replace('"', '&#34;')|reg_replace('/ +/', ' ')|trim]
+	<ELSE/>
+		[#TITRE_ENTITE|replace(' &#8211; ', '<br />')|reg_replace('/ +/', ' ')|trim]
 	</IF>
 </DEFFUNC>
 
 /**
-* Affiche les personnes liées à l'entité en cours.
-* @param {string} type - Nom du type des personnes.
-* @param {string} [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.
-* @param {string} [prepend] - Texte à afficher avant la liste de personnes.
-* @param {string} [append] - Texte à afficher après la liste de personnes.
-* @param {string} [href] - Lien à wrapper.
-*/
+ * Affiche les personnes liées à l'entité en cours.
+ * @param {string} type - Nom du type des personnes.
+ * @param {string} [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.
+ * @param {string} [prepend] - Texte à afficher avant la liste de personnes.
+ * @param {string} [append] - Texte à afficher après la liste de personnes.
+ * @param {string} [href] - Lien à wrapper.
+ */
 <DEFFUNC NAME="BASE_LISTER_PERSONNES" REQUIRED="type" OPTIONAL="wrap_class, prepend, append, href">
 	<IF COND="[#HREF]">
 		<LET VAR="LIEN_DEBUT"><a href="[#HREF]"></LET>
 		<LET VAR="LIEN_FIN"></a></LET>
 	</IF>
-	<LOOP NAME="base_lister_personnes" TABLE="relations, persons" SELECT="g_firstname,g_familyname"
-		WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'" ORDER="degree">
+	<LOOP NAME="base_lister_personnes" TABLE="relations, persons" SELECT="g_firstname,g_familyname" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'" ORDER="degree">
 
 		<BEFORE>
 			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">
@@ -260,13 +384,10 @@ rubriques).
 			[#PREPEND]
 		</BEFORE>
 		<DOFIRST>
-			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span
-					class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span>
+			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span>
 		</DOFIRST>
-		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span
-					class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DO>
-		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span
-					class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DOLAST>
+		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DO>
+		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DOLAST>
 		<AFTER>
 			[#APPEND]
 			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">

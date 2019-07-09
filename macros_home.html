@@ -4,6 +4,8 @@
  * Initialisation de la page.
  */
 <DEFMACRO NAME="HOME_INIT">
+	<!--[ Dépendances additionnelles ]-->
+	<USE MACROFILE="macros_publication.html" />
 </DEFMACRO>
 
 /**
@@ -45,7 +47,11 @@
  */
 <DEFMACRO NAME="HOME_LATEST_ISSUE">
 	<section id="home-latest-issue" class="home-latest-issue">
-		TODO HOME_LATEST_ISSUE
+		<LOOP NAME="home_latest_issue" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC"
+			LIMIT="0,1">
+			<MACRO NAME="PUBLICATION_INTRO" />
+			<MACRO NAME="PUBLICATION_TOC" />
+		</LOOP>
 	</section>
 </DEFMACRO>
 
@@ -101,7 +107,7 @@
 
 		<DO>
 			<li class="toc-contents__li toc-contents__li--class-[#CLASS]">
-				<FUNC NAME="BASE_TOC_ITEM" AFFICHER_DATEPUBLI="1" />
+				<FUNC NAME="PUBLICATION_LI_TEXTE" AFFICHER_DATEPUBLI="1" />
 			</li>
 		</DO>
 

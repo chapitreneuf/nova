@@ -1,0 +1,567 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ * Appel les dépendances communes et initialise les fonctions de base.
+ */
+<DEFMACRO NAME="PUBLICATION_INIT">
+	<LET VAR="titre_page" GLOBAL="1">
+		<FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="PUBLICATION_MAIN">
+	<IF COND="[#IDPARENT] NE 0">
+		<MACRO NAME="NAV_ENTITIES" />
+	</IF>
+	<MACRO NAME="PUBLICATION_INTRO" />
+	<MACRO NAME="PUBLICATION_TOC" />
+	<MACRO NAME="PUBLICATION_ANNEXES" />
+	<IF COND="[#IDPARENT] NE 0">
+		<MACRO NAME="NAV_ENTITIES" />
+	</IF>
+</DEFMACRO>
+
+/**
+ * Header de la publication.
+ * @param {boolean} [cliquable] - Ajouter un lien hypertexte vers la publication sur le titre.
+ */
+<DEFFUNC NAME="PUBLICATION_HEADER" OPTIONAL="cliquable">
+	<header id="publi-header" class="publi-header">
+		<!--[ Titre ]-->
+		<h1 id="publi-title" class="publi-title main-title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
+
+		<!--[ Sous-titre ]-->
+		<IF COND="[#SOUSTITRE]">
+			<div id="publi-subtitle" class="publi-subtitle main-subtitle">[#SOUSTITRE]</div>
+		</IF>
+
+		<!--[ Altertitles ]-->
+		<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_ID="publi-altertitle" WRAP_CLASS="publi-altertitle main-altertitle" />
+	</header>
+</DEFFUNC>
+
+/**
+ * Affiche les titres traduits d'une publication.
+ * @param string [wrap_id] - Valeur de l'attribut id du premier élément DIV conteneur.
+ * @param string [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.
+ */
+<DEFFUNC NAME="PUBLICATION_ALTERTITRE" OPTIONAL="wrap_id, wrap_class">
+	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
+		<LOOP NAME="publication_altertitre_parent_altertitle" SELECT="altertitre AS parentaltertitle" TABLE="publications" WHERE="id = '[#IDPARENT]'">
+			<div id="[#WRAP_ID]" class="[#WRAP_CLASS]">
+				<IF COND="[#PARENTALTERTITLE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+					<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+						<p lang="[#VALUE]" xml:lang="[#VALUE]">
+							[#PARENTALTERTITLE:#VALUE]<IF COND="[#ALTERTITRE:#VALUE]">&#160;| [#ALTERTITRE:#VALUE]<ELSEIF COND="[#TITRE]"/>&#160;| [#TITRE]</IF>
+						</p>
+					</LOOP>
+				</IF>
+			</div>
+		</LOOP>
+	<ELSEIF COND="[#ALTERTITRE]"/>
+		<div id="[#WRAP_ID]" class="[#WRAP_CLASS]">
+			[#ALTERTITRE|replace('r2r:ml', 'p')]
+		</div>
+	</IF>
+</DEFFUNC>
+
+/**
+ * Accroche et header de la publication.
+ */
+<DEFMACRO NAME="PUBLICATION_INTRO">
+	<IF COND="[#TYPE] EQ 'numero'">
+		<div class="row">
+			<div class="publi-info-col col-sm-8">
+				<MACRO NAME="PUBLICATION_COL_HEADER" />
+			</div>
+			<div class="publi-cover-col col-sm-4">
+				<MACRO NAME="PUBLICATION_COL_ACCROCHE_NUMERO" />
+			</div>
+		</div>
+	<ELSE />
+		<div class="publi-info-col">
+			<MACRO NAME="PUBLICATION_COL_HEADER" />
+		</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Colonne contenant le header et les informations sur la publication.
+ */
+<DEFMACRO NAME="PUBLICATION_COL_HEADER">
+	<FUNC NAME="PUBLICATION_HEADER" />
+	<MACRO NAME="PUBLICATION_INFORMATIONS" />
+	<MACRO NAME="PUBLICATION_NOTES" />
+</DEFMACRO>
+
+/**
+ * Colonne accroche de la publication.
+ */
+<DEFMACRO NAME="PUBLICATION_COL_ACCROCHE_NUMERO">
+	<!--[ Image d'accroche ]-->
+	<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi-cover" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
+
+	<!--[ Description ouvrage ]-->
+	<IF COND="[#DESCRIPTIONOUVRAGE]">
+		<p id="publi-description" class="publi-description">[#DESCRIPTIONOUVRAGE]</p>
+	</IF>
+
+	<!--[ ISBN ]-->
+	<IF COND="[#ISBN]">
+		<p id="publi-isbn" class="publi-isbn">ISBN&nbsp;[#ISBN]</p>
+	</IF>
+
+	<!--[ Commander le numero ]-->
+	<MACRO NAME="PUBLICATION_COMMANDER_NUMERO" />
+</DEFMACRO>
+
+/**
+ * Commander le numero.
+ */
+<DEFMACRO NAME="PUBLICATION_COMMANDER_NUMERO">
+	<IF COND="[#URLPUBLICATIONEDITEUR]">
+		<p class="publi-editor-link">
+			<a rel="external" class="external order-button btn" href="[#URLPUBLICATIONEDITEUR|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" title="[@SITE_EDITEUR]">
+				[@COMMANDER_NUMERO]
+			</a>
+		</p>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Informations sur la publication.
+ */
+<DEFMACRO NAME="PUBLICATION_INFORMATIONS">
+	<!--[ Directeur publication ]-->
+	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_ID="publi-director" WRAP_CLASS="publi-director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+
+	<!--[ Introduction ]-->
+	<IF COND="[#INTRODUCTION]">
+		<section id="publi-introduction" class="publi-introduction">
+			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="intro" />
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Sections NDLR et historique.
+ */
+<DEFMACRO NAME="PUBLICATION_NOTES">
+	<!--[ NDLR ]-->
+	<IF COND="[#NDLR]">
+		<section id="publi-ndlr" class="publi-ndlr">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" ICON="pencil" SECTION_ID="publi-ndlr" NAV="true"/>
+			[#NDLR]
+		</section>
+	</IF>
+
+	<!--[ Historique ]-->
+	<IF COND="[#HISTORIQUE]">
+		<section id="publi-historique" class="publi-historique">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" ICON="time" SECTION_ID="publi-historique" NAV="true"/>
+			[#HISTORIQUE]
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Sommaire de la publication.
+ */
+<DEFMACRO NAME="PUBLICATION_TOC">
+	<LET VAR="profondeur">0</LET>
+	<LOOP NAME="publication_toc" TABLE="publications" WHERE="id = [#ID]">
+		<BEFORE>
+			<IF COND="[#PROFONDEUR] EQ 0">
+				<section id="publi-toc" class="publi-toc">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@SOMMAIRE]" ICON="list-alt" NAV="true" SECTION_ID="publi-toc"/>
+			</IF>
+		</BEFORE>
+
+		<DO>
+			<IF COND="[#TYPE] EQ 'collection'">
+				<MACRO NAME="PUBLICATION_COLLECTION" />
+			<ELSE />
+				<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
+					<MACRO NAME="PUBLICATION_ANNEES" />
+				</IF>
+				<MACRO NAME="PUBLICATION_SOMMAIRE" />
+			</IF>
+		</DO>
+
+		<AFTER>
+			<IF COND="[#PROFONDEUR] EQ 0">
+				</section><!-- #publi-toc -->
+			</IF>
+		</AFTER>
+	</LOOP>
+	<!--[ Sommaire de la dernière sous-rubrique annuelle si elle existe]-->
+	<LET VAR="profondeur">1</LET>
+	<LOOP NAME="publication_toc_rubriqueannuelle" TABLE="publications" SELECT="id" WHERE="idparent = [#ID] AND type = 'rubriqueannuelle'" ORDER="rank DESC" LIMIT="1">
+		<LOOP NAME="publication_toc"></LOOP>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affiche le sommaire récursif d'une publication (sauf type collection).
+ */
+<DEFMACRO NAME="PUBLICATION_SOMMAIRE">
+	<LET VAR="id_publi">[#ID]</LET>
+	<LET VAR="parent_is_rubrique"><IF COND="([#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'rubriqueannuelle') AND [#DATEPUBLI|isadate]">1</IF></LET>
+
+	<LOOP NAME="publication_sommaire"
+		TABLE="entities, types"
+		SELECT="id, class, type"
+		WHERE="idparent = '[#ID]' AND id [#NOT_IN_TRADUCTIONS_PARENT_UNIQUE] AND type NOT IN ('fluxdesyndication','imageaccroche','rubriqueannuelle', 'imageaccrochelibrairie') AND type NOT LIKE '%annexe%' AND entities.idtype = types.id"
+		ORDER="entities.rank">
+
+		<BEFORE>
+			<ul class="toc-contents">
+		</BEFORE>
+
+		<DO>
+			<LOOP NAME="publication_sommaire_item" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
+				<LET VAR="publi_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
+				<li class="toc-contents-li toc-contents-li-[#CLASS] lang-[#LANGUE] dir-[#PUBLI_DIR]">
+					<SWITCH TEST="[#CLASS]">
+						<!--[ Publications ]-->
+						<DO CASE="publications">
+							<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
+								<div class="toc-publi-header">
+									<!--[ Titre ]-->
+									<h2 class="toc-publi-title">[#TITRE]</h2>
+									<!--[ Sous-titre ]-->
+									<IF COND="[#SOUSTITRE]">
+										<div class="toc-publi-subtitle">
+											[#SOUSTITRE]
+										</div>
+									</IF>
+									<!--[ Titres alternatifs ]-->
+									<IF COND="[#ALTERTITRE]">
+										<div class="toc-publi-altertitle">
+											[#ALTERTITRE|replace('r2r:ml', 'p')]
+										</div>
+									</IF>
+									<!--[ Directeur de la publication ]-->
+									<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="toc-publi-director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+									<!--[ Introduction ]-->
+									<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="intro" />
+								</div>
+								<!--[ Sommaire ]-->
+								<LET VAR="id_publi">[#ID]</LET>
+								<LOOP NAME="publication_sommaire"></LOOP>
+							</IF>
+						</DO>
+						<!--[ Textes ]-->
+						<DO CASE="textes">
+							<FUNC NAME="PUBLICATION_LI_TEXTE" AFFICHER_DATEPUBLI="[#PARENT_IS_RUBRIQUE]" />
+						</DO>
+					</SWITCH>
+				</li>
+			</LOOP>
+		</DO>
+
+		<AFTER>
+				<FUNC NAME="PUBLICATION_ALIASES" ID_PUBLI="[#ID_PUBLI]" WRAP_TAG="li" />
+			</ul><!-- .toc-contents -->
+		</AFTER>
+
+		<ALTERNATIVE>
+			<FUNC NAME="PUBLICATION_ALIASES" ID_PUBLI="[#ID_PUBLI]" />
+		</ALTERNATIVE>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Afficher les infos d'un document (texte) dans le sommaire.
+ * @param {boolean} [afficher_datepubli] - Afficher la date de publication électronique du document (utilisé dans les rubriques).
+ */
+<DEFFUNC NAME="PUBLICATION_LI_TEXTE" OPTIONAL="afficher_datepubli">
+	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc-author" />
+	<IF COND="![%RELATIONS_TRADUCTION]">
+		<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+	<ELSE/>
+		<!--[ Traductions ]-->
+		<!--[ Variable qui permet de connaitre les langues des traductions pour afficher les titres des autres langues à la fin ]-->
+		<LET ARRAY="langues_traductions_article" GLOBAL="1"></LET>
+		<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+		<!--[ Memoriser l'altertitre de la source ]-->
+		<LET VAR="altertitre_source" GLOBAL="1">[#ALTERTITRE]</LET>
+
+		<LOOP NAME="PUBLICATION_LI_texte_traductions"
+			TABLE="textes, relations"
+			SELECT="id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, documentcliquable, datepubli, langue, type, nature, numerodocument"
+			WHERE="id2 = '[#ID]' AND nature = 'traduction' AND id1 = textes.identity"
+			ORDER="rank">
+
+			<BEFORE>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			</BEFORE>
+
+			<DO>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+			</DO>
+
+			<DOLAST>
+			  <FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			  <LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+
+			  <!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
+			  <IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+					<div class="toc-altertitle toc-altertitle-sauf-traductions">
+						<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+						<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
+							<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
+						</IF>
+						</LOOP>
+					</div>
+				</IF>
+			</DOLAST>
+
+			<ALTERNATIVE>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			</ALTERNATIVE>
+		</LOOP>
+	</IF>
+</DEFFUNC>
+
+/**
+ * Afficher un élément de sommaire.
+ * @param {boolean} [afficher_datepubli] - Afficher la date de publication électronique du document (utilisé dans les rubriques).
+ */
+<DEFFUNC NAME="PUBLICATION_LI_TEXTE" OPTIONAL="afficher_datepubli">
+	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc-author" />
+	<IF COND="![%RELATIONS_TRADUCTION]">
+		<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+	<ELSE />
+		<!--[ Traductions ]-->
+		<!--[ Variable qui permet de connaitre les langues des traductions pour afficher les titres des autres langues à la fin ]-->
+		<LET ARRAY="langues_traductions_article" GLOBAL="1"></LET>
+		<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+		<!--[ Memoriser l'altertitre de la source ]-->
+		<LET VAR="altertitre_source" GLOBAL="1">[#ALTERTITRE]</LET>
+
+		<LOOP NAME="PUBLICATION_LI_traductions" TABLE="textes, relations" SELECT="id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, datepubli, langue, type, nature, numerodocument" WHERE="id2 = '[#ID]' AND nature = 'traduction' AND id1 = textes.identity" ORDER="rank">
+			<BEFORE>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+			</BEFORE>
+
+			<DO>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+			</DO>
+
+			<DOLAST>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+
+				<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
+				<IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
+					<div class="toc-altertitle toc-altertitle-sauf-traductions">
+						<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+							<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
+								<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
+							</IF>
+						</LOOP>
+					</div>
+				</IF>
+			</DOLAST>
+
+			<ALTERNATIVE>
+				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
+			</ALTERNATIVE>
+		</LOOP>
+	</IF>
+</DEFFUNC>
+
+/**
+ * Affiche le titre, le sous-titre d'un document avec la mention "texte intégral", et le numéro du doc.
+ * @param {boolean} [afficher_titres_traduits] - Affichage des titres traduits.
+ * @param {boolean} [afficher_datepubli] - Affichage de la date de publication.
+ */
+<DEFFUNC NAME="PUBLICATION_LI_DOCUMENT" OPTIONAL="afficher_titres_traduits, afficher_datepubli">
+	<!--[ Titre ]-->
+	<p class="toc-title">
+		<IF COND="[#DOCUMENTCLIQUABLE]">
+			<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
+		<ELSE/>
+			[#TITRE|removenotes]
+		</IF>
+	</p>
+	<!--[ Sous-titre ]-->
+	<IF COND="[#SOUSTITRE]">
+		<p class="toc-subtitle">[#SOUSTITRE|removenotes]</p>
+	</IF>
+	<!--[ Titres traduits]-->
+	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
+		<div class="toc-altertitle">
+			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+				<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
+			</LOOP>
+		</div>
+	</IF>
+
+	<!--[ Date de publication si publié dans une rubrique électronique ]-->
+	<IF COND="[#AFFICHER_DATEPUBLI]">
+		<p class="toc-datepubli">[#DATEPUBLI|humandate]</p>
+	</IF>
+</DEFFUNC>
+
+/**
+ * Affiche les documents annexes associés à un document.
+ */
+<DEFMACRO NAME="PUBLICATION_ANNEXES">
+	<!--[ Liste des ID renvoyés par le filtre media ]-->
+	<!--[ TODO: à adapter selon le filtre media utilisé ]-->
+	<IF COND="[%ID_MEDIA]">
+		<LET VAR="inline_media"> AND entities.id NOT IN ([%ID_MEDIA|join(',')])</LET>
+	</IF>
+
+	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' [#INLINE_MEDIA] AND type LIKE '%annexe'" ORDER="rank">
+
+		<BEFORE>
+			<section id="docannexes" class="docannexes">
+				<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@DOCANNEXES]<ELSE />[@DOCANNEXE]</IF></LET>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="folder-open" NAV="true" SECTION_ID="docannexes" />
+				<div class="docannexes-contents">
+					<ul class="docannexes-items toc-contents">
+		</BEFORE>
+
+		<DO>
+			<li class="toc-contents-li toc-contents-li-[#CLASS]">
+				<LOOP NAME="publication_annexes_item" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
+					<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
+						<LET VAR="href">[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]</LET>
+					<ELSEIF COND="[#DOCUMENT]" />
+						<LET VAR="href">[#ID|makeurlwithfile]</LET>
+					</IF>
+					<p class="toc-title">
+						<!--[ Lien ]-->
+						<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
+							<a href="[#HREF]">
+								<FUNC NAME="BASE_ICON" ICON="link" CLASSNAME="icon-small" /> [#TITRE]</a>
+							<!--[ Fichier ]-->
+						<ELSEIF COND="[#DOCUMENT]" />
+							<a href="[#HREF]">[#TITRE]</a> <span class="additional-info">([#DOCUMENT|getFileMime]&#160;&#8211;
+								[#DOCUMENT|nicefilesize])</span>
+						<ELSEIF COND="[#URLACCESMEDIA]" />
+							<a href="[#URLACCESMEDIA]">[#TITRE]</a> <span class="additional-info">([#URLACCESMEDIA])</span>
+						<ELSEIF COND="[#URLMEDIA]" />
+							<a href="[#URLMEDIA]">[#TITRE]</a> <span class="additional-info">([#URLMEDIA])</span>
+						<ELSE />
+							[#TITRE]
+						</IF>
+					</p>
+					<IF COND="[#CLASS] EQ 'liens' AND [#TEXTE]">
+						<p class="toc-description">[#TEXTE]</p>
+					<ELSEIF COND="[#CLASS] EQ 'fichiers'" />
+						<IF COND="[#DESCRIPTION]">
+							<div class="toc-description">[#DESCRIPTION]</div>
+						</IF>
+						<IF COND="[#LEGENDE]">
+							<div class="toc-legende">[#LEGENDE]</div>
+						</IF>
+						<IF COND="[#CREDITS]">
+							<div class="toc-credits">[#CREDITS]</div>
+						</IF>
+					</IF>
+				</LOOP>
+			</li>
+		</DO>
+
+		<AFTER>
+					</ul>
+				</div>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affiche tous les alias liés à une publication.
+ * @param {int} id_publi - id de la publication.
+ * @param {string} [wrap_tag] - Nom de la balise HTML conteneur.
+ */
+<DEFFUNC NAME="PUBLICATION_ALIASES" REQUIRED="id_publi" OPTIONAL="wrap_tag">
+	<LOOP NAME="publication_aliases" TABLE="relations, entities, types" SELECT="entities.id, class" WHERE="id1 = entities.id AND id2 = [#ID_PUBLI] AND nature = 'alias' AND entities.idtype = types.id" ORDER="modificationdate DESC">
+
+		<BEFORE>
+			<IF COND="[#WRAP_TAG]">
+				<[#WRAP_TAG]>
+			</IF>
+			<h2>[@ANNONCE_ALIAS]</h2>
+			<ul class="toc-contents">
+		</BEFORE>
+		<DO>
+			<li class="toc-contents-li toc-contents-li-[#CLASS]">
+				<LOOP NAME="publication_aliases_alias" TABLE="#_TP_[#CLASS]" WHERE="identity = [#ID] AND class = 'textes'">
+					<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="author" />
+					<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" />
+				</LOOP>
+			</li>
+		</DO>
+		<AFTER>
+			</ul>
+			<IF COND="[#WRAP_TAG]">
+				</[#WRAP_TAG]>
+			</IF>
+		</AFTER>
+	</LOOP>
+</DEFFUNC>
+
+/**
+ * Affiche le sommaire d'une collection.
+ */
+<DEFMACRO NAME="PUBLICATION_COLLECTION">
+	<LOOP NAME="publication_collection" 
+		TABLE="relations, entities, types" 
+		SELECT="entities.id" 
+		WHERE="id2 = entities.id AND id1 = '[#ID]' AND nature = 'P' AND degree = 1 AND entities.idtype = types.id" 
+		ORDER="entities.rank">
+		<BEFORE>
+			<ul class="toc-contents">
+		</BEFORE>
+		<DO>
+			<li class="[#TYPE]">
+				<a href="[#ID|makeurlwithid]">
+					<FUNC NAME="BASE_TITRE_ENTITE" />
+				</a>
+			</li>
+		</DO>
+		<AFTER>
+			</ul><!-- .toc-contents -->
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affiche les raccourcis vers les rubriques annuelles de même niveau.
+ */
+<DEFMACRO NAME="PUBLICATION_ANNEES">
+	<LET VAR="CURRENTID">[#ID]</LET>
+	<LOOP NAME="publication_annees" 
+		TABLE="publications" 
+		SELECT="id, titre, altertitre" 
+		WHERE="idparent = [#IDPARENT] AND type = 'rubriqueannuelle'" 
+		ORDER="rank DESC">
+		<BEFORE>
+			<div class="page-shortcuts">
+				<ul class="nav nav-pills">
+		</BEFORE>
+		<DO>
+			<IF COND="[#ALTERTITRE:#SITELANG]">
+				<LET VAR="titre">[#ALTERTITRE:#SITELANG]</LET>
+			</IF>
+			<LET VAR="active_class"><IF COND="[#ID] EQ [#CURRENTID]">class="active"</IF></LET>
+			<li [#ACTIVE_CLASS]><a href="[#ID|makeurlwithid]">[#TITRE]</a></li>
+		</DO>
+		<AFTER>
+				</ul>
+			</div>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>

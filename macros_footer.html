@@ -5,6 +5,50 @@
  */
 <DEFMACRO NAME="FOOTER_MAIN">
 	<footer id="main-footer" class="main-footer" role="contentinfo">
-		TODO FOOTER
+		<MACRO NAME="FOOTER_ISSN" />
+		<FUNC NAME="FOOTER_MAP" PUBLI_IDENTIFIER="informations" />
+		<MACRO NAME="FOOTER_LODEL" />
 	</footer>
+</DEFMACRO>
+
+/**
+ * ISSN dans le footer.
+ */
+<DEFMACRO NAME="FOOTER_ISSN">
+	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
+		<p class="main-footer__line main-footer__line--issn">[@ISSN_ELECTRONIQUE] [#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]
+		</p>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Map et pages d'informations dans le footer.
+ * @param {string} [publi_identifier] - Identifiant de la collection des informations (défaut : "informations").
+ */
+<DEFFUNC NAME="FOOTER_MAP" OPTIONAL="publi_identifier">
+	<IF COND="![#PUBLI_IDENTIFIER]">
+		<LET VAR="publi_identifier">informations</LET>
+	</IF>
+
+	<p class="main-footer__line main-footer__line--map">
+		<a href="[#SITEINFOS.URL]/?page=map">[@PLAN_DU_SITE]</a> &mdash;&nbsp;
+		<LOOP NAME="footer_map" SELECT="id" TABLE="publications" WHERE="type='collection' AND identifier='[#PUBLI_IDENTIFIER]'">
+			<LOOP NAME="footer_map_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]' AND langue = '[#SITELANG]'" ORDER="rank">
+				<a href="[#ID|makeurlwithid]">[#TITRE]</a>
+				<IF COND="[#COUNT] LT [#NBRESULTS]"> &mdash;&nbsp;</IF>
+			</LOOP>
+		</LOOP>
+	</p>
+</DEFFUNC>
+
+/**
+ * Liens Lodel et maquette dans le footer.
+ */
+<DEFMACRO NAME="FOOTER_LODEL">
+	<p class="main-footer__line">
+		<!--[ Crédit de la maquette. Ne pas supprimer. Voir le fichier LICENSE ou nous écrire à contact@edinum.org. ]-->
+		<a href="http://www.edinum.org/">Conception&nbsp;: Edinum.org</a> &mdash;&nbsp;
+		<a href="http://www.lodel.org/">[@EDITE_AVEC_LODEL]</a> &mdash;&nbsp;
+		<a href="[#SITEINFOS.URL]/lodel/">[@LODEL_ADMIN]</a>
+	</p>
 </DEFMACRO>

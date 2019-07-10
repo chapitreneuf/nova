@@ -6,7 +6,6 @@
 <DEFMACRO NAME="HEADER_MAIN">
 	<header id="main-header" class="main-header" role="banner">
 		<MACRO NAME="HEADER_ACCES" />
-		<MACRO NAME="HEADER_TITRE" />
 		<MACRO NAME="HEADER_LOGO" />
 	</header>
 </DEFMACRO>
@@ -21,21 +20,14 @@
 </DEFMACRO>
 
 /**
- * Titre du site.
- */
-<DEFMACRO NAME="HEADER_TITRE">
-	<h1 id="site-title" class="site-title">[#OPTIONS.METADONNEESSITE.TITRESITE]</h1>
-</DEFMACRO>
-
-/**
  * Logo du site.
  */
 <DEFMACRO NAME="HEADER_LOGO">
 	<div id="site-logo-container" class="site-logo-container container-fluid">
 		<IF COND="[%SITE_LOGO_PATH]">
-			<a href="[#SITEINFOS.URL]" class="site-logo"><img src="[%SITE_LOGO_PATH]" alt="[#OPTIONS.METADONNEESSITE.TITRESITE]" /></a>
+			<h1 class="site-title site-title--image"><a href="[#SITEINFOS.URL]"><img src="[%SITE_LOGO_PATH]" class="site-logo" alt="[#OPTIONS.METADONNEESSITE.TITRESITE]" /></a></h1>
 		<ELSE />
-			<a href="[#SITEINFOS.URL]" class="site-logo">[#OPTIONS.METADONNEESSITE.TITRESITE]</a>
+			<h1 class="site-title site-title--text"><a href="[#SITEINFOS.URL]">[#OPTIONS.METADONNEESSITE.TITRESITE]</a></h1>
 			<IF COND="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]">
 				<p class="site-subtitle">[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]</p>
 			</IF>

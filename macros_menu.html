@@ -6,6 +6,7 @@
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
 		<MACRO NAME="MENU_INDEX" />
+		<MACRO NAME="MENU_ISSUES" />
 		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
 	</nav>
 </DEFMACRO>
@@ -23,7 +24,7 @@
 			<LET VAR="filtre">type = 'auteur'</LET>
 
 			<LOOP NAME="menu_index_list" TABLE="[#TABLEINDEX], [#TABLETYPES]" SELECT="DISTINCT(idtype), title, altertitle" WHERE="[#FILTRE] AND [#TABLEINDEX].idtype = [#TABLETYPES].id AND [#TABLEINDEX].status GT 0" ORDER="[#TABLETYPES].rank">
-				<li><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="TRUE" /></a></li>
+				<li class="main-menu__item main-menu__item--entry"><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="TRUE" /></a></li>
 			</LOOP>
 
 			<!--[ Mots-clés ]-->
@@ -48,16 +49,75 @@
 
 			<!--[ Index par annees ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEINDEXANNUEL]">
-				<li><a href="[#SITEINFOS.URL]/?page=years">[@INDEX_PAR_ANNEES]</a></li>
+				<li class="main-menu__item main-menu__item--entry"><a href="[#SITEINFOS.URL]/?page=years">[@INDEX_PAR_ANNEES]</a></li>
 			</IF>
 
 			<!--[ Index par langues ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEINDEXPARLANGUE]">
-				<li><a href="[#SITEINFOS.URL]/?page=lang">[@INDEX_PAR_LANGUES]</a></li>
+				<li class="main-menu__item  main-menu__item--entry"><a href="[#SITEINFOS.URL]/?page=lang">[@INDEX_PAR_LANGUES]</a></li>
 			</IF>
 		</ul>
 	</section>
 </DEFMACRO>
+
+/**
+ * Liste des numéros dans le menu.
+ */
+<DEFMACRO NAME="MENU_ISSUES">
+	<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_A_PARAITRE]" FILTRE="AND paraitre = 1" />
+
+	<!--[ Résumés ]-->
+	<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_RESUMES]" FILTRE="AND (paraitre = 0 OR paraitre IS NULL) AND (integralite = 0 OR integralite IS NULL)" />
+	
+	<!--[ Texte intégral ]-->
+	<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_TEXTE_INTEGRAL]" FILTRE="AND (paraitre = 0 OR paraitre IS NULL) AND integralite = 1" />
+	
+	<!--[ Autres collections parentes ]-->
+	<LOOP NAME="menu_issues_elsewhere" TABLE="publications" SELECT="id, titre, altertitre"
+		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID]) AND identifier != 'numeros'" ORDER="rank">
+		<LET VAR="titre_section"><FUNC NAME="BASE_ML_TITRE" /></LET>
+		<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[#TITRE_SECTION]" ID_COLLECTION="[#ID]" />
+	</LOOP>
+
+	<!--[ Lien vers le sommaire des numéros ]-->
+	<a href="[#ISSUES_COLLECTIONS_ID|makeurlwithid]" class="link-to-issues">[@TOUS_LES_NUMEROS]</a>
+</DEFMACRO>
+
+/**
+ * Affiche une liste de numéros pour le menu.
+ * @param {string} titre_section - Titre de la section du menu.
+ * @param {string} [filtre] - Filtre passé dans le WHERE de la requête.
+ * @param {int} [id_collection] - ID de la collection parente.
+ */
+<DEFFUNC NAME="MENU_ISSUES_ITEMS" REQUIRED="titre_section" OPTIONAL="filtre, id_collection">
+	<IF COND="![#ID_COLLECTION]">
+		<LET VAR="id_collection">[#ISSUES_COLLECTIONS_ID]</LET>
+	</IF>
+	<LOOP NAME="menu_issues_items" 
+		TABLE="publications"
+		SELECT="id, numero, titre, altertitre, periode, datepubli, datepublipapier"
+		WHERE="idparent = '[#ID_COLLECTION]' [#FILTRE]"
+		ORDER="rank DESC">
+		<BEFORE>
+			<section class="main-menu__section main-menu__section--issues">
+				<h2 class="main-menu__section-title">[#TITRE_SECTION]</h2>
+				<ul class="main-menu__list">
+		</BEFORE>
+		<DO>
+			<li class="main-menu__item main-menu__item--issue">
+				<a href="[#ID|makeurlwithid]">
+					<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;| " /></span>
+					<LET VAR="ml_titre"><FUNC NAME="BASE_ML_TITRE" /></LET>
+					<IF COND="[#ML_TITRE] NE [#NUMERO]"><span class="publi-title">[#ML_TITRE]</span></IF>
+				</a>
+			</li>
+		</DO>
+		<AFTER>
+				</ul>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFFUNC>
 
 /**
  * Afficher des collections dans le menu.

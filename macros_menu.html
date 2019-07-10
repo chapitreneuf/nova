@@ -1,12 +1,62 @@
 <CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
 
 /**
- * Macro principale d'affichage du footer appelée par les templates.
+ * Macro principale d'affichage du menu appelée par les templates.
  */
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
+		<MACRO NAME="MENU_INDEX" />
 		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
 	</nav>
+</DEFMACRO>
+
+/**
+ * Menu des index.
+ */
+<DEFMACRO NAME="MENU_INDEX">
+	<section class="main-menu__section main-menu__section--indexes">
+		<h2 class="main-menu__section-title">[@INDEX]</h2>
+		<ul class="main-menu__list">
+			<!--[ Auteurs ]-->
+			<LET VAR="tableindex">#_TP_persons</LET>
+			<LET VAR="tabletypes">#_TP_persontypes</LET>
+			<LET VAR="filtre">type = 'auteur'</LET>
+
+			<LOOP NAME="menu_index_list" TABLE="[#TABLEINDEX], [#TABLETYPES]" SELECT="DISTINCT(idtype), title, altertitle" WHERE="[#FILTRE] AND [#TABLEINDEX].idtype = [#TABLETYPES].id AND [#TABLEINDEX].status GT 0" ORDER="[#TABLETYPES].rank">
+				<li><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="TRUE" /></a></li>
+			</LOOP>
+
+			<!--[ Mots-clés ]-->
+			<LET VAR="tableindex">#_TP_entries</LET>
+			<LET VAR="tabletypes">#_TP_entrytypes</LET>
+			<LET VAR="filtre">type LIKE 'mot%cle%' AND lang = '[#SITELANG]'</LET>
+
+			<!--[ Il faut tester l'existence de l'index dans la langue de navigation ]-->
+			<LET VAR="sitelang_keywords"><LOOP NAME="menu_index_list"></LOOP></LET>
+
+			<IF COND="[#SITELANG_KEYWORDS]">
+				[#SITELANG_KEYWORDS|trim]
+			<ELSE />
+				<!--[ Affichage de l'index dans la langue principale du site ]-->
+				<LET VAR="filtre">type LIKE 'mot%cle%' AND lang = '[#MAINLANG]'</LET>
+				<LOOP NAME="menu_index_list"></LOOP>
+			</IF>
+
+			<!--[ Autres types d'index ]-->
+			<LET VAR="filtre">type NOT LIKE 'mot%cle%' AND class != 'indexavances' AND class != 'collections'</LET>
+			<LOOP NAME="menu_index_list"></LOOP>
+
+			<!--[ Index par annees ]-->
+			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEINDEXANNUEL]">
+				<li><a href="[#SITEINFOS.URL]/?page=years">[@INDEX_PAR_ANNEES]</a></li>
+			</IF>
+
+			<!--[ Index par langues ]-->
+			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEINDEXPARLANGUE]">
+				<li><a href="[#SITEINFOS.URL]/?page=lang">[@INDEX_PAR_LANGUES]</a></li>
+			</IF>
+		</ul>
+	</section>
 </DEFMACRO>
 
 /**
@@ -26,9 +76,7 @@
 
 	<LOOP NAME="menu_collections" TABLE="publications" SELECT="id, titre, altertitre, identifier" WHERE="idparent = 0 AND type = 'collection' AND id NOT IN ([#ISSUES_COLLECTIONS_ID]) [#FILTER]" ORDER="rank">
 		<section class="main-menu__section main-menu__section--collection main-menu__section--identifier--[#IDENTIFIER]">
-			<h2>
-				<FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" />
-			</h2>
+			<h2 class="main-menu__section-title"><FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" /></h2>
 
 			<LOOP NAME="menu_collections_entities" TABLE="entities" SELECT="id, class, type" WHERE="idparent = '[#ID]' AND id [#NOT_IN_TRADUCTIONS] AND class IN ('publications', 'textes', 'liens')" ORDER="rank">
 				<BEFORE>

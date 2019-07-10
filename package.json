@@ -10,7 +10,7 @@
     "copy:webfonts": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts public",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
     "postinstall": "npm run build",
-    "watch:css": "onchange \"less/**/*.less\" -- npm run css"
+    "watch:css": "onchange -i \"less/**/*.less\" -- npm run css"
   },
   "private": true,
   "devDependencies": {

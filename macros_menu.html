@@ -164,7 +164,7 @@
 							<LOOP NAME="menu_collections_entities_lien" TABLE="liens" WHERE="id = '[#ID]'" SELECT="titre, url, vignette">
 								<!--[ Possibilité d'ajouter une icone spécifique format 16x16 via le champ #VIGNETTE ]-->
 								<IF COND="[#VIGNETTE]">
-									<LET VAR="li_icon">style="list-style-image: url([#VIGNETTE])"</LET>
+									<LET VAR="li_icon">style="list-style-image: url([#VIGNETTE|vignette(16)])"</LET>
 								</IF>
 								<LET VAR="href">[#ID|makeurlwithid]</LET>
 								<IF COND="[#TYPE] EQ 'noticedesite' AND [#URL]">

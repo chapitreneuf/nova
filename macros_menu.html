@@ -5,6 +5,81 @@
  */
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
-		TODO MENU
+		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
 	</nav>
 </DEFMACRO>
+
+/**
+ * Afficher des collections dans le menu.
+ * @param {string} [include] - Inclure des collections selon leur identifier. Penser à wrapper chaque nom entre guillemets. Exemple : INCLUDE="'presentation', 'informations'".
+ * @param {string} [exclude] - Idem exclusion des collections.
+ */
+<DEFFUNC NAME="MENU_COLLECTIONS" OPTIONAL="include, exclude">
+	<LET VAR="filter">
+		<IF COND="[#INCLUDE]">
+			AND identifier IN ([#INCLUDE])
+		</IF>
+		<IF COND="[#EXCLUDE]">
+			AND identifier NOT IN ([#EXCLUDE])
+		</IF>
+	</LET>
+
+	<LOOP NAME="menu_collections" TABLE="publications" SELECT="id, titre, altertitre, identifier" WHERE="idparent = 0 AND type = 'collection' AND id NOT IN ([#ISSUES_COLLECTIONS_ID]) [#FILTER]" ORDER="rank">
+		<section class="main-menu__section main-menu__section--collection main-menu__section--identifier--[#IDENTIFIER]">
+			<h2>
+				<FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" />
+			</h2>
+
+			<LOOP NAME="menu_collections_entities" TABLE="entities" SELECT="id, class, type" WHERE="idparent = '[#ID]' AND id [#NOT_IN_TRADUCTIONS] AND class IN ('publications', 'textes', 'liens')" ORDER="rank">
+				<BEFORE>
+					<ul class="main-menu__list">
+				</BEFORE>
+
+				<DO>
+					<IF COND="[#CLASS] EQ 'textes'">
+						<li class="main-menu__item main-menu__item--class-[#CLASS]">
+							<IF COND="![%RELATIONS_TRADUCTION_PARENT_UNIQUE]">
+								<a href="[#ID|makeurlwithid]"><FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" /></a>
+							<ELSE />
+								<!--[ Affichage des traductions dans la langue de navigation ]-->
+								<LOOP NAME="menu_collections_entities_traduction" SELECT="id, titre, altertitre" TABLE="textes, relations" WHERE="id2 = '[#ID]' AND id1 = textes.identity AND langue = '[#SITELANG]' AND nature = 'traduction'" LIMIT="1">
+									<a href="[#ID|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" /></a>
+									<ALTERNATIVE>
+										<a href="[#ID|makeurlwithid]"><FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" /></a>
+									</ALTERNATIVE>
+								</LOOP>
+							</IF>
+						</li>
+
+						<ELSEIF COND="[#CLASS] EQ 'liens'" />
+							<LOOP NAME="menu_collections_entities_lien" TABLE="liens" WHERE="id = '[#ID]'" SELECT="titre, url, vignette">
+								<!--[ Possibilité d'ajouter une icone spécifique format 16x16 via le champ #VIGNETTE ]-->
+								<IF COND="[#VIGNETTE]">
+									<LET VAR="li_icon">style="list-style-image: url([#VIGNETTE])"</LET>
+								</IF>
+								<LET VAR="href">[#ID|makeurlwithid]</LET>
+								<IF COND="[#TYPE] EQ 'noticedesite' AND [#URL]">
+									<LET VAR="href">[#URL]</LET>
+								</IF>
+								<li class="main-menu__item main-menu__item--class-[#CLASS]" [#LI_ICON]>
+									<a href="[#HREF]">[#TITRE]</a>
+								</li>
+							</LOOP>
+
+						<ELSE />
+							<li class="main-menu__item main-menu__item--class-[#CLASS]">
+								<a href="[#ID|makeurlwithid]">
+									<FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" />
+								</a>
+							</li>
+						</IF>
+					</li>
+				</DO>
+
+				<AFTER>
+					</ul>
+				</AFTER>
+			</LOOP>
+		</section>
+	</LOOP>
+</DEFFUNC>

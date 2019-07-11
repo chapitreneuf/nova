@@ -6,21 +6,28 @@
 <DEFMACRO NAME="HOME_INIT">
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
+
+	<!--[ Chercher maintenant les actualités pour savoir combien de colonnes sur la home ]-->
+	<LET VAR="section_actualites"><MACRO NAME="HOME_ACTUALITES" /></LET>
 </DEFMACRO>
 
 /**
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="HOME_MAIN">
+	<!--[ Colonne actualités si besoin ]-->
+	<LET VAR="main_col_size"><IF COND="[#SECTION_ACTUALITES]">8<ELSE/>12</IF></LET>
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-[#MAIN_COL_SIZE|trim]">
 			<MACRO NAME="HOME_BILLETS" />
 			<MACRO NAME="HOME_LATEST_ISSUE" />
 			<MACRO NAME="HOME_RUBRIQUES" />
 		</div>
-		<div class="col-md-4">
-			<MACRO NAME="HOME_ACTUALITES" />
-		</div>
+		<IF COND="[#SECTION_ACTUALITES]">
+			<div class="col-md-4">
+				[#SECTION_ACTUALITES]
+			</div>
+		</IF>
 	</div>
 </DEFMACRO>
 

@@ -7,16 +7,18 @@ Requis : git et NodeJS/NPM.
 1. Cloner le dépôt
 2. `cd nova`
 3. `npm install`
-4. Copier les fichiers dans le répertoire `tpl` du site.
+4. Copier les fichiers dans le répertoire `tpl` du site (les dossiers `.git`, `less` et `node_modules` n'ont pas besoin d'être copiés dans tpl).
 
 ## Développement
 
 * Compiler les CSS (avec LESS) : `npm run css`
-* Surveiller les fichiers LESS et compiler les CSS à chaque changement : `npm run watch-css`
+* Surveiller les fichiers LESS et compiler les CSS à chaque changement : `npm run watch:css`
 * Copier les dépendances et les webfonts dans le dossier `public` : `npm run copy`
 * Tout ceci en même temps : `npm run build`
 
 ## Personnalisation de la maquette
+
+:warning: **Les infos ci-dessous sont destinées à la personnalisation du site, pas au dev de la maquette.**
 
 Cette maquette est conçue pour être modulaire et faciliter la maintenance et la mise à jour. 
 

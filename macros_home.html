@@ -12,9 +12,16 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="HOME_MAIN">
-	<MACRO NAME="HOME_BILLETS" />
-	<MACRO NAME="HOME_LATEST_ISSUE" />
-	<MACRO NAME="HOME_RUBRIQUES" />
+	<div class="row">
+		<div class="col-md-8">
+			<MACRO NAME="HOME_BILLETS" />
+			<MACRO NAME="HOME_LATEST_ISSUE" />
+			<MACRO NAME="HOME_RUBRIQUES" />
+		</div>
+		<div class="col-md-4">
+			<MACRO NAME="HOME_ACTUALITES" />
+		</div>
+	</div>
 </DEFMACRO>
 
 /**
@@ -120,6 +127,28 @@
 				</ul>
 				<a class="btn home-rubrique__btn" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE] <FUNC NAME="BASE_ICON" ICON="chevron-right"/></a>
 			</div>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Actualités.
+ */
+<DEFMACRO NAME="HOME_ACTUALITES">
+	<LOOP NAME="home_actualites" TABLE="textes" WHERE="type='actualite'" SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC">
+		<BEFORE>
+			<section id="home-actualites" class="home-actualites">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" ICON="folder-open" SECTION_ID="home-actualites" />
+				<ul class="home-actualites__list">
+		</BEFORE>
+		<DO>
+			<li class="home-actualites__item">
+				<a href="[#ID|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" /></a>
+			</li>
+		</DO>
+		<AFTER>
+				</ul>
+			</section>
 		</AFTER>
 	</LOOP>
 </DEFMACRO>

@@ -57,7 +57,7 @@
 		<LOOP NAME="home_latest_issue" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC" LIMIT="0,1">
 			<BEFORE>
 				<section id="home-latest-issue" class="home-latest-issue">
-					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DERNIER_NUMERO]" ICON="folder-open" SECTION_ID="home-latest-issue" />
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DERNIER_NUMERO]" ICON="book" SECTION_ID="home-latest-issue" />
 			</BEFORE>
 			<MACRO NAME="PUBLICATION_PUBLI" />
 			<AFTER>
@@ -125,7 +125,7 @@
 
 		<AFTER>
 				</ul>
-				<a class="btn home-rubrique__btn" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE] <FUNC NAME="BASE_ICON" ICON="chevron-right"/></a>
+				<a class="home-rubrique__more" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE] <FUNC NAME="BASE_ICON" ICON="chevron-right"/></a>
 			</div>
 		</AFTER>
 	</LOOP>
@@ -138,7 +138,7 @@
 	<LOOP NAME="home_actualites" TABLE="textes" WHERE="type='actualite'" SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC">
 		<BEFORE>
 			<section id="home-actualites" class="home-actualites">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" ICON="folder-open" SECTION_ID="home-actualites" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" ICON="newspaper" SECTION_ID="home-actualites" />
 				<ul class="home-actualites__list">
 		</BEFORE>
 		<DO>

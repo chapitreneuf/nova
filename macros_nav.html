@@ -1,0 +1,180 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Récupérer la vraie TOC du parent pour créer des liens précédent/suivant corrects.
+ */
+<DEFMACRO NAME="NAV_ENTITIES_FIX">
+	<LET VAR="current_parent_id">
+		<IF COND="[%IDRUBRIQUEANNUELLE]">
+			[%IDRUBRIQUEANNUELLE]
+		<ELSE />
+			[%IDREALPARENT]
+		</IF>
+	</LET>
+	<LOOP NAME="nav_entities_fix_numero_children"
+		  TABLE="entities, types"
+		  SELECT="id, class, type"
+		  WHERE="idparent = '[#CURRENT_PARENT_ID]' AND type NOT IN ('fluxdesyndication','imageaccroche','rubriqueannuelle', 'imageaccrochelibrairie') AND type NOT LIKE '%annexe%' AND entities.idtype = types.id"
+		  ORDER="entities.rank">
+		<IF COND="[#CLASS] EQ 'publications' AND [#TYPE] EQ 'souspartie'">
+			<LET VAR="current_parent_id">[#ID]</LET>
+			<LOOP NAME="nav_entities_fix_numero_children"></LOOP>
+		<ELSE />
+			<LET ARRAY="parent_real_toc[]" GLOBAL="1">[#ID]</LET>
+		</IF>
+	</LOOP>
+
+	<!--[ %ID_ARTICLE_PRECEDENT ]-->
+	<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
+		<IF COND="[#VALUE] EQ [#ID]">
+			<LET VAR="id_article_precedent" GLOBAL="1">[%PREV_ID]</LET>
+		</IF>
+		<LET VAR="prev_id" GLOBAL="1">[#VALUE]</LET>
+	</LOOP>
+
+	<!--[ %ID_ARTICLE_SUIVANT ]-->
+	<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
+		<IF COND="[%ID_IS_NEXT] EQ 1">
+			<LET VAR="id_article_suivant" GLOBAL="1">[#VALUE]</LET>
+			<LET VAR="ID_IS_NEXT" GLOBAL="1">0</LET>
+		</IF>
+		<IF COND="[#VALUE] EQ [#ID]">
+			<LET VAR="ID_IS_NEXT" GLOBAL="1">1</LET>
+		</IF>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Nav entities : entité parente/précédente/suivante.
+ */
+<DEFMACRO NAME="NAV_ENTITIES">
+	<!--[ Pour les rubriques annuelles on loope sur la rubrique parente ]-->
+	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
+		<LET VAR="nav_id">[#IDPARENT]</LET>
+	<ELSE />
+		<LET VAR="nav_id">[#ID]</LET>
+	</IF>
+	<nav class="nav-entities">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 nav-entities-col-parent">
+				<!--[ Publications parentes ]-->
+				<FUNC NAME="BASE_ICON" ICON="map-marker" /><FUNC NAME="NAV_PUBLICATIONS_PARENTES" USE_ID="[#NAV_ID]" />
+
+				<!--[ Texte parent (image d'accroche de texte) ]-->
+				<IF COND="[#TYPE] EQ 'imageaccroche'">
+				  <LOOP NAME="nav_entities_texte_parent" SELECT="id, titre" TABLE="textes, relations" WHERE="id2 = '[#ID]' AND id1 = textes.identity">
+						<span class="doc-parent-separator">&gt;</span>
+						<a href="[#ID|makeurlwithid]">[#TITRE]</a>
+				  </LOOP>
+				</IF>
+			</div>
+			<div class="hidden-xs col-sm-2 nav-entities-col-siblings">
+				<IF COND="[#TYPE] NE 'imageaccroche'">
+					<!--[ Précédent ]-->
+					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
+					<!--[ Suivant ]-->
+					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
+				</IF>
+			</div>
+		</div>
+		<!--[ Tooltips ]-->
+		<script>$(".nav-entities a").tooltip();</script>
+	</nav>
+</DEFMACRO>
+
+/**
+ * Affiche les publications parentes.
+ * - titre numéro / rubrique avec lien vers le sommaire
+ * - titre des sous-parties / sous-rubriques
+ * @param {integer} [use_id] - Identifiant à utiliser.
+ */
+<DEFFUNC NAME="NAV_PUBLICATIONS_PARENTES" OPTIONAL="use_id">
+	<IF COND="![#USE_ID]">
+		<LET VAR="use_id">[#ID]</LET>
+	</IF>
+	<LOOP NAME="nav_publications_parentes" 
+		TABLE="publications, relations" 
+		SELECT="id, titre, numero, datepubli, datepublipapier, degree, periode, altertitre" 
+		WHERE="id2 = '[#USE_ID]' AND id1 = publications.identity" 
+		ORDER="degree DESC">
+		<IF COND="[#TYPE] EQ 'collection'">
+			<IF COND="[#NBRESULTS] EQ 1">
+				<span class="[#TYPE] parent-[#DEGREE]">
+					<FUNC NAME="BASE_TITRE_PUBLICATION" SEPARATOR=":" CLIQUABLE="1" ML="1"/>
+				</span>
+			</IF>
+		<ELSEIF COND="[#ID] EQ [%IDREALPARENT]"/>
+			<span class="[#TYPE] parent-[#DEGREE]">
+				<FUNC NAME="BASE_TITRE_PUBLICATION" SEPARATOR=":" CLIQUABLE="1" ML="1"/>
+			</span>
+		<ELSEIF COND="[#TYPE] EQ 'souspartie'" />
+			<span class="doc-parent-separator">&nbsp;&gt;&nbsp;</span>
+			<span class="[#TYPE] parent-[#DEGREE]">[#TITRE]</span>
+		<ELSE/>
+			<span class="doc-parent-separator">&nbsp;&gt;&nbsp;</span>
+			<span class="[#TYPE] parent-[#DEGREE]"><FUNC NAME="BASE_ML_TITRE" /></span>
+		</IF>
+	</LOOP>
+</DEFFUNC>
+
+/**
+ * Affiche les publications de même niveau.
+ * @param {integer} use_id - Identifiant à utiliser.
+ * @param {string} direction - "previous" ou "next".
+ */
+<DEFFUNC NAME="NAV_ENTITIES_SIBLING" REQUIRED="use_id, direction">
+	<!--[ Fix pour les éléments d'un numéro (car problème des sousparties) ]-->
+	<IF COND="[#CLASS] EQ 'textes' OR [#CLASS] EQ 'liens' OR [#CLASS] EQ 'fichiers' OR [#CLASS] EQ 'textessimples'">
+		<IF COND="[#DIRECTION] EQ 'previous' AND [%ID_ARTICLE_PRECEDENT]">
+			<FUNC NAME="NAV_ENTITIES_SIBLING_BUTTON" ENTITY_ID="[%ID_ARTICLE_PRECEDENT]" DIRECTION="[#DIRECTION]" />
+		<ELSEIF COND="[#DIRECTION] EQ 'next' AND [%ID_ARTICLE_SUIVANT]" />
+			<FUNC NAME="NAV_ENTITIES_SIBLING_BUTTON" ENTITY_ID="[%ID_ARTICLE_SUIVANT]" DIRECTION="[#DIRECTION]" />
+		</IF>
+	<ELSE />
+		<!--[ Fonctionnement standard pour tout le reste ]-->
+		<IF COND="[#DIRECTION] EQ 'previous'">
+			<LOOP NAME="previous" ID="[#USE_ID]">
+				<FUNC NAME="NAV_ENTITIES_SIBLING_BUTTON" ENTITY_ID="[#ID]" DIRECTION="[#DIRECTION]" />
+			</LOOP>
+		<ELSEIF COND="[#DIRECTION] EQ 'next'" />
+			<LOOP NAME="next" ID="[#USE_ID]">
+				<FUNC NAME="NAV_ENTITIES_SIBLING_BUTTON" ENTITY_ID="[#ID]" DIRECTION="[#DIRECTION]" />
+			</LOOP>
+		</IF>
+	</IF>
+</DEFFUNC>
+
+/**
+ * Bouton précédent/suivant.
+ * @param {integer} [entity_id] - Identifiant de la cible.
+ * @param {string} direction - "previous" ou "next".
+ */
+<DEFFUNC NAME="NAV_ENTITIES_SIBLING_BUTTON" REQUIRED="entity_id, direction">
+	<LOOP NAME="nav_entities_sibling_button_get_type" SELECT="entities.id, class, type" TABLE="entities, types" WHERE="entities.id = '[#ENTITY_ID]' AND entities.idtype = types.id">
+		<LET VAR="entity_type">[#TYPE]</LET>
+
+		<!--[ Traduction ]-->
+		<IF COND="[#DIRECTION] EQ 'previous'">
+			<LET VAR="btn_icon">step-backward</LET>
+			<SWITCH TEST="[#ENTITY_TYPE]">
+				<DO CASE="numero"><LET VAR="btn_trad">[@NUMERO_PRECEDENT]</LET></DO>
+				<DO CASES="rubrique, rubriqueannuelle"><LET VAR="btn_trad">[@RUBRIQUE_PRECEDENTE]</LET></DO>
+				<DO CASE="article"><LET VAR="btn_trad">[@ARTICLE_PRECEDENT]</LET></DO>
+				<DO CASE="default"><LET VAR="btn_trad">[@DOCUMENT_PRECEDENT]</LET></DO>
+			</SWITCH>
+		<ELSE />
+			<LET VAR="btn_icon">step-forward</LET>
+			<SWITCH TEST="[#ENTITY_TYPE]">
+				<DO CASE="numero"><LET VAR="btn_trad">[@NUMERO_SUIVANT]</LET></DO>
+				<DO CASES="rubrique, rubriqueannuelle"><LET VAR="btn_trad">[@RUBRIQUE_SUIVANTE]</LET></DO>
+				<DO CASE="article"><LET VAR="btn_trad">[@ARTICLE_SUIVANT]</LET></DO>
+				<DO CASE="default"><LET VAR="btn_trad">[@DOCUMENT_SUIVANT]</LET></DO>
+			</SWITCH>
+		</IF>
+
+		<!--[ Affichage ]-->
+		<a href="[#ID]" title="[#BTN_TRAD]" class="btn" aria-label="[#BTN_TRAD]" data-toggle="tooltip">
+			<FUNC NAME="BASE_ICON" ICON="[#BTN_ICON]" />
+		</a>
+	</LOOP>
+</DEFFUNC>

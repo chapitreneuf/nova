@@ -187,7 +187,7 @@
 	<LOOP NAME="publication_toc" TABLE="publications" WHERE="id = [#ID]">
 		<BEFORE>
 			<IF COND="[#PROFONDEUR] EQ 0">
-				<section id="publi-toc" class="publi-toc">
+				<section id="publi-toc" class="toc toc--publi">
 					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@SOMMAIRE]" ICON="list-alt" NAV="true" SECTION_ID="publi-toc"/>
 			</IF>
 		</BEFORE>
@@ -230,34 +230,34 @@
 		ORDER="entities.rank">
 
 		<BEFORE>
-			<ul class="publi-toc__contents">
+			<ul class="toc__contents toc__contents--sommaire">
 		</BEFORE>
 
 		<DO>
 			<LOOP NAME="publication_sommaire_item" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
 				<LET VAR="publi_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
-				<li class="publi-toc__li publi-toc__li--class-[#CLASS]" lang="[#LANGUE]" dir="[#PUBLI_DIR]">
+				<li class="toc__li toc__li--class-[#CLASS]" lang="[#LANGUE]" dir="[#PUBLI_DIR]">
 					<SWITCH TEST="[#CLASS]">
 						<!--[ Publications ]-->
 						<DO CASE="publications">
 							<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
-								<div class="publi-toc__header">
+								<div class="toc__header">
 									<!--[ Titre ]-->
-									<h2 class="publi-toc__title">[#TITRE]</h2>
+									<h2 class="toc__title">[#TITRE]</h2>
 									<!--[ Sous-titre ]-->
 									<IF COND="[#SOUSTITRE]">
-										<div class="publi-toc__subtitle">
+										<div class="toc__subtitle">
 											[#SOUSTITRE]
 										</div>
 									</IF>
 									<!--[ Titres alternatifs ]-->
 									<IF COND="[#ALTERTITRE]">
-										<div class="publi-toc__altertitle">
+										<div class="toc__altertitle">
 											[#ALTERTITRE|replace('r2r:ml', 'p')]
 										</div>
 									</IF>
 									<!--[ Directeur de la publication ]-->
-									<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi-toc__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+									<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="toc__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
 									<!--[ Introduction ]-->
 									<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
 								</div>
@@ -291,7 +291,7 @@
  * @param {boolean} [afficher_datepubli] - Afficher la date de publication électronique du document (utilisé dans les rubriques).
  */
 <DEFFUNC NAME="PUBLICATION_LI_TEXTE" OPTIONAL="afficher_datepubli">
-	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="publi-toc__author" />
+	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc__author" />
 	<IF COND="![%RELATIONS_TRADUCTION]">
 		<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
 	<ELSE/>
@@ -323,7 +323,7 @@
 
 			  <!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
 			  <IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
-					<div class="publi-toc__altertitle publi-toc__altertitle--sauf-traductions">
+					<div class="toc__altertitle toc__altertitle--sauf-traductions">
 						<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 						<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
 							<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
@@ -347,7 +347,7 @@
  */
 <DEFFUNC NAME="PUBLICATION_LI_DOCUMENT" OPTIONAL="afficher_titres_traduits, afficher_datepubli">
 	<!--[ Titre ]-->
-	<p class="publi-toc__title">
+	<p class="toc__title">
 		<IF COND="[#DOCUMENTCLIQUABLE]">
 			<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
 		<ELSE/>
@@ -356,11 +356,11 @@
 	</p>
 	<!--[ Sous-titre ]-->
 	<IF COND="[#SOUSTITRE]">
-		<p class="publi-toc__subtitle">[#SOUSTITRE|removenotes]</p>
+		<p class="toc__subtitle">[#SOUSTITRE|removenotes]</p>
 	</IF>
 	<!--[ Titres traduits]-->
 	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
-		<div class="publi-toc__altertitle">
+		<div class="toc__altertitle">
 			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 				<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
 			</LOOP>
@@ -369,7 +369,7 @@
 
 	<!--[ Date de publication si publié dans une rubrique électronique ]-->
 	<IF COND="[#AFFICHER_DATEPUBLI]">
-		<p class="publi-toc__datepubli">[#DATEPUBLI|humandate]</p>
+		<p class="toc__datepubli">[#DATEPUBLI|humandate]</p>
 	</IF>
 </DEFFUNC>
 
@@ -386,46 +386,46 @@
 	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' [#INLINE_MEDIA] AND type LIKE '%annexe'" ORDER="rank">
 
 		<BEFORE>
-			<section id="publi-docannexes" class="publi-toc publi-toc--docannexes">
+			<section id="publi-docannexes" class="toc toc--docannexes">
 				<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@DOCANNEXES]<ELSE />[@DOCANNEXE]</IF></LET>
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="folder-open" NAV="true" SECTION_ID="publi-docannexes" />
-				<ul class="publi-toc__contents publi-toc__contents--docannexes">
+				<ul class="toc__contents toc__contents--docannexes">
 		</BEFORE>
 
 		<DO>
-			<li class="publi-toc__li publi-toc__li--class-[#CLASS]">
+			<li class="toc__li toc__li--class-[#CLASS]">
 				<LOOP NAME="publication_annexes_item" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
 					<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
 						<LET VAR="href">[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]</LET>
 					<ELSEIF COND="[#DOCUMENT]" />
 						<LET VAR="href">[#ID|makeurlwithfile]</LET>
 					</IF>
-					<p class="publi-toc__title">
+					<p class="toc__title">
 						<!--[ Lien ]-->
 						<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
 							<a href="[#HREF]"><FUNC NAME="BASE_ICON" ICON="link" CLASSNAME="icon-small" /> [#TITRE]</a>
 						<!--[ Fichier ]-->
 						<ELSEIF COND="[#DOCUMENT]" />
-							<a href="[#HREF]">[#TITRE]</a> <span class="publi-toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>
+							<a href="[#HREF]">[#TITRE]</a> <span class="toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>
 						<ELSEIF COND="[#URLACCESMEDIA]" />
-							<a href="[#URLACCESMEDIA]">[#TITRE]</a> <span class="publi-toc__additional-info">([#URLACCESMEDIA])</span>
+							<a href="[#URLACCESMEDIA]">[#TITRE]</a> <span class="toc__additional-info">([#URLACCESMEDIA])</span>
 						<ELSEIF COND="[#URLMEDIA]" />
-							<a href="[#URLMEDIA]">[#TITRE]</a> <span class="publi-toc__additional-info">([#URLMEDIA])</span>
+							<a href="[#URLMEDIA]">[#TITRE]</a> <span class="toc__additional-info">([#URLMEDIA])</span>
 						<ELSE />
 							[#TITRE]
 						</IF>
 					</p>
 					<IF COND="[#CLASS] EQ 'liens' AND [#TEXTE]">
-						<p class="publi-toc__description">[#TEXTE]</p>
+						<p class="toc__description">[#TEXTE]</p>
 					<ELSEIF COND="[#CLASS] EQ 'fichiers'" />
 						<IF COND="[#DESCRIPTION]">
-							<div class="publi-toc__description">[#DESCRIPTION]</div>
+							<div class="toc__description">[#DESCRIPTION]</div>
 						</IF>
 						<IF COND="[#LEGENDE]">
-							<div class="publi-toc__legende">[#LEGENDE]</div>
+							<div class="toc__legende">[#LEGENDE]</div>
 						</IF>
 						<IF COND="[#CREDITS]">
-							<div class="publi-toc__credits">[#CREDITS]</div>
+							<div class="toc__credits">[#CREDITS]</div>
 						</IF>
 					</IF>
 				</LOOP>
@@ -452,12 +452,12 @@
 				<[#WRAP_TAG]>
 			</IF>
 			<h2>[@ANNONCE_ALIAS]</h2>
-			<ul class="publi-toc__contents publi-toc__contents--aliases">
+			<ul class="toc__contents toc__contents--aliases">
 		</BEFORE>
 		<DO>
-			<li class="publi-toc__li publi-toc__li--class-[#CLASS]">
+			<li class="toc__li toc__li--class-[#CLASS]">
 				<LOOP NAME="publication_aliases_alias" TABLE="#_TP_[#CLASS]" WHERE="identity = [#ID] AND class = 'textes'">
-					<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="publi-toc__author" />
+					<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc__author" />
 					<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" />
 				</LOOP>
 			</li>
@@ -481,8 +481,8 @@
 		WHERE="id2 = entities.id AND id1 = '[#ID]' AND nature = 'P' AND degree = 1 AND entities.idtype = types.id" 
 		ORDER="entities.rank">
 		<BEFORE>
-			<div class="publi-toc">
-				<ul class="publi-toc__contents">
+			<div class="toc">
+				<ul class="toc__contents toc__contents--collection">
 		</BEFORE>
 		<DO>
 			<li class="[#TYPE]">

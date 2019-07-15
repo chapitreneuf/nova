@@ -39,7 +39,7 @@
  * @param {boolean} [cliquable] - Ajouter un lien hypertexte vers la publication sur le titre.
  */
 <DEFFUNC NAME="PUBLICATION_HEADER" OPTIONAL="cliquable">
-	<header id="publi-header" class="publi__header">
+	<header class="publi__header">
 		<!--[ Titre ]-->
 		<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
 
@@ -164,16 +164,16 @@
 <DEFMACRO NAME="PUBLICATION_NOTES">
 	<!--[ NDLR ]-->
 	<IF COND="[#NDLR]">
-		<section id="publi-ndlr" class="publi__ndlr">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" ICON="pencil" SECTION_ID="publi-ndlr" NAV="true"/>
+		<section class="publi__ndlr">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" ICON="pencil" SECTION_ID="ndlr"/>
 			[#NDLR]
 		</section>
 	</IF>
 
 	<!--[ Historique ]-->
 	<IF COND="[#HISTORIQUE]">
-		<section id="publi-historique" class="publi__historique">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" ICON="time" SECTION_ID="publi-historique" NAV="true"/>
+		<section class="publi__historique">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" ICON="time" SECTION_ID="historique"/>
 			[#HISTORIQUE]
 		</section>
 	</IF>
@@ -187,8 +187,8 @@
 	<LOOP NAME="publication_toc" TABLE="publications" WHERE="id = [#ID]">
 		<BEFORE>
 			<IF COND="[#PROFONDEUR] EQ 0">
-				<section id="publi-toc" class="toc toc--publi">
-					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@SOMMAIRE]" ICON="list-alt" NAV="true" SECTION_ID="publi-toc"/>
+				<section class="toc toc--publi">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@SOMMAIRE]" ICON="list-alt" SECTION_ID="toc"/>
 			</IF>
 		</BEFORE>
 
@@ -386,9 +386,9 @@
 	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' [#INLINE_MEDIA] AND type LIKE '%annexe'" ORDER="rank">
 
 		<BEFORE>
-			<section id="publi-docannexes" class="toc toc--docannexes">
+			<section class="toc toc--docannexes">
 				<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@DOCANNEXES]<ELSE />[@DOCANNEXE]</IF></LET>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="folder-open" NAV="true" SECTION_ID="publi-docannexes" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="folder-open" SECTION_ID="docannexes" />
 				<ul class="toc__contents toc__contents--docannexes">
 		</BEFORE>
 

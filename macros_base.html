@@ -138,28 +138,16 @@
  * Affiche un header de section.
  * @param {string} title - Titre.
  * @param {string} [icon] - Identifiant de l'icone à ajouter (cf. FUNC BASE_ICON).
- * @param {boolean} [nav] - Ajouter un menu de nav.
- * @param {string} [section_id] - Id de la section (pour référence dans la nav).
+ * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
 */
-<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="icon, nav, section_id">
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="icon, section_id">
 	<IF COND="[#SECTION_ID]">
-		<LET VAR="DATA_ATTR"> data-section-id="[#SECTION_ID]"</LET>
+		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a href="#[#SECTION_ID]">[#TITLE]</a></LET>
+		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
-	<nav class="section-header navbar navbar-default"[#DATA_ATTR]>
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<IF COND="[#ICON]">
-					<h2 class="section-header__title"><FUNC NAME="BASE_ICON" ICON="[#ICON]" /> [#TITLE]</h2>
-				<ELSE/>
-					<h2 class="section-header__title">[#TITLE]</h2>
-				</IF>
-			</div>
-			<IF COND="[#NAV]">
-				<!--[ Menus gérés en JS ]-->
-				<div class="section-heade__nav"></div>
-			</IF>
-		</div>
-	</nav>
+	<h2 [#ID_ATTR] class="section-header">
+		<IF COND="[#ICON]"><FUNC NAME="BASE_ICON" ICON="[#ICON]"/></IF> [#TITLE]
+	</h2>
 </DEFFUNC>
 
 /**

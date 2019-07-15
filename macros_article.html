@@ -37,14 +37,19 @@
 
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
+
+	<!--[ Array pour stocker les raccourcis vers les sections de la page article ]-->
+	<LET ARRAY="page_shortcuts" GLOBAL="1"></LET>
 </DEFMACRO>
 
 /**
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="ARTICLE_MAIN">
+	
 	<MACRO NAME="NAV_ENTITIES" />
 	<MACRO NAME="ARTICLE_HEADER" />
+	<MACRO NAME="ARTICLE_RACCOURCIS" />
 	<MACRO NAME="ARTICLE_BOUTONS" />
 	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<MACRO NAME="ARTICLE_POURCITER" />
@@ -61,8 +66,8 @@
 	<MACRO NAME="ARTICLE_NOTESBASPAGE" />
 	<MACRO NAME="ARTICLE_NOTEFIN" />
 	<MACRO NAME="ARTICLE_ILLUSTRATIONS" />
-	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" WRAP_ID="article-authors-infos" />
-	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" WRAP_ID="article-translators-infos" />
+	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" SECTION_ID="article-authors-infos" />
+	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" SECTION_ID="article-translators-infos" />
 	<MACRO NAME="ARTICLE_LICENSE" />
 	<MACRO NAME="NAV_ENTITIES" />
 </DEFMACRO>
@@ -71,7 +76,7 @@
  * Header du document.
  */
 <DEFMACRO NAME="ARTICLE_HEADER">
-	<header id="article__header" class="article__header">
+	<header class="article__header">
 		<!--[ Numéro de document ]-->
 		<IF COND="[#NUMERODOCUMENT] AND [#NUMERODOCUMENT] NE '0'">
 			<p class="article__number"><span>#[#NUMERODOCUMENT]</span></p>
@@ -162,10 +167,29 @@
 </DEFMACRO>
 
 /**
+ * Affichage de la barre de raccourcis vers les sections des articles.
+ * Les liens sont déclarés dans l'array [%PAGE_SHORTCUTS] depuis la macro BASE_SECTION_HEADER.
+ */
+<DEFMACRO NAME="ARTICLE_RACCOURCIS">
+	<nav class="page-shortcuts">
+		<ul class="page-shortcuts__list">
+			<ESCAPE>
+				<?php 
+					$page_shortcuts = $context['page_shortcuts']; 
+					foreach ($page_shortcuts as $a) {
+						echo '<li class="page-shortcuts__item">', $a, '</li>';
+					}
+				?>
+			</ESCAPE>
+		</ul>
+	</nav>
+</DEFMACRO>
+
+/**
  * Boutons du header (facsimilé, print, partage).
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS">
-	<div id="article-buttons" class="article__buttons">
+	<div class="article__buttons">
 		<ul class="nav nav-pills">
 			<!--[ Bouton fac-similé ]-->
 			<IF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]"/>
@@ -197,17 +221,17 @@
  */
 <DEFMACRO NAME="ARTICLE_POURCITER">
 	<!--[ Pour citer ]-->
-	<section id="article-quotation" class="article__quotation">
+	<section class="article__quotation">
 		<div class="article__quotation-contents">
-			<h2><FUNC NAME="BASE_ICON" ICON="bookmark" /> [@POUR_CITER]</h2>
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@POUR_CITER]" ICON="bookmark" SECTION_ID="quotation" />
 			<IF COND="[%REFERENCE_PAPIER]">
 				<h3>[@REFERENCE_PAPIER]</h3>
-				<p id="article-quotation-print" class="article__quotation-print">
+				<p class="article__quotation-print">
 					<MACRO NAME="ARTICLE_REFERENCE_PAPIER"/>
 				</p>
 			</IF>
 			<h3>[@REFERENCE_ELECTRONIQUE]</h3>
-			<p id="article-quotation-digital" class="article__quotation-digital">
+			<p class="article__quotation-digital">
 				<MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" />
 			</p>
 		</div>
@@ -240,9 +264,9 @@
 	<!--[ Résumés ]-->
 	<IF COND="[#RESUME]">
 		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" ICON="comment" NAV="true" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" ICON="comment" SECTION_ID="article-abstract" />
 		<ELSE/>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" ICON="comment" NAV="true" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" ICON="comment" SECTION_ID="article-abstract" />
 		</IF>
 		<div class="article__abstract-contents">
 			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
@@ -263,7 +287,7 @@
 			ORDER="entrytypes.rank">
 
 			<BEFORE>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" ICON="tag" NAV="true" SECTION_ID="article-entries" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" ICON="tag" SECTION_ID="article-entries" />
 				<div class="article__entries-content">
 			</BEFORE>
 			<DO>
@@ -305,9 +329,9 @@
 		<LET VAR="TOC_COUNT" GLOBAL="1">0</LET>
 		<LOOP NAME="toc" TEXT="[#TEXTE]">
 			<BEFORE>
-				<section id="article-toc" class="article__toc">
-					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" ICON="list-alt" NAV="true" SECTION_ID="article-toc" />
-					<div id="article-toc-contents" class="article__toc-contents">
+				<section class="article__toc">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" ICON="list-alt" SECTION_ID="toc" />
+					<div class="article__toc-contents">
 						<ul>
 			</BEFORE>
 			<DO>
@@ -351,8 +375,8 @@
 <DEFMACRO NAME="ARTICLE_ADDENDUM">
 	<!--[ Errata ]-->
 	<IF COND="[#ADDENDUM]">
-		<section id="article-errata" class="article__errata">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERRATA]" NAV="true" SECTION_ID="article-errata" />
+		<section class="article__errata">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERRATA]" SECTION_ID="errata" />
 			<div class="article__errata-contents">
 				[#ADDENDUM|cleanCallNotes|tocss]
 			</div>
@@ -361,8 +385,8 @@
 
 	<!--[ Dédicace ]-->
 	<IF COND="[#DEDICACE]">
-		<section id="article-dedication" class="article__dedication">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DEDICACE]" NAV="true" SECTION_ID="article-dedication" />
+		<section class="article__dedication">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DEDICACE]" SECTION_ID="dedication" />
 			<div class="article__dedication-contents">
 				[#DEDICACE|cleanCallNotes|tocss]
 			</div>
@@ -371,8 +395,8 @@
 
 	<!--[ NDLR ]-->
 	<IF COND="[#NDLR]">
-		<section id="article-ndlr" class="article__ndlr">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" NAV="true" SECTION_ID="article-ndlr" />
+		<section class="article__ndlr">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" SECTION_ID="ndlr" />
 			<div class="article__ndlr-contents">
 				[#NDLR|cleanCallNotes|tocss]
 			</div>
@@ -381,8 +405,8 @@
 
 	<!--[ NDLA ]-->
 	<IF COND="[#NDLA]">
-		<section id="article-ndla" class="article__ndla">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLA]" NAV="true" SECTION_ID="article-ndla" />
+		<section class="article__ndla">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLA]" SECTION_ID="ndla" />
 			<div class="article__ndla-contents">
 				[#NDLA|cleanCallNotes|tocss]
 			</div>
@@ -395,7 +419,7 @@
  */
 <DEFMACRO NAME="ARTICLE_TEXTE">
 	<IF COND="[#TEXTE]">
-		<section id="article-text" class="article__text">
+		<section class="article__text">
 			<IF COND="[#TYPE] EQ 'informations' OR [#TYPE] EQ 'actualite'">
 				<LET VAR="text_section_title">[@TEXTE]</LET>
 			<ELSEIF COND="[#TEXTE_ACCESSIBLE]" />
@@ -403,8 +427,8 @@
 			<ELSE />
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" ICON="align-left" NAV="true" SECTION_ID="article-text" />
-			<div id="article-text-contents" class="article__text-contents">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" ICON="align-left" SECTION_ID="text" />
+			<div class="article__text-contents">
 				<!--[ Image d'accroche ]-->
 				<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
 
@@ -418,19 +442,11 @@
 				</IF>
 				<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
 			</div>
-			<!--[ Footnotes flottantes ]-->
-			<IF COND="[#NOTESBASPAGE]">
-				<div id="ftnup-container" class="ftnup-container">
-					<div class="ftnup-notes">
-						[#NOTESBASPAGE|cutnotes(150)]
-					</div>
-				</div>
-			</IF>
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->
 	<ELSEIF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]" />
-		<section id="article-facsimile" class="article__facsimile">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TEXTE]" ICON="file" NAV="true" SECTION_ID="article-facsimile" />
+		<section class="article__facsimile">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TEXTE]" ICON="file" SECTION_ID="facsimile" />
 			<a class="btn btn-block" role="button" href="[#ID|makeurlwithid]?file=1" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>
 		</section>
 	</IF>
@@ -469,8 +485,8 @@
  */
 <DEFMACRO NAME="ARTICLE_BIBLIOGRAPHIE">
 	<IF COND="[#BIBLIOGRAPHIE] AND [#TEXTE_ACCESSIBLE]">
-		<section id="article-biblio" class="article__biblio">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" ICON="book" NAV="true" SECTION_ID="article-biblio" />
+		<section class="article__biblio">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" ICON="book" SECTION_ID="biblio" />
 			<div class="article__biblio-contents">
 				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations(800, 'bibliographie')|media)]
 			</div>
@@ -484,8 +500,8 @@
 <DEFMACRO NAME="ARTICLE_ANNEXE">
 	<!--[ Annexe ]-->
 	<IF COND="[#ANNEXE] AND [#TEXTE_ACCESSIBLE]">
-		<section id="article-appendix" class="article__appendix">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" ICON="paperclip" NAV="true" SECTION_ID="article-appendix" />
+		<section class="article__appendix">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" ICON="paperclip" SECTION_ID="appendix" />
 			<div class="article__appendix-contents">
 				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations(800, 'annexe')|media]
 			</div>
@@ -507,8 +523,8 @@
  */
 <DEFMACRO NAME="ARTICLE_NOTESBASPAGE">
 	<IF COND="[#NOTESBASPAGE] AND [#TEXTE_ACCESSIBLE]">
-		<section id="article-footnotes" class="article__footnotes">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" ICON="asterisk" NAV="true" SECTION_ID="article-footnotes" />
+		<section class="article__footnotes">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" ICON="asterisk" SECTION_ID="footnotes" />
 			<div class="article__footnotes-contents">
 				[#NOTESBASPAGE]
 			</div>
@@ -521,8 +537,8 @@
  */
 <DEFMACRO NAME="ARTICLE_NOTEFIN">
 	<IF COND="[#NOTEFIN] AND [#TEXTE_ACCESSIBLE]">
-		<section id="article-endnotes" class="article__endnotes">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTEFIN]" ICON="asterisk" NAV="true" SECTION_ID="article-endnotes" />
+		<section class="article__endnotes">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTEFIN]" ICON="asterisk" SECTION_ID="endnotes" />
 			<div class="article__endnotes-contents">
 				[#NOTEFIN]
 			</div>
@@ -537,8 +553,8 @@
 	<IF COND="[#TEXTE_ACCESSIBLE]">
 		<LOOP NAME="foreach" ARRAY="[#IMAGES]">
 			<BEFORE>
-				<section id="article-illustrations" class="article__illustrations">
-					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" ICON="picture" NAV="true" SECTION_ID="article-illustrations" />
+				<section class="article__illustrations">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" ICON="picture" SECTION_ID="illustrations" />
 					<div class="article__illustrations-contents">
 			</BEFORE>
 			<DO>
@@ -576,9 +592,9 @@
 /**
  * Section description des auteurs, traducteurs.
  * @param {string} type - Type de personne.
- * @param {string} wrap_id - Id de la section.
+ * @param {string} section_id - Id de la section.
  */
-<DEFFUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" REQUIRED="type, wrap_id">
+<DEFFUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" REQUIRED="type, section_id">
 	<LOOP NAME="article_description_personnes" 
 		SELECT="persons.id" 
 		TABLE="relations, persons" 
@@ -586,13 +602,13 @@
 		ORDER="degree">
 		
 		<BEFORE>
-			<section id="[#WRAP_ID]" class="article__persons-infos">
+			<section class="article__persons-infos">
 				<IF COND="[#TYPE] EQ 'traducteur'">
 					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@TRADUCTEURS]<ELSE/>[@TRADUCTEUR]</IF></LET>
 				<ELSE />
 					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></LET>
 				</IF>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="user" NAV="true" SECTION_ID="[#WRAP_ID]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="user" SECTION_ID="[#SECTION_ID]" />
 				<div class="article__persons-infos-contents">
 		</BEFORE>
 
@@ -668,8 +684,8 @@
  */
 <DEFMACRO NAME="ARTICLE_LICENSE">
 	<IF COND="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]">
-		<section id="article-license" class="article__license">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@LICENCE]" ICON="copyright-mark" NAV="true" SECTION_ID="article-license" />
+		<section class="article__license">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@LICENCE]" ICON="copyright-mark" SECTION_ID="license" />
 			<div class="article__license-contents">
 				<p>[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]</p>
 			</div>

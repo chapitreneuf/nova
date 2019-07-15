@@ -288,31 +288,35 @@
 		LIMIT="1">
 
 		<DO>
-			<LET VAR="accroche"><IF COND="[#VIGNETTE]">[#VIGNETTE|vignette([#SIZE])]<ELSE/>[#DOCUMENT|vignette([#SIZE])]</IF></LET>
-			<IF COND="[#HREF]">
-				<a href="[#HREF]">
-			</IF>
-			<img class="image_accroche [#CLASSNAME]" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
-			<IF COND="[#HREF]">
-				</a>
-			</IF>
-			<IF COND="![#NOTEXT]">
-				<p class="accroche-lien"><a href="[#ID|makeurlwithid]">[@LIEN_ACCROCHE]</a></p>
-				<IF COND="[#CREDITS]">
-					<p class="accroche-credits">[@CREDITS]&#160;: [#CREDITS]</p>
+			<div class="accroche">
+				<LET VAR="accroche"><IF COND="[#VIGNETTE]">[#VIGNETTE|vignette([#SIZE])]<ELSE/>[#DOCUMENT|vignette([#SIZE])]</IF></LET>
+				<IF COND="[#HREF]">
+					<a href="[#HREF]">
 				</IF>
-			</IF>
+				<img class="accroche__img accroche__img--exists [#CLASSNAME]" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
+				<IF COND="[#HREF]">
+					</a>
+				</IF>
+				<IF COND="![#NOTEXT]">
+					<p class="accroche__lien"><a href="[#ID|makeurlwithid]">[@LIEN_ACCROCHE]</a></p>
+					<IF COND="[#CREDITS]">
+						<p class="accroche__credits">[@CREDITS]&#160;: [#CREDITS]</p>
+					</IF>
+				</IF>
+			</div>
 		</DO>
 
 		<ALTERNATIVE>
 			<IF COND="[#DEFAULT_IMG]">
-				<IF COND="[#HREF]">
-					<a href="[#HREF]">
-				</IF>
-				<img class="publi-default-cover [#CLASSNAME]" src="[#DEFAULT_IMG]" />
-				<IF COND="[#HREF]">
-					</a>
-				</IF>
+				<div class="accroche">
+					<IF COND="[#HREF]">
+						<a href="[#HREF]">
+					</IF>
+					<img class="accroche__img accroche__img--default [#CLASSNAME]" src="[#DEFAULT_IMG]" />
+					<IF COND="[#HREF]">
+						</a>
+					</IF>
+				</div>
 			</IF>
 		</ALTERNATIVE>
 	</LOOP>

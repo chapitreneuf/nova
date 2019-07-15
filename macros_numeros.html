@@ -1,0 +1,55 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="NUMEROS_INIT">
+	<!--[ Dépendances ]-->
+	<USE MACROFILE="macros_publication.html" />
+
+	<!--[ Variables]-->
+	<LET VAR="titre_page" GLOBAL="1">
+		<FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="NUMEROS_MAIN">
+	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOUS_LES_NUMEROS]" />
+	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC">
+		<BEFORE>
+			<div id="issues" class="issues row">
+		</BEFORE>
+		<DO>
+			<MACRO NAME="NUMEROS_ISSUE" />
+		</DO>
+		<AFTER>
+			</div>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Afficher tous les numéros.
+ */
+<DEFMACRO NAME="NUMEROS_ISSUE">
+	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
+	<div class="issue col-md-6 lang-[#LANGUE] dir-[#NUMERO_DIR]">
+		<div class="row">
+			<div class="issue__cover-col col-sm-4">
+				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="publi-cover" HREF="[#ID|makeurlwithid]" NOTEXT="1" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
+			</div>
+			<div class="issue__infos-col col-sm-8">
+				<FUNC NAME="PUBLICATION_HEADER" CLIQUABLE="1" />
+				<!--[ Directeur publication ]-->
+				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="issue__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+			</div>
+		</div>
+		<div class="row">
+			<!--[ Bouton sommaire ]-->
+			<a class="issue__btn btn" href="[#ID|makeurlwithid]">[@SOMMAIRE_DE_CE_NUMERO] <FUNC NAME="BASE_ICON" ICON="chevron-right"/></a>
+		</div>
+	</div>
+</DEFMACRO>

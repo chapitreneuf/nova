@@ -50,7 +50,8 @@
 		<MACRO NAME="ARTICLE_POURCITER" />
 	</IF>
 	<MACRO NAME="ARTICLE_INFO_BM" />
-	<MACRO NAME="ARTICLE_RESUMES_MOTSCLES" />
+	<MACRO NAME="ARTICLE_RESUMES" />
+	<MACRO NAME="ARTICLE_MOTSCLES" />
 	<MACRO NAME="ARTICLE_TOC" />
 	<MACRO NAME="ARTICLE_ADDENDUM" />
 	<MACRO NAME="ARTICLE_TEXTE" />
@@ -230,33 +231,6 @@
  */
 <DEFMACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE">
 	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. URL&nbsp;: [#SITEINFOS.URL]/[#ID|makeurlwithid]
-</DEFMACRO>
-
-/**
- * Affichage des sections résumé et index (deux colonnes).
- */
-<DEFMACRO NAME="ARTICLE_RESUMES_MOTSCLES">
-	<IF COND="[#RESUME] OR [%HASENTRIES]">
-		<div class="row">
-			<!--[ Variation de maquette selon la présence de résumés et/ou index ]-->
-			<IF COND="[#RESUME] AND [%HASENTRIES]">
-				<section id="article-abstract" class="article__abstract col-md-8">
-					<MACRO NAME="ARTICLE_RESUMES" />
-				</section>
-				<section id="article-entries" class="article__entries col-md-4">
-					<MACRO NAME="ARTICLE_MOTSCLES" />
-				</section>
-			<ELSEIF COND="[#RESUME]" />
-				<section id="article-abstract" class="article__abstract col-md-12">
-					<MACRO NAME="ARTICLE_RESUMES" />
-				</section>
-			<ELSE />
-				<section id="article-entries" class="article__entries col-md-12">
-					<MACRO NAME="ARTICLE_MOTSCLES" />
-				</section>
-			</IF>
-		</div>
-	</IF>
 </DEFMACRO>
 
 /**

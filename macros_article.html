@@ -50,7 +50,6 @@
 	<MACRO NAME="NAV_ENTITIES" />
 	<MACRO NAME="ARTICLE_HEADER" />
 	<MACRO NAME="ARTICLE_RACCOURCIS" />
-	<MACRO NAME="ARTICLE_BOUTONS" />
 	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<MACRO NAME="ARTICLE_POURCITER" />
 	</IF>
@@ -59,6 +58,7 @@
 	<MACRO NAME="ARTICLE_MOTSCLES" />
 	<MACRO NAME="ARTICLE_TOC" />
 	<MACRO NAME="ARTICLE_ADDENDUM" />
+	<MACRO NAME="ARTICLE_BOUTONS" />
 	<MACRO NAME="ARTICLE_TEXTE" />
 	<MACRO NAME="ARTICLE_BIBLIOGRAPHIE" />
 	<MACRO NAME="ARTICLE_ANNEXE" />
@@ -194,31 +194,52 @@
  * Boutons du header (facsimilé, print, partage).
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS">
-	<div class="article__buttons">
-		<ul class="nav nav-pills">
-			<!--[ Bouton fac-similé ]-->
-			<IF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]"/>
-				<li><a role="button" href="[#ID|makeurlwithid]?file=1"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE]</a></li>
-			</IF>
-			<!--[ Bouton imprimer ]-->
-			<IF COND="[#TEXTE_ACCESSIBLE]"/>
-				<li><a role="button" href="#" onclick="window.print()"><FUNC NAME="BASE_ICON" ICON="print" /> [@WIDGETS_PRINT]</a></li>
-			</IF>
-			<!--[ Boutons de partage ]-->
-			<IF COND="[#TEXTE_ACCESSIBLE]"/>
-				<li><a id="button-toggle-social" role="button" href="#"><FUNC NAME="BASE_ICON" ICON="share" /> [@PARTAGER]</a></li>
+	<IF COND="[#TEXTE_ACCESSIBLE]" />
+		<div class="article__buttons">
+			<ul class="article__buttons-list nav nav-pills">
+				<!--[ Bouton fac-similé ]-->
+				<IF COND="[#ALTERFICHIER]"/>
+					<li class="article__button">
+						<a href="[#ID|makeurlwithid]?file=1"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE]</a>
+					</li>
+				</IF>
+
+				<!--[ Bouton imprimer ]-->
+				<li class="article__button">
+					<a href="#" onclick="window.print()"><FUNC NAME="BASE_ICON" ICON="print" /> [@WIDGETS_PRINT]</a>
+				</li>
+
+				<!--[ Boutons de partage ]-->
 				<MACRO NAME="ARTICLE_LIENS_PARTAGE" />
-			</IF>
-		</ul>
-	</div>
-	
+			</ul>
+		</div>
+	</IF>
 </DEFMACRO>
 
 /**
  * Boutons de partage.
  */
 <DEFMACRO NAME="ARTICLE_LIENS_PARTAGE">
-	TODO
+	<li class="article__button article__button--social">
+		<a href="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut]" title="Facebook" target="_blank">
+			<FUNC NAME="BASE_ICON" ICON="facebook-square" ICON_STYLE="fab" TITLE="Facebook" />
+		</a>
+	</li>
+	<li class="article__button article__button--social">
+		<a href="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Twitter">
+			<FUNC NAME="BASE_ICON" ICON="twitter" ICON_STYLE="fab" TITLE="Twitter" />
+		</a>
+	</li>
+	<li class="article__button article__button--social">
+		<a href="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim]" target="_blank" title="LinkedIn">
+			<FUNC NAME="BASE_ICON" ICON="linkedin" ICON_STYLE="fab" TITLE="LinkedIn" />
+		</a>
+	</li>
+	<li class="article__button article__button--social">
+		<a href="mailto:?subject=[#TITRE|textebrut]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Email">
+			<FUNC NAME="BASE_ICON" ICON="envelope" TITLE="Email" />
+		</a>
+	</li>
 </DEFMACRO>
 
 /**

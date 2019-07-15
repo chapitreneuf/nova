@@ -55,6 +55,32 @@ body {
 	max-width: 100%;
 }
 
+// ARTICLES
+// ========
+
+// Numérotation des paragraphes avec CSS counters
+@media print, (min-width: @screen-md) {
+	body:not(.type-informations):not(.type-actualite) {
+		.article__text-contents {
+			counter-reset: p; /* Set the p counter to 0 */
+			position: relative;
+		}
+
+		.article__text-contents > p.texte:before {
+			counter-increment: p; /* Increment the p counter */
+			content: counter(p); /* Display the counter */
+			position: absolute;
+			left: -60px;
+			text-align: right;
+			width: 40px;
+			font-size: .8em;
+			line-height: 200%;
+			font-family: @font-1;
+			color: #aaa;
+		}
+	}
+}
+
 // INCLUSION DES STYLES DE PERSONNALISATION
 // IMPORTANT : ne rien ajouter après cette ligne.
 // ==============================================

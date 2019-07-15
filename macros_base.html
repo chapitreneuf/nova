@@ -359,6 +359,34 @@
 </DEFFUNC>
 
 /**
+* Affiche la mention "Paru dans" :
+* - Paru dans TITRESITE, NUMERO | PERIODE
+* - Paru dans TITRESITE, TITRE rubrique, TITRE sous-rubrique
+* @param {boolean} [citation] - Fonction appelée dans le contexte d'un "Pour citer".
+*/
+<DEFFUNC NAME="BASE_PARU_DANS" OPTIONAL="citation">
+	<em>[#OPTIONS.METADONNEESSITE.TITRESITE]</em>
+	<IF COND="[#CITATION]"> [[@EN_LIGNE]]</IF>
+
+	<LOOP NAME="base_paru_dans" TABLE="relations, publications" SELECT="id,titre,numero,datepublipapier,datepubli,periode"
+		WHERE="id2 = '[#ID]' AND type IN ('numero', 'rubrique') AND nature = 'P' AND id1 = publications.identity"
+		ORDER="degree DESC" LIMIT="2">
+
+		<BEFORE>, </BEFORE>
+
+		<!--[ numéro / rubrique ]-->
+		<IF COND="[#COUNT] EQ 1" />
+		<IF COND="![#CITATION]"><a href="[#ID|makeurlwithid]"></IF>
+		<IF COND="[#TYPE] EQ 'numero'">[#NUMERO]
+			<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />
+			<ELSE />[#TITRE]</IF>
+		<IF COND="![#CITATION]"></a></IF>
+		<!--[ sous-rubrique ]-->
+		<ELSE />, [#TITRE]</IF>
+	</LOOP>
+</DEFFUNC>
+
+/**
  * Affiche les personnes liées à l'entité en cours.
  * @param {string} type - Nom du type des personnes.
  * @param {string} [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.

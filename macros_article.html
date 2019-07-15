@@ -1,0 +1,704 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="ARTICLE_INIT">
+	<!--[ Dépendances additionnelles ]-->
+	<USE MACROFILE="macros_publication.html" />
+
+	<!--[ Option : nombre de documents "du même auteur" affichés dans les articles ]-->
+	<LET VAR="article_meme_auteur_max_documents" GLOBAL="1">3</LET>
+
+	<!--[ Détecter les entrées d'index et créer une globale %HASENTRIES ]-->
+	<LOOP NAME="hasentries" TABLE="relations, entries, entrytypes" SELECT="COUNT(entries.id)" WHERE="nature = 'E' AND id1 = [#ID] AND id2 = entries.id AND class != 'indexavances'">
+		<IF COND="[#NBRESULTATS] GT 0">
+			<LET VAR="hasentries" GLOBAL="1">1</LET>
+		</IF>
+	</LOOP>
+
+	<!--[ Liste des auteurs ]-->
+	<LET VAR="liste_auteurs" GLOBAL="1"><FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" APPEND=", " /></LET>
+
+	<!--[ Titre de la page ]-->
+	<LET VAR="titre_page" GLOBAL="1">
+		<IF COND="[#TYPE] EQ 'informations' AND [#ALTERTITRE:#SITELANG]">
+			[#ALTERTITRE:#SITELANG|removenotes|textebrut] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+		<ELSE/>
+			[#TITRE|removenotes|textebrut] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+		</IF>
+	</LET>
+
+	<!--[ Barrière mobile ]-->
+	<IF COND="[#TYPE] NE 'article' OR [#DATEPUBLI] LE today() OR [#LODELUSER.RIGHTS] GE 5">
+		<LET VAR="texte_accessible">1</LET>
+		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] article-fulltext</LET>
+	</IF>
+
+	<!--[ Fix de la boucle prev/next ]-->
+	<MACRO NAME="NAV_ENTITIES_FIX" />
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="ARTICLE_MAIN">
+	<MACRO NAME="NAV_ENTITIES" />
+	<MACRO NAME="ARTICLE_HEADER" />
+	<MACRO NAME="ARTICLE_BOUTONS" />
+	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+		<MACRO NAME="ARTICLE_POURCITER" />
+	</IF>
+	<MACRO NAME="ARTICLE_INFO_BM" />
+	<MACRO NAME="ARTICLE_RESUMES_MOTSCLES" />
+	<MACRO NAME="ARTICLE_TOC" />
+	<MACRO NAME="ARTICLE_ADDENDUM" />
+	<MACRO NAME="ARTICLE_TEXTE" />
+	<MACRO NAME="ARTICLE_BIBLIOGRAPHIE" />
+	<MACRO NAME="ARTICLE_ANNEXE" />
+	<MACRO NAME="ARTICLE_DOCANNEXES" />
+	<MACRO NAME="ARTICLE_NOTESBASPAGE" />
+	<MACRO NAME="ARTICLE_NOTEFIN" />
+	<MACRO NAME="ARTICLE_ILLUSTRATIONS" />
+	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" WRAP_ID="article-authors-infos" />
+	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" WRAP_ID="article-translators-infos" />
+	<MACRO NAME="ARTICLE_LICENSE" />
+	<MACRO NAME="NAV_ENTITIES" />
+</DEFMACRO>
+
+/**
+ * Header du document.
+ */
+<DEFMACRO NAME="ARTICLE_HEADER">
+	<header id="article__header" class="article__header">
+		<!--[ Numéro de document ]-->
+		<IF COND="[#NUMERODOCUMENT] AND [#NUMERODOCUMENT] NE '0'">
+			<p class="article__number"><span>#[#NUMERODOCUMENT]</span></p>
+		</IF>
+
+		<!--[ Titre du document ]-->
+		<h1 class="main-title article__title">[#TITRE|removenotes]</h1>
+
+		<!--[ Sous-titre du document ]-->
+		<IF COND="[#SOUSTITRE]">
+			<p class="main-subtitle article__subtitle">[#SOUSTITRE|removenotes]</p>
+		</IF>
+
+		<!--[ Titres alternatifs ]-->
+		<IF COND="[#ALTERTITRE]">
+			<div class="main-altertitle article__altertitle">
+				<LET VAR="value">[#ALTERTITRE]</LET>
+				<LOOP NAME="mltext">
+					<p lang="[#LANG]">[#VALUE|removenotes]</p>
+				</LOOP>
+			</div>
+		</IF>
+
+		<!--[ Auteurs ]-->
+		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_ID="article-author" WRAP_CLASS="article__author" HREF="#article__authors-infos"/>
+
+		<!--[ Traducteurs ]-->
+		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="traducteur" WRAP_ID="article-translator" WRAP_CLASS="article__author" PREPEND="[@TRADUCTION_DE] " HREF="#article__translators-infos" />
+
+		<!--[ Pagination ]-->
+		<IF COND="[#PAGINATION]">
+			<p class="article__pagination">p. [#PAGINATION]</p>
+		</IF>
+
+		<!--[ Notice biblio ]-->
+		<IF COND="[#NOTICEBIBLIOOEUVRE]">
+			<div class="article__reference">
+				<strong>[@REFERENCE_OEUVRE]</strong>
+				<br />[#NOTICEBIBLIOOEUVRE|cleanCallNotes]
+			</div>
+		</IF>
+
+		<!--[ Alias de traduction ]-->
+		<MACRO NAME="ARTICLE_TRADUCTIONS" />
+	</header>
+</DEFMACRO>
+
+/**
+ * Boîte d'info affichée si barrière mobile.
+ */
+<DEFMACRO NAME="ARTICLE_INFO_BM">
+	<IF COND="[#TYPE] EQ 'article' AND [#DATEPUBLI] GT today()">
+		<p class="article__info-bm alert alert-info" role="alert">[@AVERTISSEMENT_TEXTE_INTEGRAL] [#DATEPUBLI|formateddate('%B %Y')].</p>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Affichage des traduction du document.
+ */
+<DEFMACRO NAME="ARTICLE_TRADUCTIONS">
+	<IF COND="[%RELATIONS_TRADUCTION]">
+		<LOOP NAME="article_traductions"
+			SELECT="id, titre, langue, IF(id IN (SELECT id2 FROM relations WHERE nature = 'traduction'), 1, 0) AS original"
+			TABLE="textes, relations"
+			WHERE="(id2 = [#ID] AND id1 = textes.identity) OR (id1 = [#ID] AND id2 = textes.identity) OR (id2 = (SELECT id2 FROM relations WHERE id1 = [#ID] AND nature = 'traduction' LIMIT 1)) AND id1 != [#ID] AND id1 = textes.identity"
+			WHERE="nature = 'traduction'"
+			ORDER="original DESC">
+
+			<BEFORE><dl class="translations"></BEFORE>
+			<DO>
+				<IF COND="[#COUNT] EQ 1">
+					<IF COND="[#ORIGINAL]">
+						<LET VAR="has_original" GLOBAL="1">true</LET>
+						<dt>[@ARTICLE_TRADUCTION_DE]</dt>
+					<ELSE/>
+						<dt>[@ARTICLE_TRADUCTIONS]</dt>
+					</IF>
+				<ELSEIF COND="[#COUNT] EQ 2 AND [%HAS_ORIGINAL]"/>
+					<dt>[@ARTICLE_TRADUCTIONS_AUTRES]</dt>
+				</IF>
+				<dd class="translations__title<IF COND="[#LANGUE] EQ [#SITELANG]"> translations__title--sitelang</IF><IF COND="![#ORIGINAL]"> translations__title--translated</IF>">
+					<a href="[#ID|makeurlwithid]">[#TITRE]</a>
+				</dd>
+			</DO>
+			<AFTER></dl></AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Boutons du header (facsimilé, print, partage).
+ */
+<DEFMACRO NAME="ARTICLE_BOUTONS">
+	<div id="article-buttons" class="article__buttons">
+		<ul class="nav nav-pills">
+			<!--[ Bouton fac-similé ]-->
+			<IF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]"/>
+				<li><a role="button" href="[#ID|makeurlwithid]?file=1"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE]</a></li>
+			</IF>
+			<!--[ Bouton imprimer ]-->
+			<IF COND="[#TEXTE_ACCESSIBLE]"/>
+				<li><a role="button" href="#" onclick="window.print()"><FUNC NAME="BASE_ICON" ICON="print" /> [@WIDGETS_PRINT]</a></li>
+			</IF>
+			<!--[ Boutons de partage ]-->
+			<IF COND="[#TEXTE_ACCESSIBLE]"/>
+				<li><a id="button-toggle-social" role="button" href="#"><FUNC NAME="BASE_ICON" ICON="share" /> [@PARTAGER]</a></li>
+				<MACRO NAME="ARTICLE_LIENS_PARTAGE" />
+			</IF>
+		</ul>
+	</div>
+	
+</DEFMACRO>
+
+/**
+ * Boutons de partage.
+ */
+<DEFMACRO NAME="ARTICLE_LIENS_PARTAGE">
+	TODO
+</DEFMACRO>
+
+/**
+ * Section "Pour citer"
+ */
+<DEFMACRO NAME="ARTICLE_POURCITER">
+	<!--[ Pour citer ]-->
+	<section id="article-quotation" class="article__quotation">
+		<div class="article__quotation-contents">
+			<h2><FUNC NAME="BASE_ICON" ICON="bookmark" /> [@POUR_CITER]</h2>
+			<IF COND="[%REFERENCE_PAPIER]">
+				<h3>[@REFERENCE_PAPIER]</h3>
+				<p id="article-quotation-print" class="article__quotation-print">
+					<MACRO NAME="ARTICLE_REFERENCE_PAPIER"/>
+				</p>
+			</IF>
+			<h3>[@REFERENCE_ELECTRONIQUE]</h3>
+			<p id="article-quotation-digital" class="article__quotation-digital">
+				<MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" />
+			</p>
+		</div>
+	</section>
+</DEFMACRO>
+
+/**
+ * Référence papier.
+ */
+<DEFMACRO NAME="ARTICLE_REFERENCE_PAPIER">
+	<LET VAR="isnumero">[#ID|getParentByType('numero')]</LET>
+	<IF COND="[#NOTICEBIBLIO]">
+		[#NOTICEBIBLIO]
+	<ELSEIF COND="[#PAGINATION] AND [#ISNUMERO]"/>
+		[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <em>[#OPTIONS.METADONNEESSITE.TITRESITE]</em><LOOP NAME="reference_papier_numero" SELECT="id, titre, numero, datepublipapier, datepubli, periode" TABLE="relations, publications" WHERE="id2 = '[#ID]' AND type IN ('numero', 'rubrique') AND nature = 'P' AND id1 = publications.identity" ORDER="degree DESC" LIMIT="2"><BEFORE>, </BEFORE><IF COND="[#COUNT] EQ 1" /><IF COND="[#TYPE] EQ 'numero'">[#NUMERO]&nbsp;|&nbsp;[#DATEPUBLIPAPIER|formateddate('%Y')]<ELSE/>[#TITRE]</IF><ELSE />, [#TITRE]</IF></LOOP>, [#PAGINATION].
+	</IF>
+</DEFMACRO>
+
+/**
+ * Référence électronique.
+ */
+<DEFMACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE">
+	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. URL&nbsp;: [#SITEINFOS.URL]/[#ID|makeurlwithid]
+</DEFMACRO>
+
+/**
+ * Affichage des sections résumé et index (deux colonnes).
+ */
+<DEFMACRO NAME="ARTICLE_RESUMES_MOTSCLES">
+	<IF COND="[#RESUME] OR [%HASENTRIES]">
+		<div class="row">
+			<!--[ Variation de maquette selon la présence de résumés et/ou index ]-->
+			<IF COND="[#RESUME] AND [%HASENTRIES]">
+				<section id="article-abstract" class="article__abstract col-md-8">
+					<MACRO NAME="ARTICLE_RESUMES" />
+				</section>
+				<section id="article-entries" class="article__entries col-md-4">
+					<MACRO NAME="ARTICLE_MOTSCLES" />
+				</section>
+			<ELSEIF COND="[#RESUME]" />
+				<section id="article-abstract" class="article__abstract col-md-12">
+					<MACRO NAME="ARTICLE_RESUMES" />
+				</section>
+			<ELSE />
+				<section id="article-entries" class="article__entries col-md-12">
+					<MACRO NAME="ARTICLE_MOTSCLES" />
+				</section>
+			</IF>
+		</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section résumés.
+ */
+<DEFMACRO NAME="ARTICLE_RESUMES">
+	<!--[ Résumés ]-->
+	<IF COND="[#RESUME]">
+		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" ICON="comment" NAV="true" SECTION_ID="article-abstract" />
+		<ELSE/>
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" ICON="comment" NAV="true" SECTION_ID="article-abstract" />
+		</IF>
+		<div class="article__abstract-contents">
+			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
+		</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section indexes liés au document.
+ */
+<DEFMACRO NAME="ARTICLE_MOTSCLES">
+	<!--[ Entrées d'index]-->
+	<IF COND="[%HASENTRIES]">
+		<LOOP NAME="article_motscles" 
+			TABLE="relations, entries, entrytypes" 
+			SELECT="DISTINCT(idtype), title, altertitle, type AS entrytype" 
+			WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes'" 
+			ORDER="entrytypes.rank">
+
+			<BEFORE>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" ICON="tag" NAV="true" SECTION_ID="article-entries" />
+				<div class="article__entries-content">
+			</BEFORE>
+			<DO>
+				<LOOP NAME="article_motscles_entrees" 
+					TABLE="entries" SELECT="id, g_name" 
+					WHERE="idtype = '[#IDTYPE]' AND iddocument = '[#ID]'" 
+					ORDER="degree">
+					<BEFORE>
+						<!--[ Support index rtl ]-->
+						<IF COND="[#ENTRYTYPE] LIKE /^motscles([a-z]*)$/">
+							<LET VAR="entrydir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#MATCHES.1.0]"/></LET>
+						</IF>
+						<div class="article__index article__index--type-[#ENTRYTYPE]" dir="[#ENTRYDIR]">
+							<h3 class="entries-type"><FUNC NAME="BASE_ML_TITRE" INDEX="true" /></h3>
+					</BEFORE>
+					<DOFIRST><a href="[#ID|makeurlwithid]" class="entry">[#G_NAME]</a></DOFIRST>
+					<DO>, <a href="[#ID|makeurlwithid]" class="entry">[#G_NAME]</a></DO>
+					<AFTER>
+						</div>
+					</AFTER>
+				</LOOP>
+			</DO>
+			<AFTER>
+				</div>
+			</AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section table des matières du document.
+ */
+<DEFMACRO NAME="ARTICLE_TOC">
+	<IF COND="[#TEXTE]">
+		<LET VAR="TOC_PREV_NIVEAU" GLOBAL="1">1</LET>
+		<LET VAR="OUVRIR_UL"><ul></LET>
+		<LET VAR="FERMER_UL"></ul></li></LET>
+		<!--[ [#COUNT] et <DOFIRST> ne fonctionnent pas pour la loop "toc" donc on utilise un workaround avec une variable globale [%TOC_COUNT] ]-->
+		<LET VAR="TOC_COUNT" GLOBAL="1">0</LET>
+		<LOOP NAME="toc" TEXT="[#TEXTE]">
+			<BEFORE>
+				<section id="article-toc" class="article__toc">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" ICON="list-alt" NAV="true" SECTION_ID="article-toc" />
+					<div id="article-toc-contents" class="article__toc-contents">
+						<ul>
+			</BEFORE>
+			<DO>
+				<LET VAR="TOC_COUNT" GLOBAL="1">[%TOC_COUNT|lmath('+', '1')]</LET>
+				<LET VAR="ECART">[#NIVEAU|lmath('-', [%TOC_PREV_NIVEAU])]</LET>
+				<LET VAR="LIEN"><a href="#tocto[#TOCID]" id="tocfrom[#TOCID]">[#TITRE|removenotes]</a></LET>
+				<IF COND="[#ECART] EQ 0">
+					<IF COND="[%TOC_COUNT] GT 1">
+						</li>
+					</IF>
+					<li dir="[#DIR]">[#LIEN]
+				<ELSEIF COND="[#ECART] GT 0" />
+					[#OUVRIR_UL|str_repeat([#ECART])]
+					<li dir="[#DIR]">[#LIEN]
+				<ELSE />
+					<IF COND="[%TOC_COUNT] GT 1">
+						</li>
+					</IF>
+					[#FERMER_UL|str_repeat([#ECART|lmath('*', -1)])]
+					<li dir="[#DIR]">[#LIEN]
+				</IF>
+				<LET VAR="TOC_PREV_NIVEAU" GLOBAL="1">[#NIVEAU]</LET>
+			</DO>
+			<AFTER>
+							<!--[ Fermeture des derniers ul/li ]-->
+							</li>
+							<IF COND="[%TOC_PREV_NIVEAU] GT 1">
+								[#FERMER_UL|str_repeat([%TOC_PREV_NIVEAU|lmath('-', 1)])]
+							</IF>
+						</ul>
+					</div>
+				</section>
+			</AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Sections errata, dédicace, ndlr et ndla.
+ */
+<DEFMACRO NAME="ARTICLE_ADDENDUM">
+	<!--[ Errata ]-->
+	<IF COND="[#ADDENDUM]">
+		<section id="article-errata" class="article__errata">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERRATA]" NAV="true" SECTION_ID="article-errata" />
+			<div class="article__errata-contents">
+				[#ADDENDUM|cleanCallNotes|tocss]
+			</div>
+		</section>
+	</IF>
+
+	<!--[ Dédicace ]-->
+	<IF COND="[#DEDICACE]">
+		<section id="article-dedication" class="article__dedication">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DEDICACE]" NAV="true" SECTION_ID="article-dedication" />
+			<div class="article__dedication-contents">
+				[#DEDICACE|cleanCallNotes|tocss]
+			</div>
+		</section>
+	</IF>
+
+	<!--[ NDLR ]-->
+	<IF COND="[#NDLR]">
+		<section id="article-ndlr" class="article__ndlr">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" NAV="true" SECTION_ID="article-ndlr" />
+			<div class="article__ndlr-contents">
+				[#NDLR|cleanCallNotes|tocss]
+			</div>
+		</section>
+	</IF>
+
+	<!--[ NDLA ]-->
+	<IF COND="[#NDLA]">
+		<section id="article-ndla" class="article__ndla">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLA]" NAV="true" SECTION_ID="article-ndla" />
+			<div class="article__ndla-contents">
+				[#NDLA|cleanCallNotes|tocss]
+			</div>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section texte principal du document.
+ */
+<DEFMACRO NAME="ARTICLE_TEXTE">
+	<IF COND="[#TEXTE]">
+		<section id="article-text" class="article__text">
+			<IF COND="[#TYPE] EQ 'informations' OR [#TYPE] EQ 'actualite'">
+				<LET VAR="text_section_title">[@TEXTE]</LET>
+			<ELSEIF COND="[#TEXTE_ACCESSIBLE]" />
+				<LET VAR="text_section_title">[@TEXTE_INTEGRAL]</LET>
+			<ELSE />
+				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
+			</IF>
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" ICON="align-left" NAV="true" SECTION_ID="article-text" />
+			<div id="article-text-contents" class="article__text-contents">
+				<!--[ Image d'accroche ]-->
+				<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
+
+				<!--[ Texte intégral ]-->
+				<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
+				<IF COND="[#TEXTE_ACCESSIBLE]"/>
+					[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations(800)|media]
+				<ELSE />
+					[#TEXTE|removenotes|tocable|tocss('heading')|illustrations(800)|cuttext(1000, true)|media]
+			<MACRO NAME="ARTICLE_INFO_BM" />
+				</IF>
+				<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
+			</div>
+			<!--[ Footnotes flottantes ]-->
+			<IF COND="[#NOTESBASPAGE]">
+				<div id="ftnup-container" class="ftnup-container">
+					<div class="ftnup-notes">
+						[#NOTESBASPAGE|cutnotes(150)]
+					</div>
+				</div>
+			</IF>
+		</section>
+	<!-- [ Si pas de texte on affiche le PDF ] -->
+	<ELSEIF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]" />
+		<section id="article-facsimile" class="article__facsimile">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TEXTE]" ICON="file" NAV="true" SECTION_ID="article-facsimile" />
+			<a class="btn btn-block" role="button" href="[#ID|makeurlwithid]?file=1" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Image d'accroche du document.
+ */
+<DEFMACRO NAME="ARTICLE_IMAGEACCROCHE">
+	<LOOP NAME="article_imageaccroche" 
+		TABLE="fichiers" 
+		WHERE="type = 'imageaccroche' AND idparent = [#ID]" 
+		ORDER="rank" 
+		LIMIT="0,1">
+
+		<IF COND="[#VIGNETTE]">
+			<LET VAR="accroche">[#VIGNETTE|vignette(350)]</LET>
+		<ELSE/>
+			<LET VAR="accroche">[#DOCUMENT|vignette(350)]</LET>
+		</IF>
+		<div class="article__accroche">
+			<a href="[#ID|makeurlwithid]">
+				<img alt="[#TITRE|textebrut]" src="[#ACCROCHE|trim]" [#ACCROCHE|sizeattributs] />
+				<p class="article__accroche-lien accroche-lien">[@AFFICHER_ACCROCHE]</p>
+			</a>
+			<IF COND="[#CREDITS]">
+				<p class="article__accroche-credits accroche-credits">[#CREDITS]</p>
+			</IF>
+		</div>
+	</LOOP>
+</DEFMACRO>
+
+
+/**
+ * Section bibliographie du document.
+ */
+<DEFMACRO NAME="ARTICLE_BIBLIOGRAPHIE">
+	<IF COND="[#BIBLIOGRAPHIE] AND [#TEXTE_ACCESSIBLE]">
+		<section id="article-biblio" class="article__biblio">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" ICON="book" NAV="true" SECTION_ID="article-biblio" />
+			<div class="article__biblio-contents">
+				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations(800, 'bibliographie')|media)]
+			</div>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section annexes (texte) du document.
+ */
+<DEFMACRO NAME="ARTICLE_ANNEXE">
+	<!--[ Annexe ]-->
+	<IF COND="[#ANNEXE] AND [#TEXTE_ACCESSIBLE]">
+		<section id="article-appendix" class="article__appendix">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" ICON="paperclip" NAV="true" SECTION_ID="article-appendix" />
+			<div class="article__appendix-contents">
+				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations(800, 'annexe')|media]
+			</div>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section fichiers placés en annexe.
+ */
+<DEFMACRO NAME="ARTICLE_DOCANNEXES">
+	<IF COND="[#TEXTE_ACCESSIBLE]">
+		TODO
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section notes de bas de page.
+ */
+<DEFMACRO NAME="ARTICLE_NOTESBASPAGE">
+	<IF COND="[#NOTESBASPAGE] AND [#TEXTE_ACCESSIBLE]">
+		<section id="article-footnotes" class="article__footnotes">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" ICON="asterisk" NAV="true" SECTION_ID="article-footnotes" />
+			<div class="article__footnotes-contents">
+				[#NOTESBASPAGE]
+			</div>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section notes de fin.
+ */
+<DEFMACRO NAME="ARTICLE_NOTEFIN">
+	<IF COND="[#NOTEFIN] AND [#TEXTE_ACCESSIBLE]">
+		<section id="article-endnotes" class="article__endnotes">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTEFIN]" ICON="asterisk" NAV="true" SECTION_ID="article-endnotes" />
+			<div class="article__endnotes-contents">
+				[#NOTEFIN]
+			</div>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section table des illustrations.
+ */
+<DEFMACRO NAME="ARTICLE_ILLUSTRATIONS">
+	<IF COND="[#TEXTE_ACCESSIBLE]">
+		<LOOP NAME="foreach" ARRAY="[#IMAGES]">
+			<BEFORE>
+				<section id="article-illustrations" class="article__illustrations">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" ICON="picture" NAV="true" SECTION_ID="article-illustrations" />
+					<div class="article__illustrations-contents">
+			</BEFORE>
+			<DO>
+				<div class="article__illustration illustration row">
+					<div class="illustration__thumb col-xs-5">
+						<IF COND="[#VALUE.TITRE]">
+							<LET VAR="DATA_FANCYBOX_TITLE">data-fancybox-title="[#VALUE.TITRE|textebrut]"</LET>
+						</IF>
+						<a href="[#VALUE.SRC]" class="fancybox" rel="tableillustrations" [#DATA_FANCYBOX_TITLE]><img alt="[#VALUE.TITRE|textebrut]" src="[#VALUE.THUMB_SRC]" /></a>
+					</div>
+					<div class="illustration__info col-xs-7">
+						<IF COND="[#VALUE.TITRE]">
+							<div class="illustration__titre" title="[@ILLUSTRATION_TITRE]">[#VALUE.TITRE]</div>
+						</IF>
+						<IF COND="[#VALUE.LEGENDE]">
+							<div class="illustration__legende" title="[@ILLUSTRATION_LEGENDE]">[#VALUE.LEGENDE]</div>
+						</IF>
+						<IF COND="[#VALUE.CREDIT]">
+							<div class="illustration__credits" title="[@ILLUSTRATION_CREDITS]">[#VALUE.CREDIT]</div>
+						</IF>
+						<div class="illustration__source" title="URL">
+							<p><a href="[#VALUE.SRC|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[#VALUE.SRC]</a></p>
+						</div>
+					</div>
+				</div>
+			</DO>
+			<AFTER>
+					</div>
+				</section>
+			</AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Section description des auteurs, traducteurs.
+ * @param {string} type - Type de personne.
+ * @param {string} wrap_id - Id de la section.
+ */
+<DEFFUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" REQUIRED="type, wrap_id">
+	<LOOP NAME="article_description_personnes" 
+		SELECT="persons.id" 
+		TABLE="relations, persons" 
+		WHERE="id1 = '[%ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'"
+		ORDER="degree">
+		
+		<BEFORE>
+			<section id="[#WRAP_ID]" class="article__persons-infos">
+				<IF COND="[#TYPE] EQ 'traducteur'">
+					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@TRADUCTEURS]<ELSE/>[@TRADUCTEUR]</IF></LET>
+				<ELSE />
+					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></LET>
+				</IF>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="user" NAV="true" SECTION_ID="[#WRAP_ID]" />
+				<div class="article__persons-infos-contents">
+		</BEFORE>
+
+		<DO>
+			<LOOP NAME="article_description_personnes_auteur" 
+				SELECT="idperson, nomfamille, prenom, description" 
+				TABLE="auteurs" 
+				WHERE="id = '[#ID]' AND iddocument='[%ID]'">
+
+				<h3>
+					<a href="[#IDPERSON|makeurlwithid]">[#PRENOM] <span class="family-name">[#NOMFAMILLE]</span></a>
+				</h3>
+				<IF COND="[#DESCRIPTION]">
+					<p class="article__person-description">
+						[#DESCRIPTION|removetags("p")]
+					</p>
+				</IF>
+				<IF COND="[#TYPE] EQ 'auteur'">
+					<MACRO NAME="ARTICLE_DU_MEME_AUTEUR" />
+				</IF>
+			</LOOP>
+		</DO>
+
+		<AFTER>
+				</div>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFFUNC>
+
+/**
+ * Liste des articles du même auteur.
+ */
+<DEFMACRO NAME="ARTICLE_DU_MEME_AUTEUR">
+	<LET VAR="limit">[%ARTICLE_MEME_AUTEUR_MAX_DOCUMENTS]</LET>
+
+	<LOOP NAME="article_du_meme_auteur"
+		SELECT="numerodocument,id,datepubli,langue,LEFT(texte,1) AS texte,LEFT(alterfichier,1) AS alterfichier,documentcliquable,titre,soustitre"
+		TABLE="textes"
+		WHERE="idperson = '[#IDPERSON]' AND type NOT IN ('informations', 'actualite') AND id NOT IN ([%RELATIONS_TRADUCTION|join(',')]) AND id != '[%ID]'"
+		ORDER="datepubli DESC"
+		LIMIT="[#LIMIT|lmath('+', 1)]">
+
+		<BEFORE>
+			<h4>[@DU_MEME_AUTEUR]</h4>
+			<ul class="toc__contents toc__contents--du-meme-auteur">
+		</BEFORE>
+
+		<DO>
+			<IF COND="[#COUNT] LE [#LIMIT]">
+				<li class="toc__li toc__li--class-textes">
+					<FUNC NAME="PUBLICATION_LI_DOCUMENT" />
+					<p class="toc-paru-dans">
+						[@PARU_DANS] <FUNC NAME="BASE_PARU_DANS" />
+					</p>
+				</li>
+			</IF>
+		</DO>
+
+		<AFTER>
+			<IF COND="[#NBRESULTS] GT [#LIMIT]">
+				<li>
+					<a class="toc__more" href="[#IDPERSON|makeurlwithid]"><FUNC NAME="BASE_ICON" ICON="plus-sign" /> [@TOUS_LES_TEXTES]</a>
+				</li>
+			</IF>
+			</ul>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Section droits d'auteur.
+ */
+<DEFMACRO NAME="ARTICLE_LICENSE">
+	<IF COND="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]">
+		<section id="article-license" class="article__license">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@LICENCE]" ICON="copyright-mark" NAV="true" SECTION_ID="article-license" />
+			<div class="article__license-contents">
+				<p>[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]</p>
+			</div>
+		</section>
+	</IF>
+</DEFMACRO>

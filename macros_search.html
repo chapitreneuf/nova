@@ -1,0 +1,89 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="SEARCH_INIT">
+	<!--[ Dépendances ]-->
+	<USE MACROFILE="macros_publication.html" />
+
+	<!--[ Globales ]-->
+	<LET VAR="titre_page" GLOBAL="1">
+		[@RECHERCHE] &ldquo;[#QUERY]&rdquo; &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+	<LET VAR="resultats_par_page" GLOBAL="1">5</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="SEARCH_MAIN">
+	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RECHERCHE] &ldquo;[#QUERY]&rdquo;" />
+	<FUNC NAME="NAV_SEARCH_FORM" AUTOFOCUS="1" />
+	<MACRO NAME="SEARCH_RESULTS" />
+</DEFMACRO>
+
+/**
+ * Résultats de recherche de Lodel.
+ */
+<DEFMACRO NAME="SEARCH_RESULTS">
+	<LOOP NAME="search" LIMIT="[%RESULTATS_PAR_PAGE]">
+		<ALTERNATIVE>
+			<p>[@AUCUN_RESULTAT]</p>
+		</ALTERNATIVE>
+		<BEFORE>
+			<section id="search-results" class="search-results">
+			<ul class="toc__contents toc__contents--search-results">
+		</BEFORE>
+		<DO>
+			<LOOP NAME="search_lodelsearch_type"
+				TABLE="entities, types"
+				SELECT="entities.id, class, type"
+				WHERE="entities.id = '[#ID]' AND entities.idtype = types.id">
+
+				<IF COND="[#CLASS] EQ 'textes'">
+					<LOOP NAME="search_lodelsearch_item"
+						TABLE="#_TP_[#CLASS]"
+						WHERE="identity = '[#ID]'">
+					<li class="toc__li toc__li--class-[#CLASS]" lang="[#LANGUE]">
+						<FUNC NAME="PUBLICATION_LI_TEXTE" AFFICHER_DATEPUBLI="[#PARENT_IS_RUBRIQUE]" />
+						<IF COND="[#TEXTE]">
+							<p class="toc__description">[#TEXTE|textebrut|cuttext(300, true)]<p>
+						</IF>
+					</li>
+					</LOOP>
+				</IF>
+			</LOOP>
+		</DO>
+		<AFTER>
+			</ul>
+			<MACRO NAME="SEARCH_LODELSEARCH_PREV_NEXT" />
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Boutons vers les résultats précédent/suivant.
+ */
+<DEFMACRO NAME="SEARCH_LODELSEARCH_PREV_NEXT">
+	<LOOP NAME="page_scale">
+		<BEFORE>
+			<!--[ Prev ]-->
+			<div class="search-prev col-xs-6">
+				<IF COND="[#PREVIOUSURL]">
+					<a class="btn btn-default"  href="[#PREVIOUSURL]"><FUNC NAME="BASE_ICON" ICON="triangle-left" /> [@PRECEDENT]</a>
+				</IF>
+			</div>
+		</BEFORE>
+		<DO> </DO>
+		<AFTER>
+			<!--[ Next ]-->
+			<div class="search-next col-xs-6">
+				<IF COND="[#NEXTURL]">
+					<a class="btn btn-default"  href="[#NEXTURL]">[@SUIVANT] <FUNC NAME="BASE_ICON" ICON="triangle-right" /></a>
+				</IF>
+			</div>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>

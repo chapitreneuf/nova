@@ -24,7 +24,7 @@ window.fnLoader = {
 
 		// Sidenotes
 		sidenotes: function () {
-			$(function() {
+			var setSidenotesPosition = function () {
 				var margin = 10;
 				var minTop = 0;
 				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 100;
@@ -35,6 +35,7 @@ window.fnLoader = {
 
 				$("#sidenotes .notesbaspage").each(function () {
 					try {
+						$(this).show();
 						var $a = $(this).find("a.FootnoteSymbol");
 						var href = $a.attr("href");
 						var targetId = href.replace("#ftn", "#bodyftn");
@@ -57,7 +58,11 @@ window.fnLoader = {
 						console.error(error);
 					}
 				});
-			});
+			};
+
+			// Run when page is ready + on viwport resize
+			$(setSidenotesPosition);
+			$(window).resize(setSidenotesPosition);
 		}
 	}
 };

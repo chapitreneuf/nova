@@ -8,5 +8,7 @@ jspm_packages/
 .node_repl_history
 
 # Public
-public/
+public/css
+public/vendor
+public/webfonts
 

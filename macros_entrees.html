@@ -1,0 +1,167 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="ENTREES_INIT">
+	<LET VAR="CURRENT_TYPE" GLOBAL="1">[#TYPE.TYPE]</LET>
+
+	<LET VAR="titre_page" GLOBAL="1">
+		<IF COND="[#TYPE.TITLE]"><IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF></IF> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="ENTREES_MAIN">
+	<MACRO NAME="ENTREES_TITLE" />
+	<IF COND="[#TYPE.FLAT] AND [#TYPE.SORT] EQ 'sortkey'">
+		<MACRO NAME="ENTREES_INDEX_PLAT" />
+	<ELSE />
+		<MACRO NAME="ENTREES_INDEX_HIERARCHIQUE" />
+	</IF>
+</DEFMACRO>
+
+/**
+ * Titre h1 du type d'index.
+ */
+<DEFMACRO NAME="ENTREES_TITLE">
+	<h1 class="main-title entrees__title">
+		[@INDEX]&#160;| <span class="entrees__type"><IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF></span>
+	</h1>
+</DEFMACRO>
+
+/**
+ * Raccourcis vers les mots-clés dans d'autres langues.
+ */
+<DEFMACRO NAME="ENTREES_RACCOURCIS">
+	<IF COND="[%CURRENT_TYPE] LIKE /^mots?cle/">
+		<LOOP NAME="entrees_raccourcis" 
+			TABLE="entrytypes, entries"
+			SELECT="DISTINCT(idtype), type, title, altertitle, lang"
+			WHERE="type LIKE 'mot%cle%' AND entries.idtype = entrytypes.id"
+			ORDER="entrytypes.rank">
+
+			<BEFORE>
+				<IF COND="[#NBLIGNES] GT 1">
+					<section id="page-shortcuts" class="page-shortcuts">
+						<ul class="nav nav-pills">
+				</IF>
+			</BEFORE>
+
+			<DO>
+				<IF COND="[#NBLIGNES] GT 1">
+					<LET VAR="active_class"><IF COND="[#TYPE] EQ [%CURRENT_TYPE]">active</IF></LET>
+					<li class="page-shortcuts__item [#ACTIVE_CLASS]"><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="1" /></a></li>
+				</IF>
+			</DO>
+
+			<AFTER>
+				<IF COND="[#NBLIGNES] GT 1">
+						</ul>
+					</section>
+				</IF>
+			</AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>
+
+/**
+* Afficher un index plat.
+*/
+<DEFMACRO NAME="ENTREES_INDEX_PLAT">
+	<MACRO NAME="ENTREES_RACCOURCIS" />
+
+	<LET VAR="table">#_TP_entries</LET>
+	<LET VAR="field">[#TYPE.SORT]</LET>
+	<LET VAR="idtype">[#TYPE.ID]</LET>
+
+	<section id="alphabet" class="alphabet">
+		<div class="btn-group">
+			<LOOP NAME="alphabetSpec">
+				<IF COND="[#NBRESULTS]">
+					<a class="alphabet_btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
+					<ELSE/>
+					<span class="alphabet_btn alphabet_btn--disabled btn btn-default disabled">[#LETTRE]</span>
+				</IF>
+			</LOOP>
+		</div>
+	</section>
+
+	<section id="index-list" class="index-list index-list--plat index-list--type-[%CURRENT_TYPE]">
+		<LOOP NAME="alphabetSpec">
+			<LET VAR="lettresql">[#LETTRE|replace("'", "\'")]</LET>
+			<LOOP NAME="entrees_index_plat_alpha" 
+				TABLE="entries"
+				SELECT="id, g_name"
+				WHERE="type = '[#TYPE.TYPE]' AND UPPER(SUBSTRING([#FIELD],1,1)) = '[#LETTRESQL]'"
+				ORDER="[#FIELD]">
+
+				<BEFORE>
+					<section id="alpha[#LETTRE|ord]" class="indexes-section">
+						<div class="row">
+							<div class="index-list__letter-col col-sm-2 col-sm-offset-1">
+								<h2 class="index-list__letter">
+									<a href="#indexes-alphabet">[#LETTRE]</a>
+								</h2>
+							</div>
+							<div class="index-list__contents-col col-sm-8">
+								<ul class="index-list__list index-list__list--plat" xml:lang="[#TYPE.LANG]" lang="[#TYPE.LANG]">
+				</BEFORE>
+
+				<DO>
+					<li class="index-list__item index-list__item--plat"><MACRO NAME="ENTREES_ENTREE"/></li>
+				</DO>
+
+				<AFTER>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</AFTER>
+			</LOOP>
+		</LOOP>
+	</section>
+</DEFMACRO>
+
+/**
+ * Afficher un index hiérarchique.
+ */
+<DEFMACRO NAME="ENTREES_INDEX_HIERARCHIQUE">
+	<LET VAR="idrec">0</LET>
+	<section id="index-list" class="index-list index-list--hierarchique index-list--type-[%CURRENT_TYPE]">
+		<LOOP NAME="entrees_index_hierarchique" SELECT="id, g_name" TABLE="entries" WHERE="type = '[#TYPE.TYPE]' AND idparent = '[#IDREC]'" ORDER="entries.[#TYPE.SORT]">
+			<BEFORE>
+				<ul class="index-list__list index-list__list--hierarchique">
+			</BEFORE>
+			<DO>
+				<li class="index-list__item index-list__item--hierarchique">
+					<MACRO NAME="ENTREES_ENTREE"/>
+					<LET VAR="idrec">[#ID]</LET>
+					<LOOP NAME="entrees_index_hierarchique"></LOOP>
+				</li>
+			</DO>
+			<AFTER>
+				</ul>
+			</AFTER>
+		</LOOP>
+	</section>
+</DEFMACRO>
+
+/**
+ * Afficher une entrée d'index avec le nombre d'entités liées
+ * (si pas d'entitiés alors ne pas afficher le nombre et ne pas créer de lien)
+ */
+<DEFMACRO NAME="ENTREES_ENTREE">
+	<LOOP NAME="entrees_entree_count"
+		TABLE="relations, entities"
+		SELECT="count(id) AS n"
+		WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id [#NOT_IN_TRADUCTIONS]">
+		<IF COND="[#N] EQ '0'">
+			[#G_NAME]
+		<ELSE/>
+			<a class="index-list__entree" href="[#ID|makeurlwithid]">[#G_NAME]</a> <span class="index-list__count">([#N])</span>
+		</IF>
+	</LOOP>
+</DEFMACRO>

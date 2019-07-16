@@ -5,12 +5,50 @@
  */
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
+		<MACRO NAME="MENU_SITELANG" />
 		<MACRO NAME="MENU_BRAND" />
 		<MACRO NAME="MENU_INDEX" />
 		<MACRO NAME="MENU_ISSUES" />
 		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
 		<FUNC NAME="MENU_PARTENAIRES" PUBLI_IDENTIFIER="partenaires" />
 	</nav>
+</DEFMACRO>
+
+/**
+ * Sélecteur de langue (pour les visiteurs non identifiés ou les visiteurs access membre seulement).
+ */
+<DEFMACRO NAME="MENU_SITELANG">
+	<IF COND="[#LODELUSER.RIGHTS] LE 5">
+		<LOOP NAME="menu_lang" TABLE="translations" ORDER="rank">
+			<BEFORE>
+				<IF COND="[#NBRESULTS] GT 1">
+					<section class="main-menu__sitelang">
+						<ul class="main-menu__langs">
+				</IF>
+			</BEFORE>
+			<DO>
+				<IF COND="[#NBRESULTS] GT 1">
+					<IF COND="[#SITELANG] EQ [#LANG]">
+						<li class="main-menu__lang main-menu__lang--active">
+							[#LANG]
+						</li>
+					<ELSE />
+						<li class="main-menu__lang">
+							<a href="[#CURRENTURL|query_string('lang', [#LANG])]">
+								[#LANG]
+							</a>
+						</li>
+					</IF>
+				</IF>
+			</DO>
+			<AFTER>
+				<IF COND="[#NBRESULTS] GT 1">
+						</ul>
+					</section>
+				</IF>
+			</AFTER>
+		</LOOP>
+	</IF>
 </DEFMACRO>
 
 /**

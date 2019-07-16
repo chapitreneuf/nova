@@ -80,11 +80,8 @@ de modifier un mixin ou encore d'ajouter des déclarations CSS qui seront ajout�
 
 ## Javascript
 
-:warning: **Cette fonctionnalité n'est pas encore implémentée : à revoir.**
-
 Il est possible d'appeler un script en plus du script par défaut en indiquant le chemin relatif dans la globale Lodelscript `[%CUSTOM_SCRIPT_PATH]`.
 
-Le script par défaut stocke les fonctions dans un objet `window.fnLoader.fns`, il est donc possible de surcharger n'importe laquelle de ces fonctions en modifiant directement cet objet. De la même façon, pour ajouter une fonction, on insère sa déclaration dans l'objet.
+Le script par défaut `public/js/nova.js` stocke les fonctions dans un objet `window.fnLoader.fns`, il est donc possible de surcharger n'importe laquelle de ces fonctions en modifiant directement cet objet. De la même façon, pour ajouter une fonction, on insère sa déclaration dans l'objet.
 
 Les fonctions sont exécutées après tous les appels javascript.
-

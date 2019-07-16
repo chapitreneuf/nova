@@ -124,6 +124,30 @@
 		
 	<!-- Bootstrap -->
 	<script src="[%DIR_VENDOR]/bootstrap/bootstrap.bundle.min.js"></script>
+
+	<!--[ JS site ]-->
+	<script type="text/javascript" src="tpl/public/js/nova.js"></script>
+
+	<!--[ Insertion de scripts optionnels : utiliser la globale [%CUSTOM_SCRIPT_PATH] pour le chemin du script ]-->
+	<IF COND="[%CUSTOM_SCRIPT_PATH]">
+		<script type="text/javascript" src="[%CUSTOM_SCRIPT_PATH]"></script>
+	</IF>
+
+	<!--[ Loader : lancer les fonctions ]-->
+	<MACRO NAME="HEAD_JS_LOADER" />
+</DEFMACRO>
+
+/**
+ * Chargement de la queue des fonctions JS.
+ */
+<DEFMACRO NAME="HEAD_JS_LOADER">
+	<script>
+		if (window.fnLoader) {
+			window.fnLoader.load();
+		} else {
+			console.error("fnLoader not found");
+		}
+	</script>
 </DEFMACRO>
 
 /**

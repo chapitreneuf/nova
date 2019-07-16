@@ -25,7 +25,7 @@
     "packages": {
       "bootstrap": {
         "version": "4.3.1",
-        "src": "{dist/css/bootstrap.min.css,dist/js/bootstrap.bundle.min.js}",
+        "src": "{dist/css/bootstrap.min.css,dist/css/bootstrap.min.css.map,dist/js/bootstrap.bundle.min.js}",
         "namespaced": true
       },
       "jquery": {

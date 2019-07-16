@@ -22,9 +22,23 @@ window.fnLoader = {
 			});
 		},
 
-		// Footnotes
-		footnotes: function () {
-			// TODO
+		// Sidenotes
+		sidenotes: function () {
+			$(function() {
+				$("#sidenotes .notesbaspage").each(function () {
+					try {
+						var $a = $(this).find("a.FootnoteSymbol");
+						var href = $a.attr("href");
+						var targetId = href.replace("#ftn", "#bodyftn");
+						var $target = $(targetId);
+						var top = $target.offset().top;
+						$(this).offset({ top: top });
+					} catch (error) {
+						$(this).hide();
+						console.error(error);
+					}
+				});
+			});
 		}
 	}
 };

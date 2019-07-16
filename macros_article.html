@@ -453,20 +453,7 @@
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" ICON="align-left" SECTION_ID="text" />
-			<div class="article__text-contents">
-				<!--[ Image d'accroche ]-->
-				<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
-
-				<!--[ Texte intégral ]-->
-				<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
-				<IF COND="[#TEXTE_ACCESSIBLE]"/>
-					[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations(800)|media]
-				<ELSE />
-					[#TEXTE|removenotes|tocable|tocss('heading')|illustrations(800)|cuttext(1000, true)|media]
-			<MACRO NAME="ARTICLE_INFO_BM" />
-				</IF>
-				<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
-			</div>
+			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->
 	<ELSEIF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]" />
@@ -475,6 +462,31 @@
 			<a class="btn btn-block" role="button" href="[#ID|makeurlwithid]?file=1" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>
 		</section>
 	</IF>
+</DEFMACRO>
+
+/**
+ * Afficher le texte.
+ */
+<DEFMACRO NAME="ARTICLE_TEXTE_CONTENTS">
+	<div class="row">
+		<div class="article__text-contents col-md-8">
+			<!--[ Image d'accroche ]-->
+			<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
+
+			<!--[ Texte intégral ]-->
+			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
+			<IF COND="[#TEXTE_ACCESSIBLE]"/>
+				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations(800)|media]
+			<ELSE />
+				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations(800)|cuttext(1000, true)|media]
+				<MACRO NAME="ARTICLE_INFO_BM" />
+			</IF>
+			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
+		</div>
+		<div id="sidenotes" class="article__sidenotes col-4 d-hidden d-md-visible">
+			[#NOTESBASPAGE|cutnotes(150)]
+		</div>
+	</div>
 </DEFMACRO>
 
 /**
@@ -503,7 +515,6 @@
 		</div>
 	</LOOP>
 </DEFMACRO>
-
 
 /**
  * Section bibliographie du document.

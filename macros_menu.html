@@ -7,6 +7,7 @@
 	<nav id="main-menu" class="main-menu">
 		<MACRO NAME="MENU_SITELANG" />
 		<MACRO NAME="MENU_BRAND" />
+		<MACRO NAME="MENU_SEARCH" />
 		<MACRO NAME="MENU_INDEX" />
 		<MACRO NAME="MENU_ISSUES" />
 		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
@@ -57,6 +58,15 @@
 <DEFMACRO NAME="MENU_BRAND">
 	<section class="main-menu__brand">
 		<a class="main-menu__brand-link" href="[#OPTIONS.METADONNEESSITE.URLDIFFUSEURSITE]">[#OPTIONS.METADONNEESSITE.DIFFUSEURSITE]</a>
+	</section>
+</DEFMACRO>
+
+/**
+ * Barre de recherche.
+ */
+<DEFMACRO NAME="MENU_SEARCH">
+	<section class="main-menu__search">
+		<FUNC NAME="NAV_SEARCH_FORM" />
 	</section>
 </DEFMACRO>
 

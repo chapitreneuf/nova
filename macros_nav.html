@@ -180,6 +180,25 @@
 </DEFFUNC>
 
 /**
+ * Formulaire recherche.
+ * @param {boolean} [autofocus] - Autofocus.
+ */
+<DEFFUNC NAME="NAV_SEARCH_FORM" OPTIONAL="autofocus">
+	<IF COND="[#AUTOFOCUS]">
+		<LET VAR="autofocus">autofocus</LET>
+	</IF>
+	<form class="search-form" action="./" method="get">
+		<div class="input-group input-group-lg">
+			<input name="page" type="hidden" value="search" />
+			<input name="query" type="text" class="form-control" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="submit"><FUNC NAME="BASE_ICON" ICON="search" /></button>
+			</span>
+		</div>
+	</form>
+</DEFFUNC>
+
+/**
  * Message d'erreur 404.
  */
 <DEFMACRO NAME="NAV_ERREUR_404">

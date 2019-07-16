@@ -5,11 +5,21 @@
  */
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
+		<MACRO NAME="MENU_BRAND" />
 		<MACRO NAME="MENU_INDEX" />
 		<MACRO NAME="MENU_ISSUES" />
 		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
 		<FUNC NAME="MENU_PARTENAIRES" PUBLI_IDENTIFIER="partenaires" />
 	</nav>
+</DEFMACRO>
+
+/**
+ * Nom du diffuseur du site.
+ */
+<DEFMACRO NAME="MENU_BRAND">
+	<section class="main-menu__brand">
+		<a class="main-menu__brand-link" href="[#OPTIONS.METADONNEESSITE.URLDIFFUSEURSITE]">[#OPTIONS.METADONNEESSITE.DIFFUSEURSITE]</a>
+	</section>
 </DEFMACRO>
 
 /**

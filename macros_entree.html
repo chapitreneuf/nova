@@ -1,0 +1,69 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="ENTREE_INIT">
+	<!--[ Dépendances additionnelles ]-->
+	<USE MACROFILE="macros_publication.html" />
+	
+	<LET VAR="titre_page" GLOBAL="1">
+		<IF COND="[#TYPE.TITLE]"><IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF></IF><IF COND="[#NOMFAMILLE] AND [#PRENOM]"/> - [#NOMFAMILLE] [#PRENOM]<ELSEIF COND="[#IDENTRY] AND [#NOM]"/> - [#NOM]</IF> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="ENTREE_MAIN">
+	<MACRO NAME="ENTREE_TITLE" />
+	<MACRO NAME="ENTREE_LISTE_TEXTES" />
+	<MACRO NAME="ENTREE_RETOUR" />
+</DEFMACRO>
+
+/**
+ * Titre h1 de l'entrée.
+ */
+<DEFMACRO NAME="ENTREE_TITLE">
+	<IF COND="[#NOM]">
+		<h1 class="main-title entry__title">
+			<IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF>&#160;&#8211; [#NOM]
+		</h1>
+	<ELSEIF COND="[#NOMFAMILLE]" />
+		<h1 class="main-title entry__title">
+			[#PRENOM] <span class="family-name">[#NOMFAMILLE]</span>
+		</h1>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Affichage des textes associés à l'entrée.
+ */
+<DEFMACRO NAME="ENTREE_LISTE_TEXTES">
+	<LET VAR="where_clause"><IF COND="[#TYPE.CLASS] EQ 'auteurs'">idperson<ELSE/>identry</IF>='[#ID]'</LET>
+	<LOOP NAME="entree_liste_textes" 
+		TABLE="textes" 
+		WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]" 
+		ORDER="datepubli DESC">
+		<BEFORE>
+			<section id="entry-type" class="toc toc--entry">
+				<ul class="toc__contents toc__contents--entry toc__contents--entry-class-[#TYPE.CLASS] toc__contents--entry-type-[#TYPE.TYPE]">
+		</BEFORE>
+		<DO>
+			<li class="toc__li toc__li toc__li--class-textes">
+				<FUNC NAME="PUBLICATION_LI_TEXTE"/>
+			</li>
+		</DO>
+		<AFTER>
+				</ul>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Bouton "Retour à l'index".
+ */
+<DEFMACRO NAME="ENTREE_RETOUR">
+	<a rev="index" class="entry__retour-btn btn btn-block" href="[#TYPE.ID|makeurlwithid]"><FUNC NAME="BASE_ICON" ICON="chevron-left"/> [@RETOUR_INDEX]</a>
+</DEFMACRO>

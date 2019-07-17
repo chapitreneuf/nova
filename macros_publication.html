@@ -292,52 +292,47 @@
  */
 <DEFFUNC NAME="PUBLICATION_LI_TEXTE" OPTIONAL="afficher_datepubli">
 	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc__author" />
-	<IF COND="![%RELATIONS_TRADUCTION]">
-		<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
-	<ELSE/>
-		<!--[ Traductions ]-->
-		<!--[ Variable qui permet de connaitre les langues des traductions pour afficher les titres des autres langues à la fin ]-->
-		<LET ARRAY="langues_traductions_article" GLOBAL="1"></LET>
-		<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
-		<!--[ Memoriser l'altertitre de la source ]-->
-		<LET VAR="altertitre_source" GLOBAL="1">[#ALTERTITRE]</LET>
+	<!--[ Variable qui permet de connaitre les langues des traductions pour afficher les titres des autres langues à la fin ]-->
+	<LET ARRAY="langues_traductions_article" GLOBAL="1"></LET>
+	<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+	<!--[ Memoriser l'altertitre de la source ]-->
+	<LET VAR="altertitre_source" GLOBAL="1">[#ALTERTITRE]</LET>
 
-		<LOOP NAME="PUBLICATION_LI_texte_traductions"
-			TABLE="textes, relations"
-			SELECT="id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, documentcliquable, datepubli, langue, type, nature, numerodocument"
-			WHERE="id2 = '[#ID]' AND nature = 'traduction' AND id1 = textes.identity"
-			ORDER="rank">
+	<LOOP NAME="publication_li_texte_traductions"
+		TABLE="textes, relations"
+		SELECT="id, titre, soustitre, altertitre, LEFT(texte,1) AS texte, LEFT(alterfichier,1) AS alterfichier, documentcliquable, datepubli, langue, type, nature, numerodocument"
+		WHERE="id2 = '[#ID]' AND nature = 'traduction' AND id1 = textes.identity"
+		ORDER="rank">
 
-			<BEFORE>
-				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
-			</BEFORE>
+		<BEFORE>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+		</BEFORE>
 
-			<DO>
-				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
-				<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
-			</DO>
+		<DO>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+		</DO>
 
-			<DOLAST>
-			  <FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
-			  <LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
+		<DOLAST>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
 
-			  <!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
-			  <IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
-					<div class="toc__altertitle toc__altertitle--sauf-traductions">
-						<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-						<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
-							<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
-						</IF>
-						</LOOP>
-					</div>
-				</IF>
-			</DOLAST>
+			<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
+			<IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+				<div class="toc__altertitle toc__altertitle--sauf-traductions">
+					<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+					<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
+						<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
+					</IF>
+					</LOOP>
+				</div>
+			</IF>
+		</DOLAST>
 
-			<ALTERNATIVE>
-				<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
-			</ALTERNATIVE>
-		</LOOP>
-	</IF>
+		<ALTERNATIVE>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+		</ALTERNATIVE>
+	</LOOP>
 </DEFFUNC>
 
 /**

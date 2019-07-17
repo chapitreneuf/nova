@@ -1,0 +1,137 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="PERSONNES_INIT">
+	<LET VAR="titre_page" GLOBAL="1">
+		<IF COND="[#TYPE.TITLE]"><IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF></IF> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="PERSONNES_MAIN">
+	<MACRO NAME="PERSONNES_TITLE" />
+	<MACRO NAME="PERSONNES_RACCOURCIS" />
+	<MACRO NAME="PERSONNES_INDEX" />
+</DEFMACRO>
+
+/**
+ * Titre h1 de la page (type de personnes).
+ */
+<DEFMACRO NAME="PERSONNES_TITLE">
+	<h1 class="main-title personnes__title">
+		[@INDEX]&#160;| <span class="personnes__type"><IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF></span>
+	</h1>
+</DEFMACRO>
+
+/**
+ * Raccourcis vers les autres personnes.
+ */
+<DEFMACRO NAME="PERSONNES_RACCOURCIS">
+	<LOOP NAME="personnes_raccourcis" 
+		TABLE="persons, persontypes"
+		SELECT="idtype, type AS ptype, title, altertitle" 
+		WHERE="persons.idtype = persontypes.id" 
+		GROUPBY="persontypes.type" 
+		ORDER="persontypes.rank">
+
+		<BEFORE>
+			<IF COND="[#NBLIGNES] GT 1">
+				<div id="page-shortcuts" class="page-shortcuts">
+					<ul class="nav nav-pills">
+			</IF>
+		</BEFORE>
+
+		<DO>
+			<IF COND="[#NBLIGNES] GT 1">
+				<LET VAR="active_class"><IF COND="[#TYPE.TYPE] EQ [#PTYPE]">class="active"</IF></LET>
+				<li [#ACTIVE_CLASS]><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="1" /></a></li>
+			</IF>
+		</DO>
+
+		<AFTER>
+			<IF COND="[#NBLIGNES] GT 1">
+					</ul>
+				</div>
+			</IF>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affiche le nombre d'entités liées à une autre entité (pour les indexes).
+ */
+<DEFMACRO NAME="PERSONNES_NOMBRE_ENTITES">
+	<LOOP NAME="personnes_nombre_entites"
+		TABLE="relations, entities" 
+		SELECT="count(id) AS n" 
+		WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id [#NOT_IN_TRADUCTIONS]">
+		<span class="index-list__count">([#N])</span>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Liste des entrées d'index de personnes.
+ */
+<DEFMACRO NAME="PERSONNES_INDEX">
+	<LET VAR="table">#_TP_persons</LET>
+	<LET VAR="field">sortkey</LET>
+	<LET VAR="idtype">[#TYPE.ID]</LET>
+
+	<div id="alphabet" class="alphabet">
+		<div class="btn-group">
+			<LOOP NAME="alphabetSpec">
+				<IF COND="[#NBRESULTS]">
+					<a class="alphabet_btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
+				<ELSE/>
+					<span class="alphabet_btn btn btn-default disabled">[#LETTRE]</span>
+				</IF>
+			</LOOP>
+		</div>
+	</div>
+
+	<div id="indexes-index" class="index-list index-list--plat index-list--type-[%CURRENT_TYPE]">
+		<LOOP NAME="alphabetSpec">
+			<LET VAR="lettresql">[#LETTRE|replace("'", "\'")]</LET>
+			<LOOP NAME="personnes_index_entries"
+				TABLE="relations, entities, persons, types, persontypes"
+				SELECT="persons.id, g_firstname, g_familyname"
+				WHERE="UPPER(SUBSTRING([#FIELD],1,1)) = '[#LETTRESQL]' AND types.type NOT IN ('informations', 'actualite') AND persontypes.type = '[#TYPE.TYPE]' AND persons.idtype = persontypes.id AND relations.id1 = entities.id AND relations.id2 = persons.id"
+				GROUPBY="persons.id"
+				ORDER="[#FIELD]">
+
+				<BEFORE>
+					<section id="alpha[#LETTRE|ord]" class="index-list__section">
+						<div class="row">
+							<div class="index-list__letter-col col-sm-2 col-sm-offset-1">
+								<h2 class="index-list__letter">
+									<a href="#indexes-alphabet">[#LETTRE]</a>
+								</h2>
+							</div>
+							<div class="index-list__contents-col col-sm-8">
+								<ul xml:lang="[#TYPE.LANG]" lang="[#TYPE.LANG]">
+				</BEFORE>
+
+				<DO>
+					<li class="index-list__item index-list__item--plat">
+						<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEINDEXPERSONNES] EQ 'Surname; First name'">
+							<a href="[#ID|makeurlwithid]"><span class="family-name">[#G_FAMILYNAME]</span><IF COND="[#G_FIRSTNAME]">, [#G_FIRSTNAME]</IF></a> <MACRO NAME="PERSONNES_NOMBRE_ENTITES" />
+						<ELSE/>
+							<a href="[#ID|makeurlwithid]">[#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span></a> <MACRO NAME="PERSONNES_NOMBRE_ENTITES" />
+						</IF>
+					</li>
+				</DO>
+
+				<AFTER>
+								</ul>
+							</div>
+						</div>
+					</section>
+				</AFTER>
+			</LOOP>
+		</LOOP>
+	</div>
+</DEFMACRO>

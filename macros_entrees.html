@@ -76,18 +76,7 @@
 	<LET VAR="table">#_TP_entries</LET>
 	<LET VAR="field">[#TYPE.SORT]</LET>
 	<LET VAR="idtype">[#TYPE.ID]</LET>
-
-	<section id="alphabet" class="alphabet">
-		<div class="btn-group">
-			<LOOP NAME="alphabetSpec">
-				<IF COND="[#NBRESULTS]">
-					<a class="alphabet_btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
-					<ELSE/>
-					<span class="alphabet_btn alphabet_btn--disabled btn btn-default disabled">[#LETTRE]</span>
-				</IF>
-			</LOOP>
-		</div>
-	</section>
+	<MACRO NAME="NAV_ALPHABET" />
 
 	<section id="index-list" class="index-list index-list--plat index-list--type-[%CURRENT_TYPE]">
 		<LOOP NAME="alphabetSpec">

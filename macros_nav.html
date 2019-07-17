@@ -199,6 +199,23 @@
 </DEFFUNC>
 
 /**
+ * Raccourcis alphabet (utilisés dans les listes d'index plats).
+ */
+<DEFMACRO NAME="NAV_ALPHABET">
+	<nav id="alphabet" class="alphabet">
+		<div class="btn-group">
+			<LOOP NAME="alphabetSpec">
+				<IF COND="[#NBRESULTS]">
+					<a class="alphabet_btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
+					<ELSE/>
+					<span class="alphabet_btn alphabet_btn--disabled btn btn-default disabled">[#LETTRE]</span>
+				</IF>
+			</LOOP>
+		</div>
+	</nav>
+</DEFMACRO>
+
+/**
  * Message d'erreur 404.
  */
 <DEFMACRO NAME="NAV_ERREUR_404">

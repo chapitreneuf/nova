@@ -80,18 +80,7 @@
 	<LET VAR="table">#_TP_persons</LET>
 	<LET VAR="field">sortkey</LET>
 	<LET VAR="idtype">[#TYPE.ID]</LET>
-
-	<div id="alphabet" class="alphabet">
-		<div class="btn-group">
-			<LOOP NAME="alphabetSpec">
-				<IF COND="[#NBRESULTS]">
-					<a class="alphabet_btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
-				<ELSE/>
-					<span class="alphabet_btn btn btn-default disabled">[#LETTRE]</span>
-				</IF>
-			</LOOP>
-		</div>
-	</div>
+	<MACRO NAME="NAV_ALPHABET" />
 
 	<div id="indexes-index" class="index-list index-list--plat index-list--type-[%CURRENT_TYPE]">
 		<LOOP NAME="alphabetSpec">

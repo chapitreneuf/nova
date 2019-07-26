@@ -58,7 +58,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-10 nav-entities-col-parent">
 				<!--[ Publications parentes ]-->
-				<FUNC NAME="BASE_ICON" ICON="map-marker" /><FUNC NAME="NAV_PUBLICATIONS_PARENTES" USE_ID="[#NAV_ID]" />
+				<FUNC NAME="BASE_ICON" ICON="map-marker" /><FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 
 				<!--[ Texte parent (image d'accroche de texte) ]-->
 				<IF COND="[#TYPE] EQ 'imageaccroche'">
@@ -83,37 +83,27 @@
 </DEFMACRO>
 
 /**
- * Affiche les publications parentes.
- * - titre numéro / rubrique avec lien vers le sommaire
- * - titre des sous-parties / sous-rubriques
+ * Affiche le fil d'ariane.
  * @param {integer} [use_id] - Identifiant à utiliser.
  */
-<DEFFUNC NAME="NAV_PUBLICATIONS_PARENTES" OPTIONAL="use_id">
+<DEFFUNC NAME="NAV_ARIANE" OPTIONAL="use_id">
 	<IF COND="![#USE_ID]">
 		<LET VAR="use_id">[#ID]</LET>
 	</IF>
-	<LOOP NAME="nav_publications_parentes" 
-		TABLE="publications, relations" 
-		SELECT="id, titre, numero, datepubli, datepublipapier, degree, periode, altertitre" 
-		WHERE="id2 = '[#USE_ID]' AND id1 = publications.identity" 
-		ORDER="degree DESC">
-		<IF COND="[#TYPE] EQ 'collection'">
-			<IF COND="[#NBRESULTS] EQ 1">
-				<span class="[#TYPE] parent-[#DEGREE]">
-					<FUNC NAME="BASE_TITRE_PUBLICATION" SEPARATOR=":" CLIQUABLE="1" ML="1"/>
-				</span>
-			</IF>
-		<ELSEIF COND="[#ID] EQ [%IDREALPARENT]"/>
-			<span class="[#TYPE] parent-[#DEGREE]">
-				<FUNC NAME="BASE_TITRE_PUBLICATION" SEPARATOR=":" CLIQUABLE="1" ML="1"/>
-			</span>
-		<ELSEIF COND="[#TYPE] EQ 'souspartie'" />
-			<span class="doc-parent-separator">&nbsp;&gt;&nbsp;</span>
-			<span class="[#TYPE] parent-[#DEGREE]">[#TITRE]</span>
-		<ELSE/>
-			<span class="doc-parent-separator">&nbsp;&gt;&nbsp;</span>
-			<span class="[#TYPE] parent-[#DEGREE]"><FUNC NAME="BASE_ML_TITRE" /></span>
-		</IF>
+	<LOOP NAME="nav_ariane" TABLE="relations, entities" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id" ORDER="degree DESC">
+		<BEFORE>
+			<nav class="ariane" aria-label="breadcrumb">
+				<ol class="ariane__list breadcrumb">
+		</BEFORE>
+		<DO>
+			<li class="ariane__item breadcrumb-item">
+				<a class="ariane__link" href="[#ID|makeurlwithid]">[#G_TITLE|couper(50)]<IF COND="[#G_TITLE|hasbeencut]"><span class="ariane__cut">…</span></IF></a>
+			</li>
+		</DO>
+		<AFTER>
+				</ol>
+			</nav>
+		</AFTER>
 	</LOOP>
 </DEFFUNC>
 

@@ -5,11 +5,13 @@
  */
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
-		<MACRO NAME="MENU_SITELANG" />
-		<MACRO NAME="MENU_BRAND" />
-		<MACRO NAME="MENU_SEARCH" />
-		<MACRO NAME="MENU_INDEX" />
+		<div class="main-menu__box">
+			<MACRO NAME="MENU_SITELANG" />
+			<MACRO NAME="MENU_BRAND" />
+			<MACRO NAME="MENU_SEARCH" />
+		</div>
 		<MACRO NAME="MENU_ISSUES" />
+		<MACRO NAME="MENU_INDEX" />
 		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires'" />
 		<FUNC NAME="MENU_PARTENAIRES" PUBLI_IDENTIFIER="partenaires" />
 	</nav>

@@ -122,13 +122,16 @@
 </DEFFUNC>
 
 /**
- * Affiche une icone de la collection FontAwesome 5 Solid Free (https://fontawesome.com/icons?d=gallery&s=solid&m=free)
- * @param {string} icon - Identifiant de l'icone.
+ * Affiche une icone du dossier public/svg
+ * @param {string} icon - Nom du fichier icone (sans l'extension).
  * @param {string} [classname] - Class optionnelle à appliquer au span.
  * @param {string} [title] - Attribut title optionnel.
 */
 <DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title">
-	<!--[ TODO ]-->
+	<IF COND="[#TITLE]">
+		<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
+	</IF>
+	<img class="icon [#CLASSNAME]" [#TITLE_ATTR] src="tpl/public/icons/[#ICON].svg" />
 </DEFFUNC>
 
 /**

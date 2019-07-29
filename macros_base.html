@@ -141,17 +141,14 @@
 /**
  * Affiche un header de section.
  * @param {string} title - Titre.
- * @param {string} [icon] - Identifiant de l'icone à ajouter (cf. FUNC BASE_ICON).
  * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
 */
-<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="icon, section_id">
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id">
 	<IF COND="[#SECTION_ID]">
 		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a href="#[#SECTION_ID]">[#TITLE]</a></LET>
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
-	<h2 [#ID_ATTR] class="section-header">
-		<IF COND="[#ICON]"><FUNC NAME="BASE_ICON" ICON="[#ICON]"/></IF> [#TITLE]
-	</h2>
+	<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
 </DEFFUNC>
 
 /**

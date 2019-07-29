@@ -398,7 +398,7 @@
 					<p class="toc__title">
 						<!--[ Lien ]-->
 						<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
-							<a href="[#HREF]"><FUNC NAME="BASE_ICON" ICON="link" CLASSNAME="icon-small" /> [#TITRE]</a>
+							<a href="[#HREF]">[#TITRE]</a>
 						<!--[ Fichier ]-->
 						<ELSEIF COND="[#DOCUMENT]" />
 							<a href="[#HREF]">[#TITRE]</a> <span class="toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>

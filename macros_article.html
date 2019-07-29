@@ -199,14 +199,9 @@
 				<!--[ Bouton fac-similé ]-->
 				<IF COND="[#ALTERFICHIER]"/>
 					<li class="article__button">
-						<a href="[#ID|makeurlwithid]?file=1"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE]</a>
+						<a href="[#ID|makeurlwithid]?file=1">[@TELECHARGER_FACSIMILE]</a>
 					</li>
 				</IF>
-
-				<!--[ Bouton imprimer ]-->
-				<li class="article__button">
-					<a href="#" onclick="window.print()"><FUNC NAME="BASE_ICON" ICON="print" /> [@WIDGETS_PRINT]</a>
-				</li>
 
 				<!--[ Boutons de partage ]-->
 				<MACRO NAME="ARTICLE_LIENS_PARTAGE" />
@@ -289,9 +284,9 @@
 	<!--[ Résumés ]-->
 	<IF COND="[#RESUME]">
 		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" ICON="comment" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
 		<ELSE/>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" ICON="comment" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
 		</IF>
 		<div class="article__abstract-contents">
 			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
@@ -312,7 +307,7 @@
 			ORDER="entrytypes.rank">
 
 			<BEFORE>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" ICON="tag" SECTION_ID="article-entries" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" SECTION_ID="article-entries" />
 				<div class="article__entries-content">
 			</BEFORE>
 			<DO>
@@ -355,7 +350,7 @@
 		<LOOP NAME="toc" TEXT="[#TEXTE]">
 			<BEFORE>
 				<section class="article__toc">
-					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" ICON="list-alt" SECTION_ID="toc" />
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" SECTION_ID="toc" />
 					<div class="article__toc-contents">
 						<ul>
 			</BEFORE>
@@ -452,14 +447,14 @@
 			<ELSE />
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" ICON="align-left" SECTION_ID="text" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->
 	<ELSEIF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]" />
 		<section class="article__facsimile">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TEXTE]" ICON="file" SECTION_ID="facsimile" />
-			<a class="btn btn-block" role="button" href="[#ID|makeurlwithid]?file=1" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]"><FUNC NAME="BASE_ICON" ICON="file" /> [@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TEXTE]" SECTION_ID="facsimile" />
+			<a class="btn btn-block" role="button" href="[#ID|makeurlwithid]?file=1" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>
 		</section>
 	</IF>
 </DEFMACRO>
@@ -523,7 +518,7 @@
 <DEFMACRO NAME="ARTICLE_BIBLIOGRAPHIE">
 	<IF COND="[#BIBLIOGRAPHIE] AND [#TEXTE_ACCESSIBLE]">
 		<section class="article__biblio">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" ICON="book" SECTION_ID="biblio" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" SECTION_ID="biblio" />
 			<div class="article__biblio-contents">
 				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations(800, 'bibliographie')|media)]
 			</div>
@@ -538,7 +533,7 @@
 	<!--[ Annexe ]-->
 	<IF COND="[#ANNEXE] AND [#TEXTE_ACCESSIBLE]">
 		<section class="article__appendix">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" ICON="paperclip" SECTION_ID="appendix" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" SECTION_ID="appendix" />
 			<div class="article__appendix-contents">
 				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations(800, 'annexe')|media]
 			</div>
@@ -561,7 +556,7 @@
 <DEFMACRO NAME="ARTICLE_NOTESBASPAGE">
 	<IF COND="[#NOTESBASPAGE] AND [#TEXTE_ACCESSIBLE]">
 		<section class="article__footnotes">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" ICON="asterisk" SECTION_ID="footnotes" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" SECTION_ID="footnotes" />
 			<div class="article__footnotes-contents">
 				[#NOTESBASPAGE]
 			</div>
@@ -575,7 +570,7 @@
 <DEFMACRO NAME="ARTICLE_NOTEFIN">
 	<IF COND="[#NOTEFIN] AND [#TEXTE_ACCESSIBLE]">
 		<section class="article__endnotes">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTEFIN]" ICON="asterisk" SECTION_ID="endnotes" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTEFIN]" SECTION_ID="endnotes" />
 			<div class="article__endnotes-contents">
 				[#NOTEFIN]
 			</div>
@@ -591,7 +586,7 @@
 		<LOOP NAME="foreach" ARRAY="[#IMAGES]">
 			<BEFORE>
 				<section class="article__illustrations">
-					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" ICON="picture" SECTION_ID="illustrations" />
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" SECTION_ID="illustrations" />
 					<div class="article__illustrations-contents">
 			</BEFORE>
 			<DO>
@@ -645,7 +640,7 @@
 				<ELSE />
 					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></LET>
 				</IF>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="user" SECTION_ID="[#SECTION_ID]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" SECTION_ID="[#SECTION_ID]" />
 				<div class="article__persons-infos-contents">
 		</BEFORE>
 
@@ -708,7 +703,7 @@
 		<AFTER>
 			<IF COND="[#NBRESULTS] GT [#LIMIT]">
 				<li>
-					<a class="toc__more" href="[#IDPERSON|makeurlwithid]"><FUNC NAME="BASE_ICON" ICON="plus-sign" /> [@TOUS_LES_TEXTES]</a>
+					<a class="toc__more" href="[#IDPERSON|makeurlwithid]">[@TOUS_LES_TEXTES]</a>
 				</li>
 			</IF>
 			</ul>
@@ -722,7 +717,7 @@
 <DEFMACRO NAME="ARTICLE_LICENSE">
 	<IF COND="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]">
 		<section class="article__license">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@LICENCE]" ICON="copyright-mark" SECTION_ID="license" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@LICENCE]" SECTION_ID="license" />
 			<div class="article__license-contents">
 				<p>[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]</p>
 			</div>

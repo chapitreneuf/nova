@@ -58,7 +58,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-10 nav-entities-col-parent">
 				<!--[ Publications parentes ]-->
-				<FUNC NAME="BASE_ICON" ICON="map-marker" /><FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
+				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 
 				<!--[ Texte parent (image d'accroche de texte) ]-->
 				<IF COND="[#TYPE] EQ 'imageaccroche'">
@@ -211,7 +211,7 @@
 <DEFMACRO NAME="NAV_ERREUR_404">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERREUR_404]" />
 	<p class="error error-404">[@PAGE_NOT_FOUND]</p>
-	<a rev="index" class="btn btn-block" href="[#TYPE.ID|makeurlwithid]"><FUNC NAME="BASE_ICON" ICON="home"/> [@RETOUR_HOME]</a>
+	<a rev="index" class="btn btn-block" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
 </DEFMACRO>
 
 /**
@@ -220,5 +220,5 @@
 <DEFMACRO NAME="NAV_ERREUR_500">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERREUR_500]" />
 	<p class="error error-500">[@INTERNAL_ERROR]</p>
-	<a rev="index" class="btn btn-block" href="[#TYPE.ID|makeurlwithid]"><FUNC NAME="BASE_ICON" ICON="home"/> [@RETOUR_HOME]</a>
+	<a rev="index" class="btn btn-block" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
 </DEFMACRO>

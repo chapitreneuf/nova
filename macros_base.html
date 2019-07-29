@@ -123,19 +123,12 @@
 
 /**
  * Affiche une icone de la collection FontAwesome 5 Solid Free (https://fontawesome.com/icons?d=gallery&s=solid&m=free)
- * @param {string} icon - Identifiant de l'icone sans les prefixes. Par exemple, "cat" affiche l'icône "fas fa-cat"
- * @param {string} [icon_style] - Style FontAwesome de l'icône (défaut : fas). Les styles supplémentaires doivent être importés dans les CSS.
+ * @param {string} icon - Identifiant de l'icone.
  * @param {string} [classname] - Class optionnelle à appliquer au span.
- * @param {string} [title] - Attribut title optinnel.
+ * @param {string} [title] - Attribut title optionnel.
 */
-<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="icon_style, classname, title">
-	<IF COND="[#TITLE]">
-		<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
-	</IF>
-	<IF COND="![#ICON_STYLE]">
-		<LET VAR="icon_style">fas</LET>
-	</IF>
-	<span class="[#ICON_STYLE] fa-[#ICON] [#CLASSNAME]" aria-hidden="true" [#TITLE_ATTR]></span>
+<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title">
+	<!--[ TODO ]-->
 </DEFFUNC>
 
 /**

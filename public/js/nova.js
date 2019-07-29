@@ -33,7 +33,7 @@ window.fnLoader = {
 				var $more = $("#sidenotes .notesbaspage--more");
 				$more.hide();
 
-				$("#sidenotes .notesbaspage").each(function () {
+				$("#sidenotes .notesbaspage:not(.notesbaspage--more)").each(function () {
 					try {
 						$(this).show();
 						var $a = $(this).find("a.FootnoteSymbol");
@@ -55,7 +55,7 @@ window.fnLoader = {
 						}
 					} catch (error) {
 						$(this).hide();
-						console.error(error);
+						console.error(error, $(this));
 					}
 				});
 			};

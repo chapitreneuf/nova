@@ -144,12 +144,12 @@
 <DEFMACRO NAME="HOME_ACTUALITES">
 	<LOOP NAME="home_actualites" TABLE="textes" WHERE="type='actualite'" SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC">
 		<BEFORE>
-			<section id="home-actualites" class="home-actualites">
+			<section id="home-actualites__section" class="home-actualites__section">
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" ICON="newspaper" SECTION_ID="home-actualites" />
-				<ul class="home-actualites__list">
+				<ul class="home-actualites_section__list">
 		</BEFORE>
 		<DO>
-			<li class="home-actualites__item">
+			<li class="home-actualites-section__item">
 				<a href="[#ID|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" /></a>
 			</li>
 		</DO>

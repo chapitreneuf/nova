@@ -16,7 +16,7 @@
  */
 <DEFMACRO NAME="HOME_MAIN">
 	<!--[ Colonne actualités si besoin ]-->
-	<LET VAR="main_col_size"><IF COND="[#SECTION_ACTUALITES]">8<ELSE/>12</IF></LET>
+	<LET VAR="main_col_size"><IF COND="[#SECTION_ACTUALITES]">9<ELSE/>12</IF></LET>
 	<div class="row">
 		<div class="col-md-[#MAIN_COL_SIZE|trim]">
 			<MACRO NAME="HOME_BILLETS" />
@@ -24,7 +24,7 @@
 			<MACRO NAME="HOME_RUBRIQUES" />
 		</div>
 		<IF COND="[#SECTION_ACTUALITES]">
-			<div class="col-md-4">
+			<div class="col-md-3 home-actualites">
 				[#SECTION_ACTUALITES]
 			</div>
 		</IF>

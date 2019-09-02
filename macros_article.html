@@ -49,9 +49,7 @@
 	<MACRO NAME="NAV_ENTITIES" />
 	<MACRO NAME="ARTICLE_HEADER" />
 	<MACRO NAME="ARTICLE_RACCOURCIS" />
-	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
-		<MACRO NAME="ARTICLE_POURCITER" />
-	</IF>
+
 	<MACRO NAME="ARTICLE_INFO_BM" />
 	<MACRO NAME="ARTICLE_RESUMES" />
 	<MACRO NAME="ARTICLE_MOTSCLES" />
@@ -65,6 +63,9 @@
 	<MACRO NAME="ARTICLE_NOTESBASPAGE" />
 	<MACRO NAME="ARTICLE_NOTEFIN" />
 	<MACRO NAME="ARTICLE_ILLUSTRATIONS" />
+		<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+		<MACRO NAME="ARTICLE_POURCITER" />
+	</IF>
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" SECTION_ID="authors-infos" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" SECTION_ID="translators-infos" />
 	<MACRO NAME="ARTICLE_LICENSE" />
@@ -469,7 +470,7 @@
  */
 <DEFMACRO NAME="ARTICLE_TEXTE_CONTENTS">
 	<div class="row">
-		<div class="article__text-contents col-md-8">
+		<div class="article__text-contents col-md-9">
 			<!--[ Image d'accroche ]-->
 			<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
 
@@ -483,7 +484,7 @@
 			</IF>
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
 		</div>
-		<div id="sidenotes" class="article__sidenotes col-4 d-hidden d-md-visible">
+		<div id="sidenotes" class="article__sidenotes col-3 d-hidden d-md-visible">
 			[#NOTESBASPAGE|cutnotes(150)]
 			<p class="notesbaspage notesbaspage--more" style="display: none;"><a class="notesbaspage__more-link" href="#">[@NOTES_SUIVANTES]</a></p>
 		</div>
@@ -596,13 +597,13 @@
 			</BEFORE>
 			<DO>
 				<div class="article__illustration illustration row">
-					<div class="illustration__thumb col-xs-5">
+					<div class="illustration__thumb col-md-2">
 						<IF COND="[#VALUE.TITRE]">
 							<LET VAR="DATA_FANCYBOX_TITLE">data-fancybox-title="[#VALUE.TITRE|textebrut]"</LET>
 						</IF>
 						<a href="[#VALUE.SRC]" class="fancybox" rel="tableillustrations" [#DATA_FANCYBOX_TITLE]><img alt="[#VALUE.TITRE|textebrut]" src="[#VALUE.THUMB_SRC]" /></a>
 					</div>
-					<div class="illustration__info col-xs-7">
+					<div class="illustration__info col-md-10">
 						<IF COND="[#VALUE.TITRE]">
 							<div class="illustration__titre" title="[@ILLUSTRATION_TITRE]">[#VALUE.TITRE]</div>
 						</IF>

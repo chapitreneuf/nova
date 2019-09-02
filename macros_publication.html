@@ -84,12 +84,10 @@
 <DEFMACRO NAME="PUBLICATION_INTRO">
 	<IF COND="[#TYPE] EQ 'numero'">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-12">
 				<MACRO NAME="PUBLICATION_COL_HEADER" />
 			</div>
-			<div class="col-sm-4">
-				<MACRO NAME="PUBLICATION_COL_ACCROCHE" />
-			</div>
+                    
 		</div>
 	<ELSE />
 		<MACRO NAME="PUBLICATION_COL_HEADER" />
@@ -102,8 +100,16 @@
 <DEFMACRO NAME="PUBLICATION_COL_HEADER">
 	<div class="publi__section-header">
 		<FUNC NAME="PUBLICATION_HEADER" CLIQUABLE="1" />
-		<MACRO NAME="PUBLICATION_INFORMATIONS" />
-		<MACRO NAME="PUBLICATION_NOTES" />
+		<!--[ Directeur publication ]-->
+	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+		<div class="row">
+                    <div class="col-sm-3">
+                        <MACRO NAME="PUBLICATION_COL_ACCROCHE" />
+                    </div>
+                    <div class="col-sm-9">
+                        <MACRO NAME="PUBLICATION_INFORMATIONS" />
+                        <MACRO NAME="PUBLICATION_NOTES" />
+                    </div>
 	</div>
 </DEFMACRO>
 
@@ -147,8 +153,7 @@
  * Informations sur la publication.
  */
 <DEFMACRO NAME="PUBLICATION_INFORMATIONS">
-	<!--[ Directeur publication ]-->
-	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+	
 
 	<!--[ Introduction ]-->
 	<IF COND="[#INTRODUCTION]">
@@ -350,9 +355,9 @@
 		</IF>
 	</p>
 	<!--[ Sous-titre ]-->
-	<IF COND="[#SOUSTITRE]">
+	<!--<IF COND="[#SOUSTITRE]">
 		<p class="toc__subtitle">[#SOUSTITRE|removenotes]</p>
-	</IF>
+	</IF>-->
 	<!--[ Titres traduits]-->
 	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
 		<div class="toc__altertitle">
@@ -363,9 +368,9 @@
 	</IF>
 
 	<!--[ Date de publication si publié dans une rubrique électronique ]-->
-	<IF COND="[#AFFICHER_DATEPUBLI]">
+	<!--<IF COND="[#AFFICHER_DATEPUBLI]">
 		<p class="toc__datepubli">[#DATEPUBLI|humandate]</p>
-	</IF>
+	</IF>-->
 </DEFFUNC>
 
 /**

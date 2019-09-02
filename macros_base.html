@@ -146,7 +146,7 @@
 */
 <DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="icon, section_id">
 	<IF COND="[#SECTION_ID]">
-		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a href="#[#SECTION_ID]">[#TITLE]</a></LET>
+		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a class="page-shortcuts__link" href="#[#SECTION_ID]">[#TITLE]</a></LET>
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
 	<h2 [#ID_ATTR] class="section-header">
@@ -245,8 +245,8 @@
 		<IF COND="[#MATCHES.0|count] GT 1">
 			<ul class="nav nav-tabs" role="tablist">
 				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-					<li<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> class="active"</IF>>
-						<a href="#[#TAB_ID]-[#VALUE]" aria-controls="#[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
+					<li class="nav-item">
+						<a class="nav-link<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> active"</IF>" href="#[#TAB_ID]-[#VALUE]" aria-controls="#[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
 					</li>
 				</LOOP>
 			</ul>

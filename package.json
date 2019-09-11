@@ -5,16 +5,13 @@
   "main": "index.html",
   "scripts": {
     "build": "npm run copy && npm run css",
-    "copy": "npm run copy:vendor && npm run copy:webfonts",
     "copy:vendor": "frontend-dependencies",
-    "copy:webfonts": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts public",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
     "postinstall": "npm run build",
     "watch:css": "onchange -i \"less/**/*.less\" -- npm run css"
   },
   "private": true,
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.9.0",
     "frontend-dependencies": "^1.1.7",
     "less": "^3.9.0",
     "less-plugin-autoprefix": "^2.0.0",

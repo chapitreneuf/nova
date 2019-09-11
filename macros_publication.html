@@ -28,7 +28,7 @@
  */
 <DEFMACRO NAME="PUBLICATION_PUBLI">
 	<div class="publi">
-		<MACRO NAME="PUBLICATION_INTRO" />
+		<FUNC NAME="PUBLICATION_HEADER" CLIQUABLE="1" />
 		<MACRO NAME="PUBLICATION_TOC" />
 		<MACRO NAME="PUBLICATION_ANNEXES" />
 	</div>
@@ -50,6 +50,53 @@
 
 		<!--[ Altertitles ]-->
 		<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+
+		<!--[ Directeur publication ]-->
+		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+
+		<div class="row">
+			<div class="col-md-4">
+				<!--[ Image d'accroche ]-->
+				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
+			</div>
+			<div class="col-md-8">
+				<!--[ Introduction ]-->
+				<IF COND="[#INTRODUCTION]">
+					<section id="publi-introduction" class="publi__introduction">
+						<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
+					</section>
+				</IF>
+			</div>
+		</div>
+
+		<!--[ Description ouvrage ]-->
+		<IF COND="[#DESCRIPTIONOUVRAGE]">
+			<p class="publi__descriptionouvrage">[#DESCRIPTIONOUVRAGE]</p>
+		</IF>
+
+		<!--[ ISBN ]-->
+		<IF COND="[#ISBN]">
+			<p class="publi__isbn">ISBN&nbsp;[#ISBN]</p>
+		</IF>
+
+		<!--[ Commander le numero ]-->
+		<MACRO NAME="PUBLICATION_COMMANDER_NUMERO" />
+
+		<!--[ NDLR ]-->
+		<IF COND="[#NDLR]">
+			<section class="publi__ndlr">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" ICON="pencil" SECTION_ID="ndlr"/>
+				[#NDLR]
+			</section>
+		</IF>
+
+		<!--[ Historique ]-->
+		<IF COND="[#HISTORIQUE]">
+			<section class="publi__historique">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" ICON="time" SECTION_ID="historique"/>
+				[#HISTORIQUE]
+			</section>
+		</IF>
 	</header>
 </DEFFUNC>
 
@@ -79,64 +126,6 @@
 </DEFFUNC>
 
 /**
- * Accroche et header de la publication.
- */
-<DEFMACRO NAME="PUBLICATION_INTRO">
-	<IF COND="[#TYPE] EQ 'numero'">
-		<div class="row">
-			<div class="col-sm-12">
-				<MACRO NAME="PUBLICATION_COL_HEADER" />
-			</div>
-                    
-		</div>
-	<ELSE />
-		<MACRO NAME="PUBLICATION_COL_HEADER" />
-	</IF>
-</DEFMACRO>
-
-/**
- * Colonne contenant le header et les informations sur la publication.
- */
-<DEFMACRO NAME="PUBLICATION_COL_HEADER">
-	<div class="publi__section-header">
-		<FUNC NAME="PUBLICATION_HEADER" CLIQUABLE="1" />
-		<!--[ Directeur publication ]-->
-	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-		<div class="row">
-                    <div class="col-sm-3">
-                        <MACRO NAME="PUBLICATION_COL_ACCROCHE" />
-                    </div>
-                    <div class="col-sm-9">
-                        <MACRO NAME="PUBLICATION_INFORMATIONS" />
-                        <MACRO NAME="PUBLICATION_NOTES" />
-                    </div>
-	</div>
-</DEFMACRO>
-
-/**
- * Colonne accroche de la publication.
- */
-<DEFMACRO NAME="PUBLICATION_COL_ACCROCHE">
-	<div class="publi__section-accroche">
-		<!--[ Image d'accroche ]-->
-		<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
-
-		<!--[ Description ouvrage ]-->
-		<IF COND="[#DESCRIPTIONOUVRAGE]">
-			<p class="publi__descriptionouvrage">[#DESCRIPTIONOUVRAGE]</p>
-		</IF>
-
-		<!--[ ISBN ]-->
-		<IF COND="[#ISBN]">
-			<p class="publi__isbn">ISBN&nbsp;[#ISBN]</p>
-		</IF>
-
-		<!--[ Commander le numero ]-->
-		<MACRO NAME="PUBLICATION_COMMANDER_NUMERO" />
-	</div>
-</DEFMACRO>
-
-/**
  * Commander le numero.
  */
 <DEFMACRO NAME="PUBLICATION_COMMANDER_NUMERO">
@@ -146,41 +135,6 @@
 				[@COMMANDER_NUMERO]
 			</a>
 		</p>
-	</IF>
-</DEFMACRO>
-
-/**
- * Informations sur la publication.
- */
-<DEFMACRO NAME="PUBLICATION_INFORMATIONS">
-	
-
-	<!--[ Introduction ]-->
-	<IF COND="[#INTRODUCTION]">
-		<section id="publi-introduction" class="publi__introduction">
-			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
-		</section>
-	</IF>
-</DEFMACRO>
-
-/**
- * Sections NDLR et historique.
- */
-<DEFMACRO NAME="PUBLICATION_NOTES">
-	<!--[ NDLR ]-->
-	<IF COND="[#NDLR]">
-		<section class="publi__ndlr">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" ICON="pencil" SECTION_ID="ndlr"/>
-			[#NDLR]
-		</section>
-	</IF>
-
-	<!--[ Historique ]-->
-	<IF COND="[#HISTORIQUE]">
-		<section class="publi__historique">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" ICON="time" SECTION_ID="historique"/>
-			[#HISTORIQUE]
-		</section>
 	</IF>
 </DEFMACRO>
 
@@ -403,7 +357,7 @@
 					<p class="toc__title">
 						<!--[ Lien ]-->
 						<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
-							<a href="[#HREF]"><FUNC NAME="BASE_ICON" ICON="link" CLASSNAME="icon-small" /> [#TITRE]</a>
+							<a href="[#HREF]">[#TITRE]</a>
 						<!--[ Fichier ]-->
 						<ELSEIF COND="[#DOCUMENT]" />
 							<a href="[#HREF]">[#TITRE]</a> <span class="toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>

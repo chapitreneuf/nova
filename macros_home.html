@@ -10,28 +10,19 @@
 	<!--[ Nombre maximum d'actualités présentées sur la home ]-->
 	<LET VAR="home_max_actualites">3</LET>
 
-	<!--[ Chercher maintenant les actualités pour savoir combien de colonnes sur la home ]-->
-	<LET VAR="section_actualites"><MACRO NAME="HOME_ACTUALITES" /></LET>
+	<!--[ Colonne de droite ]-->
+	<LET VAR="col_right_contents" GLOBAL="1">
+		<MACRO NAME="HOME_ACTUALITES" />
+	</LET>
 </DEFMACRO>
 
 /**
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="HOME_MAIN">
-	<!--[ Colonne actualités si besoin ]-->
-	<LET VAR="main_col_size"><IF COND="[#SECTION_ACTUALITES]">9<ELSE/>12</IF></LET>
-	<div class="row">
-		<div class="col-md-[#MAIN_COL_SIZE|trim]">
-			<MACRO NAME="HOME_BILLETS" />
-			<MACRO NAME="HOME_LATEST_ISSUE" />
-			<MACRO NAME="HOME_RUBRIQUES" />
-		</div>
-		<IF COND="[#SECTION_ACTUALITES]">
-			<div class="col-md-3 home-actualites">
-				[#SECTION_ACTUALITES]
-			</div>
-		</IF>
-	</div>
+	<MACRO NAME="HOME_BILLETS" />
+	<MACRO NAME="HOME_LATEST_ISSUE" />
+	<MACRO NAME="HOME_RUBRIQUES" />
 </DEFMACRO>
 
 /**

@@ -25,6 +25,8 @@ window.fnLoader = {
 		// Sidenotes
 		sidenotes: function () {
 			var setSidenotesPosition = function () {
+				if ($("#sidenotes").length === 0) return;
+
 				var margin = 10;
 				var minTop = 0;
 				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 100;

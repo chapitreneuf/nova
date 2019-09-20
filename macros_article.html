@@ -55,7 +55,6 @@
 	<MACRO NAME="ARTICLE_MOTSCLES" />
 	<MACRO NAME="ARTICLE_TOC" />
 	<MACRO NAME="ARTICLE_ADDENDUM" />
-	<MACRO NAME="ARTICLE_BOUTONS" />
 	<MACRO NAME="ARTICLE_TEXTE" />
 	<MACRO NAME="ARTICLE_BIBLIOGRAPHIE" />
 	<MACRO NAME="ARTICLE_ANNEXE" />
@@ -448,7 +447,14 @@
 			<ELSE />
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+			<div class="row">
+				<div class="col-md-9">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+				</div>
+				<div class="col-md-3">
+					<MACRO NAME="ARTICLE_BOUTONS" />
+				</div>
+			</div>
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->

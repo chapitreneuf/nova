@@ -6,14 +6,6 @@
 <DEFMACRO NAME="HOME_INIT">
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
-
-	<!--[ Nombre maximum d'actualités présentées sur la home ]-->
-	<LET VAR="home_max_actualites">3</LET>
-
-	<!--[ Colonne de droite ]-->
-	<LET VAR="col_right_contents" GLOBAL="1">
-		<MACRO NAME="HOME_ACTUALITES" />
-	</LET>
 </DEFMACRO>
 
 /**
@@ -129,28 +121,6 @@
 				</ul>
 				<a class="home-rubrique__more" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE]</a>
 			</div>
-		</AFTER>
-	</LOOP>
-</DEFMACRO>
-
-/**
- * Actualités.
- */
-<DEFMACRO NAME="HOME_ACTUALITES">
-	<LOOP NAME="home_actualites" TABLE="textes" WHERE="type='actualite'" SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%HOME_MAX_ACTUALITES]">
-		<BEFORE>
-			<section id="home-actualites__section" class="home-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" ICON="newspaper" SECTION_ID="home-actualites" />
-				<ul class="home-actualites_section__list">
-		</BEFORE>
-		<DO>
-			<li class="home-actualites-section__item">
-				<a href="[#ID|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" /></a>
-			</li>
-		</DO>
-		<AFTER>
-				</ul>
-			</section>
 		</AFTER>
 	</LOOP>
 </DEFMACRO>

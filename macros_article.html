@@ -10,6 +10,9 @@
 	<!--[ Option : nombre de documents "du même auteur" affichés dans les articles ]-->
 	<LET VAR="article_meme_auteur_max_documents" GLOBAL="1">3</LET>
 
+	<!--[ Pas de colonne de droite sur les articles ]-->
+	<LET VAR="side_contents" GLOBAL="1"></LET>
+
 	<!--[ Détecter les entrées d'index et créer une globale %HASENTRIES ]-->
 	<LOOP NAME="hasentries" TABLE="relations, entries, entrytypes" SELECT="COUNT(entries.id)" WHERE="nature = 'E' AND id1 = [#ID] AND id2 = entries.id AND class != 'indexavances'">
 		<IF COND="[#NBRESULTATS] GT 0">

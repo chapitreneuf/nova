@@ -4,6 +4,9 @@
  * Initialisation des variables de base (communes à toutes les pages).
  */
 <DEFMACRO NAME="BASE_INIT">
+	<!--[ Option : nombre maximum d'actualités présentées dans la colonne de droite ]-->
+	<LET VAR="side_max_actualites" GLOBAL="1">3</LET>
+
 	<!--[ Langue principale du site ]-->
 	<LET VAR="mainlang" GLOBAL="1">[#OPTIONS.METADONNEESSITE.LANGUEPRINCIPALE]</LET>
 
@@ -89,6 +92,11 @@
 		<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] lang-[#LANGUE] dir-[#DIR]</LET>
 	</IF>
+
+	<!--[ Colonne de droite ]-->
+	<LET VAR="side_contents" GLOBAL="1">
+		<MACRO NAME="BASE_SIDE_CONTENTS" />
+	</LET>
 </DEFMACRO>
 
 /**
@@ -411,3 +419,35 @@
 		</AFTER>
 	</LOOP>
 </DEFFUNC>
+
+/**
+ * Contenu par défaut de la sidebar.
+ * Personnalisable dans chacun des templates en surchargeant la globale [%SIDE_CONTENTS].
+ */
+<DEFMACRO NAME="BASE_SIDE_CONTENTS">
+	<MACRO NAME="BASE_SIDE_ACTUALITES" />
+</DEFMACRO>
+
+/**
+* Actualités dans la sidebar.
+*/
+<DEFMACRO NAME="BASE_SIDE_ACTUALITES">
+	<LOOP NAME="base_side_actualites" TABLE="textes" WHERE="type='actualite'"
+		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
+		<BEFORE>
+			<section id="side-actualites__section" class="home-actualites__section">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" ICON="newspaper" SECTION_ID="side-actualites" />
+				<ul class="side-actualites_section__list">
+		</BEFORE>
+		<DO>
+			<li class="side-actualites-section__item">
+				<a href="[#ID|makeurlwithid]">
+					<FUNC NAME="BASE_ML_TITRE" /></a>
+			</li>
+		</DO>
+		<AFTER>
+			</ul>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>

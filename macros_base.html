@@ -426,6 +426,7 @@
  */
 <DEFMACRO NAME="BASE_SIDE_CONTENTS">
 	<MACRO NAME="BASE_SIDE_ACTUALITES" />
+	<MACRO NAME="BASE_SIDE_RSS" />
 </DEFMACRO>
 
 /**
@@ -447,6 +448,49 @@
 		</DO>
 		<AFTER>
 			</ul>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affichage des flux RSS dans la sidebar.
+ */
+<DEFMACRO NAME="BASE_SIDE_RSS">
+	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication'" ORDER="rank">
+		<BEFORE>
+			<section id="side-rss__section" class="side-actualites__section">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RSS]" />
+				<ul class="side-rss_section__list">
+		</BEFORE>
+		<DO>
+			<BLOCK ID="42" REFRESH="1800">
+				<LOOP NAME="rss" URL="[#URLFIL]">
+					<li class="side-rss-item">
+						<h2 class="side-rss-item__title"><FUNC NAME="ML_TITRE" /></h2>
+						<ul class="side-rss-item__entries">
+							<IF COND="![#NOMBREMAXITEMS]">
+								<LET VAR="nombremaxitems">10</LET>
+							</IF>
+							<LOOP NAME="rssitem" LIMIT="0, [#NOMBREMAXITEMS]">
+								<IF COND="[#TITLE]">
+									<li class="side-rss-item__entry">
+										<a href="[#LINK|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">
+											[#TITLE|cleanBadChars]
+										</a>
+									</li>
+								</IF>
+							</LOOP>
+							<IF COND="[#URL]">
+								<a class="side-rss-item__link external" rel="external" href="[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@VISITER_SITE]</a>
+							</IF>
+						</ul>
+					</li>
+				</LOOP>
+			</BLOCK>
+		</DO>
+		<AFTER>
+				</ul>
 			</section>
 		</AFTER>
 	</LOOP>

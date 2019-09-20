@@ -65,6 +65,17 @@ window.fnLoader = {
 			// Run when page is ready + on viwport resize
 			$(setSidenotesPosition);
 			$(window).resize(setSidenotesPosition);
+		},
+
+		// Zoom
+		zoom: function () {
+			$(function () {
+				$("[data-set-zoom-level]").click(function () {
+					var zoomLevel = $(this).attr("data-set-zoom-level");
+					if (!zoomLevel) return;
+					$("body").attr("data-zoom-level", zoomLevel);
+				});
+			});
 		}
 	}
 };

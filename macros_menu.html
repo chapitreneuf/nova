@@ -7,6 +7,7 @@
 	<nav id="main-menu" class="main-menu">
 		<div class="main_menu__section">
 			<MACRO NAME="MENU_SITELANG" />
+			<MACRO NAME="MENU_ZOOM" />
 			<MACRO NAME="MENU_BRAND" />
 			<MACRO NAME="MENU_SEARCH" />
 		</div>
@@ -52,6 +53,23 @@
 			</AFTER>
 		</LOOP>
 	</IF>
+</DEFMACRO>
+
+/**
+ * Boutons d'ajustement de la taille de la police.
+ */
+<DEFMACRO NAME="MENU_ZOOM">
+	<section class="main-menu__zoom">
+		<button class="main-menu__zoom-btn btn" data-set-zoom-level="small">
+			<span style="font-size:60%;">A</span>
+		</button>
+		<button class="main-menu__zoom-btn btn" data-set-zoom-level="medium">
+			<span style="font-size:80%;">A</span>
+		</button>
+		<button class="main-menu__zoom-btn btn" data-set-zoom-level="big">
+			<span style="font-size:100%;">A</span>
+		</button>
+	</section>
 </DEFMACRO>
 
 /**

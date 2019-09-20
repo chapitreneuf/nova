@@ -46,8 +46,9 @@
 
 /**
  * Nav entities : entité parente/précédente/suivante.
+ * @param {boolean} [show_buttons] - Afficher les boutons précédent/suivant.
  */
-<DEFMACRO NAME="NAV_ENTITIES">
+<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons">
 	<!--[ Pour les rubriques annuelles on loope sur la rubrique parente ]-->
 	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
 		<LET VAR="nav_id">[#IDPARENT]</LET>
@@ -56,7 +57,7 @@
 	</IF>
 	<nav class="nav-entities">
 		<div class="row">
-			<div class="col-xs-12 col-sm-10 nav-entities-col-parent">
+			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">10<ELSE/>12</IF> nav-entities-col-parent">
 				<!--[ Publications parentes ]-->
 				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 
@@ -68,17 +69,19 @@
 				  </LOOP>
 				</IF>
 			</div>
-			<div class="hidden-xs col-sm-2 nav-entities-col-siblings">
-				<IF COND="[#TYPE] NE 'imageaccroche'">
-					<!--[ Précédent ]-->
-					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
-					<!--[ Suivant ]-->
-					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
-				</IF>
-			</div>
+			<IF COND="[#SHOW_BUTTONS]">
+				<div class="hidden-xs col-sm-2 nav-entities-col-siblings">
+					<IF COND="[#TYPE] NE 'imageaccroche'">
+						<!--[ Précédent ]-->
+						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
+						<!--[ Suivant ]-->
+						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
+					</IF>
+				</div>
+			</IF>
 		</div>
 	</nav>
-</DEFMACRO>
+</DEFFUNC>
 
 /**
  * Affiche le fil d'ariane.

@@ -54,12 +54,12 @@
 		<!--[ Directeur publication ]-->
 		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
 
-		<div class="row">
-			<div class="col-md-4">
+		<div>
+			<div class="float-left publi__header_accroche">
 				<!--[ Image d'accroche ]-->
 				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
 			</div>
-			<div class="col-md-8">
+			<div>
 				<!--[ Introduction ]-->
 				<IF COND="[#INTRODUCTION]">
 					<section id="publi-introduction" class="publi__introduction">

@@ -122,7 +122,6 @@ h5.texte a {
     line-height:1em;
 
 }
-
 .main-menu__brand-caret {
     border:2px solid @color-5;
     -moz-border-radius: 50%;
@@ -132,11 +131,11 @@ h5.texte a {
     height:15px;
     float: left;
 }
-
 .main-menu__brand-link {
     font-weight: bold;
     text-transform: uppercase;
     .font-size(1.4);
+    padding-left: 9px;
 }
 
 .main-menu__list {
@@ -144,7 +143,6 @@ h5.texte a {
      margin: 0 0 0 10px;
      padding: 0;
 }
-
 .main-menu__item {
      margin: 0;
      padding: 0 7px;
@@ -152,11 +150,9 @@ h5.texte a {
      border-left:1px dashed @color-6;
 
 }
-
 .main-menu__item:last-child {
        border-left:none;
 }
-
 .main-menu__item:before {
       position:relative;
       top:-0.3em;
@@ -167,7 +163,6 @@ h5.texte a {
       display:inline-block;
       left:-7px;
 }
-
 .main-menu__item:last-child:before {
       border-left:1px dashed @color-6;   
 }
@@ -183,22 +178,31 @@ h5.texte a {
 .link-to-issues {color:@color-3;.font-size(1.6);}
 
 .nav-tabs {border-bottom: 2px dotted @color-4;margin-bottom: -1px;.font-size(1.4)}
-
 .nav-tabs .nav-item {margin-bottom: -2px;}
 
 .nav-link.active {border: 2px dotted transparent;}
 
 .main-menu__langs {padding: 0;}
+.main-menu__sitelang {padding-left:0;}
 .main-menu__lang {
     border:2px solid @color-5;
     width: max-content;
-    padding: 0 3px;
+    padding: 4px 3px;
     list-style-type: none;
     display: inline;
     font-weight: bold;
     text-transform: uppercase;
     .font-size(1.4);
 }
+
+.main-menu__zoom {text-align: right;padding-right:0;}
+.main-menu__zoom-btn {
+    border: 2px solid #bbb;
+    padding: 0 5px;
+    .font-size(1.4);
+}
+
+.main-menu__search-form {padding:0;}
 
 // HOME
 // ============

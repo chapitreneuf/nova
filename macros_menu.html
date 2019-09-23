@@ -5,7 +5,7 @@
  */
 <DEFMACRO NAME="MENU_MAIN">
 	<nav id="main-menu" class="main-menu">
-		<div class="main_menu__section">
+		<div class="main_menu__section row">
 			<MACRO NAME="MENU_SITELANG" />
 			<MACRO NAME="MENU_ZOOM" />
 			<MACRO NAME="MENU_BRAND" />
@@ -26,7 +26,7 @@
 		<LOOP NAME="menu_lang" TABLE="translations" ORDER="rank">
 			<BEFORE>
 				<IF COND="[#NBRESULTS] GT 1">
-					<section class="main-menu__sitelang">
+					<section class="main-menu__sitelang col-sm-6">
 						<ul class="main-menu__langs">
 				</IF>
 			</BEFORE>
@@ -59,7 +59,7 @@
  * Boutons d'ajustement de la taille de la police.
  */
 <DEFMACRO NAME="MENU_ZOOM">
-	<section class="main-menu__zoom">
+	<section class="main-menu__zoom col-sm-6">
 		<button class="main-menu__zoom-btn btn" data-set-zoom-level="small">
 			<span style="font-size:60%;">A</span>
 		</button>
@@ -76,7 +76,7 @@
  * Nom du diffuseur du site.
  */
 <DEFMACRO NAME="MENU_BRAND">
-	<section class="main-menu__brand">
+	<section class="main-menu__brand col-sm-12">
 		<div class="main-menu__brand-caret"></div>
 		<a class="main-menu__brand-link" href="[#OPTIONS.METADONNEESSITE.URLDIFFUSEURSITE]">[#OPTIONS.METADONNEESSITE.DIFFUSEURSITE]</a>
 	</section>
@@ -86,7 +86,7 @@
  * Barre de recherche.
  */
 <DEFMACRO NAME="MENU_SEARCH">
-	<section class="main-menu__search-form">
+	<section class="main-menu__search-form col-sm-12">
 		<FUNC NAME="NAV_SEARCH_FORM" />
 	</section>
 </DEFMACRO>

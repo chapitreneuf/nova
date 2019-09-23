@@ -57,7 +57,7 @@
 	</IF>
 	<nav class="nav-entities">
 		<div class="row">
-			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">10<ELSE/>12</IF> nav-entities-col-parent">
+			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">9<ELSE/>12</IF> nav-entities-col-parent">
 				<!--[ Publications parentes ]-->
 				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 
@@ -70,7 +70,7 @@
 				</IF>
 			</div>
 			<IF COND="[#SHOW_BUTTONS]">
-				<div class="hidden-xs col-sm-2 nav-entities-col-siblings">
+				<div class="hidden-xs col-sm-3 nav-entities-col-siblings">
 					<IF COND="[#TYPE] NE 'imageaccroche'">
 						<!--[ Précédent ]-->
 						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />

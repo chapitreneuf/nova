@@ -22,6 +22,7 @@ body {
 }
 hr {
     border-top:3px dotted @color-5;
+    margin: 30px 0;
 }
 
 // FONTS
@@ -207,11 +208,10 @@ h5.texte a {
 // HOME
 // ============
 
-.home-billets {padding:30px 15px 15px;text-align: justify;}
+.home-billets {padding-top:30px;text-align: justify;}
 
 .home-rubriques{padding:0 15px 30px;}
 
-.home-latest-issue {padding:0 7px 15px;}
 
 .section-header {color:@color-3;text-transform:uppercase;}
 
@@ -228,7 +228,7 @@ h5.texte a {
 
 // PUBLICATIONS
 // ============
-.publi__header_accroche {padding:0 15px 10px 0;}
+.publi__header_accroche {padding:0 15px 10px 15px;}
 .accroche__img {max-width: 100%;}
 .accroche__lien {.font-size(1.2);}
 
@@ -291,10 +291,18 @@ h5.texte a {
     color:@color-6;
 }
 h2#toc {border-bottom :1px dashed @color-6;}
-.page-shortcuts {margin-top:30px;}
+.page-shortcuts {margin-top:30px;margin-bottom:30px;}
+
+.article__abstract-contents{margin-bottom:30px;}
+
 .tab-pane {text-align: justify;}
 
 .article__text {text-align: justify;}
+.article_text__section--border {
+    border-top:1px dashed @color-6;
+    border-bottom:1px dashed @color-6;
+    padding-top: 5px;
+}
 
 .footnotecall {
     position: relative;
@@ -304,7 +312,7 @@ h2#toc {border-bottom :1px dashed @color-6;}
     top: -.5em;
 }
 
-.section-header {margin-top:30px}
+.article-fulltext section {margin-top:30px}
 
 .page-shortcuts__item {
     padding:0 5px;

@@ -25,6 +25,8 @@ window.fnLoader = {
 		// Sidenotes
 		sidenotes: function () {
 			var setSidenotesPosition = function () {
+				if ($("#sidenotes").length === 0) return;
+
 				var margin = 10;
 				var minTop = 0;
 				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 100;
@@ -63,6 +65,17 @@ window.fnLoader = {
 			// Run when page is ready + on viwport resize
 			$(setSidenotesPosition);
 			$(window).resize(setSidenotesPosition);
+		},
+
+		// Zoom
+		zoom: function () {
+			$(function () {
+				$("[data-set-zoom-level]").click(function () {
+					var zoomLevel = $(this).attr("data-set-zoom-level");
+					if (!zoomLevel) return;
+					$("body").attr("data-zoom-level", zoomLevel);
+				});
+			});
 		}
 	}
 };

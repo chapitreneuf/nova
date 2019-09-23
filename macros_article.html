@@ -10,6 +10,9 @@
 	<!--[ Option : nombre de documents "du même auteur" affichés dans les articles ]-->
 	<LET VAR="article_meme_auteur_max_documents" GLOBAL="1">3</LET>
 
+	<!--[ Pas de colonne de droite sur les articles ]-->
+	<LET VAR="side_contents" GLOBAL="1"></LET>
+
 	<!--[ Détecter les entrées d'index et créer une globale %HASENTRIES ]-->
 	<LOOP NAME="hasentries" TABLE="relations, entries, entrytypes" SELECT="COUNT(entries.id)" WHERE="nature = 'E' AND id1 = [#ID] AND id2 = entries.id AND class != 'indexavances'">
 		<IF COND="[#NBRESULTATS] GT 0">
@@ -46,7 +49,7 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="ARTICLE_MAIN">
-	<MACRO NAME="NAV_ENTITIES" />
+	<FUNC NAME="NAV_ENTITIES" />
 	<MACRO NAME="ARTICLE_HEADER" />
 	<MACRO NAME="ARTICLE_RACCOURCIS" />
 
@@ -55,7 +58,6 @@
 	<MACRO NAME="ARTICLE_MOTSCLES" />
 	<MACRO NAME="ARTICLE_TOC" />
 	<MACRO NAME="ARTICLE_ADDENDUM" />
-	<MACRO NAME="ARTICLE_BOUTONS" />
 	<MACRO NAME="ARTICLE_TEXTE" />
 	<MACRO NAME="ARTICLE_BIBLIOGRAPHIE" />
 	<MACRO NAME="ARTICLE_ANNEXE" />
@@ -69,7 +71,7 @@
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" SECTION_ID="authors-infos" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" SECTION_ID="translators-infos" />
 	<MACRO NAME="ARTICLE_LICENSE" />
-	<MACRO NAME="NAV_ENTITIES" />
+	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" />
 </DEFMACRO>
 
 /**
@@ -101,7 +103,7 @@
 		</IF>
 
 		<!--[ Auteurs ]-->
-		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_ID="article-author" WRAP_CLASS="article__author" HREF="#article__authors-infos"/>
+		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_ID="article-author" WRAP_CLASS="article__author" HREF="#authors-infos"/>
 
 		<!--[ Traducteurs ]-->
 		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="traducteur" WRAP_ID="article-translator" WRAP_CLASS="article__author" PREPEND="[@TRADUCTION_DE] " HREF="#article__translators-infos" />
@@ -448,7 +450,14 @@
 			<ELSE />
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+			<div class="row">
+				<div class="col-md-9">
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+				</div>
+				<div class="col-md-3">
+					<MACRO NAME="ARTICLE_BOUTONS" />
+				</div>
+			</div>
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->

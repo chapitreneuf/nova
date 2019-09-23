@@ -42,14 +42,40 @@
 				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
 			</div>
 			<div class="issue__infos-col col-sm-8">
-				<FUNC NAME="PUBLICATION_HEADER" CLIQUABLE="1" />
-				<!--[ Directeur publication ]-->
-				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="issue__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+				<MACRO NAME="NUMEROS_ISSUE_INFOS" />
 			</div>
 		</div>
 		<div class="row">
 			<!--[ Bouton sommaire ]-->
 			<a class="issue__btn btn" href="[#ID|makeurlwithid]">[@SOMMAIRE_DE_CE_NUMERO]</a>
 		</div>
+	</div>
+</DEFMACRO>
+
+/**
+ * Informations sur le numéro.
+ */
+<DEFMACRO NAME="NUMEROS_ISSUE_INFOS">
+	<div class="issue__infos">
+		<!--[ Titre ]-->
+		<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
+
+		<!--[ Sous-titre ]-->
+		<IF COND="[#SOUSTITRE]">
+			<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
+		</IF>
+
+		<!--[ Altertitles ]-->
+		<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+
+		<!--[ Directeur publication ]-->
+		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+
+		<!--[ Introduction ]-->
+		<IF COND="[#INTRODUCTION]">
+			<section id="publi-introduction" class="publi__introduction">
+				<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
+			</section>
+		</IF>
 	</div>
 </DEFMACRO>

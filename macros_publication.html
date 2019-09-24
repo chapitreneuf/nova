@@ -42,14 +42,13 @@
 	<header class="publi__header">
 
 		<div class="row">
-		
-			<div class="col-sm-3 publi__header_accroche">
+
+			<div class="col-sm-4 publi__header_accroche">
                             <!--[ Image d'accroche ]-->
                             <FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
 			</div>
-			
-			<div class="col-sm-9">
-			
+
+			<div class="col-sm-8">
                             <!--[ Titre ]-->
                             <h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
 
@@ -63,15 +62,17 @@
 
                             <!--[ Directeur publication ]-->
                             <FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-
-                            <!--[ Introduction ]-->
+			</div>
+			
+			<div class="col-sm-12">
+			 <!--[ Introduction ]-->
                             <IF COND="[#INTRODUCTION]">
                                 <section id="publi-introduction" class="publi__introduction">
                                     <FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
                                 </section>
                             </IF>
-                            
 			</div>
+
 		</div>
 
 		<!--[ Description ouvrage ]-->

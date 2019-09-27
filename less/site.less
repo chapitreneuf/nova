@@ -297,7 +297,8 @@ h2#toc {border-bottom :1px dashed @color-6;}
 
 .tab-pane {text-align: justify;}
 
-.article__text {text-align: justify;}
+.article__text {text-align: justify;margin-top:30px;}
+.article__text h2 {margin-top:0;}
 .article_text__section--border {
     border-top:1px dashed @color-6;
     border-bottom:1px dashed @color-6;
@@ -369,6 +370,16 @@ td p {margin:0;}
 .media-credits{margin-top:-10px;color:@color-6;.font-size(1.4);text-align: center;}
 .media-urlaccesmedia{margin-top:-10px;color:@color-6;.font-size(1.4);text-align: center;margin-bottom:20px;}
 
+ul.texte, ol.texte {line-height:1.15em;margin:20px 0;}
+ul.texte li, ol.texte li {
+    list-style: square;
+    color: @color-5;
+}
+ul.texte li p, ol.texte li p {color: @color-1;}
+
+
+.nav-entities-col-siblings {text-align:right;}
+.entry__retour-btn {text-align:left;margin-top:20px;}
 
 // Numérotation des paragraphes avec CSS counters
 @media print, (min-width: @screen-md) {

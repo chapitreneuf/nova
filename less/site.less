@@ -313,7 +313,6 @@ h2#toc {border-bottom :2px dotted @color-6;}
 
 .article__text {text-align: justify;margin-top:30px;}
 .article__text h2 {margin-top:0;margin-left: -15px;}
-.article_text__section {padding-right:30px;}
 .article_text__section--border {
     border-top:2px dotted @color-6;
     border-bottom:2px dotted @color-6;
@@ -403,6 +402,21 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 
 .nav-entities-col-siblings {text-align:right;}
 .entry__retour-btn {text-align:left;margin-top:20px;}
+
+
+
+@media (max-width: @screen-xs) {
+    #sidenotes {display:none;}
+}
+@media (max-width: @screen-sm) {
+    .article__text-contents {padding: 0 15px;}
+}
+
+
+@media (min-width: @screen-sm) {
+    .article_text__section {padding-right:30px;}
+}
+
 
 // Numérotation des paragraphes avec CSS counters
 @media print, (min-width: @screen-md) {

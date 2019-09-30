@@ -109,9 +109,9 @@ h5.texte a {
 .main-menu__section-title {
      margin:30px 0 0;
      text-transform:uppercase;
-     .font-size(1.8);
+     .font-size(1.7);
 }
-
+.main-menu__item {.font-size(1.6);}
 .main-menu__brand {
     margin-bottom:8px; 
     border:2px solid @color-5;
@@ -148,7 +148,7 @@ h5.texte a {
      margin: 0;
      padding: 0 7px;
      line-height: 20px;
-     border-left:1px dashed @color-6;
+     border-left:1px dotted @color-6;
 
 }
 .main-menu__item:last-child {
@@ -159,13 +159,13 @@ h5.texte a {
       top:-0.3em;
       height:1em;
       width:12px;
-      border-bottom:1px dashed @color-6;
+      border-bottom:1px dotted @color-6;
       content:"";
       display:inline-block;
       left:-7px;
 }
 .main-menu__item:last-child:before {
-      border-left:1px dashed @color-6;   
+      border-left:1px dotted @color-6;   
 }
    
 .main-menu__section--partenaires {margin-top: 30px;}
@@ -175,12 +175,16 @@ h5.texte a {
     list-style-type: none;
     padding-left: 0;
 }
-
+.main-menu__logo {
+    padding-top: 10px;
+    padding-left: 10px;
+}
 .link-to-issues {color:@color-3;.font-size(1.6);}
 
-.nav-tabs {border-bottom: 2px dotted @color-4;margin-bottom: -1px;.font-size(1.4)}
+.nav-tabs {border-bottom: 2px dotted @color-6;margin-bottom: -1px;.font-size(1.4)}
 .nav-tabs .nav-item {margin-bottom: -2px;}
 
+.nav-tabs .nav-link.active{border-color: @color-6 @color-6 transparent @color-6;}
 .nav-link.active {border: 2px dotted transparent;}
 
 .main-menu__langs {padding: 0;}
@@ -214,7 +218,7 @@ h5.texte a {
 
 
 .section-header {color:@color-3;text-transform:uppercase;margin-top: 30px;}
-
+h2#home-latest-issue {margin-top: 0;}
 .home-rubrique__titre {font-weight:bold;}
 .home-rubrique {margin-top:15px;}
 .home-rubrique__more {color:@color-3;.font-size(1.6);margin-left: 23px;}
@@ -229,8 +233,9 @@ h5.texte a {
 // PUBLICATIONS
 // ============
 .publi__header_accroche {padding:0 15px 10px 15px;}
+.publi-title-text {text-transform: none;}
 .accroche__img {max-width: 100%;}
-.accroche__lien {.font-size(1.2);}
+.accroche__lien {.font-size(1.2);line-height:1.1em;}
 
 
 .publi__title {text-transform:uppercase;}
@@ -275,7 +280,9 @@ h5.texte a {
 // ========
 
 .article__sidenotes .notesbaspage {
-	.font-size(1.4);
+	.font-size(1.3);
+	line-height:1.2em;
+	text-align:left;
 }
 .article__title {color:@color-3;margin-top: 0;}
 .article__subtitle {
@@ -290,7 +297,7 @@ h5.texte a {
     font-family: @font-2;
     color:@color-6;
 }
-h2#toc {border-bottom :1px dashed @color-6;}
+h2#toc {border-bottom :2px dotted @color-6;}
 .page-shortcuts {margin-top:30px;margin-bottom:30px;}
 
 .article__abstract-contents{margin-bottom:30px;}
@@ -300,8 +307,8 @@ h2#toc {border-bottom :1px dashed @color-6;}
 .article__text {text-align: justify;margin-top:30px;}
 .article__text h2 {margin-top:0;}
 .article_text__section--border {
-    border-top:1px dashed @color-6;
-    border-bottom:1px dashed @color-6;
+    border-top:2px dotted @color-6;
+    border-bottom:2px dotted @color-6;
     padding-top: 5px;
 }
 
@@ -311,8 +318,10 @@ h2#toc {border-bottom :1px dashed @color-6;}
     line-height: 0;
     vertical-align: baseline;
     top: -.5em;
+    font-weight:bold;
 }
-
+.FootnoteSymbol {font-weight:bold;}
+.notesbaspage {.font-size(1.5);line-height:1.2em;}
 /*.article-fulltext section {margin-top:30px}*/
 
 .page-shortcuts__item {

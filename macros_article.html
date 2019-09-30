@@ -244,7 +244,7 @@
  */
 <DEFMACRO NAME="ARTICLE_POURCITER">
 	<!--[ Pour citer ]-->
-	<section class="article__quotation">
+	<section class="article__quotation col-md-10">
 		<div class="article__quotation-contents">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@POUR_CITER]" SECTION_ID="quotation" />
 			<IF COND="[%REFERENCE_PAPIER]">
@@ -291,7 +291,7 @@
 		<ELSE/>
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
 		</IF>
-		<div class="article__abstract-contents">
+		<div class="article__abstract-contents col-md-10">
 			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
 		</div>
 	</IF>
@@ -352,7 +352,7 @@
 		<LET VAR="TOC_COUNT" GLOBAL="1">0</LET>
 		<LOOP NAME="toc" TEXT="[#TEXTE]">
 			<BEFORE>
-				<section class="article__toc">
+				<section class="article__toc col-md-10">
 					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" SECTION_ID="toc" />
 					<div class="article__toc-contents">
 						<ul>
@@ -450,13 +450,15 @@
 			<ELSE />
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
-			<div class="row article_text__section--border">
+			<div class="col-md-10 article_text__section">
+                            <div class="row article_text__section--border">
 				<div class="col-md-9">
 					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
 				</div>
 				<div class="col-md-3">
 					<MACRO NAME="ARTICLE_BOUTONS" />
 				</div>
+                            </div>
 			</div>
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
 		</section>
@@ -565,7 +567,7 @@
  */
 <DEFMACRO NAME="ARTICLE_NOTESBASPAGE">
 	<IF COND="[#NOTESBASPAGE] AND [#TEXTE_ACCESSIBLE]">
-		<section class="article__footnotes">
+		<section class="article__footnotes col-md-10">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" SECTION_ID="footnotes" />
 			<div class="article__footnotes-contents">
 				[#NOTESBASPAGE]
@@ -595,7 +597,7 @@
 	<IF COND="[#TEXTE_ACCESSIBLE]">
 		<LOOP NAME="foreach" ARRAY="[#IMAGES]">
 			<BEFORE>
-				<section class="article__illustrations">
+				<section class="article__illustrations col-md-10">
 					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" SECTION_ID="illustrations" />
 					<div class="article__illustrations-contents">
 			</BEFORE>
@@ -644,7 +646,7 @@
 		ORDER="degree">
 		
 		<BEFORE>
-			<section class="article__persons-infos">
+			<section class="article__persons-infos col-md-10">
 				<IF COND="[#TYPE] EQ 'traducteur'">
 					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@TRADUCTEURS]<ELSE/>[@TRADUCTEUR]</IF></LET>
 				<ELSE />

@@ -82,10 +82,7 @@ h5.texte a {
 .main-container {background-color: @color-bg-1;}
 
 .main-content {background-color: @color-bg-1;padding: 0 30px 30px;}
-.main-content--horsart {
-    margin-right: 30px;
-    border-right: 1px solid #777;
-}
+
 .main-footer {
 	text-align: center;
 	.font-size(1.4);
@@ -229,7 +226,6 @@ h2#home-latest-issue {margin-top: 0;}
 // ========
 
 .home-actualites {padding:30px 0 0;border-left:1px solid @color-5}
-.side-actualites__section {margin-left:-15px;}
 .home-actualites__section {padding: 0 15px 30px;}
 .side-actualites_section__list {list-style-type:none;padding-left:0;}
 .side-actualites-section__item {margin:10px 0;}
@@ -406,15 +402,24 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 
 
 @media (max-width: @screen-xs) {
-    #sidenotes {display:none;}
+    
 }
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0 15px;}
+    #sidenotes {display:none;}
+    .side-actualites__section {padding:0 30px 30px;border-top: 2px dotted @color-6;}
+    .main-content {padding-bottom: 0;}
 }
 
 
 @media (min-width: @screen-sm) {
     .article_text__section {padding-right:30px;}
+    .main-content--horsart {
+        margin-right: 30px;
+        border-right: 1px solid #777;
+    }
+    .side-actualites__section {margin-left:-15px;}
+
 }
 
 

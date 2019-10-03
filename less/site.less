@@ -306,12 +306,6 @@ h2#quotation {border-bottom :2px dotted @color-6;}
 h2#authors-infos {border-bottom :2px dotted @color-6;}
 h2#license {border-bottom :2px dotted @color-6;}
 h2#bibliographie {border-bottom :2px dotted @color-6;}
-.article__footnotes {margin-left: -15px;}
-.article__illustrations {margin-left: -15px;}
-.article__quotation {margin-left: -15px;}
-.article__persons-infos {margin-left: -15px;}
-.article__license {margin-left: -15px;}
-.article__bibliographie {margin-left: -15px;}
 
 .page-shortcuts {margin-top:30px;margin-bottom:30px;}
 .page-shortcuts__link{.font-size(1.5);}
@@ -416,9 +410,7 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 
 .article__buttons-list {float: right;margin-right: -15px;}
 
-@media (max-width: @screen-xs) {
-    
-}
+
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0 15px;}
     #sidenotes {display:none;}
@@ -437,6 +429,14 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 
 }
 
+@media (min-width: @screen-md) {
+    .article__footnotes {margin-left: -15px;}
+    .article__illustrations {margin-left: -15px;}
+    .article__quotation {margin-left: -15px;}
+    .article__persons-infos {margin-left: -15px;}
+    .article__license {margin-left: -15px;}
+    .article__bibliographie {margin-left: -15px;}
+}
 
 // Numérotation des paragraphes avec CSS counters
 @media print, (min-width: @screen-md) {

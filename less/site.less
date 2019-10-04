@@ -252,8 +252,11 @@ h2#home-latest-issue {margin-top: 0;}
     margin: 15px 0 0;
      
 }
-
-.toc__li {list-style: square;color:@color-5;}
+.toc__contents--docannexes {padding-left:0;}
+.toc__contents--docannexes .toc__li--class-fichiers {list-style-type:none;padding-bottom:15px;}
+.toc__contents--docannexes .toc__title {.font-size(2);color: @color-2;}
+.toc__contents--docannexes .toc__title span {.font-size(1.5);}
+.toc__li {color:@color-5;}
 .toc__li--class-publications {list-style-type: none;margin: 20px 0;}
 .toc__author {color:@color-1;margin: 0;}
 .toc__title {color:@color-3;margin-bottom: 5px;}
@@ -307,9 +310,10 @@ h2#illustrations {border-bottom :2px dotted @color-6;}
 h2#quotation {border-bottom :2px dotted @color-6;}
 h2#authors-infos {border-bottom :2px dotted @color-6;}
 h2#license {border-bottom :2px dotted @color-6;}
-h2#bibliographie {border-bottom :2px dotted @color-6;}
+h2#biblio {border-bottom :2px dotted @color-6;}
 h2#translators-infos {border-bottom :2px dotted @color-6;}
-
+h2#appendix {border-bottom :2px dotted @color-6;}
+h2#docannexes {border-bottom :2px dotted @color-6;}
 
 .page-shortcuts {margin-top:30px;margin-bottom:30px;}
 .page-shortcuts__link{.font-size(1.5);}
@@ -340,7 +344,7 @@ h2#translators-infos {border-bottom :2px dotted @color-6;}
 }
 .FootnoteSymbol {font-weight:bold;color:@color-3;.font-size(1.6);padding-right: 5px;}
 .notesbaspage {.font-size(1.5);line-height:1.2em;}
-/*.article-fulltext section {margin-top:30px}*/
+
 
 .page-shortcuts__item {
     padding:0 5px;
@@ -361,6 +365,18 @@ h2#translators-infos {border-bottom :2px dotted @color-6;}
 .illustration__info {.font-size(1.5);}
 .article__persons-infos-contents {.font-size(1.5);}
 .article__license-contents {.font-size(1.5);}
+.article__biblio-contents {.font-size(1.5);text-align: justify;}
+.article__appendix-contents {.font-size(1.5);text-align: justify;}
+.article__appendix h1 {font-size: 2rem;font-weight: normal;color:@color-2;}
+.article__appendix h2 {font-size: 1.8rem;font-weight:bold;}
+.article__appendix h3 {font-size: 1.75rem;}
+.toc__contents--docannexes {.font-size(1.5);text-align: justify;}
+.article__biblio-contents h1 {font-size: 2rem;font-weight: normal;color:@color-2;}
+.article__biblio-contents h2 {font-size: 1.8rem;font-weight:bold;}
+.article__biblio-contents h3 {font-size: 1.75rem;}
+
+
+.article__biblio-contents 
 .article__index {margin-top:10px;}
 .entries-type {margin:0;font-weight: bold;}
 
@@ -449,8 +465,9 @@ ul.texte li p, ol.texte li p {color: @color-1;}
     .article__quotation {margin-left: -15px;}
     .article__persons-infos {margin-left: -15px;}
     .article__license {margin-left: -15px;}
-    .article__bibliographie {margin-left: -15px;}
-
+    .article__biblio {margin-left: -15px;}
+    .article__appendix {margin-left: -15px;}
+    .toc--docannexes {margin-left: -15px;}
 }
 
 // Numérotation des paragraphes avec CSS counters

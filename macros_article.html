@@ -529,7 +529,7 @@
  */
 <DEFMACRO NAME="ARTICLE_BIBLIOGRAPHIE">
 	<IF COND="[#BIBLIOGRAPHIE] AND [#TEXTE_ACCESSIBLE]">
-		<section class="article__biblio">
+		<section class="article__biblio col-md-10">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" SECTION_ID="biblio" />
 			<div class="article__biblio-contents">
 				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations(800, 'bibliographie')|media)]
@@ -544,7 +544,7 @@
 <DEFMACRO NAME="ARTICLE_ANNEXE">
 	<!--[ Annexe ]-->
 	<IF COND="[#ANNEXE] AND [#TEXTE_ACCESSIBLE]">
-		<section class="article__appendix">
+		<section class="article__appendix col-md-10">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" SECTION_ID="appendix" />
 			<div class="article__appendix-contents">
 				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations(800, 'annexe')|media]

@@ -5,8 +5,10 @@
 @import "inc/vars.less";
 @font-face {
 	font-family: "Ubuntu";
-	src: url('../webfonts/Ubuntu-R.ttf');
+	src: url('../webfonts/Ubuntu-C.ttf');
 }
+
+
 // ELEMENTS STANDARD
 // =================
 
@@ -36,7 +38,7 @@ h1 {
     color: @color-3;
     margin-top:30px;
     font-family: @font-2;
-    .font-size(2.8);
+    .font-size(3.3);
 }
 h1.texte, h2.texte, h3.texte, h4.texte, h5.texte, h6.texte {margin-top: 30px;}
 h1.texte {
@@ -46,21 +48,21 @@ h1.texte {
 }
 h2.texte  {
     font-family: @font-2;
-    .font-size(2.4);
+    .font-size(3);
 }
 h3.texte a {
     font-family: @font-2;
-    .font-size(2.2);
+    .font-size(2.7);
      color: @color-7;
 }
 h4.texte a {
     font-family: @font-2;
-    .font-size(2);
+    .font-size(2.4);
      color: @color-8;
 }
 h5.texte a {
     font-family: @font-2;
-    .font-size(1.8);
+    .font-size(2.1);
      color: @color-9;
 }
 .icon {
@@ -110,6 +112,7 @@ h5.texte a {
      margin:30px 0 0;
      text-transform:uppercase;
      .font-size(1.7);
+     font-family: @font-2;
 }
 .main-menu__item {.font-size(1.6);}
 .main-menu__brand {
@@ -167,7 +170,9 @@ h5.texte a {
 .main-menu__item:last-child:before {
       border-left:1px dotted @color-6;   
 }
-   
+
+.main-menu .publi-number {.font-size(1.6);}
+
 .main-menu__section--partenaires {margin-top: 30px;}
 .main-menu__section--issues {margin-bottom:7px;}
 
@@ -243,7 +248,7 @@ h2#home-latest-issue {margin-top: 0;}
 
 .publi__title {text-transform:uppercase;}
 .publi-title {padding-left: 11px;.font-size(1.5);}
-.publi-number {margin-right: 5px;font-weight: bold;}
+.publi-number {margin-right: 5px;font-weight: bold;.font-size(3);}
 
 .toc {margin-top:30px;}
 .toc__contents {padding-left: 30px;}

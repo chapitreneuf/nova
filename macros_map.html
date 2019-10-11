@@ -1,0 +1,94 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="MAP_INIT">
+	<LET VAR="titre_page" GLOBAL="1">
+		[@PLAN_DU_SITE] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="MAP_MAIN">
+	<div class="map">
+		<MACRO NAME="MAP_TITLE" />
+		<MACRO NAME="MAP_TREE" />
+	</div>
+</DEFMACRO>
+
+/**
+ * Titre de la page.
+ */
+<DEFMACRO NAME="MAP_TITLE">
+	<h1 class="map__title main-title">[@PLAN_DU_SITE]</h1>
+</DEFMACRO>
+
+/**
+ * Plan du site.
+ */
+<DEFMACRO NAME="MAP_TREE">
+	<LET VAR="idrec">0</LET>
+	<LET VAR="classes">'publications'</LET>
+
+	<LOOP NAME="map_tree" 
+		TABLE="entities, types" 
+		SELECT="entities.id, type, class" 
+		WHERE="idparent = '[#IDREC]' AND types.id = entities.idtype AND class IN ([#CLASSES]) AND identifier != 'partenaires' AND identifier != 'reseaux-sociaux' AND type !='souspartie'" ORDER="entities.rank">
+		<BEFORE>
+			<IF COND="[#IDREC] EQ 1"><ul class="map"><ELSEIF COND="[#IDREC] GT 1"/><ul></IF>
+		</BEFORE>
+
+		<DO>
+			<IF COND="[#CLASS] NE 'publications' OR [#IDREC] NE 0">
+				<li class="[#CLASS]">
+			</IF>
+
+			<SWITCH TEST="[#CLASS]">
+				<!--[ Textes ]-->
+				<DO CASE="textes">
+					<LOOP NAME="map_tree_textes_titre" SELECT="id,titre,documentcliquable,langue" TABLE="textes" WHERE="id = '[#ID]'">
+						<!--[ Titre ]-->
+						<p class="toc__title">
+								<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>	
+						</p>
+					</LOOP>
+				</DO>
+
+				<!--[ Fichiers ]-->
+				<DO CASE="fichiers">
+					<LOOP NAME="map_tree_fichiers_titre" SELECT="id, titre, document" TABLE="fichiers" WHERE="id = '[#ID]'">
+						<a href="[#ID|makeurlwithfile]" class="[#TYPE]">
+							[#TITRE] ([#DOCUMENT|nicefilesize])
+						</a>
+					</LOOP>
+				</DO>
+
+				<!--[ Publications ]-->
+				<DO CASE="publications">
+					<LOOP NAME="map_tree_publications_titre" SELECT="id, titre, numero, datepubli, datepublipapier, type" TABLE="publications" WHERE="id = '[#ID]'">
+						<IF COND="[#IDREC] EQ 0">
+							<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+						<ELSE />
+							<FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" />
+						</IF>
+					</LOOP>
+				</DO>
+			</SWITCH>
+
+			<LET VAR="idrec">[#ID]</LET>
+			<LET VAR="classes"><IF COND="[#TYPE] EQ 'collection'">'publications','textes'<ELSE/>'publications'</IF></LET>
+			<LOOP NAME="map_tree"></LOOP>
+
+			<IF COND="[#CLASS] NE 'publications' OR [#IDREC] NE 0">
+				</li>
+			</IF>
+		</DO>
+
+		<AFTER>
+			<IF COND="[#IDREC] GT 0"></ul></IF>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>

@@ -1,0 +1,109 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="IMAGE_INIT">
+	<LET VAR="titre_page">
+		[#TITRE|removenotes|textebrut] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
+
+	<!--[ Fix de la boucle prev/next ]-->
+	<MACRO NAME="NAV_ENTITIES_FIX" />
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="IMAGE_MAIN">
+	<FUNC NAME="NAV_ENTITIES" />
+	<MACRO NAME="IMAGE_TITLE" />
+	<MACRO NAME="IMAGE_THUMBNAIL" />
+	<MACRO NAME="IMAGE_CAPTION" />
+	<MACRO NAME="IMAGE_DESCRIPTION" />
+	<MACRO NAME="IMAGE_AUTHORS" />
+	<MACRO NAME="IMAGE_CREDITS" />
+	<MACRO NAME="IMAGE_FILE" />
+</DEFMACRO>
+
+/**
+ * Affichage de l'image.
+ */
+<DEFMACRO NAME="IMAGE_THUMBNAIL">
+	<LET VAR="image">
+		<IF COND="[#CLASS] EQ 'liens'">
+			[#CAPTUREDECRAN|vignette(480)]
+		<ELSEIF COND="[#TYPE|strpos('image')] SNE false AND [#DOCUMENT]" />
+			[#DOCUMENT|vignette(480)]
+		<ELSEIF COND="[#VIGNETTE]" />
+			[#VIGNETTE|vignette(480)]
+		</IF>
+	</LET>
+	<IF COND="[#IMAGE]">
+		<a href="[#ID|makeurlwithfile]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim]" /></a>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Titre h1 de l'image.
+ */
+<DEFMACRO NAME="IMAGE_TITLE">
+	<h1 class="main-title image__title">[#TITRE]</h1>
+</DEFMACRO>
+
+/**
+ * Légende de l'image.
+ */
+<DEFMACRO NAME="IMAGE_CAPTION">
+	<IF COND="[#LEGENDE]">
+		<div class="image__caption">[#LEGENDE]</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Description de l'image.
+ */
+<DEFMACRO NAME="IMAGE_DESCRIPTION">
+	<IF COND="[#DESCRIPTION]">
+		<h2>[@DESCRIPTION]</h2>
+		<div class="image__description">[#DESCRIPTION]</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Auteurs de l'image.
+ */
+<DEFMACRO NAME="IMAGE_AUTHORS">
+	<LOOP NAME="image_authors" SELECT="prenom, nomfamille" TABLE="auteurs" WHERE="type = 'auteur' AND iddocument = '[#ID]'" ORDER="rank">
+		<BEFORE>
+			<h2><IF COND="[#NBRESULTS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></h2>
+			<p class="image__author">
+		</BEFORE>
+		<DO>
+			[#PRENOM] <span class="family-name">[#NOMFAMILLE]</span>
+		</DO>
+		<AFTER>
+			</p>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Crédits de l'image.
+ */
+<DEFMACRO NAME="IMAGE_CREDITS">
+	<IF COND="[#CREDITS]">
+		<h2>[@CREDITS]</h2>
+		<p class="image__credits">[#CREDITS]</p>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Chemin de l'image.
+ */
+<DEFMACRO NAME="IMAGE_FILE">
+	<h2>[@FICHIER_ORIGINAL]</h2>
+	<p class="image__file">
+		<a href="[#ID|makeurlwithfile]">[#DOCUMENT|basename]</a> ([#DOCUMENT|getFileMime] &#8211; [#DOCUMENT|nicefilesize])
+	</p>
+</DEFMACRO>

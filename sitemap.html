@@ -1,0 +1,51 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+<ESCAPE>
+<?php
+header('Content-type: application/xml; charset='.C::get('charset'));
+echo '<?xml version="1.0" encoding="'.C::get('charset').'"?>'."\n";
+?>
+</ESCAPE>
+
+<urlset xmlns="http://www.google.com/schemas/sitemap/0.84" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.google.com/schemas/sitemap/0.84 http://www.google.com/schemas/sitemap/0.84/sitemap.xsd">
+
+	<!--[ Accueil ]-->
+	<url>
+		<loc>[#SITEINFOS.URL]/</loc>
+		<LOOP NAME="sitemap_lastmodified" SELECT="MAX(upd)" TABLE="entities">
+			<lastmod>[#SITEINFOS.UPD|formateddate("%Y-%m-%dT%T")]</lastmod>
+		</LOOP>
+		<changefreq>always</changefreq>
+		<priority>1.0</priority>
+	</url>
+
+	<!--[ Entités ]-->
+	<LOOP NAME="sitemap_entities" SELECT="id, modificationdate" TABLE="entities" WHERE="status GT 0">
+		<url>
+			<loc>[#SITEINFOS.URL]/[#ID|makeurlwithid]</loc>
+			<lastmod>[#MODIFICATIONDATE|formateddate("%Y-%m-%dT%T")]</lastmod>
+			<changefreq>daily</changefreq>
+			<priority>0.9</priority>
+		</url>
+	</LOOP>
+
+	<!--[ Entrées d'index ]-->
+	<LOOP NAME="sitemap_entries" SELECT="id, upd" TABLE="entries" WHERE="status GT 0">
+		<url>
+			<loc>[#SITEINFOS.URL]/[#ID|makeurlwithid]</loc>
+			<lastmod>[#UPD|formateddate("%Y-%m-%dT%T")]</lastmod>
+			<changefreq>daily</changefreq>
+			<priority>0.5</priority>
+		</url>
+	</LOOP>
+
+	<!--[ Personnes ]-->
+	<LOOP NAME="sitemap_persons" SELECT="id, upd" TABLE="persons" WHERE="status GT 0">
+		<url>
+			<loc>[#SITEINFOS.URL]/[#ID|makeurlwithid]</loc>
+			<lastmod>[#UPD|formateddate("%Y-%m-%dT%T")]</lastmod>
+			<changefreq>daily</changefreq>
+			<priority>0.5</priority>
+		</url>
+	</LOOP>
+</urlset>

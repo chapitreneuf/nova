@@ -33,7 +33,7 @@
 	</LET>
 
 	<!--[ Barrière mobile ]-->
-	<IF COND="[#TYPE] NE 'article' OR [#DATEPUBLI] LE today() OR [#LODELUSER.RIGHTS] GE 5">
+	<IF COND="[#DATEPUBLI] LE today() OR [#LODELUSER.RIGHTS] GE 5">
 		<LET VAR="texte_accessible">1</LET>
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] article-fulltext</LET>
 	</IF>
@@ -135,7 +135,7 @@
  * Boîte d'info affichée si barrière mobile.
  */
 <DEFMACRO NAME="ARTICLE_INFO_BM">
-	<IF COND="[#TYPE] EQ 'article' AND [#DATEPUBLI] GT today()">
+	<IF COND="[#DATEPUBLI] GT today()">
 		<p class="article__info-bm alert alert-info" role="alert">[@AVERTISSEMENT_TEXTE_INTEGRAL] [#DATEPUBLI|formateddate('%B %Y')].</p>
 	</IF>
 </DEFMACRO>

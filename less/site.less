@@ -216,6 +216,23 @@ h5.texte a {
 
 .main-menu__search-form {padding:0;}
 
+// Main menu toogler (hamburger button)
+.main-menu-toggler-container {
+    text-align: right;
+}
+
+.main-menu-toggler {
+    background-color: @color-2;
+    margin: 10px;
+}
+
+.main-menu-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-size: 100% 200%;
+    width: 2em;
+    height: 2em;
+}
+
 // HOME
 // ============
 
@@ -242,7 +259,7 @@ h2#home-latest-issue {margin-top: 0;}
 // ============
 .publi__header_accroche {padding:0 15px 10px 15px;}
 .publi-title-text {text-transform: none;color:@color-3;}
-.accroche__img {max-width: 100%;}
+.accroche__img, .image__thumbnail {max-width: 100%;}
 .accroche__lien {.font-size(1.2);line-height:1.1em;}
 
 
@@ -509,7 +526,6 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 		}
 	}
 }
-
 
 // INCLUSION DES STYLES DE PERSONNALISATION
 // IMPORTANT : ne rien ajouter après cette ligne.

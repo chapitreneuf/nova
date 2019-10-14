@@ -11,6 +11,15 @@ window.fnLoader = {
 
 	// Déclaration des fonctions à charger par défaut
 	fns: {
+		// Hamburger menu
+		hamburger: function () {
+			$(function () {
+				$("#main-menu-toggler").on("click", function () {
+					$("#main-menu-container").toggleClass("d-none");
+				});
+			});
+		},
+
 		// Ajouter des ancres aux paragraphes
 		pAnchors: function () {
 			// Ready

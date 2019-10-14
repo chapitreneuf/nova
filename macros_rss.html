@@ -1,0 +1,253 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Initialisation de la page.
+ */
+<DEFMACRO NAME="RSS_INIT">
+
+</DEFMACRO>
+
+/**
+ * Macro principale appelée par le template.
+ */
+<DEFMACRO NAME="RSS_MAIN">
+	<MACRO NAME="RSS_HEADER" />
+	<rss version="2.0">
+		<channel>
+			<MACRO NAME="RSS_DOCUMENT" />
+			<MACRO NAME="RSS_INDEX_AUTEURS" />
+			<MACRO NAME="RSS_INDEX_GENERAL" />
+			<MACRO NAME="RSS_INDIVIDU" />
+		</channel>
+	</rss>
+</DEFMACRO>
+
+/**
+ * Header XML.
+ */
+<DEFMACRO NAME="RSS_HEADER">
+	<?php
+	header("Content-type: application/xml");
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	?>
+</DEFMACRO>
+
+/**
+ * Flux RSS des documents.
+ */
+<DEFMACRO NAME="RSS_DOCUMENT">
+	<LOOP NAME="rss_document" TABLE="entities, types"  WHERE="entities.id='[#IDENTITY]' AND entities.idtype=types.id  AND entities.status GT 0" LIMIT="0,1">
+		<DO>
+			<IF COND="([#TPL] EQ 'sommaire') OR ([#TPL] EQ 'article')">
+				<title>[#G_TITLE|textebrut|htmlspecialchars]</title>
+				<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+				<IF COND="[#ID|get_dc_fields('description')]">
+					<description>[#ID|get_dc_fields('description')|textebrut|htmlspecialchars]</description>
+				</IF>
+
+				<LOOP NAME="rss_document_parent"  TABLE="relations, entities"  WHERE="id2 = '[#ID]' AND nature = 'P' AND id1 = entities.id" ORDER="degree DESC">
+					<category domain="[#CURRENTURL|dirname]/[#ID|makeurlwithid]">
+						[#G_TITLE|couper(50)]<IF COND="[#G_TITLE|hasbeencut]">...</IF>
+					</category>
+				</LOOP>
+
+				<language>fr</language>
+				<pubDate>[#CREATIONDATE|formateddate('%a, %d %b %Y %T %z')]</pubDate>
+				<lastBuildDate>[#MODIFICATIONDATE|formateddate('%a, %d %b %Y %T %z')]</lastBuildDate>
+				<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+				<ttl>0</ttl>
+
+				<IF COND="[#TPL] EQ 'sommaire'">
+					<FUNC NAME="RSS_CHILDREN" TYPENAME="[#TYPENAME]" IDPARENT="[#ID]" />
+				</IF>
+			</IF>
+		</DO>
+		<ALTERNATIVE>
+			<IF COND="(![#IDENTITY]) AND (![#QUERY])">
+				<MACRO NAME="RSS_HOME" />
+			</IF>
+		</ALTERNATIVE>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affiche les enfants de l'entité courante.
+ * @param {integer} idparent - Identifiant du parent.
+ * @param {string} [typename] - N'afficher que les élements de ce type.
+ */
+<DEFFUNC NAME="RSS_CHILDREN" REQUIRED="idparent" OPTIONAL="typename">
+	<LOOP NAME="rss_children" TABLE="relations, entities, types" WHERE="id1 = '[#IDPARENT]' AND nature = 'P' AND id2 = entities.id AND degree='1' AND entities.status GT 0 AND entities.idtype=types.id">
+		<DO>
+			<IF COND="[#CLASS] EQ 'publications' AND [#TYPE] EQ 'souspartie'">
+				<FUNC NAME="RSS_CHILDREN" TYPENAME="[#TYPENAME]" IDPARENT="[#ID]" />
+			<ELSEIF COND="![#TYPENAME] OR ([#TYPE] EQ [#TYPENAME])" />
+				<item>
+					<title>[#G_TITLE|textebrut|htmlspecialchars] </title>
+					<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+					<IF COND="[#ID|get_dc_fields('description')]">
+						<description>[#ID|get_dc_fields('description')|textebrut|htmlspecialchars]</description>
+					</IF>
+					<pubDate>[#CREATIONDATE|formateddate('%a, %d %b %Y %T %z')]</pubDate>
+					<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+				</item>
+			</IF>
+		</DO>
+	</LOOP>
+</DEFFUNC>
+
+/**
+ * Flux RSS du site.
+ */
+<DEFMACRO NAME="RSS_HOME">
+	<!--[ Flux page d'accueil : dix derniers documents publiés ]-->
+	<LOOP NAME="rss_home" TABLE="sites" WHERE="name='[#SITE]' AND status GT 0" LIMIT="0,1">
+		<title>[#TITLE]</title>
+	</LOOP>
+	<link>[#CURRENTURL|dirname]</link>
+	<IF COND="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE]">
+		<description>[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark]</description>
+	</IF>
+	<language>fr</language>
+	<LOOP NAME="rss_home_latest_textes" TABLE="textes" LIMIT="0,10" ORDER="datepubli DESC">
+		<DO>
+			<item>
+				<title>[#G_TITLE|textebrut|htmlspecialchars]</title>
+				<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+				<IF COND="[#RESUME|textebrut]">
+					<description>[#RESUME|textebrut]</description>
+					<ELSE />
+					<description>[#TEXTE|textebrut|couper(1500)]</description>
+				</IF>
+				<pubDate>[(#DATEPUBLI|formateddate('%a, %d %b %Y %T %z'))]</pubDate>
+				<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+			</item>
+		</DO>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Flux RSS des index de personnes.
+ */
+<DEFMACRO NAME="RSS_INDEX_AUTEURS">
+	<LOOP NAME="rss_index_auteurs_types" TABLE="persontypes" WHERE="persontypes.id='[#IDENTITY]'">
+		<DO>
+			<title>[#TITLE]</title>
+			<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+			<description>[@INDEX]</description>
+			<language>fr</language>
+			<ttl>0</ttl>
+
+			<LOOP NAME="rss_index_auteurs_entries" TABLE="persons" WHERE="persons.idtype='[#ID]'" LIMIT="0,10" ORDER="upd DESC">
+				<item>
+					<title>[#G_FIRSTNAME|removenotes] [#G_FAMILYNAME|removenotes]</title>
+					<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+					<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+					<pubDate>[#UPD]</pubDate>
+				</item>
+			</LOOP>
+		</DO>
+	</LOOP>
+	<LOOP NAME="rss_index_auteurs" TABLE="persons, persontypes" WHERE="persons.id='[#IDENTITY]' AND persons.idtype = persontypes.id">
+		<DO>
+			<title>[#TITLE] : [#G_FIRSTNAME|removenotes] [#G_FAMILYNAME|removenotes]</title>
+			<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+			<description>[@PUBLICATIONS_DE] [#TITLE] [#G_FIRSTNAME] [#G_FAMILYNAME]</description>
+			<language>fr</language>
+			<ttl>0</ttl>
+
+			<LOOP NAME="rss_index_auteurs_articles" TABLE="relations, entities" WHERE="relations.id2 = [#ID] AND relations.id1 = entities.id AND entities.status GT 0" LIMIT="0,10" ORDER="creationdate DESC">
+				<item>
+					<title>[#G_TITLE|textebrut|htmlspecialchars]</title>
+					<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+
+					<IF COND="[#ID|get_dc_fields('description')]">
+						<description>[#ID|get_dc_fields('description')|textebrut|htmlspecialchars]</description>
+					</IF>
+
+					<pubDate>[#CREATIONDATE|formateddate('%a, %d %b %Y %T %z')]</pubDate>
+					<lastBuildDate>[#MODIFICATIONDATE|formateddate('%a, %d %b %Y %T %z')]</lastBuildDate>
+					<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+				</item>
+			</LOOP>
+		</DO>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Flux RSS des index.
+ */
+<DEFMACRO NAME="RSS_INDEX_GENERAL">
+	<LOOP NAME="rss_index_general_types" TABLE="entrytypes" WHERE="entrytypes.id='[#IDENTITY]'">
+		<DO>
+			<title>[#TITLE]</title>
+			<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+			<description>[@DERNIERES_ENTREES_INDEX]</description>
+			<language>fr</language>
+			<ttl>0</ttl>
+
+			<LOOP NAME="rss_index_general_entries" TABLE="entries" WHERE="entries.idtype='[#ID]'" LIMIT="0,10" ORDER="upd DESC">
+				<item>
+					<title>[#G_NAME|removenotes]</title>
+					<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+					<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+					<pubDate>[#UPD]</pubDate>
+				</item>
+			</LOOP>
+		</DO>
+	</LOOP>
+
+	<LOOP NAME="rss_index_general" TABLE="entries" WHERE="entries.id='[#IDENTITY]'">
+		<DO>
+			<title>[#G_NAME]</title>
+			<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+			<description>[@ENTREES_INDEX]</description>
+			<language>fr</language>
+			<ttl>0</ttl>
+
+			<LOOP NAME="rss_index_general_entry" TABLE="relations, entities" WHERE="relations.id2 = [#ID] AND relations.id1 = entities.id AND entities.status GT 0" LIMIT="0,10" ORDER="entities.modificationdate DESC">
+				<item>
+					<title>[#G_TITLE|textebrut|htmlspecialchars]</title>
+					<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+
+					<IF COND="[#ID|get_dc_fields('description')]">
+						<description>[#ID|get_dc_fields('description')|textebrut|htmlspecialchars]</description>
+					</IF>
+
+					<pubDate>[#CREATIONDATE|formateddate('%a, %d %b %Y %T %z')]</pubDate>
+					<lastBuildDate>[#MODIFICATIONDATE|formateddate('%a, %d %b %Y %T %z')]</lastBuildDate>
+					<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+				</item>
+			</LOOP>
+		</DO>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Flux RSS des individus (n'est plus utilisé).
+ */
+<DEFMACRO NAME="RSS_INDIVIDU">
+	<LOOP NAME="rss_individu" TABLE="individus" WHERE="individus.identity='[#IDENTITY]'">
+		<DO>
+			<title>[#PRENOM] [#NOM]</title>
+			<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+			<description>[#ACCROCHE]</description>
+			<language>fr</language>
+			<ttl>0</ttl>
+
+			<LOOP NAME="rss_individu_entry" TABLE="relations, entities" WHERE="relations.id2 = [#ID] AND relations.id1 = entities.id AND entities.status GT 0" LIMIT="0,10" ORDER="entities.modificationdate DESC">
+				<item>
+					<title>[#G_TITLE|textebrut|htmlspecialchars]</title>
+					<link>[#CURRENTURL|dirname]/[#ID|makeurlwithid]</link>
+
+					<IF COND="[#ID|get_dc_fields('description')]">
+						<description>[#ID|get_dc_fields('description')|textebrut|htmlspecialchars]</description>
+					</IF>
+
+					<pubDate>[#CREATIONDATE|formateddate('%a, %d %b %Y %T %z')]</pubDate>
+					<lastBuildDate>[#MODIFICATIONDATE|formateddate('%a, %d %b %Y %T %z')]</lastBuildDate>
+					<guid isPermaLink="true">[#CURRENTURL|dirname]/[#ID|makeurlwithid]</guid>
+				</item>
+			</LOOP>
+		</DO>
+	</LOOP>
+</DEFMACRO>

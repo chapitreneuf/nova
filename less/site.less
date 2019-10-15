@@ -62,13 +62,16 @@ h4.texte a {
 }
 h5.texte a {
     font-family: @font-2;
-    .font-size(2.1);
+    .font-size(2.2);
      color: @color-9;
 }
+
+h6 {.font-size(1.8);}
 .icon {
 	width: 16px;
 	height: 16px;
 }
+h7, .heading7 {color: @color-2;}
 
 // LAYOUT
 // ======
@@ -310,6 +313,7 @@ h2#home-latest-issue {margin-top: 0;}
 .article__text-contents h1:first-child {margin-top:0;}
 .article__text {text-align: justify;margin-top:30px;}
 .article__text h2 {margin-top:0;margin-left: -15px;}
+.article__text-contents h2 {margin-left: inherit;}
 .article_text__section--border {
     border-top:2px dotted @color-6;
     border-bottom:2px dotted @color-6;
@@ -438,7 +442,7 @@ p.texte {margin-top: 15px;}
 
 table {margin: 0 auto;width: 100%;table-layout: fixed;}
 tbody {display: block;overflow-x: auto;}
-tr,td {padding:3px;}
+tr,td {padding:3px;text-align:center;}
 td p {margin:0;}
 
 .doc-media-contents {margin:5px 0;}

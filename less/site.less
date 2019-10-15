@@ -484,17 +484,14 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0 15px;}
     #sidenotes {display:none;}
-    .side-actualites__section {padding:0 30px 30px;border-top: 2px dotted @color-6;}
+    .side-actualites__section {padding:0 30px 30px;}
     .main-content {padding-bottom: 0;}
 }
 
 
 @media (min-width: @screen-sm) {
     .article_text__section {padding-right:30px;}
-    .main-content--horsart {
-        margin-right: 30px;
-        border-right: 2px dotted #777;
-    }
+    
     .side-actualites__section {margin-left:-15px;}
     .side_contents {padding-left:0;}
 }
@@ -508,7 +505,18 @@ ul.texte li p, ol.texte li p {color: @color-1;}
     .article__biblio {margin-left: -15px;}
     .article__appendix {margin-left: -15px;}
     .toc--docannexes {margin-left: -15px;}
+    .main-content--horsart {
+        margin-right: 30px;
+        border-right: 2px dotted #777;
+    }
+     .side_contents hr {display:none;}
 }
+@media (min-width: @screen-sm) AND  (max-width: @screen-md) {
+    .side-actualites__section {margin-left:15px;}
+    .side_contents{padding: 0 30px 30px 30px;}
+    .side_contents hr {margin:0;}
+}
+
 
 // Numérotation des paragraphes avec CSS counters
 @media print, (min-width: @screen-md) {

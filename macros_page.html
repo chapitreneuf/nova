@@ -38,7 +38,7 @@
 				<div id="main-menu-container" class="main-menu-container col-md-3 color-bg-2 d-md-block d-none">
 					<MACRO NAME="MENU_MAIN" />
 				</div>
-				<main class='main-content col<IF COND="[%SIDE_CONTENTS]"> main-content--horsart<ELSE />-md-9</IF>' role="main">
+				<main class='main-content col-md-9 col-lg col<IF COND="[%SIDE_CONTENTS]"> main-content--horsart<ELSE />-md-9</IF>' role="main">
 </DEFMACRO>
 
 /**
@@ -47,7 +47,9 @@
 <DEFMACRO NAME="PAGE_END">
 					</main><!--[ .main-content ]-->
 					<IF COND="[%SIDE_CONTENTS]">
-						<div class="col-md-2 side_contents">
+                                               
+                                                <div class="col-md-3 color-bg-2 d-none d-md-block d-lg-none"></div>
+						<div class="col-md-9 col-lg-2 side_contents"> <hr/>
 							[%SIDE_CONTENTS]
 						</div>
 					</IF>

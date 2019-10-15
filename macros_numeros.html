@@ -20,7 +20,7 @@
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOUS_LES_NUMEROS]" />
 	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC">
 		<BEFORE>
-			<div id="issues" class="issues row">
+			<div id="issues" class="issues">
 		</BEFORE>
 		<DO>
 			<MACRO NAME="NUMEROS_ISSUE" />
@@ -36,12 +36,29 @@
  */
 <DEFMACRO NAME="NUMEROS_ISSUE">
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
-	<div class="issue col-md-6 lang-[#LANGUE] dir-[#NUMERO_DIR]">
+	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
-			<!--<div class="issue__accroche-col col-sm-4">
+			<div class="issue__accroche-col col-md-2">
 				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
-			</div>-->
-			<div class="issue__infos-col col-sm-12">
+			</div>	
+			<div class="col-md-10">
+                            <!--[ Titre ]-->
+                            <h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
+
+                            <!--[ Sous-titre ]-->
+                            <IF COND="[#SOUSTITRE]">
+                                <div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
+                            </IF>
+
+                            <!--[ Altertitles ]-->
+                            <FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+
+                            <!--[ Directeur publication ]-->
+                            <FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+                            <br/>
+                        </div>
+	
+			<div class="issue__infos-col">
 				<MACRO NAME="NUMEROS_ISSUE_INFOS" />
 			</div>
 		</div>
@@ -49,6 +66,7 @@
 			<!--[ Bouton sommaire ]-->
 			<a class="issue__btn btn" href="[#ID|makeurlwithid]">[@SOMMAIRE_DE_CE_NUMERO]</a>
 		</div>
+		<hr/>
 	</div>
 </DEFMACRO>
 
@@ -57,20 +75,7 @@
  */
 <DEFMACRO NAME="NUMEROS_ISSUE_INFOS">
 	<div class="issue__infos">
-		<!--[ Titre ]-->
-		<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
-
-		<!--[ Sous-titre ]-->
-		<IF COND="[#SOUSTITRE]">
-			<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
-		</IF>
-
-		<!--[ Altertitles ]-->
-		<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
-
-		<!--[ Directeur publication ]-->
-		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-
+		
 		<!--[ Introduction ]-->
 		<IF COND="[#INTRODUCTION]">
 			<section id="publi-introduction" class="publi__introduction">

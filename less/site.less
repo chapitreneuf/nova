@@ -429,6 +429,11 @@ p.texte {margin-top: 15px;}
     display: block;
     margin:0 auto;
 }
+.article__appendix img {
+    max-width : 100%;
+    heigth: auto;
+    display: block;
+}
 .illustration__thumb img {
     max-width : 100%;
     heigth: auto;
@@ -446,6 +451,9 @@ p.texte {margin-top: 15px;}
 .legendeillustration {margin-top:5px;margin-bottom:0;color:@color-6;.font-size(1.4);}
 .creditillustration{margin-top:5px;margin-bottom:0;color:@color-6;.font-size(1.4);}
 .creditillustration {margin-bottom:0;}
+.article__appendix .titreillustration {margin-top:5px;margin-bottom:0;.font-size(1.3);}
+.article__appendix .legendeillustration {margin-top:5px;margin-bottom:0;.font-size(1.3);}
+.article__appendix .creditillustration {margin-top:0;.font-size(1.3);}
 
 table {margin: 0 auto;width: 100%;table-layout: fixed;}
 tbody {display: block;overflow-x: auto;}
@@ -487,6 +495,11 @@ ul.texte li p, ol.texte li p {color: @color-1;}
 .article__ndla {margin-left:-15px;}
 .article__ndla h2 {color: @color-1;text-transform:none;font-weight:bold;.font-size(1.75);}
 
+.encadre {
+    padding: 10px;
+    border: 2px dotted #777;
+    margin: 0 15px 15px;
+}
 
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0 15px;}

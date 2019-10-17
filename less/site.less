@@ -90,7 +90,6 @@ h7, .heading7 {color: @color-2;}
 // LAYOUT
 // ======
 
-.main-header {text-align: center;background-color: @color-bg-2;}
 .color-bg-2 {background-color: @color-bg-2;}
 .site-logo-container {
     background-color: @color-bg-2;
@@ -98,40 +97,23 @@ h7, .heading7 {color: @color-2;}
 }
 .site-title {margin-top:0;}
 
+.main-header {text-align: center;background-color: @color-bg-2;}
 .main-container {background-color: @color-bg-1;}
-
 .main-content {background-color: @color-bg-1;padding: 0 30px 30px;}
-
 .main-footer {
 	text-align: center;
 	.font-size(1.4);
 	background-color: @color-bg-2;
 	padding:15px;
 }
+.main-footer__line {margin: 0 0 6px;}
+.skip-to-content {display: none;}
 
-.main-footer__line {
-	margin: 0 0 6px;
-}
 // NAV
 // ===
 .main-menu {padding-bottom:30px}
-.skip-to-content {
-	display: none;
-}
 
-.main_menu__section {
-    padding:30px 15px;
-    margin: 0 -15px;
-    background-color: @color-bg-3;
-}
-
-.main-menu__section-title {
-     margin:30px 0 0;
-     text-transform:uppercase;
-     .font-size(1.7);
-     font-family: @font-2;
-}
-.main-menu__item {.font-size(1.6);}
+// Main menu brand
 .main-menu__brand {
     margin-bottom:8px; 
     border:2px solid @color-5;
@@ -141,7 +123,6 @@ h7, .heading7 {color: @color-2;}
     padding:5px;
     text-align:center;
     line-height:1em;
-
 }
 .main-menu__brand-caret {
     border:2px solid @color-5;
@@ -159,6 +140,23 @@ h7, .heading7 {color: @color-2;}
     padding-left: 9px;
 }
 
+// Main menu sections
+.main_menu__section {
+    padding:30px 15px;
+    margin: 0 -15px;
+    background-color: @color-bg-3;
+}
+.main-menu__section-title {
+     margin:30px 0 0;
+     text-transform:uppercase;
+     .font-size(1.7);
+     font-family: @font-2;
+}
+.main-menu__section--partenaires {margin-top: 30px;}
+.main-menu__section--issues {margin-bottom:7px;}
+
+
+// Main menu list
 .main-menu__list {
     list-style: none;
      margin: 0 0 0 10px;
@@ -169,11 +167,9 @@ h7, .heading7 {color: @color-2;}
      padding: 0 7px;
      line-height: 20px;
      border-left:1px dotted @color-6;
-
+     .font-size(1.6);
 }
-.main-menu__item:last-child {
-       border-left:none;
-}
+.main-menu__item:last-child {border-left:none;}
 .main-menu__item:before {
       position:relative;
       top:-0.3em;
@@ -184,16 +180,15 @@ h7, .heading7 {color: @color-2;}
       display:inline-block;
       left:-7px;
 }
-.main-menu__item:last-child:before {
-      border-left:1px dotted @color-6;   
-}
+.main-menu__item:last-child:before {border-left:1px dotted @color-6;}
+
+.link-to-issues {color:@color-3;.font-size(1.6);}
 
 .main-menu .publi-number {.font-size(1.6);}
 .map .publi-number {.font-size(1.8);}
 
-.main-menu__section--partenaires {margin-top: 30px;}
-.main-menu__section--issues {margin-bottom:7px;}
 
+// Main menu logos
 .main-menu__logos {
     list-style-type: none;
     padding-left: 0;
@@ -204,14 +199,14 @@ h7, .heading7 {color: @color-2;}
     padding-left: 10px;
 }
 .main-menu__logo-image {width:75px;}
-.link-to-issues {color:@color-3;.font-size(1.6);}
 
+// Main menu nav
 .nav-tabs {border-bottom: 2px dotted @color-6;margin-bottom: 5px;.font-size(1.4);}
 .nav-tabs .nav-item {margin-bottom: -2px;}
-
 .nav-tabs .nav-link.active{border-color: @color-6 @color-6 transparent @color-6;}
 .nav-link.active {border: 2px dotted transparent;}
 
+// Main menu langs
 .main-menu__langs {padding: 0;}
 .main-menu__sitelang {padding-left:0;}
 .main-menu__lang {
@@ -235,15 +230,11 @@ h7, .heading7 {color: @color-2;}
 .main-menu__search-form {padding:0;}
 
 // Main menu toogler (hamburger button)
-.main-menu-toggler-container {
-    text-align: right;
-}
-
+.main-menu-toggler-container {text-align: right;}
 .main-menu-toggler {
     background-color: @color-2;
     margin: 0 10px 10px;
 }
-
 .main-menu-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     background-size: 100% 200%;
@@ -264,6 +255,7 @@ h2#home-latest-issue {margin-top: 0;}
 .home-rubrique__titre {font-weight:bold;}
 .home-rubrique {margin-top:15px;}
 .home-rubrique__more {color:@color-3;.font-size(1.6);margin-left: 23px;}
+
 // ACTUALITES
 // ========
 

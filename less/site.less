@@ -475,11 +475,9 @@ td p {margin:0;}
 ul.texte, ol.texte {line-height:1em;margin:20px 0;}
 ul.texte ul {margin:0 0 10px;}
 ul.texte ul p {margin-bottom:3px;}
-ul.texte li {
-    list-style: square;
-    color: @color-5;
-}
-ol.texte li {color: @color-5;}
+ul.texte li {list-style: square;}
+ul.texte li::marker {color: @color-5;}
+ol.texte li::marker {color: @color-5;}
 ul.texte li p, ol.texte li p {color: @color-1;}
 
 .advers {text-align:center;margin-bottom: 0;}

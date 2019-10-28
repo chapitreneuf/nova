@@ -337,7 +337,7 @@ h2#home-latest-issue {margin-top: 0;}
     padding-top: 5px;
     margin-bottom:30px;
 }
-
+.article__sidenotes {text-align:left;.font-size(1.5);}
 .article__sidenotes .notesbaspage {
 	.font-size(1.3);
 	line-height:1.2em;
@@ -360,6 +360,7 @@ h2#home-latest-issue {margin-top: 0;}
     font-family: @font-2;
     color:@color-6;
 }
+
 
 h2#footnotes {border-bottom :2px dotted @color-6;}
 h2#toc {border-bottom :2px dotted @color-6;}
@@ -485,7 +486,7 @@ td p {margin:0;}
 .media-urlaccesmedia{margin-top:-10px;color:@color-6;.font-size(1.4);text-align: center;margin-bottom:20px;}
 .doc-media-contents iframe {width:100%;}
 
-ul.texte, ol.texte {line-height:1.4em;margin:20px 0;}
+ul.texte, ol.texte {margin:20px 0;text-align:left;}
 ul.texte ul {margin:0;}
 ul.texte ul p {margin-bottom:3px;}
 ul.texte li {list-style: square;}
@@ -520,7 +521,7 @@ ul.texte li p, ol.texte li p {color: @color-1;}
     margin: 0 15px 15px;
 }
 
-.question {margin-left:15px;color: @color-6;font-style:italic;font-weight:bold;}
+.question {color: @color-6;font-style:italic;margin-top:10px;}
 
 
 @media (max-width: @screen-sm) {
@@ -560,7 +561,10 @@ ul.texte li p, ol.texte li p {color: @color-1;}
         margin-right: 30px;
         border-right: 2px dotted #777;
     }
-     .side_contents hr {display:none;}
+    .side_contents hr {display:none;}
+    .remerciements {margin-left:45px;font-style:italic;text-align:left;}
+    .epigraphe {margin-left:33%;text-align:right;.font-size(1.6);}
+    .citation {margin-left:45px;.font-size(1.6);text-align:justify;}
 }
 @media (min-width: @screen-sm) AND  (max-width: @screen-md) {
     .side-actualites__section {margin-left:15px;}

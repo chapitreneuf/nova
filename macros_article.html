@@ -83,7 +83,10 @@
 		<IF COND="[#NUMERODOCUMENT] AND [#NUMERODOCUMENT] NE '0'">
 			<p class="article__number"><span>#[#NUMERODOCUMENT]</span></p>
 		</IF>
-
+                <!--[ Sous-titre du document ]-->
+		<IF COND="[#SURTITRE]">
+			<p class="main-subhead article__subhead">[#SURTITRE|removenotes]</p>
+		</IF>
 		<!--[ Titre du document ]-->
 		<h1 class="main-title article__title">[#TITRE|removenotes]</h1>
 

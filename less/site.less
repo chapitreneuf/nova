@@ -5,8 +5,10 @@
 @import "inc/vars.less";
 @font-face {
 	font-family: "Ubuntu";
-	src: url('../webfonts/Ubuntu-R.ttf');
+	src: url('../webfonts/Ubuntu-C.ttf');
 }
+
+
 // ELEMENTS STANDARD
 // =================
 
@@ -36,7 +38,7 @@ h1 {
     color: @color-3;
     margin-top:30px;
     font-family: @font-2;
-    .font-size(2.8);
+    .font-size(3.3);
 }
 h1.texte, h2.texte, h3.texte, h4.texte, h5.texte, h6.texte {margin-top: 30px;}
 h1.texte {
@@ -46,21 +48,21 @@ h1.texte {
 }
 h2.texte  {
     font-family: @font-2;
-    .font-size(2.4);
+    .font-size(3);
 }
 h3.texte a {
     font-family: @font-2;
-    .font-size(2.2);
+    .font-size(2.7);
      color: @color-7;
 }
 h4.texte a {
     font-family: @font-2;
-    .font-size(2);
+    .font-size(2.4);
      color: @color-8;
 }
 h5.texte a {
     font-family: @font-2;
-    .font-size(1.8);
+    .font-size(2.1);
      color: @color-9;
 }
 .icon {
@@ -110,6 +112,7 @@ h5.texte a {
      margin:30px 0 0;
      text-transform:uppercase;
      .font-size(1.7);
+     font-family: @font-2;
 }
 .main-menu__item {.font-size(1.6);}
 .main-menu__brand {
@@ -167,7 +170,9 @@ h5.texte a {
 .main-menu__item:last-child:before {
       border-left:1px dotted @color-6;   
 }
-   
+
+.main-menu .publi-number {.font-size(1.6);}
+
 .main-menu__section--partenaires {margin-top: 30px;}
 .main-menu__section--issues {margin-bottom:7px;}
 
@@ -260,7 +265,7 @@ h2#home-latest-issue {margin-top: 0;}
 
 .publi__title {text-transform:uppercase;}
 .publi-title {padding-left: 11px;.font-size(1.5);}
-.publi-number {margin-right: 5px;font-weight: bold;}
+.publi-number {margin-right: 5px;font-weight: bold;.font-size(3);}
 
 .toc {margin-top:30px;}
 .toc__contents {padding-left: 30px;}
@@ -351,7 +356,7 @@ h2#docannexes {border-bottom :2px dotted @color-6;}
 
 .tab-pane {text-align: justify;}
 
-
+p.texte {margin-top: 15px;}
 
 .footnotecall {
     position: relative;
@@ -430,7 +435,8 @@ h2#docannexes {border-bottom :2px dotted @color-6;}
 .legendeillustration {margin-top:5px;margin-bottom:0;color:@color-6;.font-size(1.4);text-align: center;}
 .creditillustration {margin-bottom:0;}
 
-table {margin: 0 auto;}
+table {margin: 0 auto;width: 100%;table-layout: fixed;}
+tbody {display: block;overflow-x: auto;}
 tr,td {padding:3px;}
 td p {margin:0;}
 
@@ -441,18 +447,23 @@ td p {margin:0;}
 .media-urlaccesmedia{margin-top:-10px;color:@color-6;.font-size(1.4);text-align: center;margin-bottom:20px;}
 
 ul.texte, ol.texte {line-height:1em;margin:20px 0;}
+ul.texte ul {margin:0 0 10px;}
+ul.texte ul p {margin-bottom:3px;}
 ul.texte li, ol.texte li {
     list-style: square;
     color: @color-5;
 }
 ul.texte li p, ol.texte li p {color: @color-1;}
 
+.advers {text-align:center;margin-bottom: 0;}
 
 .nav-entities-col-siblings {text-align:right;}
 .entry__retour-btn {text-align:left;margin-top:20px;}
 
+.article__buttons {margin-top: -2px;}
 .article__buttons-list {float: right;margin-right: -15px;}
 .article__buttons-list .icon {width: 24px;height: 24px;padding-left:5px;}
+.article__button--facsimile .icon {width:117px;}
 
 .article__errata {margin-left:-15px;}
 .article__errata h2 {color: @color-1;text-transform:none;font-weight:bold;.font-size(1.75);}

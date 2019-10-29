@@ -201,8 +201,10 @@
 			<ul class="article__buttons-list nav nav-pills">
 				<!--[ Bouton fac-similé ]-->
 				<IF COND="[#ALTERFICHIER]"/>
-					<li class="article__button">
-						<a href="[#ID|makeurlwithid]?file=1">[@TELECHARGER_FACSIMILE]</a>
+					<li class="article__button article__button--facsimile">
+						<a href="[#ID|makeurlwithid]?file=1">
+                                                    <FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="Facsimile" />
+						</a>
 					</li>
 				</IF>
 

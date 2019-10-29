@@ -43,7 +43,7 @@ h1 {
     font-family: @font-2;
     .font-size(3.3);
 }
-h1.texte, h2.texte, h3.texte, h4.texte, h5.texte, h6.texte {margin-top: 30px;}
+h1.texte, h2.texte, h3.texte, h4.texte, h5.texte, h6.texte {margin-top: 30px;text-align:left;}
 h1.texte {
     font-family: @font-1;
     .font-size(2.4);
@@ -525,7 +525,9 @@ p.encadre {
 }
 p.encadre + p.encadre {margin-top: 0;}
 
-
+.remerciements {margin-left:20px;font-style:italic;text-align:left;}
+.epigraphe {margin-left:20%;text-align:right;.font-size(1.6);}
+.citation {margin-left:20px;.font-size(1.6);text-align:justify;}
 .question {color: @color-6;font-style:italic;margin-top:10px;}
 
 
@@ -551,7 +553,9 @@ p.encadre + p.encadre {margin-top: 0;}
     .article__text-contents {padding: 0 15px;}
     .article__button--social--break {break-before: always;}
     .article_text__section {padding-right: 15px;}
-
+    .main-menu__zoom {padding-left: 0;}
+    .main-menu__sitelang{padding-right:0}
+   
 }
 @media (min-width: @screen-md) {
     .article__footnotes {margin-left: -15px;}
@@ -567,17 +571,14 @@ p.encadre + p.encadre {margin-top: 0;}
         border-right: 2px dotted #777;
     }
     .side_contents hr {display:none;}
-    .remerciements {margin-left:45px;font-style:italic;text-align:left;}
-    .epigraphe {margin-left:33%;text-align:right;.font-size(1.6);}
-    .citation {margin-left:45px;.font-size(1.6);text-align:justify;}
+    .remerciements {margin-left:45px;}
+    .epigraphe {margin-left:33%;}
+    .citation {margin-left:45px;}
 }
 @media (min-width: @screen-sm) AND  (max-width: @screen-md) {
     .side-actualites__section {margin-left:15px;}
     .side_contents{padding: 0 30px 30px 30px;}
     .side_contents hr {margin:0;}
-}
-
-@media (min-width: @screen-lg) {
 }
 
 // Numérotation des paragraphes avec CSS counters

@@ -212,6 +212,57 @@
 </DEFMACRO>
 
 /**
+ * Pagination des résultats d'une boucle sur plusieurs pages.
+ * Doit être appelée dans la balise <AFTER>.
+ * D'après PRINT_PAGE_SCALE : https://github.com/OpenEdition/lodel/blob/6604180dade14bf0b63fc395d3718f3dc1dd027e/share/macros/macros.html#L66
+ */
+<DEFMACRO NAME="NAV_PAGE_SCALE">
+	<LOOP NAME="page_scale">
+		<BEFORE>
+			<nav class="pagination-container" aria-label="pagination">
+				<ul class="pagination">
+					<IF COND="[#PREVIOUSURL]">
+						<li class="page-item">
+							<a class="page-link" href="[#PREVIOUSURL]" aria-label="[@PRECEDENT]">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+					</IF>
+		</BEFORE>
+
+		<DO>
+			<IF COND="[#HOLE] EQ 1">
+				<li class="page-item disabled">
+					<span class="page-link">…</span>
+				</li>
+			</IF>
+
+			<IF COND="[#URLPAGE] EQ ''">
+				<li class="page-item active">
+					<a class="page-link" href="#">[#PAGENUMBER] <span class="sr-only">(current)</span></a>
+				</li>
+			<ELSE />
+				<li class="page-item">
+					<a class="page-link" href="[#URLPAGE]">[#PAGENUMBER]</a>
+				</li>
+			</IF>
+		</DO>
+
+		<AFTER>
+					<IF COND="[#NEXTURL]">
+						<li class="page-item">
+							<a class="page-link" href="[#NEXTURL]" aria-label="[@SUIVANT]">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</IF>
+				</ul>
+			</nav>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
  * Message d'erreur 404.
  */
 <DEFMACRO NAME="NAV_ERREUR_404">

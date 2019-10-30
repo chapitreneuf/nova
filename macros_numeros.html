@@ -18,7 +18,7 @@
  */
 <DEFMACRO NAME="NUMEROS_MAIN">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOUS_LES_NUMEROS]" />
-	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC">
+	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="rank DESC" SPLIT="10">
 		<BEFORE>
 			<div id="issues" class="issues row">
 		</BEFORE>
@@ -27,6 +27,7 @@
 		</DO>
 		<AFTER>
 			</div>
+			<MACRO NAME="NAV_PAGE_SCALE" />
 		</AFTER>
 	</LOOP>
 </DEFMACRO>

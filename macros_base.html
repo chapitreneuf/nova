@@ -152,7 +152,10 @@
 		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a class="page-shortcuts__link" href="#[#SECTION_ID]">[#TITLE]</a></LET>
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
-	<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
+	<div class="section-header-container">
+		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
+		<a class="section-header-arrow" href="#main-content">🡡</a>
+	</div>
 </DEFFUNC>
 
 /**

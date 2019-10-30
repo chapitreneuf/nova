@@ -98,7 +98,12 @@
 		</BEFORE>
 		<DO>
 			<li class="ariane__item breadcrumb-item">
-				<a class="ariane__link" href="[#ID|makeurlwithid]">[#G_TITLE|couper(50)]<IF COND="[#G_TITLE|hasbeencut]"><span class="ariane__cut">…</span></IF></a>
+				<a class="ariane__link" href="[#ID|makeurlwithid]">
+					<LOOP NAME="nav_ariane_numero" TABLE="publications" WHERE="type = 'numero' AND id = '[#ID]'" SELECT="numero" />
+						[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" TEXTEBRUT="1" />&nbsp;:&#32;
+					</LOOP>
+					[#G_TITLE|couper(50)]<IF COND="[#G_TITLE|hasbeencut]"><span class="ariane__cut">…</span></IF>
+				</a>
 			</li>
 		</DO>
 		<AFTER>

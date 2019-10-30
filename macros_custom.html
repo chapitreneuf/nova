@@ -21,4 +21,9 @@
 	<!--[ Option : prefixe DOI.
 		Par défaut on utilise le champ des options [#OPTIONS.NOVA.PREFIXEDOI] ]-->
 	<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.NOVA.PREFIXEDOI]</LET>
+
+	<!--[ Option : nom et lien diffuseur site.
+			Par défaut ils sont définis via les options dans Lodel. ]-->
+	<LET VAR="diffuseursite" GLOBAL="1">[#OPTIONS.METADONNEESSITE.DIFFUSEURSITE]</LET>
+	<LET VAR="urldiffuseursite" GLOBAL="1">[#OPTIONS.NOVA.URLDIFFUSEURSITE]</LET>
 </DEFMACRO>

@@ -20,6 +20,13 @@ window.fnLoader = {
 			});
 		},
 
+		initLargetable: function () {
+			$(function () {
+				if (!$("body").hasClass("class-textes")) return;
+				$(".article__text table").largetable({ enableMaximize: true });
+			});
+		},
+
 		// Ajouter des ancres aux paragraphes
 		pAnchors: function () {
 			// Ready

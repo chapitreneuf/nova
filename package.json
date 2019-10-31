@@ -29,6 +29,11 @@
         "version": "3.4.1",
         "src": "dist/jquery.slim.min.js",
         "namespaced": true
+      },
+      "largetable": {
+        "version": "1.0.0",
+        "src": "{largetable.css,largetable.js}",
+        "namespaced": true
       }
     }
   },

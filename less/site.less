@@ -392,13 +392,17 @@ p.texte {margin-top: 15px;}
 
 .footnotecall {
     position: relative;
-    font-size: 75%;
+    font-size: 10px;
     line-height: 0;
     vertical-align: baseline;
     top: -.5em;
     font-weight:bold;
     color:@color-3;
     padding-left:2px;
+    font-family: @font-1;
+    font-style:normal;
+    text-align:left;
+    
 }
 .FootnoteSymbol {font-weight:bold;color:@color-3;.font-size(1.6);padding-right: 5px;}
 .notesbaspage {.font-size(1.5);line-height:1.2em;}
@@ -537,9 +541,35 @@ p.encadre + p.encadre {margin-top: 0;}
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0;}
     .side-actualites__section {padding:0 30px 30px;}
-    .main-content {padding-bottom: 0;}
+    .main-content {padding-bottom: 0;padding: 0 15px 30px;}
     .site-logo-container {padding-bottom:0;}
-body {.font-size(1.5);}
+    body {.font-size(1.4);}
+    .citation{.font-size(1.3);}
+    .epigraphe{.font-size(1.3);}
+    .article__title{.font-size(2.5);}
+    .illustration__info {.font-size(1.3);}
+    .article__persons-infos-contents {.font-size(1.3);}
+    .article__persons-infos-identity {.font-size(1.3);}
+    .article__license-contents {.font-size(1.3);}
+    .article__biblio-contents {.font-size(1.3);}
+    .article__appendix-contents {.font-size(1.3);}
+    .toc__contents--docannexes {.font-size(1.3);}
+    .article__quotation-digital{.font-size(1.3);}
+    table {.font-size(1.4);}
+    ul.texte li li{.font-size(1.4);}
+    h1.texte {.font-size(2);}
+    h2.texte {.font-size(2.4);}
+    h3.texte a {.font-size(2.1);}
+    h4.texte a {.font-size(1.8);}
+    h5.texte a {.font-size(1.6);}
+    h6{.font-size(1.4);}
+    .article__quotation {padding-left:0;padding-right:0;}
+    .article__toc {padding-left: 0;padding-right: 0;}
+    .article__persons-infos {padding-left: 0;padding-right: 0;}
+    .article__biblio {padding-left: 0;padding-right: 0;}
+    .article__appendix {padding-left: 0;padding-right: 0;}
+    .article__illustrations {padding-left: 0;padding-right: 0;}
+    .article__footnotes {padding-left: 0;padding-right: 0;}
 }
 
 
@@ -553,7 +583,7 @@ body {.font-size(1.5);}
 }
 @media (max-width: @screen-md) {
      #sidenotes {display:none;}
-    .article__text-contents {padding: 0;}
+    .article__text-contents {padding: 0 15px;}
     .article__button--social--break {break-before: always;}
     .article_text__section {padding-right: 15px;}
     .main-menu__zoom {padding-left: 0;}
@@ -577,7 +607,7 @@ body {.font-size(1.5);}
     .side_contents hr {display:none;}
     .remerciements {margin-left:45px;}
     .epigraphe {margin-left:33%;}
-    .citation {margin-left:45px;}
+    .citation {margin-left:60px;}
 }
 @media (min-width: @screen-sm) AND  (max-width: @screen-md) {
     .side-actualites__section {margin-left:15px;}

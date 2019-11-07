@@ -154,7 +154,6 @@
 		<BEFORE>
 			<IF COND="[#PROFONDEUR] EQ 0">
 				<section class="toc toc--publi">
-					<!--<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@SOMMAIRE]" ICON="list-alt" SECTION_ID="toc"/>-->
 			</IF>
 		</BEFORE>
 
@@ -315,10 +314,6 @@
 			[#TITRE|removenotes]
 		</IF>
 	</p>
-	<!--[ Sous-titre ]-->
-	<!--<IF COND="[#SOUSTITRE]">
-		<p class="toc__subtitle">[#SOUSTITRE|removenotes]</p>
-	</IF>-->
 	<!--[ Titres traduits]-->
 	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
 		<div class="toc__altertitle">
@@ -328,10 +323,6 @@
 		</div>
 	</IF>
 
-	<!--[ Date de publication si publié dans une rubrique électronique ]-->
-	<!--<IF COND="[#AFFICHER_DATEPUBLI]">
-		<p class="toc__datepubli">[#DATEPUBLI|humandate]</p>
-	</IF>-->
 </DEFFUNC>
 
 /**

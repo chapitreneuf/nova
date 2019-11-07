@@ -27,9 +27,6 @@ hr {
     margin: 30px 0;
 }
 
-.section-header-arrow {float:right;}
-.absolute {position:absolute;}
-
 // FONTS
 // =================
 
@@ -537,6 +534,10 @@ p.encadre + p.encadre {margin-top: 0;}
 .epigraphe {margin-left:20%;text-align:right;.font-size(1.6);}
 .citation {margin-left:20px;.font-size(1.5);text-align:justify;line-height: 1.4em;}
 .question {color: @color-6;font-style:italic;margin-top:10px;}
+
+.section-header-arrow {position: absolute;right: 15px;}
+.article_text__section--buttons {position: absolute;right: 15px;}
+.article_text__section .section-header-arrow {right: 0;}
 
 
 @media (max-width: @screen-sm) {

@@ -39,13 +39,19 @@
  * Afficher tous les numéros.
  */
 <DEFMACRO NAME="NUMEROS_ISSUE">
+	<!--[ Image d'accroche ]-->
+	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" /></LET>
+	
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
-			<div class="issue__accroche-col col-md-2">
-				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
-			</div>	
-			<div class="col-md-10">
+			<IF COND="[#IMG_ACCROCHE]">
+				<div class="issue__accroche-col col-md-2">
+					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
+				</div>	
+			</IF>
+
+			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">10<ELSE/>12</IF>">
 				<a class="section-header-arrow" href="#main-content">🡡</a>
 				<!--[ Titre ]-->
 				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>

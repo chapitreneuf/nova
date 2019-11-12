@@ -46,22 +46,22 @@
 				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
 			</div>	
 			<div class="col-md-10">
-                            <a class="section-header-arrow" href="#main-content">🡡</a>
-                            <!--[ Titre ]-->
-                            <h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
+				<a class="section-header-arrow" href="#main-content">🡡</a>
+				<!--[ Titre ]-->
+				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
 
-                            <!--[ Sous-titre ]-->
-                            <IF COND="[#SOUSTITRE]">
-                                <div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
-                            </IF>
+				<!--[ Sous-titre ]-->
+				<IF COND="[#SOUSTITRE]">
+						<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
+				</IF>
 
-                            <!--[ Altertitles ]-->
-                            <FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+				<!--[ Altertitles ]-->
+				<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
 
-                            <!--[ Directeur publication ]-->
-                            <FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-                            <br/>
-                        </div>
+				<!--[ Directeur publication ]-->
+				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+				<br/>
+			</div>
 	
 			<div class="issue__infos-col">
 				<MACRO NAME="NUMEROS_ISSUE_INFOS" />

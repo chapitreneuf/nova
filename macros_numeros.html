@@ -39,29 +39,35 @@
  * Afficher tous les numéros.
  */
 <DEFMACRO NAME="NUMEROS_ISSUE">
+	<!--[ Image d'accroche ]-->
+	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" /></LET>
+	
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
-			<div class="issue__accroche-col col-md-2">
-				<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
-			</div>	
-			<div class="col-md-10">
-                            <a class="section-header-arrow" href="#main-content">🡡</a>
-                            <!--[ Titre ]-->
-                            <h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
+			<IF COND="[#IMG_ACCROCHE]">
+				<div class="issue__accroche-col col-md-2">
+					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
+				</div>	
+			</IF>
 
-                            <!--[ Sous-titre ]-->
-                            <IF COND="[#SOUSTITRE]">
-                                <div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
-                            </IF>
+			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">10<ELSE/>12</IF>">
+				<a class="section-header-arrow" href="#main-content">🡡</a>
+				<!--[ Titre ]-->
+				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
 
-                            <!--[ Altertitles ]-->
-                            <FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+				<!--[ Sous-titre ]-->
+				<IF COND="[#SOUSTITRE]">
+						<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
+				</IF>
 
-                            <!--[ Directeur publication ]-->
-                            <FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-                            <br/>
-                        </div>
+				<!--[ Altertitles ]-->
+				<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+
+				<!--[ Directeur publication ]-->
+				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+				<br/>
+			</div>
 	
 			<div class="issue__infos-col">
 				<MACRO NAME="NUMEROS_ISSUE_INFOS" />

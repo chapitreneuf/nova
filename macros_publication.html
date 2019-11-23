@@ -39,39 +39,40 @@
  * @param {boolean} [cliquable] - Ajouter un lien hypertexte vers la publication sur le titre.
  */
 <DEFFUNC NAME="PUBLICATION_HEADER" OPTIONAL="cliquable">
+	<!--[ Image d'accroche ]-->
+	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" /></LET>
+
 	<header class="publi__header">
-
 		<div class="row">
+			<IF COND="[#IMG_ACCROCHE]">
+				<div class="col-sm-3 publi__header_accroche">
+					[#IMG_ACCROCHE]
+				</div>
+			</IF>
 
-			<div class="col-sm-3 publi__header_accroche">
-                            <!--[ Image d'accroche ]-->
-                            <FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" DEFAULT_IMG="[%PUBLI_DEFAULT_COVER]" />
+			<div class="col-sm-<IF COND="[#IMG_ACCROCHE]">9<ELSE/>12</IF>">
+				<!--[ Titre ]-->
+				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
+
+				<!--[ Sous-titre ]-->
+				<IF COND="[#SOUSTITRE]">
+						<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
+				</IF>
+
+				<!--[ Altertitles ]-->
+				<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+
+				<!--[ Directeur publication ]-->
+				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
 			</div>
 
-			<div class="col-sm-9">
-                            
-                            <!--[ Titre ]-->
-                            <h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
-
-                            <!--[ Sous-titre ]-->
-                            <IF COND="[#SOUSTITRE]">
-                                <div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
-                            </IF>
-
-                            <!--[ Altertitles ]-->
-                            <FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
-
-                            <!--[ Directeur publication ]-->
-                            <FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-			</div>
-			
 			<div class="col-sm-12">
 			 <!--[ Introduction ]-->
-                            <IF COND="[#INTRODUCTION]">
-                                <section id="publi-introduction" class="publi__introduction">
-                                    <FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
-                                </section>
-                            </IF>
+				<IF COND="[#INTRODUCTION]">
+					<section id="publi-introduction" class="publi__introduction">
+							<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
+					</section>
+				</IF>
 			</div>
 
 		</div>

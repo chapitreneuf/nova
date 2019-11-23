@@ -289,9 +289,8 @@
  * @param {string} [classname] - Classe de l'image.
  * @param {boolean} [notext] - Afficher lien + crédits.
  * @param {string} [href] - Lien sur l'image.
- * @param {string} [default_img] - Chemin vers l'image par défaut (si pas d'image d'accroche associée à l'entité).
  */
-<DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href, default_img">
+<DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href">
 	<LOOP NAME="base_accroche_publication" 
 		TABLE="fichiers" 
 		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'" 
@@ -316,20 +315,6 @@
 				</IF>
 			</div>
 		</DO>
-
-		<ALTERNATIVE>
-			<IF COND="[#DEFAULT_IMG]">
-				<div class="accroche">
-					<IF COND="[#HREF]">
-						<a href="[#HREF]">
-					</IF>
-					<img class="accroche__img accroche__img--default [#CLASSNAME]" src="[#DEFAULT_IMG]" />
-					<IF COND="[#HREF]">
-						</a>
-					</IF>
-				</div>
-			</IF>
-		</ALTERNATIVE>
 	</LOOP>
 </DEFFUNC>
 

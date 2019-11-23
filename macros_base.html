@@ -153,10 +153,25 @@
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
 	<div class="section-header-container">
-		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
 		<a class="section-header-arrow" href="#main-content">🡡</a>
+		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
 	</div>
 </DEFFUNC>
+
+
+/**
+ * Affiche comme précédemment mais sans la fleche vers le haut
+*/
+<DEFFUNC NAME="BASE_SECTION_HEADER_NO_ARROW" REQUIRED="title" OPTIONAL="section_id">
+	<IF COND="[#SECTION_ID]">
+		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a class="page-shortcuts__link" href="#[#SECTION_ID]">[#TITLE]</a></LET>
+		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
+	</IF>
+	<div class="section-header-container">
+		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
+	</div>
+</DEFFUNC>
+
 
 /**
  * Affiche le titre d'une publication.
@@ -440,7 +455,7 @@
 		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
 		<BEFORE>
 			<section id="side-actualites__section" class="side-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" />
+				<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@ACTUALITES]" />
 				<ul class="side-actualites_section__list">
 		</BEFORE>
 		<DO>

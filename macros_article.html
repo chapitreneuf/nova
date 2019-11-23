@@ -292,9 +292,9 @@
 	<!--[ Résumés ]-->
 	<IF COND="[#RESUME]">
 		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
 		<ELSE/>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
 		</IF>
 		<div class="article__abstract-contents col-12 col-lg-10">
 			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
@@ -315,7 +315,7 @@
 			ORDER="entrytypes.rank">
 
 			<BEFORE>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" SECTION_ID="article-entries" />
+				<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@INDEX]" SECTION_ID="article-entries" />
 				<div class="article__entries-content col-12 col-lg-10">
 			</BEFORE>
 			<DO>
@@ -414,7 +414,7 @@
 	<!--[ Dédicace ]-->
 	<IF COND="[#DEDICACE]">
 		<section class="article__dedication col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DEDICACE]" />
+			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@DEDICACE]" />
 			<div class="article__dedication-contents">
 				[#DEDICACE|cleanCallNotes|tocss]
 			</div>

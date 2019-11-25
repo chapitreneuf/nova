@@ -45,7 +45,7 @@ h1 {
 h1.texte, h2.texte, h3.texte, h4.texte, h5.texte, h6.texte {margin-top: 30px;text-align:left;}
 h1.texte {
     font-family: @font-2;
-    .font-size(3.2);
+    .font-size(2.8);
     font-weight:bold;
     margin-bottom: 10px;
 }
@@ -79,17 +79,34 @@ h6 {.font-size(1.8);}
 }
 h7, .heading7 {color: @color-2;}
 
+// data-zoom-level
+// ======
 [data-zoom-level="small"] .main-menu__item {font-size: 80%;}
-[data-zoom-level="big"] .main-menu__item {font-size: 100%;}
-[data-zoom-level="small"] .publi-title {font-size: 80%;}
-[data-zoom-level="big"] .publi-title {font-size: 100%;}
-[data-zoom-level="small"] .side-actualites-section__item {font-size: 80%;}
-[data-zoom-level="big"] .side-actualites-section__item {font-size: 130%;}
+[data-zoom-level="big"] .main-menu__item {font-size: 120%;}
+[data-zoom-level="small"] .main-menu .publi-number {font-size: 80%;}
+[data-zoom-level="big"] .main-menu .publi-number {font-size: 96%;}
+
 [data-zoom-level="small"] .main-content {font-size: 80%;}
 [data-zoom-level="big"] .main-content {font-size: 130%;}
-[data-zoom-level="small"] .main-menu .publi-number {font-size: 80%;}
-[data-zoom-level="big"] .main-menu .publi-number {font-size: 95%;}
-[data-zoom-level="big"] .main-menu__list li {font-size: 130%;}
+
+[data-zoom-level="small"] .main-content h1 a{font-size: 80%;}
+[data-zoom-level="big"] .main-content h1 a{font-size: 130%;}
+[data-zoom-level="small"] .main-content h2 a{font-size: 80%;}
+[data-zoom-level="big"] .main-content h2 a{font-size: 130%;}
+[data-zoom-level="small"] .main-content h3 a{font-size: 132%;}
+[data-zoom-level="big"] .main-content h3 a{font-size: 210%;}
+[data-zoom-level="small"] .main-content h4 a{font-size: 147%;}
+[data-zoom-level="big"] .main-content h4 a {font-size: 210%;}
+[data-zoom-level="small"] .main-content h5 a{font-size: 170%;}
+[data-zoom-level="big"] .main-content h5 a{font-size: 235%;}
+[data-zoom-level="small"] .main-content h6 a{font-size: 95%;}
+[data-zoom-level="big"] .main-content h6 a{font-size: 143%;}
+[data-zoom-level="small"] .main-content .heading7 {font-size: 123%;}
+[data-zoom-level="big"] .main-content .heading7{font-size: 110%;}
+
+[data-zoom-level="small"] .side-actualites-section__item {font-size: 80%;}
+[data-zoom-level="big"] .side-actualites-section__item {font-size: 130%;}
+
 
 // LAYOUT
 // ======
@@ -283,7 +300,7 @@ h2#home-latest-issue {margin-top: 0;}
 .accroche__lien {.font-size(1.2);line-height:1.1em;}
 
 .publi__title{margin-top:0;text-transform:uppercase;}
-.publi-title {padding-left: 11px;.font-size(1.5);}
+.publi-title {padding-left: 11px;}
 .publi-number {margin-right: 5px;font-weight: bold;.font-size(3);}
 
 .publi__introduction {padding:0 15px;}

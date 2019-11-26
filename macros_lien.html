@@ -84,11 +84,11 @@
 
 			<BLOCK ID="1" REFRESH="1800">
 				<ul class="lien-rss__list">
-					<LOOP NAME="lien_rss" URL="[#URLFIL]">
+					<LOOP NAME="rss" URL="[#URLFIL]">
 						<IF COND="![#NOMBREMAXITEMS]">
 							<LET VAR="nombremaxitems">10</LET>
 						</IF>
-						<LOOP NAME="lien_rss_item" LIMIT="0,[#NOMBREMAXITEMS]">
+						<LOOP NAME="rssitem" LIMIT="0,[#NOMBREMAXITEMS]">
 							<IF COND="[#TITLE]">
 								<li>
 									<h3 class="link-rss__title">

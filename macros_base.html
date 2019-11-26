@@ -467,6 +467,17 @@
 				<ul class="side-rss_section__list">
 		</BEFORE>
 		<DO>
+			<MACRO NAME="myrss" />
+		</DO>
+		<AFTER>
+				</ul>
+			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+
+<DEFMACRO NAME="myrss">
 			<BLOCK ID="2" REFRESH="1800">
 				<LOOP NAME="rss" URL="[#URLFIL]">
 					<li class="side-rss-item">
@@ -491,10 +502,4 @@
 					</li>
 				</LOOP>
 			</BLOCK>
-		</DO>
-		<AFTER>
-				</ul>
-			</section>
-		</AFTER>
-	</LOOP>
 </DEFMACRO>

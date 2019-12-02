@@ -461,7 +461,7 @@
 	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication'" ORDER="rank">
 		<BEFORE>
 			<section id="side-rss__section" class="side-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RSS]" />
+				<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@RSS]" />
 				<ul class="side-rss_section__list">
 		</BEFORE>
 		<DO>

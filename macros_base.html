@@ -94,9 +94,7 @@
 	</IF>
 
 	<!--[ Colonne de droite ]-->
-	<LET VAR="side_contents" GLOBAL="1">
-		<MACRO NAME="BASE_SIDE_CONTENTS" />
-	</LET>
+	<LET VAR="side_contents" GLOBAL="1">1</LET>
 </DEFMACRO>
 
 /**
@@ -467,21 +465,10 @@
 				<ul class="side-rss_section__list">
 		</BEFORE>
 		<DO>
-			<MACRO NAME="myrss" />
-		</DO>
-		<AFTER>
-				</ul>
-			</section>
-		</AFTER>
-	</LOOP>
-</DEFMACRO>
-
-
-<DEFMACRO NAME="myrss">
-			<BLOCK ID="2" REFRESH="1800">
+			<!--[<BLOCK ID="2" REFRESH="1800"> ]-->
 				<LOOP NAME="rss" URL="[#URLFIL]">
 					<li class="side-rss-item">
-						<h2 class="side-rss-item__title"><FUNC NAME="ML_TITRE" /></h2>
+						<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
 						<ul class="side-rss-item__entries">
 							<IF COND="![#NOMBREMAXITEMS]">
 								<LET VAR="nombremaxitems">10</LET>
@@ -501,5 +488,11 @@
 						</ul>
 					</li>
 				</LOOP>
-			</BLOCK>
+			<!--[</BLOCK>]-->
+		</DO>
+		<AFTER>
+				</ul>
+			</section>
+		</AFTER>
+	</LOOP>
 </DEFMACRO>

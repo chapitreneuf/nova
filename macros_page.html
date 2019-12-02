@@ -47,10 +47,9 @@
 <DEFMACRO NAME="PAGE_END">
 					</main><!--[ .main-content ]-->
 					<IF COND="[%SIDE_CONTENTS]">
-                                               
-                                                <div class="col-md-3 color-bg-2 d-none d-md-block d-lg-none"></div>
+						<div class="col-md-3 color-bg-2 d-none d-md-block d-lg-none"></div>
 						<div class="col-md-9 col-lg-2 side_contents"> <hr/>
-							[%SIDE_CONTENTS]
+							<MACRO NAME="BASE_SIDE_CONTENTS" />
 						</div>
 					</IF>
 				</div><!--[ .row ]-->

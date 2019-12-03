@@ -680,7 +680,7 @@
 
 		<DO>
 			<LOOP NAME="article_description_personnes_auteur" 
-				SELECT="idperson, nomfamille, prenom, description" 
+				SELECT="idperson, nomfamille, prenom, description, courriel" 
 				TABLE="auteurs" 
 				WHERE="id = '[#ID]' AND iddocument='[%ID]'">
 
@@ -691,6 +691,9 @@
 					<p class="article__person-description">
 						[#DESCRIPTION|removetags("p")]
 					</p>
+				</IF>
+				<IF COND="[#COURRIEL]">
+					<a class="article__person-email" href="mailto:[#COURRIEL]">[#COURRIEL]</a>
 				</IF>
 				<IF COND="[#TYPE] EQ 'auteur'">
 					<MACRO NAME="ARTICLE_DU_MEME_AUTEUR" />

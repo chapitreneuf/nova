@@ -739,7 +739,7 @@
 <DEFFUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" REQUIRED="type, url" OPTIONAL="condition">
 	<IF COND="[#CONDITION]">
 		<li class="article__person-idno">
-			<a href="[#URL]"><FUNC NAME="BASE_ICON" ICON="idno-[#TYPE]" CLASSNAME="article__person-idno-icon" TITLE="[#TYPE]" EXTENSION="png" /></a>
+			<a href="[#URL]"><FUNC NAME="BASE_ICON" ICON="idno-[#TYPE|strtolower]" CLASSNAME="article__person-idno-icon" TITLE="[#TYPE]" EXTENSION="png" /></a>
 		</li>
 	</IF>
 </DEFFUNC>

@@ -90,6 +90,7 @@ window.fnLoader = {
 			// Run when page is ready + on viwport resize
 			$(setSidenotesPosition);
 			$(window).resize(setSidenotesPosition);
+			$(document).on("zoomLevelChanged", setSidenotesPosition);
 		},
 
 		// Zoom
@@ -99,6 +100,7 @@ window.fnLoader = {
 					var zoomLevel = $(this).attr("data-set-zoom-level");
 					if (!zoomLevel) return;
 					$("body").attr("data-zoom-level", zoomLevel);
+					$(document).trigger("zoomLevelChanged");
 				});
 			});
 		}

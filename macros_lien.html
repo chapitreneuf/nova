@@ -86,7 +86,7 @@
 				<ul class="lien-rss__list">
 					<LOOP NAME="rss" URL="[#URLFIL]">
 						<IF COND="![#NOMBREMAXITEMS]">
-							<LET VAR="nombremaxitems">10</LET>
+							<LET VAR="nombremaxitems">5</LET>
 						</IF>
 						<LOOP NAME="rssitem" LIMIT="0,[#NOMBREMAXITEMS]">
 							<IF COND="[#TITLE]">

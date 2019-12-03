@@ -468,7 +468,6 @@
 					<div class="col-1">
 					<a class="section-header-arrow" href="#main-content">🡡</a>
 					</div>
-					
 				</div>
 			</div>
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
@@ -490,6 +489,9 @@
 		<div class="article__text-contents col-lg-9">
 			<!--[ Image d'accroche ]-->
 			<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
+
+			<!--[ Chapo ]-->
+			<MACRO NAME="ARTICLE_CHAPO" />
 
 			<!--[ Texte intégral ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
@@ -533,6 +535,15 @@
 			</IF>
 		</div>
 	</LOOP>
+</DEFMACRO>
+
+/**
+ * Chapo.
+ */
+<DEFMACRO NAME="ARTICLE_CHAPO">
+	<IF COND="[#CHAPO]">
+		<p class="article__chapo">[#CHAPO|cleanCallNotes]</p>
+	</IF>
 </DEFMACRO>
 
 /**

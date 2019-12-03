@@ -336,7 +336,7 @@
 		<LET VAR="inline_media"> AND entities.id NOT IN ([%ID_MEDIA|join(',')])</LET>
 	</IF>
 
-	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' [#INLINE_MEDIA] AND type LIKE '%annexe'" ORDER="rank">
+	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' [#INLINE_MEDIA] AND type LIKE '%annexe' AND identifier != 'tei'" ORDER="rank">
 
 		<BEFORE>
 			<section class="toc toc--docannexes col-md-10">

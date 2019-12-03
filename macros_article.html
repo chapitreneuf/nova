@@ -83,7 +83,7 @@
 		<IF COND="[#NUMERODOCUMENT] AND [#NUMERODOCUMENT] NE '0'">
 			<p class="article__number"><span>#[#NUMERODOCUMENT]</span></p>
 		</IF>
-                <!--[ Sous-titre du document ]-->
+		<!--[ Sous-titre du document ]-->
 		<IF COND="[#SURTITRE]">
 			<p class="main-subhead article__subhead">[#SURTITRE|removenotes]</p>
 		</IF>
@@ -206,16 +206,34 @@
 				<IF COND="[#ALTERFICHIER]"/>
 					<li class="article__button article__button--facsimile">
 						<a href="[#ID|makeurlwithid]?file=1">
-                                                    <FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="Facsimile" />
+							<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="Facsimile" />
 						</a>
 					</li>
 				</IF>
-
+				<!--[ Bouton de téléchargement de la TEI ]-->
+				<MACRO NAME="ARTICLE_BOUTON_TEI" />
 				<!--[ Boutons de partage ]-->
 				<MACRO NAME="ARTICLE_LIENS_PARTAGE" />
 			</ul>
 		</div>
 	</IF>
+</DEFMACRO>
+
+/**
+ * Bouton de téléchargement de la TEI.
+ */
+<DEFMACRO NAME="ARTICLE_BOUTON_TEI">
+	<LOOP NAME="article_bouton_tei" 
+		TABLE="fichiers" 
+		WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = 'tei' AND document != ''" 
+		ORDER="rank" 
+		LIMIT="0,1">
+		<li class="article__button article__button--tei">
+			<a href="[#ID|makeurlwithfile]">
+				<FUNC NAME="BASE_ICON" ICON="xml-tei" TITLE="XML TEI" />
+			</a>
+		</li>
+	</LOOP>
 </DEFMACRO>
 
 /**

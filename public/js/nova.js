@@ -55,9 +55,18 @@ window.fnLoader = {
 					try {
 						$(this).show();
 						var $a = $(this).find("a.FootnoteSymbol");
+						if ($a.length === 0) return;
+						
 						var href = $a.attr("href");
 						var targetId = href.replace("#ftn", "#bodyftn");
 						var $target = $(targetId);
+
+						// Barriere mobile
+						if ($target.length === 0) {
+							$(this).hide();
+							return;
+						}
+
 						var top = $target.offset().top;
 						if (top <= minTop) {
 							top = minTop;
@@ -81,6 +90,7 @@ window.fnLoader = {
 			// Run when page is ready + on viwport resize
 			$(setSidenotesPosition);
 			$(window).resize(setSidenotesPosition);
+			$(document).on("zoomLevelChanged", setSidenotesPosition);
 		},
 
 		// Zoom
@@ -90,6 +100,7 @@ window.fnLoader = {
 					var zoomLevel = $(this).attr("data-set-zoom-level");
 					if (!zoomLevel) return;
 					$("body").attr("data-zoom-level", zoomLevel);
+					$(document).trigger("zoomLevelChanged");
 				});
 			});
 		}

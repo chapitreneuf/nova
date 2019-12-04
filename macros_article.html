@@ -468,7 +468,6 @@
 					<div class="col-1">
 					<a class="section-header-arrow" href="#main-content">🡡</a>
 					</div>
-					
 				</div>
 			</div>
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
@@ -490,6 +489,9 @@
 		<div class="article__text-contents col-lg-9">
 			<!--[ Image d'accroche ]-->
 			<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
+
+			<!--[ Chapo ]-->
+			<MACRO NAME="ARTICLE_CHAPO" />
 
 			<!--[ Texte intégral ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
@@ -533,6 +535,15 @@
 			</IF>
 		</div>
 	</LOOP>
+</DEFMACRO>
+
+/**
+ * Chapo.
+ */
+<DEFMACRO NAME="ARTICLE_CHAPO">
+	<IF COND="[#CHAPO]">
+		<p class="article__chapo">[#CHAPO|cleanCallNotes]</p>
+	</IF>
 </DEFMACRO>
 
 /**
@@ -669,7 +680,7 @@
 
 		<DO>
 			<LOOP NAME="article_description_personnes_auteur" 
-				SELECT="idperson, nomfamille, prenom, description" 
+				SELECT="idperson, nomfamille, prenom, description, courriel" 
 				TABLE="auteurs" 
 				WHERE="id = '[#ID]' AND iddocument='[%ID]'">
 
@@ -681,6 +692,10 @@
 						[#DESCRIPTION|removetags("p")]
 					</p>
 				</IF>
+				<IF COND="[#COURRIEL]">
+					<a class="article__person-email" href="mailto:[#COURRIEL]">[#COURRIEL]</a>
+				</IF>
+				<MACRO NAME="ARTICLE_AUTEUR_IDNO" />
 				<IF COND="[#TYPE] EQ 'auteur'">
 					<MACRO NAME="ARTICLE_DU_MEME_AUTEUR" />
 				</IF>
@@ -692,6 +707,41 @@
 			</section>
 		</AFTER>
 	</LOOP>
+</DEFFUNC>
+
+/**
+ * Identifiants de l'auteur dans d'autres bases.
+ */
+<DEFMACRO NAME="ARTICLE_AUTEUR_IDNO">
+	<IF COND="[#IDREF] OR [#ORCID] OR [#HAL] OR [#ISNI] OR [#ARK]">
+		<div class="article__person-idnos">
+			<h4>[@RESSOURCES_AUTEUR_AUTRES_BASES]</h4>
+			<ul class="article__person-idnos-list">
+				<FUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" TYPE="IDREF" URL="https://www.idref.fr/[#IDREF]" CONDITION="[#IDREF]" />
+				<FUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" TYPE="ORCID" URL="http://orcid.org/[#ORCID]" CONDITION="[#ORCID]" />
+				<FUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" TYPE="HAL" URL="https://cv.archives-ouvertes.fr/[#HAL]" CONDITION="[#HAL]" />
+				<FUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" TYPE="ISNI" URL="http://www.isni.org/[#ISNI]" CONDITION="[#ISNI]" />
+				<!--[ BNF: https://www.bnf.fr/fr/lidentifiant-ark-archival-resource-key ]-->
+				<IF COND="[#ARK] LIKE /(?<=\/cb)[^\/%.-]{8}(?=.?$)/">
+					<FUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" TYPE="BNF" CONDITION="1" URL="https://data.bnf.fr/fr/[#MATCHES.0.0]" />
+				</IF>
+			</ul>
+		</div>
+	</IF>
+</DEFMACRO>
+
+ /**
+ * Affichage de l'icone d'une base ou est reference l'auteur.
+ * @param {string} type - Type d'identifiant.
+ * @param {string} url - URL cible.
+ * @param {boolean} [condition] - Affiche l'icone seulement si true.
+ */
+<DEFFUNC NAME="ARTICLE_AUTEUR_IDNO_ITEM" REQUIRED="type, url" OPTIONAL="condition">
+	<IF COND="[#CONDITION]">
+		<li class="article__person-idno">
+			<a href="[#URL]"><FUNC NAME="BASE_ICON" ICON="idno-[#TYPE|strtolower]" CLASSNAME="article__person-idno-icon" TITLE="[#TYPE]" EXTENSION="png" /></a>
+		</li>
+	</IF>
 </DEFFUNC>
 
 /**

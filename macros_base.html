@@ -128,16 +128,18 @@
 </DEFFUNC>
 
 /**
- * Affiche une icone du dossier public/svg
+ * Affiche une icone du dossier public/icons
  * @param {string} icon - Nom du fichier icone (sans l'extension).
  * @param {string} [classname] - Class optionnelle à appliquer au span.
  * @param {string} [title] - Attribut title optionnel.
+ * @param {string} [extension] - Extension de fichier de l'icone. Par défaut : svg.
 */
-<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title">
+<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title, extension">
 	<IF COND="[#TITLE]">
 		<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
 	</IF>
-	<img class="icon [#CLASSNAME]" [#TITLE_ATTR] src="tpl/public/icons/[#ICON].svg" />
+	<IF COND="![#EXTENSION]"><LET VAR="extension">svg</LET></IF>
+	<img class="icon [#CLASSNAME]" [#TITLE_ATTR] src="tpl/public/icons/[#ICON].[#EXTENSION]" />
 </DEFFUNC>
 
 /**

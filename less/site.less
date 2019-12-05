@@ -234,6 +234,8 @@ h7, .heading7 {color: @color-2;}
     height: 2em;
 }
 
+.nav-pills li {padding: 0 5px;border-right: 1px solid #dee2e6;}
+
 // HOME
 // ============
 
@@ -331,7 +333,15 @@ h2#home-latest-issue {margin-top: 0;}
 .index-list--plat ul {padding-left:20px;}
 
 .btn.disabled, .btn:disabled {opacity: 0.45;}
-
+.lien-rss .btn-block {
+	.font-size(1.9);
+    border-top:2px dotted @color-6;
+    border-bottom:2px dotted @color-6;
+    padding-top: 5px;
+    color:@color-3;
+    margin-top: 30px;
+}
+.lien-rss .btn-block:hover { color:@color-2;}
 // ARTICLES
 // ========
 .article__text-contents {padding:0 10px 0 45px;}
@@ -553,6 +563,8 @@ p.encadre + p.encadre {margin-top: 0;}
 .section-header-arrow {position: absolute;right: 15px;}
 .article_text__section .section-header-arrow {right: 0;}
 .article_text__section h2 {margin-left:0;}
+
+
 
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0;}
@@ -789,6 +801,8 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="small"] .article__persons-infos-contents h4{font-size: 80%;}
 [data-zoom-level="big"] .article__persons-infos-contents h4{font-size:62%;}
 [data-zoom-level="small"] .article__doi {font-size: 80%;}
+[data-zoom-level="small"] .article__license-contents {font-size: 80%;}
+[data-zoom-level="big"] .article__license-contents {font-size: 130%;}
 
 [data-zoom-level="big"] .article__doi{font-size: 95%;}
 [data-zoom-level="small"] .entries-type {font-size: 80%;}
@@ -796,7 +810,17 @@ p.encadre + p.encadre {margin-top: 0;}
 
 [data-zoom-level="small"] .side-actualites-section__item {font-size: 80%;}
 [data-zoom-level="big"] .side-actualites-section__item {font-size: 130%;}
+[data-zoom-level="small"] .side-rss_section__list {font-size: 80%;}
+[data-zoom-level="big"] .side-rss_section__list {font-size: 102%;}
+[data-zoom-level="small"] .side-rss-item__title {font-size: 103%;}
+[data-zoom-level="big"] .side-rss-item__title {font-size: 107%;}
+[data-zoom-level="small"] .link-rss__title {font-size: 80%;}
+[data-zoom-level="big"] .link-rss__title {font-size: 54%;}
+[data-zoom-level="small"] .lien-rss .btn-block {font-size: 80%;}
+[data-zoom-level="big"] .lien-rss .btn-block {font-size: 110%;}
 
+[data-zoom-level="small"] .alphabet_btn {font-size: 80%;}
+[data-zoom-level="big"] .alphabet_btn {font-size: 110%;}
 
 // INCLUSION DES STYLES DE PERSONNALISATION
 // IMPORTANT : ne rien ajouter après cette ligne.

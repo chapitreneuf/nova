@@ -234,7 +234,7 @@ h7, .heading7 {color: @color-2;}
     height: 2em;
 }
 
-.nav-pills li {padding: 0 5px;border-right: 1px solid #dee2e6;}
+.page-shortcuts .nav-pills li {padding: 0 5px;border-right: 1px solid #dee2e6;}
 
 // HOME
 // ============
@@ -467,7 +467,7 @@ p.texte {margin-top: 15px;}
 .article__entries-content {padding-left:0;}
 
 .article__illustration {margin:15px 0;}
-.illustration__thumb {margin-top: 5px;}
+.illustration__thumb {margin-top: 5px;padding-left: 0;}
 .imageillustration img {
     max-width : 100%;
     heigth: auto;
@@ -575,7 +575,7 @@ p.encadre + p.encadre {margin-top: 0;}
     .citation{.font-size(1.3);}
     .epigraphe{.font-size(1.3);}
     .article__title{.font-size(2.5);}
-    .illustration__info {.font-size(1.3);}
+    .illustration__info {.font-size(1.3);padding-right: 0;}
     .article__persons-infos-contents {.font-size(1.3);}
     .article__persons-infos-contents h4 {.font-size(1.4);}
     .article__persons-infos-identity {.font-size(1.5);margin-bottom:0;}
@@ -611,7 +611,8 @@ p.encadre + p.encadre {margin-top: 0;}
     .article__ndlr h2 {.font-size(1.5);}
     .article__dedication h2 {.font-size(1.5);}
     .article__errata h2 {.font-size(1.5);}
-             .article__entries-title{padding-right:0;}
+	.article__entries-title{padding-right:0;}
+
 }
 @media (max-width: @screen-sm) {
         .article__button--social--break {break-before: always;}
@@ -654,7 +655,7 @@ p.encadre + p.encadre {margin-top: 0;}
     .remerciements {margin-left:45px;}
     .epigraphe {margin-left:33%;}
     .citation {margin-left:60px;}
-    .article__abstract-contents{margin-left: -15px;}
+    .article__abstract-contents{padding-right: 0;margin-left: -15px;}
     .article__doi {margin-right: 20%;}
 
 }

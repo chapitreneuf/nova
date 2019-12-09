@@ -534,13 +534,13 @@ ul.texte li p, ol.texte li p {color: @color-1;margin:0;}
 .article__button--facsimile .icon {width:43px;}
 
 
-.article__errata {margin-left:-15px;}
+.article__errata {margin-left:-15px;font-family: ubuntu;font-size: 1.9rem;padding-top: 10px;}
 .article__errata h2 {color: @color-1;text-transform:none;font-weight:bold;.font-size(1.75);}
 .article__dedication {margin-left:-15px;font-family: ubuntu;font-size: 1.9rem;padding-top: 10px;}
 .article__dedication h2 {color: @color-1;text-transform:none;font-weight:bold;.font-size(1.75);}
-.article__ndlr {margin-left:-15px;}
+.article__ndlr {margin-left:-15px;font-family: ubuntu;font-size: 1.9rem;padding-top: 10px;}
 .article__ndlr h2 {color: @color-1;text-transform:none;font-weight:bold;.font-size(1.75);}
-.article__ndla {margin-left:-15px;}
+.article__ndla {margin-left:-15px;font-family: ubuntu;font-size: 1.9rem;padding-top: 10px;}
 .article__ndla h2 {color: @color-1;text-transform:none;font-weight:bold;.font-size(1.75);}
 
 .encadre {
@@ -564,7 +564,7 @@ p.encadre + p.encadre {margin-top: 0;}
 .article_text__section .section-header-arrow {right: 0;}
 .article_text__section h2 {margin-left:0;}
 
-.chapo {font-weight: bold;font-family: @font-2;}
+.chapo {font-weight: bold;font-family: ubuntu;}
 
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0;}
@@ -773,12 +773,16 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] #article-translator{font-size: 95%;}
 [data-zoom-level="small"] .article__abstract-contents a {font-size: 80%;}
 [data-zoom-level="big"] .article__abstract-contents a {font-size: 143%;}
-[data-zoom-level="small"] .article__errata h2, .article__ndlr h2.section-header  {font-size: 80%;}
-[data-zoom-level="big"] .article__errata h2, .article__ndlr h2.section-header {font-size: 110%;}
+
+[data-zoom-level="small"] .article__errata h2 {font-size: 80%;}
+[data-zoom-level="big"] .article__errata h2 {font-size: 147%;}
+[data-zoom-level="small"] .article__ndlr h2.section-header  {font-size: 80%;}
+[data-zoom-level="big"] .article__ndlr h2.section-header {font-size: 147%;}
 [data-zoom-level="small"] .article__ndla h2.section-header  {font-size: 80%;}
-[data-zoom-level="big"] .article__ndla h2.section-header {font-size: 116%;}
+[data-zoom-level="big"] .article__ndla h2.section-header {font-size: 147%;}
 [data-zoom-level="small"] .article__dedication h2  {font-size: 80%;}
 [data-zoom-level="big"] .article__dedication h2 {font-size: 147%;}
+
 [data-zoom-level="small"] .article__sidenotes p  {font-size: 80%;}
 [data-zoom-level="big"] .article__sidenotes p {font-size: 117%;}
 [data-zoom-level="small"] .article__biblio-contents {font-size: 80%;}

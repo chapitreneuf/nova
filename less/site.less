@@ -40,12 +40,12 @@ h1 {
     color: @color-3;
     margin-top:30px;
     font-family: @font-2;
-    .font-size(3.3);
+    .font-size(3.4);
 }
 h1.texte, h2.texte, h3.texte, h4.texte, h5.texte, h6.texte {margin-top: 30px;text-align:left;}
 h1.texte {
     font-family: @font-2;
-    .font-size(2.8);
+    .font-size(2.9);
     font-weight:bold;
     margin-bottom: 10px;
 }
@@ -54,11 +54,11 @@ h1.lien__title {margin-top:0;margin-bottom:20px;}
 
 h2.texte  {
     font-family: @font-2;
-    .font-size(3);
+    .font-size(2.8);
 }
 h3.texte a {
     font-family: @font-2;
-    .font-size(2.7);
+    .font-size(2.6);
      color: @color-7;
 }
 h4.texte a {
@@ -565,6 +565,7 @@ p.encadre + p.encadre {margin-top: 0;}
 .article_text__section h2 {margin-left:0;}
 
 .chapo {font-weight: bold;font-family: ubuntu;}
+.article__altertitle {line-height: 1em;}
 
 @media (max-width: @screen-sm) {
     .article__text-contents {padding: 0;}
@@ -586,7 +587,6 @@ p.encadre + p.encadre {margin-top: 0;}
     .article__quotation-digital{.font-size(1.3);}
     .article__footnotes-contents p {.font-size(1.3);}
     .article__footnotes-contents {.font-size(1.3);}
-    .article__dedication {.font-size(1.5);}
     .creditillustration {.font-size(1.3);}
     .article__quotation h3{.font-size(1.5);}
     .toc__title {margin-bottom: 0;}
@@ -608,11 +608,16 @@ p.encadre + p.encadre {margin-top: 0;}
     .article__footnotes {padding-left: 0;padding-right: 0;.font-size(1.3);}
     .section-header-arrow {right: 0;}
     h3{.font-size(1.5);}
+	.article__ndla h2 {.font-size(1.5);}
+	.article__ndla {.font-size(1.5);}
     .article__ndlr h2 {.font-size(1.5);}
+	.article__ndlr {.font-size(1.5);}
     .article__dedication h2 {.font-size(1.5);}
+	.article__dedication {.font-size(1.5);}
     .article__errata h2 {.font-size(1.5);}
+    .article__errata {.font-size(1.5);}
 	.article__entries-title{padding-right:0;}
-
+	.FootnoteSymbol{.font-size(1.3);} 
 }
 @media (max-width: @screen-sm) {
         .article__button--social--break {break-before: always;}
@@ -715,7 +720,9 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] h1 {font-size: 165%;}
 [data-zoom-level="small"] .main-content h1 a{font-size: 80%;}
 [data-zoom-level="big"] .main-content h1 a{font-size: 130%;}
-[data-zoom-level="small"] .main-content h2 a{font-size: 80%;}
+[data-zoom-level="small"] .main-content h1 .footnotecall{font-size: 50%;}
+[data-zoom-level="big"] .main-content h1 .footnotecall{font-size: 64%;}
+[data-zoom-level="small"] .main-content h2 a{font-size: 84%;}
 [data-zoom-level="big"] .main-content h2 a{font-size: 130%;}
 [data-zoom-level="small"] h2.section-header {font-size: 100%;}
 [data-zoom-level="big"] h2.section-header {font-size: 110%;}
@@ -733,10 +740,7 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] .publi-number {font-size: 115%;}
 
 
-[data-zoom-level="small"] .dedicace {font-size: 80%;}
-[data-zoom-level="big"] .dedicace {font-size: 130%;}
-[data-zoom-level="small"] .epigraphe {font-size: 80%;}
-[data-zoom-level="big"] .epigraphe {font-size: 97%;}
+
 
 [data-zoom-level="small"] .titreillustration {font-size: 80%;}
 [data-zoom-level="big"] .titreillustration {font-size: 94%;}
@@ -746,6 +750,8 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] .legendeillustration {font-size: 91%;}
 [data-zoom-level="small"] .groupe-illustration .legendeillustration {font-size: 80%;}
 [data-zoom-level="big"] .groupe-illustration .legendeillustration {font-size: 130%;}
+[data-zoom-level="small"] .groupe-illustration .creditillustration {font-size: 80%;}
+[data-zoom-level="big"] .groupe-illustration .creditillustration {font-size: 130%;}
 [data-zoom-level="small"] .illustration__thumb  {font-size: 80%;}
 [data-zoom-level="big"] .illustration__thumb {font-size: 74%;}
 [data-zoom-level="small"] .article__illustration .titreillustration {font-size: 80%;}
@@ -758,7 +764,8 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="small"] .imageillustration {font-size: 80%;}
 [data-zoom-level="big"] .imageillustration {font-size: 130%;}
 [data-zoom-level="small"] .creditillustration {font-size: 80%;}
-[data-zoom-level="big"] .creditillustration {font-size: 130%;}
+[data-zoom-level="big"] .creditillustration {font-size: 93%;}
+
 [data-zoom-level="small"] .citation {font-size: 80%;}
 [data-zoom-level="big"] .citation {font-size: 92%;}
 
@@ -775,13 +782,25 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] .article__abstract-contents a {font-size: 143%;}
 
 [data-zoom-level="small"] .article__errata h2 {font-size: 80%;}
-[data-zoom-level="big"] .article__errata h2 {font-size: 147%;}
+[data-zoom-level="big"] .article__errata h2 {font-size: 137%;}
 [data-zoom-level="small"] .article__ndlr h2.section-header  {font-size: 80%;}
-[data-zoom-level="big"] .article__ndlr h2.section-header {font-size: 147%;}
+[data-zoom-level="big"] .article__ndlr h2.section-header {font-size: 137%;}
 [data-zoom-level="small"] .article__ndla h2.section-header  {font-size: 80%;}
-[data-zoom-level="big"] .article__ndla h2.section-header {font-size: 147%;}
+[data-zoom-level="big"] .article__ndla h2.section-header {font-size: 137%;}
 [data-zoom-level="small"] .article__dedication h2  {font-size: 80%;}
-[data-zoom-level="big"] .article__dedication h2 {font-size: 147%;}
+[data-zoom-level="big"] .article__dedication h2 {font-size: 137%;}
+[data-zoom-level="small"] .dedicace {font-size: 80%;}
+[data-zoom-level="big"] .dedicace {font-size: 130%;}
+[data-zoom-level="small"] .ndlr {font-size: 80%;}
+[data-zoom-level="big"] .ndlr {font-size: 130%;}
+[data-zoom-level="small"] .addendum {font-size: 80%;}
+[data-zoom-level="big"] .addendum {font-size: 130%;}
+[data-zoom-level="small"] .ndla {font-size: 80%;}
+[data-zoom-level="big"] .ndla {font-size: 130%;}
+
+[data-zoom-level="small"] .epigraphe {font-size: 87%;}
+[data-zoom-level="big"] .epigraphe {font-size: 91%;}
+
 
 [data-zoom-level="small"] .article__sidenotes p  {font-size: 80%;}
 [data-zoom-level="big"] .article__sidenotes p {font-size: 117%;}
@@ -791,12 +810,14 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] .article__appendix h2 {font-size: 110%;}
 [data-zoom-level="small"] .article__appendix-contents {font-size: 80%;}
 [data-zoom-level="big"] .article__appendix-contents {font-size:84%;}
-[data-zoom-level="small"] h2#footnotes  {font-size: 80%;}
+[data-zoom-level="small"] h2#footnotes  {font-size: 91%;}
 [data-zoom-level="big"] h2#footnotes {font-size: 162%;}
 [data-zoom-level="small"] .article__footnotes-contents p {font-size: 80%;}
 [data-zoom-level="big"] .article__footnotes-contents p {font-size: 124%;}
+[data-zoom-level="small"] .FootnoteSymbol  {font-size: 85%;}
+[data-zoom-level="big"] .FootnoteSymbol {font-size: 95%;}
 [data-zoom-level="small"] .article__quotation-contents h3{font-size: 92%;}
-[data-zoom-level="big"] .article__quotation-contents h3{font-size:62%;}
+[data-zoom-level="big"] .article__quotation-contents h3{font-size:84%;}
 [data-zoom-level="small"] .article__quotation-digital {font-size: 80%;}
 [data-zoom-level="big"] .article__quotation-digital {font-size:84%;}
 [data-zoom-level="small"] .article__persons-infos-contents {font-size: 80%;}
@@ -804,12 +825,13 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="small"] .article__persons-infos-contents h3{font-size: 80%;}
 [data-zoom-level="big"] .article__persons-infos-contents h3{font-size:62%;}
 [data-zoom-level="small"] .article__persons-infos-contents h4{font-size: 80%;}
-[data-zoom-level="big"] .article__persons-infos-contents h4{font-size:62%;}
-[data-zoom-level="small"] .article__doi {font-size: 80%;}
-[data-zoom-level="small"] .article__license-contents {font-size: 80%;}
-[data-zoom-level="big"] .article__license-contents {font-size: 130%;}
-
+[data-zoom-level="big"] .article__persons-infos-contents h4{font-size:96%;}
+[data-zoom-level="small"] .article__doi {font-size: 100%;}
 [data-zoom-level="big"] .article__doi{font-size: 95%;}
+[data-zoom-level="small"] .article__license-contents {font-size: 80%;}
+[data-zoom-level="big"] .article__license-contents {font-size: 100%;}
+
+
 [data-zoom-level="small"] .entries-type {font-size: 80%;}
 [data-zoom-level="big"] .entries-type {font-size: 95%;}
 
@@ -826,6 +848,9 @@ p.encadre + p.encadre {margin-top: 0;}
 
 [data-zoom-level="small"] .alphabet_btn {font-size: 80%;}
 [data-zoom-level="big"] .alphabet_btn {font-size: 110%;}
+
+[data-zoom-level="small"] ul.texte li li {font-size: 100%;}
+[data-zoom-level="big"] ul.texte li li {font-size: 98%;}
 
 // INCLUSION DES STYLES DE PERSONNALISATION
 // IMPORTANT : ne rien ajouter après cette ligne.

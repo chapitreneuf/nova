@@ -296,7 +296,8 @@ h2#home-latest-issue {margin-top: 0;}
 //.toc__li--class-publications li {margin-left:0;.font-size(1.6);}
 .toc__li--class-publications li li {list-style-type: circle;}
 .toc__author {font-weight:bold;color:@color-1;margin: 0;line-height:1.2em;.font-size(1.6);}
-.toc__title {color:@color-3;margin-bottom:10px;line-height: 1.2em;font-weight:bold;.font-size(1.9);}
+.toc__title {color:@color-3;margin-bottom:10px;line-height: 1.2em;font-weight:bold;}
+h2.toc__title {.font-size(1.9);}
 .toc__title a {font-weight:normal;}
 
 .toc__altertitle {color:@color-1;}
@@ -376,6 +377,7 @@ h2#home-latest-issue {margin-top: 0;}
     color:@color-6;
 }
 .article__person-idnos {margin:5px 0 20px 0;}
+.article__person-idnos h4 {margin-bottom:10px}
 
 #article-translator {.font-size(1.7);}
 .article__doi {color:@color-6;.font-size(1.5);text-align:right;}
@@ -563,7 +565,7 @@ p.encadre + p.encadre {margin-top: 0;}
 .article_text__section .section-header-arrow {right: 0;}
 .article_text__section h2 {margin-left:0;}
 
-.chapo {font-weight: bold;font-family: ubuntu;}
+.chapo {font-weight: bold;font-family: ubuntu;.font-size(1.8);}
 .article__altertitle {line-height: 1em;}
 
 @media (max-width: @screen-sm) {
@@ -860,7 +862,8 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] .toc__title {font-size: 90%;}
 [data-zoom-level="small"] .toc__header .toc__title {font-size: 115%;}
 [data-zoom-level="big"] .toc__header .toc__title {font-size: 104%;}
-
+[data-zoom-level="small"] .chapo {font-size: 94%;}
+[data-zoom-level="big"] .chapo {font-size: 110%;}
 // INCLUSION DES STYLES DE PERSONNALISATION
 // IMPORTANT : ne rien ajouter après cette ligne.
 // ==============================================

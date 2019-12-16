@@ -460,20 +460,21 @@
 			<ELSE />
 				<LET VAR="text_section_title">[@TEXTE_EXTRAIT]</LET>
 			</IF>
-			<div class="article_text__section article_text__section--border">
-				<div class="row">
-					<div class="col col-md-3">
-						<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+			<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+				<div class="article_text__section article_text__section--border">
+					<div class="row">
+						<div class="col col-md-3">
+							<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+						</div>
+						<div class="col-5 col-md-8 article_text__section--buttons">
+							<MACRO NAME="ARTICLE_BOUTONS" />
+						</div>
+						<div class="col-1">
+						<a class="section-header-arrow" href="#main-content">🡡</a>
+						</div>
 					</div>
-					<div class="col-5 col-md-8 article_text__section--buttons">
-						<MACRO NAME="ARTICLE_BOUTONS" />
-					</div>
-					<div class="col-1">
-					<a class="section-header-arrow" href="#main-content">🡡</a>
-					</div>
-					
 				</div>
-			</div>
+			</IF>
 			<MACRO NAME="ARTICLE_TEXTE_CONTENTS" />
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->

@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 1651.7897 503.14697"
+   viewBox="0 0 60.150003 20"
    version="1.1"
    id="svg4"
    sodipodi:docname="xml-tei.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   width="1651.7897"
-   height="503.14697">
+   width="60.150002"
+   height="20">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,9 +41,9 @@
      inkscape:window-height="1125"
      id="namedview6"
      showgrid="false"
-     inkscape:zoom="0.46"
-     inkscape:cx="-174.59018"
-     inkscape:cy="711.18427"
+     inkscape:zoom="20.817224"
+     inkscape:cx="10.648378"
+     inkscape:cy="9.1574654"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -54,23 +54,23 @@
      fit-margin-bottom="0" />
   <g
      id="g5435"
-     transform="matrix(75.679695,0,0,75.679695,139763.38,-27096.687)">
+     transform="matrix(75.679695,0,0,75.679695,139763.38,-27579.834)">
     <path
-       style="opacity:1;fill:none;fill-opacity:0.49019608;stroke:#a8a8a8;stroke-width:0.29649481;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -1846.5903,358.19259 h 20.0072 l 1.4482,6.35188 h -20.0438 z"
+       style="opacity:1;fill:none;fill-opacity:0.49019608;stroke:#a8a8a8;stroke-width:0.01178531;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m -1846.7677,364.43434 h 0.7231 l 0.057,0.25249 h -0.7247 z"
        id="path5426"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:3.76548386px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:0.15689516px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
-       x="-1843.6063"
-       y="362.63901"
+       style="font-style:normal;font-weight:normal;font-size:0.14967643px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:0.00623652px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="-1846.6783"
+       y="364.61108"
        id="text5433"><tspan
          sodipodi:role="line"
-         x="-1843.6063"
-         y="362.63901"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Verdana;-inkscape-font-specification:Verdana;fill:#333333;stroke-width:0.15689516px;"
+         x="-1846.6783"
+         y="364.61108"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Verdana;-inkscape-font-specification:Verdana;fill:#333333;stroke-width:0.00623652px"
          id="tspan5431">XML-TEI</tspan></text>
   </g>
 </svg>

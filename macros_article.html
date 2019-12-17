@@ -116,7 +116,7 @@
 
 		<!--[ DOI ]-->
 		<IF COND="[%PREFIXEDOI] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
-			<p class="article__doi">DOI&nbsp;: [%PREFIXEDOI][#ID]</p>
+			<p class="article__doi"><a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">DOI&nbsp;: [%PREFIXEDOI][#ID]</a></p>
 		</IF>
 
 		<!--[ Pagination ]-->

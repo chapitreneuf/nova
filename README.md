@@ -23,7 +23,7 @@ En plus des champs habituellement supportés par le le modèle éditorial d'Open
 
 Les instructions ci-dessous vous permettent de personnaliser votre site tout en conservant la possibilité de mettre à niveau la maquette Nova facilement à posteriori. La maquette est conçue pour vous permettre d'isoler vos modifications du reste du code.
 
-:point_up: **Lors de la personnalisation d'un site, il est recommandé de n'éditer que les fichiers `macros_custom.html` et `less/custom.less` et de ne jamais modifier les autres fichiers de la maquette.**
+:warning: **Lors de la personnalisation d'un site, il est recommandé de n'éditer que les fichiers `macros_custom.html` et `less/custom.less` et de ne jamais modifier les autres fichiers de la maquette.**
 
 Les deux fichiers `macros_custom.html` et `less/custom.less` (en plus des éventuelles images, scripts JavaScript ou fichiers CSS qu'il est possible d'ajouter) permettent de surcharger tous les templates et tous les styles sans jamais toucher au code source de la maquette Nova. Respecter cette méthode facilite grandement la mise à jour future de la Nova et facilite donc la maintenance de votre site.
 

@@ -9,6 +9,7 @@ En plus des champs habituellement supportés par le le modèle éditorial d'Open
 * Le champ [#CHAPO]
 * Les liens vers les fiches des auteurs dans les bases de données suivantes : IdRef, BNF, Orcid, HAL, Isni
 * Le courriel des auteurs (déjà supporté par le ME OEJ mais non affiché).
+* La mise en valeur d'un fichier TEI attaché à l'article.
 
 ## Installation
 
@@ -114,6 +115,24 @@ Le lien du bouton peut être défini via l'une des deux options suivantes :
 **Option 1 :** créer dans le ME le champ d'options `[#OPTIONS.NOVA.URLDIFFUSEURSITE]`, puis dans les options du site y renseigner l'URL du lien.
 
 **Option 2 :** modifier la valeur de la variable `[%URLDIFFUSEURSITE]` dans `macros_custom.html` avec l'URL du lien.
+
+#### Comment attacher un fichier TEI à un article ?
+
+1. Éditer l'article,
+2. Dans le menu "Documents annexes", sélectionner "Ajouter :" > "Fichiers" > "Fichier placé en annexe",
+3. Renseigner le titre : "TEI",
+4. Uploader le fichier TEI via le champ "Document",
+5. (Important) Renseigner l'identifiant en bas du formulaire : "tei",
+6. Enregistrer le formulaire avec le bouton "Terminer",
+7. Ne pas oublier que le document doit être "publié" pour qu'il soit visible en ligne.
+
+## Mise à jour de la maquette Nova sur un site
+
+Pour mettre à jour la maquette Nova sur un site :
+
+1. Créer une sauvegarde du contenu de dossier `tpl/`.
+2. Remplacer le contenu du dossier `tpl/` du site avec la nouvelle maquette Nova à jour.
+3. Copier dans cette nouvelle maquette les fichiers de personnalisation du site sauvegardés en 1 : `macros_custom.html`, `less/custom.less` ainsi que toutes les ressources externes ajoutées lors de la personnalisation (images, scripts, webfonts, etc.).
 
 ## Développement avec NodeJS
 

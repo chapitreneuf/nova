@@ -1,0 +1,133 @@
+<lodeltranslations>
+<translations>
+<row><lang>fr</lang>
+<title>Français</title>
+<textgroups>site</textgroups>
+<translators>Thomas Brouard, François Grosdemouge</translators>
+<modificationdate>0000-00-00</modificationdate>
+<creationdate>0000-00-00</creationdate>
+<texts>
+<contents name="accueil" textgroup="site" status="2">Accueil</contents>
+<contents name="afficher_accroche" textgroup="site" status="2">Afficher l’image</contents>
+<contents name="and" textgroup="site" status="2">et</contents>
+<contents name="annexe" textgroup="site" status="2">Annexe</contents>
+<contents name="annonce_alias" textgroup="site" status="2">Alias</contents>
+<contents name="article_precedent" textgroup="site" status="2">Article précédent</contents>
+<contents name="article_suivant" textgroup="site" status="2">Article suivant</contents>
+<contents name="article_traduction_de" textgroup="site" status="2">Traduit de :</contents>
+<contents name="article_traductions" textgroup="site" status="2">Traduction(s) :</contents>
+<contents name="article_traductions_autres" textgroup="site" status="2">Autre(s) traduction(s) de cet article :</contents>
+<contents name="aucun_resultat" textgroup="site" status="2">Aucun résultat.</contents>
+<contents name="auteur" textgroup="site" status="2">Auteur</contents>
+<contents name="auteurs" textgroup="site" status="2">Auteurs</contents>
+<contents name="autres_numeros_recents" textgroup="site" status="2">Autres numéros</contents>
+<contents name="avertissement_texte_integral" textgroup="site" status="2">Ce document sera publié en ligne en texte intégral en</contents>
+<contents name="bibliographie" textgroup="site" status="2">Bibliographie</contents>
+<contents name="chercher" textgroup="site" status="2">Chercher</contents>
+<contents name="citation" textgroup="site" status="2">Citation</contents>
+<contents name="commander_numero" textgroup="site" status="2">Commander ce numéro</contents>
+<contents name="consulte_le" textgroup="site" status="2">consulté le</contents>
+<contents name="credits" textgroup="site" status="2">Crédits</contents>
+<contents name="dedicace" textgroup="site" status="2">Dédicace</contents>
+<contents name="dernier_numero" textgroup="site" status="2">Dernier numéro</contents>
+<contents name="dernieres_entrees_index" textgroup="site" status="2">Dernières entrées d'index</contents>
+<contents name="derniers_articles" textgroup="site" status="2">Derniers articles</contents>
+<contents name="description" textgroup="site" status="2">Description</contents>
+<contents name="directeur_publication" textgroup="site" status="2">Sous la direction de</contents>
+<contents name="docannexe" textgroup="site" status="2">Document annexe</contents>
+<contents name="docannexes" textgroup="site" status="2">Documents</contents>
+<contents name="document_precedent" textgroup="site" status="2">Document précédent</contents>
+<contents name="document_suivant" textgroup="site" status="2">Document suivant</contents>
+<contents name="du_meme_auteur" textgroup="site" status="2">Articles du même auteur</contents>
+<contents name="edite_avec_lodel" textgroup="site" status="2">Édité avec Lodel</contents>
+<contents name="en_ligne" textgroup="site" status="2">En ligne</contents>
+<contents name="entrees_index" textgroup="site" status="2">Entrées d’index</contents>
+<contents name="errata" textgroup="site" status="2">Errata</contents>
+<contents name="erreur_404" textgroup="site" status="2">Erreur 404</contents>
+<contents name="fichier_original" textgroup="site" status="2">Fichier original</contents>
+<contents name="heberge_par_edinum" textgroup="site" status="2">Créé et hébergé par Edinum.org</contents>
+<contents name="historique" textgroup="site" status="2">Historique</contents>
+<contents name="illustration_credits" textgroup="site" status="2">Crédits</contents>
+<contents name="illustration_legende" textgroup="site" status="2">Légende</contents>
+<contents name="illustration_titre" textgroup="site" status="2">Titre</contents>
+<contents name="index" textgroup="site" status="2">Index</contents>
+<contents name="index_par_annees" textgroup="site" status="2">Par années</contents>
+<contents name="index_par_langues" textgroup="site" status="2">Par langues</contents>
+<contents name="issn_electronique" textgroup="site" status="2">ISSN électronique</contents>
+<contents name="licence" textgroup="site" status="2">Droits d'auteur</contents>
+<contents name="lien_accroche" textgroup="site" status="2">Informations sur cette image</contents>
+<contents name="lien_rss" textgroup="site" status="2">S’abonner à ce flux</contents>
+<contents name="lire_la_suite" textgroup="site" status="2">Lire la suite</contents>
+<contents name="lire_notice_site" textgroup="site" status="2">Lire la notice complète</contents>
+<contents name="lodel_admin" textgroup="site" status="2">Accès réservé</contents>
+<contents name="logos" textgroup="site" status="2">Affiliations/partenaires</contents>
+<contents name="mis_en_ligne_le" textgroup="site" status="2">mis en ligne le</contents>
+<contents name="nav_a_paraitre" textgroup="site" status="2">Numéros à paraître</contents>
+<contents name="nav_resumes" textgroup="site" status="2">Derniers numéros</contents>
+<contents name="nav_texte_integral" textgroup="site" status="2">Numéros en texte intégral</contents>
+<contents name="navigation" textgroup="site" status="2">Navigation</contents>
+<contents name="ndla" textgroup="site" status="2">Notes de l’auteur</contents>
+<contents name="ndlr" textgroup="site" status="2">Notes de la rédaction</contents>
+<contents name="notefin" textgroup="site" status="2">Note de fin</contents>
+<contents name="notes" textgroup="site" status="2">Notes</contents>
+<contents name="notice_revisee_le" textgroup="site" status="2">Notice révisée le</contents>
+<contents name="numero_precedent" textgroup="site" status="2">Numéro précédent</contents>
+<contents name="numero_suivant" textgroup="site" status="2">Numéro suivant</contents>
+<contents name="numeros" textgroup="site" status="2">Numéros</contents>
+<contents name="page_not_found" textgroup="site" status="2">La page que vous demandez n'existe pas.</contents>
+<contents name="par" textgroup="site" status="2">par</contents>
+<contents name="partager" textgroup="site" status="2">Partager</contents>
+<contents name="paru_dans" textgroup="site" status="2">Paru dans</contents>
+<contents name="plan_du_site" textgroup="site" status="2">Plan du site</contents>
+<contents name="pour_citer" textgroup="site" status="2">Citer cet article</contents>
+<contents name="precedent" textgroup="site" status="2">Précédent</contents>
+<contents name="presentation" textgroup="site" status="2">Présentation</contents>
+<contents name="publications_de" textgroup="site" status="2">Publications de</contents>
+<contents name="recherche" textgroup="site" status="2">Recherche</contents>
+<contents name="reference_electronique" textgroup="site" status="2">Référence électronique</contents>
+<contents name="reference_oeuvre" textgroup="site" status="2">Référence(s) :</contents>
+<contents name="reference_papier" textgroup="site" status="2">Référence papier</contents>
+<contents name="resume" textgroup="site" status="2">Résumé</contents>
+<contents name="resumes" textgroup="site" status="2">Résumés</contents>
+<contents name="retour_home" textgroup="site" status="2">Retour à l'accueil du site</contents>
+<contents name="retour_index" textgroup="site" status="2">Retour à l’index</contents>
+<contents name="rubrique_precedente" textgroup="site" status="2">Rubrique précédente</contents>
+<contents name="rubrique_suivante" textgroup="site" status="2">Rubrique suivante</contents>
+<contents name="rubriques" textgroup="site" status="2">Rubriques</contents>
+<contents name="site_editeur" textgroup="site" status="2">Site de l’éditeur</contents>
+<contents name="skip_to_content" textgroup="site" status="2">Aller directement au contenu</contents>
+<contents name="sommaire" textgroup="site" status="2">Sommaire</contents>
+<contents name="sommaire_complet_du_numero" textgroup="site" status="2">Sommaire complet du numéro</contents>
+<contents name="sommaire_de_ce_numero" textgroup="site" status="2">Sommaire de ce numéro</contents>
+<contents name="sommaire_de_cette_rubrique" textgroup="site" status="2">Sommaire de cette rubrique</contents>
+<contents name="suivant" textgroup="site" status="2">Suivant</contents>
+<contents name="table_des_illustrations" textgroup="site" status="2">Illustrations</contents>
+<contents name="telecharger_facsimile" textgroup="site" status="2">Fac-similé</contents>
+<contents name="texte" textgroup="site" status="2">Texte</contents>
+<contents name="texte_extrait" textgroup="site" status="2">Extrait</contents>
+<contents name="texte_integral" textgroup="site" status="2">Texte</contents>
+<contents name="toc" textgroup="site" status="2">Plan</contents>
+<contents name="tous_les_numeros" textgroup="site" status="2">Tous les numéros</contents>
+<contents name="tous_les_textes" textgroup="site" status="2">Tous les textes...</contents>
+<contents name="tout_le_contenu" textgroup="site" status="2">Voir tout le contenu</contents>
+<contents name="traducteur" textgroup="site" status="2">Traducteur</contents>
+<contents name="traducteurs" textgroup="site" status="2">Traducteurs</contents>
+<contents name="traduction_de" textgroup="site" status="2">Traduction de</contents>
+<contents name="widgets_print" textgroup="site" status="2">Imprimer</contents>
+<contents name="zoomimage_agrandir" textgroup="site" status="2">Agrandir</contents>
+<contents name="zoomimage_fermer" textgroup="site" status="2">Fermer</contents>
+<contents name="zoomimage_original" textgroup="site" status="2">Original</contents>
+<contents name="zoomimage_precedent" textgroup="site" status="2">Précédent</contents>
+<contents name="zoomimage_suivant" textgroup="site" status="2">Suivant</contents>
+<contents name="document" textgroup="site" status="2">Document</contents>
+<contents name="permalien" textgroup="site" status="2">Permalien</contents>
+<contents name="actualites" textgroup="site" status="2">Actualités</contents>
+<contents name="notes_suivantes" textgroup="site" status="2">Notes suivantes</contents>
+<contents name="visiter_site" textgroup="site" status="2">Visiter le site</contents>
+<contents name="rss" textgroup="site" status="2">Fils d'infos</contents>
+<contents name="warning_empty_query" textgroup="site" status="2">Vous avez une erreur</contents>
+<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Autres ressources du même auteur </contents>
+</texts>
+</row>
+</translations>
+</lodeltranslations>

@@ -13,12 +13,17 @@ En plus des champs habituellement supportés par le le modèle éditorial d'Open
 
 ## Installation
 
-**TODO Arnaud: rédiger cette partie**
-
-* Installation (maquette + filtres lodel-textfunc)
+* Prérequis
+  * Installation de lodel-textfunc: voir les instructions dans la branche outils de ce dépôt.
+  * Optionnellement installer lessphp pour compiler le CSS (aussi présent dans la branche outils), ou bien utiliser la méthode node.js décrite plus loin.
+* Installation
+  * Créer un nouveau site depuis l'interface de lodel
+  * Installer le template nova dans un dossier nommé tpl/ à l'intérieur du dossier du nouveau site
+  * Compiler le CSS
 * Traductions
-* Compilation LESS avec php
+  * utiliser les fichiers translations/translation-{fr,en}.xml fournis dans ce dépôt et les importer depuis l'interface du site lodel.
 * Script d'ajout des champs au ME (optionel)
+  * En cours d'écriture, se trouvera dans la branche outils
 
 ## Personnalisation de la maquette d'un site
 

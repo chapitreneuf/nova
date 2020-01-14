@@ -30,6 +30,6 @@ Une fois le logiciel en place on peut compiler le CSS d'un site, en se plaçant 
 `plessc less/site.less public/css/site.css`
 
 
-# TODO
-
-Scripts d'upgrade du modèle éditorial pour les fonctionnalités optionnelles du template **nova**
+# Upgrade du Modèle Édiorial
+Placer le script nova_me_upgrade.php à la racine de l'installation lodel
+lancer `php nova_me_upgrade.php nom_du_site`

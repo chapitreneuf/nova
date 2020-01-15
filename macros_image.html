@@ -10,6 +10,15 @@
 
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
+
+	<!--[ Trouver la bonne image ]-->
+	<IF COND="[#TYPE|strpos('image')] SNE false AND [#DOCUMENT]" />
+		<LET VAR="image">[#DOCUMENT]</LET>
+		<LET VAR="image_url">[#ID|makeurlwithfile]</LET>
+	<ELSEIF COND="[#VIGNETTE]" />
+		<LET VAR="image">[#VIGNETTE]</LET>
+		<LET VAR="image_url">[#VIGNETTE]</LET>
+	</IF>
 </DEFMACRO>
 
 /**
@@ -30,17 +39,8 @@
  * Affichage de l'image.
  */
 <DEFMACRO NAME="IMAGE_THUMBNAIL">
-	<LET VAR="image">
-		<IF COND="[#CLASS] EQ 'liens'">
-			[#CAPTUREDECRAN|vignette(480)]
-		<ELSEIF COND="[#TYPE|strpos('image')] SNE false AND [#DOCUMENT]" />
-			[#DOCUMENT|vignette(480)]
-		<ELSEIF COND="[#VIGNETTE]" />
-			[#VIGNETTE|vignette(480)]
-		</IF>
-	</LET>
 	<IF COND="[#IMAGE]">
-		<a href="[#ID|makeurlwithfile]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim]" /></a>
+		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette(480)]" /></a>
 	</IF>
 </DEFMACRO>
 
@@ -102,8 +102,10 @@
  * Chemin de l'image.
  */
 <DEFMACRO NAME="IMAGE_FILE">
-	<h2>[@FICHIER_ORIGINAL]</h2>
-	<p class="image__file">
-		<a href="[#ID|makeurlwithfile]">[#DOCUMENT|basename]</a> ([#DOCUMENT|getFileMime] &#8211; [#DOCUMENT|nicefilesize])
-	</p>
+	<IF COND="[#IMAGE]">
+		<h2>[@FICHIER_ORIGINAL]</h2>
+		<p class="image__file">
+			<a href="[#IMAGE_URL]">[#IMAGE|basename]</a> ([#IMAGE|getFileMime] &#8211; [#IMAGE|nicefilesize])
+		</p>
+	</IF>
 </DEFMACRO>

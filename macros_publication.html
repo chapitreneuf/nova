@@ -353,6 +353,9 @@
 					<ELSEIF COND="[#DOCUMENT]" />
 						<LET VAR="href">[#ID|makeurlwithfile]</LET>
 					</IF>
+					<IF COND="[#VIGNETTE]">
+						<img src="[#VIGNETTE|vignette(300)]" alt="[#TITRE|textebrut]" />
+					</IF>
 					<p class="toc__title">
 						<!--[ Lien ]-->
 						<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">

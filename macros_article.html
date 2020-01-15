@@ -115,7 +115,7 @@
 		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="traducteur" WRAP_ID="article-translator" WRAP_CLASS="article__author" PREPEND="[@TRADUCTION_DE] " HREF="#article__translators-infos" />
 
 		<!--[ DOI ]-->
-		<IF COND="[%PREFIXEDOI] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+		<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
 			<p class="article__doi"><a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">DOI&nbsp;: [%PREFIXEDOI][#ID]</a></p>
 		</IF>
 

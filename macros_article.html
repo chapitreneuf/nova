@@ -776,7 +776,7 @@
 	<LOOP NAME="article_du_meme_auteur"
 		SELECT="numerodocument,id,datepubli,langue,LEFT(texte,1) AS texte,LEFT(alterfichier,1) AS alterfichier,documentcliquable,titre,soustitre"
 		TABLE="textes"
-		WHERE="idperson = '[#IDPERSON]' AND type NOT IN ('informations', 'actualite') AND id NOT IN ([%RELATIONS_TRADUCTION|join(',')]) AND id != '[%ID]'"
+		WHERE="idperson = '[#IDPERSON]' AND type NOT IN ('informations', 'actualite') AND id [#NOT_IN_TRADUCTIONS] AND id != '[%ID]'"
 		ORDER="datepubli DESC"
 		LIMIT="[#LIMIT|lmath('+', 1)]">
 

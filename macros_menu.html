@@ -160,7 +160,7 @@
 	</LOOP>
 
 	<!--[ Lien vers le sommaire des numéros ]-->
-	<a href="[#ISSUES_COLLECTIONS_ID|makeurlwithid]" class="link-to-issues">[@TOUS_LES_NUMEROS]</a>
+	<MACRO NAME="MENU_ISSUES_LINK" />
 </DEFMACRO>
 
 /**
@@ -198,6 +198,18 @@
 		</AFTER>
 	</LOOP>
 </DEFFUNC>
+
+/**
+ * Affichage du lien vers tous les numéros.
+ */
+<DEFMACRO NAME="MENU_ISSUES_LINK">
+	<LOOP NAME="menu_issues_link" 
+		TABLE="publications" 
+		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID]) AND identifier = 'numeros'" 
+		SELECT="id" LIMIT="0,1" ORDER="rank" />
+		<a href="[#ISSUES_COLLECTIONS_ID|makeurlwithid]" class="link-to-issues">[@TOUS_LES_NUMEROS]</a>
+	</LOOP>
+</DEFMACRO>
 
 /**
  * Afficher des collections dans le menu.

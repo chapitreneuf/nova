@@ -23,7 +23,7 @@ En plus des champs habituellement supportés par le le modèle éditorial d'Open
 * Traductions
   * utiliser les fichiers translations/translation-{fr,en}.xml fournis dans ce dépôt et les importer depuis l'interface du site lodel.
 * Script d'ajout des champs au ME (optionel)
-  * En cours d'écriture, se trouvera dans la branche outils
+  * Voir la branche outils
 
 ## Personnalisation de la maquette d'un site
 

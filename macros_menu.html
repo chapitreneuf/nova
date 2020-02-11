@@ -144,35 +144,41 @@
  * Liste des numéros dans le menu.
  */
 <DEFMACRO NAME="MENU_ISSUES">
-	<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_A_PARAITRE]" FILTRE="AND paraitre = 1" />
+	<LOOP NAME="menu_issues" 
+		TABLE="publications" 
+		SELECT="id, titre, altertitre, identifier"
+		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID])"
+		ORDER="(identifier='numeros') DESC, rank">
+		<DOFIRST>
+			<!--[ Collection 'numeros' ]-->
+			<!--[ A paraitre ]-->
+			<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_A_PARAITRE]" ID_COLLECTION="[#ID]" FILTRE="AND paraitre = 1" />
 
-	<!--[ Résumés ]-->
-	<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_RESUMES]" FILTRE="AND (paraitre = 0 OR paraitre IS NULL) AND (integralite = 0 OR integralite IS NULL)" />
-	
-	<!--[ Texte intégral ]-->
-	<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_TEXTE_INTEGRAL]" FILTRE="AND (paraitre = 0 OR paraitre IS NULL) AND integralite = 1" />
-	
-	<!--[ Autres collections parentes ]-->
-	<LOOP NAME="menu_issues_elsewhere" TABLE="publications" SELECT="id, titre, altertitre"
-		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID]) AND identifier != 'numeros'" ORDER="rank">
-		<LET VAR="titre_section"><FUNC NAME="BASE_ML_TITRE" /></LET>
-		<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[#TITRE_SECTION]" ID_COLLECTION="[#ID]" />
+			<!--[ Résumés ]-->
+			<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_RESUMES]" ID_COLLECTION="[#ID]" FILTRE="AND (paraitre = 0 OR paraitre IS NULL) AND (integralite = 0 OR integralite IS NULL)" />
+
+			<!--[ Texte intégral ]-->
+			<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[@NAV_TEXTE_INTEGRAL]" ID_COLLECTION="[#ID]" FILTRE="AND (paraitre = 0 OR paraitre IS NULL) AND integralite = 1" />
+		</DOFIRST>
+		<DO>
+			<!--[ Autres collections parentes ]-->
+			<LET VAR="titre_section"><FUNC NAME="BASE_ML_TITRE" /></LET>
+			<FUNC NAME="MENU_ISSUES_ITEMS" TITRE_SECTION="[#TITRE_SECTION]" ID_COLLECTION="[#ID]" />
+		</DO>
+		<AFTER>
+			<!--[ Lien vers le sommaire des numéros ]-->
+			<MACRO NAME="MENU_ISSUES_LINK" />
+		</AFTER>
 	</LOOP>
-
-	<!--[ Lien vers le sommaire des numéros ]-->
-	<MACRO NAME="MENU_ISSUES_LINK" />
 </DEFMACRO>
 
 /**
  * Affiche une liste de numéros pour le menu.
  * @param {string} titre_section - Titre de la section du menu.
+ * @param {int} id_collection - ID de la collection parente.
  * @param {string} [filtre] - Filtre passé dans le WHERE de la requête.
- * @param {int} [id_collection] - ID de la collection parente.
  */
-<DEFFUNC NAME="MENU_ISSUES_ITEMS" REQUIRED="titre_section" OPTIONAL="filtre, id_collection">
-	<IF COND="![#ID_COLLECTION]">
-		<LET VAR="id_collection">[#ISSUES_COLLECTIONS_ID]</LET>
-	</IF>
+<DEFFUNC NAME="MENU_ISSUES_ITEMS" REQUIRED="titre_section, id_collection" OPTIONAL="filtre, ">
 	<LOOP NAME="menu_issues_items" 
 		TABLE="publications"
 		SELECT="id, numero, titre, altertitre, periode, datepubli, datepublipapier"

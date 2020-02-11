@@ -178,7 +178,7 @@
  * @param {int} id_collection - ID de la collection parente.
  * @param {string} [filtre] - Filtre passé dans le WHERE de la requête.
  */
-<DEFFUNC NAME="MENU_ISSUES_ITEMS" REQUIRED="titre_section, id_collection" OPTIONAL="filtre, ">
+<DEFFUNC NAME="MENU_ISSUES_ITEMS" REQUIRED="titre_section, id_collection" OPTIONAL="filtre">
 	<LOOP NAME="menu_issues_items" 
 		TABLE="publications"
 		SELECT="id, numero, titre, altertitre, periode, datepubli, datepublipapier"

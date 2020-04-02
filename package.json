@@ -4,10 +4,10 @@
   "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
   "main": "index.html",
   "scripts": {
-    "build": "npm run copy && npm run css",
+    "build": "npm run copy:vendor && npm run css",
     "copy:vendor": "frontend-dependencies",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
-    "postinstall": "npm run build",
+    "postinstall": "npm run css",
     "watch:css": "onchange -i \"less/**/*.less\" -- npm run css"
   },
   "private": true,

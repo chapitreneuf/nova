@@ -146,7 +146,7 @@ Les scripts optionnels suivants sont disponibles pour permettre le développemen
 * Installation du projet avec NPM : `npm install`
 * Compiler les CSS (avec LESS) : `npm run css`
 * Surveiller les fichiers LESS et compiler les CSS à chaque changement : `npm run watch:css`
-* Copier les dépendances et les webfonts dans le dossier `public` : `npm run copy`
+* Mettre à jour les dépendances dans le dossier `public/vendor` : `npm run copy:vendor`
 * Tout ceci en même temps : `npm run build`
 
 ## Crédits et financement

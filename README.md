@@ -149,6 +149,8 @@ Les scripts optionnels suivants sont disponibles pour permettre le développemen
 * Mettre à jour les dépendances dans le dossier `public/vendor` : `npm run copy:vendor`
 * Tout ceci en même temps : `npm run build`
 
+Remarque : la tâche `gulp` déclarée dans `package.json` est un alias mis en place pour des raisons de compatibilité avec la maquette Prima.
+
 ## Crédits et financement
 
 Ce projet a été développé par le [collectif Edinum](https://edinum.org) pour les Bibliothèques universitaires de l'Université Jean Moulin Lyon 3. Il a été financé par l'Université Jean Moulin Lyon 3. 

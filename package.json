@@ -8,7 +8,8 @@
     "copy:vendor": "frontend-dependencies",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
     "postinstall": "npm run css",
-    "watch:css": "onchange -i \"less/**/*.less\" -- npm run css"
+    "watch:css": "onchange -i \"less/**/*.less\" -- npm run css",
+    "gulp": "npm run css"
   },
   "private": true,
   "devDependencies": {

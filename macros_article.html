@@ -186,14 +186,12 @@
 <DEFMACRO NAME="ARTICLE_RACCOURCIS">
 	<nav class="page-shortcuts">
 		<ul class="page-shortcuts__list nav nav-pills">
-			<ESCAPE>
-				<?php 
-					$page_shortcuts = $context['page_shortcuts']; 
-					foreach ($page_shortcuts as $a) {
-						echo '<li class="page-shortcuts__item">', $a, '</li>';
-					}
-				?>
-			</ESCAPE>
+			<?php 
+				$page_shortcuts = $context['page_shortcuts']; 
+				foreach ($page_shortcuts as $a) {
+					echo '<li class="page-shortcuts__item">', $a, '</li>';
+				}
+			?>
 		</ul>
 	</nav>
 </DEFMACRO>

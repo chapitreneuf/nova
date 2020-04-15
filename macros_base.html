@@ -146,32 +146,20 @@
  * Affiche un header de section.
  * @param {string} title - Titre.
  * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
+	* @param {boolean} [no_arrow] - Ne pas afficher la fleche de retour en haut.
 */
-<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id">
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id, no_arrow">
 	<IF COND="[#SECTION_ID]">
 		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a class="page-shortcuts__link" href="#[#SECTION_ID]">[#TITLE]</a></LET>
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
 	<div class="section-header-container">
-		<a class="section-header-arrow" href="#main-content"><img class="icon icon_arrow_top" title="arrow top" src="tpl/public/icons/arrow-top.svg" /></a>
+		<IF COND="[#NO_ARROW]">
+			<a class="section-header-arrow" href="#main-content"><img class="icon icon_arrow_top" title="arrow top" src="tpl/public/icons/arrow-top.svg" /></a>
+		</IF>
 		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
 	</div>
 </DEFFUNC>
-
-
-/**
- * Affiche comme précédemment mais sans la fleche vers le haut
-*/
-<DEFFUNC NAME="BASE_SECTION_HEADER_NO_ARROW" REQUIRED="title" OPTIONAL="section_id">
-	<IF COND="[#SECTION_ID]">
-		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a class="page-shortcuts__link" href="#[#SECTION_ID]">[#TITLE]</a></LET>
-		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
-	</IF>
-	<div class="section-header-container">
-		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
-	</div>
-</DEFFUNC>
-
 
 /**
  * Affiche le titre d'une publication.
@@ -440,7 +428,7 @@
 		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
 		<BEFORE>
 			<section id="side-actualites__section" class="side-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@ACTUALITES]" />
+				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@ACTUALITES]" />
 				<ul class="side-actualites_section__list">
 		</BEFORE>
 		<DO>
@@ -463,7 +451,7 @@
 	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication'" ORDER="rank">
 		<BEFORE>
 			<section id="side-rss__section" class="side-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@RSS]" />
+				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RSS]" />
 				<ul class="side-rss_section__list">
 		</BEFORE>
 		<DO>

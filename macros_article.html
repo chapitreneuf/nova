@@ -311,9 +311,9 @@
 	<!--[ Résumés ]-->
 	<IF COND="[#RESUME]">
 		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
-			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
 		<ELSE/>
-			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
 		</IF>
 		<div class="article__abstract-contents col-12 col-lg-10">
 			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
@@ -335,7 +335,7 @@
 
 			<BEFORE>
 				<div class="col-12 col-lg-10 article__entries-title">
-					<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@INDEX]" SECTION_ID="article-entries" />
+					<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@INDEX]" SECTION_ID="article-entries" />
 				</div>
 				<div class="article__entries-content col-12 col-lg-10">
 			</BEFORE>
@@ -379,7 +379,7 @@
 		<LOOP NAME="toc" TEXT="[#TEXTE]">
 			<BEFORE>
 				<section class="article__toc col-12 col-lg-10">
-					<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@TOC]" SECTION_ID="toc" />
+					<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TOC]" SECTION_ID="toc" />
 					<div class="article__toc-contents">
 						<ul>
 			</BEFORE>
@@ -425,7 +425,7 @@
 	<!--[ Errata ]-->
 	<IF COND="[#ADDENDUM]">
 		<section class="article__errata col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@ERRATA]" />
+			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@ERRATA]" />
 			<div class="article__errata-contents">
 				[#ADDENDUM|cleanCallNotes|tocss]
 			</div>
@@ -435,7 +435,7 @@
 	<!--[ Dédicace ]-->
 	<IF COND="[#DEDICACE]">
 		<section class="article__dedication col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@DEDICACE]" />
+			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@DEDICACE]" />
 			<div class="article__dedication-contents">
 				[#DEDICACE|cleanCallNotes|tocss]
 			</div>
@@ -445,7 +445,7 @@
 	<!--[ NDLR ]-->
 	<IF COND="[#NDLR]">
 		<section class="article__ndlr col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@NDLR]" />
+			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@NDLR]" />
 			<div class="article__ndlr-contents">
 				[#NDLR|cleanCallNotes|tocss]
 			</div>
@@ -455,7 +455,7 @@
 	<!--[ NDLA ]-->
 	<IF COND="[#NDLA]">
 		<section class="article__ndla col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[@NDLA]" />
+			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@NDLA]" />
 			<div class="article__ndla-contents">
 				[#NDLA|cleanCallNotes|tocss]
 			</div>
@@ -480,7 +480,7 @@
 				<div class="article_text__section article_text__section--border">
 					<div class="row">
 						<div class="col col-md-3">
-							<FUNC NAME="BASE_SECTION_HEADER_NO_ARROW" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+							<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
 						</div>
 						<div class="col-7 col-md-8 article_text__section--buttons">
 							<MACRO NAME="ARTICLE_BOUTONS" />

@@ -38,6 +38,21 @@ window.fnLoader = {
 			});
 		},
 
+		// Generation des page-shortcuts
+		pageShortcuts: function () {
+			$(function () {
+				var $list = $(".page-shortcuts__list");
+				var $targets = $("h2.section-header[id]");
+				var html = "";
+				$targets.each(function () {
+					var id = $(this).attr("id");
+					var title = $(this).text();
+					html += "<li class='page-shortcuts__item'><a href='#" + id + "' class='page-shortcuts__link'>" + title + "</a></li>\n";
+				});
+				$list.html(html);
+			});
+		},
+
 		// Sidenotes
 		sidenotes: function () {
 			var setSidenotesPosition = function () {

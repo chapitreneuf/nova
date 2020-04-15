@@ -40,9 +40,6 @@
 
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
-
-	<!--[ Array pour stocker les raccourcis vers les sections de la page article ]-->
-	<LET ARRAY="page_shortcuts" GLOBAL="1"></LET>
 </DEFMACRO>
 
 /**
@@ -181,18 +178,11 @@
 
 /**
  * Affichage de la barre de raccourcis vers les sections des articles.
- * Les liens sont déclarés dans l'array [%PAGE_SHORTCUTS] depuis la macro BASE_SECTION_HEADER.
+ * Les liens sont calculés en JS. Voir https://github.com/edinum/nova/issues/70
  */
 <DEFMACRO NAME="ARTICLE_RACCOURCIS">
 	<nav class="page-shortcuts">
-		<ul class="page-shortcuts__list nav nav-pills">
-			<?php 
-				$page_shortcuts = $context['page_shortcuts']; 
-				foreach ($page_shortcuts as $a) {
-					echo '<li class="page-shortcuts__item">', $a, '</li>';
-				}
-			?>
-		</ul>
+		<ul class="page-shortcuts__list nav nav-pills"></ul>
 	</nav>
 </DEFMACRO>
 

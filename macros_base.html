@@ -150,7 +150,6 @@
 */
 <DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id, no_arrow">
 	<IF COND="[#SECTION_ID]">
-		<LET ARRAY="page_shortcuts[]" GLOBAL="1"><a class="page-shortcuts__link" href="#[#SECTION_ID]">[#TITLE]</a></LET>
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
 	<div class="section-header-container">

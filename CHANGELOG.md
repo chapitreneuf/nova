@@ -1,5 +1,9 @@
 # Changelog Nova
 
+## 1.0.5 (27/04/2020)
+
+* Compatibilité avec Node.js versions 0.10 et 0.12 (downgrade de LESS, passage des dépendances non bloquantes en optionalDependencies)
+
 ## 1.0.4 (15/04/2020)
 
 * Création du CHANGELOG.

@@ -13,9 +13,11 @@
   },
   "private": true,
   "devDependencies": {
+    "less": "^2.7.3",
+    "less-plugin-autoprefix": "^1.5.1"
+  },
+  "optionalDependencies": {
     "frontend-dependencies": "^1.1.7",
-    "less": "^3.9.0",
-    "less-plugin-autoprefix": "^2.0.0",
     "onchange": "^6.0.0"
   },
   "frontendDependencies": {

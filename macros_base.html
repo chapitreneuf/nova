@@ -502,14 +502,20 @@
 			</IF>
 
 			<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
-			<div class="side-twitter_container" data-twitter-src="[#URLFIL]" data-twitter-max-items="[#NOMBREMAXITEMS]"></div>
+			<div class="side-twitter__container" data-twitter-src="[#URLFIL]" data-twitter-max-items="[#NOMBREMAXITEMS]"></div>
+			<p class="side-twitter__message">[@TWITTER_LOADING]</p>
 			<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
-
-			<!--[ TODO: [@TWITTER_ALT] when not loaded ]-->
 		</DO>
 		<AFTER>
 			</section>
 			<script>
+				function twttrError() {
+					$(".side-twitter__message").each(function () {
+						$(this).addClass("error");
+						$(this).text("[@TWITTER_ALT]");
+					});
+				}
+
 				var timelineDefaultOptions = {
 					chrome: "noheader, nofooter",
 					tweetLimit: 3,
@@ -524,6 +530,7 @@
 					if (d.getElementById(id)) return t;
 					js = d.createElement(s);
 					js.id = id;
+					js.onerror = twttrError;
 					js.src = "https://platform.twitter.com/widgets.js";
 					fjs.parentNode.insertBefore(js, fjs);
 
@@ -556,6 +563,9 @@
 							$container.get(0),
 							options
 						)
+						.then(function () {
+							$container.next(".side-twitter__message").remove();
+						})
 						.catch(console.error);
 					});
 				});

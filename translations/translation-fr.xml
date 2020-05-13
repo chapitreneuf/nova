@@ -127,6 +127,9 @@
 <contents name="rss" textgroup="site" status="2">Fils d'infos</contents>
 <contents name="warning_empty_query" textgroup="site" status="2">Vous avez une erreur</contents>
 <contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Autres ressources du même auteur </contents>
+<contents name="tweets" textgroup="site" status="2">Tweets</contents>
+<contents name="twitter_alt" textgroup="site" status="2">Impossible d'afficher les tweets.</contents>
+<contents name="twitter_link" textgroup="site" status="2">Voir le fil sur Twitter</contents>
 </texts>
 </row>
 </translations>

@@ -417,6 +417,7 @@
 <DEFMACRO NAME="BASE_SIDE_CONTENTS">
 	<MACRO NAME="BASE_SIDE_ACTUALITES" />
 	<MACRO NAME="BASE_SIDE_RSS" />
+	<MACRO NAME="BASE_SIDE_TWITTER" />
 </DEFMACRO>
 
 /**
@@ -447,7 +448,7 @@
  * Affichage des flux RSS dans la sidebar.
  */
 <DEFMACRO NAME="BASE_SIDE_RSS">
-	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication'" ORDER="rank">
+	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil NOT LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
 			<section id="side-rss__section" class="side-actualites__section">
 				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RSS]" />
@@ -482,6 +483,34 @@
 		<AFTER>
 				</ul>
 			</section>
+		</AFTER>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affichage des fils Twitter dans la sidebar.
+ */
+<DEFMACRO NAME="BASE_SIDE_TWITTER">
+	<LOOP NAME="base_side_twitter" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil LIKE 'http%://twitter.com/%'" ORDER="rank">
+		<BEFORE>
+			<section id="side-twitter__section" class="side-actualites__section">
+				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TWEETS]" />
+		</BEFORE>
+		<DO>
+			<IF COND="![#NOMBREMAXITEMS]">
+				<LET VAR="nombremaxitems">3</LET>
+			</IF>
+			<IF COND="![#URL]">
+				<LET VAR="url">[#URLFIL]</LET>
+			</IF>
+
+			<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
+			<a class="twitter-timeline d-block" data-dnt="true" data-chrome="noheader nofooter" data-tweet-limit="[#NOMBREMAXITEMS]" href="[#URLFIL]?ref_src=twsrc%5Etfw">[@TWITTER_ALT]</a>
+			<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
+		</DO>
+		<AFTER>
+			</section>
+			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 		</AFTER>
 	</LOOP>
 </DEFMACRO>

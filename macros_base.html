@@ -493,24 +493,73 @@
 <DEFMACRO NAME="BASE_SIDE_TWITTER">
 	<LOOP NAME="base_side_twitter" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
-			<section id="side-twitter__section" class="side-actualites__section">
+			<section id="side-twitter__section" class="side-actualites__section side-twitter__section">
 				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TWEETS]" />
 		</BEFORE>
 		<DO>
-			<IF COND="![#NOMBREMAXITEMS]">
-				<LET VAR="nombremaxitems">3</LET>
-			</IF>
 			<IF COND="![#URL]">
 				<LET VAR="url">[#URLFIL]</LET>
 			</IF>
 
 			<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
-			<a class="twitter-timeline d-block" data-dnt="true" data-chrome="noheader nofooter" data-tweet-limit="[#NOMBREMAXITEMS]" href="[#URLFIL]?ref_src=twsrc%5Etfw">[@TWITTER_ALT]</a>
+			<div class="side-twitter_container" data-twitter-src="[#URLFIL]" data-twitter-max-items="[#NOMBREMAXITEMS]"></div>
 			<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
+
+			<!--[ TODO: [@TWITTER_ALT] when not loaded ]-->
 		</DO>
 		<AFTER>
 			</section>
-			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<script>
+				var timelineDefaultOptions = {
+					chrome: "noheader, nofooter",
+					tweetLimit: 3,
+					dnt: true,
+					lang: "[#SITELANG]"
+				};
+
+				// Load Twitter script
+				window.twttr = (function (d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0],
+						t = window.twttr || {};
+					if (d.getElementById(id)) return t;
+					js = d.createElement(s);
+					js.id = id;
+					js.src = "https://platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js, fjs);
+
+					t._e = [];
+					t.ready = function (f) {
+						t._e.push(f);
+					};
+
+					return t;
+				}(document, "script", "twitter-wjs"));
+
+				// When Twitter script is ready
+				window.twttr.ready(function (twttr) {
+					// Create Timeline for each container
+					$("[data-twitter-src]").each(function () {
+						var $container = $(this),
+							src = $container.attr("data-twitter-src"),
+							maxItems = Number($container.attr("data-twitter-max-items"));
+						
+						var options = Object.assign({}, timelineDefaultOptions);
+						if (maxItems) {
+							options.tweetLimit = maxItems;
+						}
+
+						twttr.widgets.createTimeline(
+							{
+								sourceType: 'url',
+								url: src
+							},
+							$container.get(0),
+							options
+						)
+						.catch(console.error);
+					});
+				});
+			</script>
 		</AFTER>
 	</LOOP>
 </DEFMACRO>

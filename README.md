@@ -131,6 +131,14 @@ Le lien du bouton peut être défini via l'une des deux options suivantes :
 6. Enregistrer le formulaire avec le bouton "Terminer",
 7. Ne pas oublier que le document doit être "publié" pour qu'il soit visible en ligne.
 
+#### Comment afficher une timeline Twitter dans la barre latérale
+
+1. Dans une collection à la racine du site, créer une entité de type "Flux de syndication".
+2. Remplir le formulaire d'édition de l'entité comme habituellement pour les flux RSS.
+3. Dans le champ "URL du fil de syndication du site" renseigner l'URL complète de la timeline Twitter, sans oublier le protocole `https://`. Exemple : https://twitter.com/EdinumOrg
+4. Le champ "Nombre maximum d’items du flux" détermine le nombre de tweets affichés (par défaut : 3).
+5. Enregistrer et publier.
+
 ## Mise à jour de la maquette Nova sur un site
 
 Pour mettre à jour la maquette Nova sur un site :

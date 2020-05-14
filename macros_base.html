@@ -153,7 +153,7 @@
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
 	<div class="section-header-container">
-		<IF COND="[#NO_ARROW]">
+		<IF COND="![#NO_ARROW]">
 			<a class="section-header-arrow" href="#main-content"><img class="icon icon_arrow_top" title="arrow top" src="tpl/public/icons/arrow-top.svg" /></a>
 		</IF>
 		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>

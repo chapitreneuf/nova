@@ -288,6 +288,28 @@ h2#home-latest-issue {margin-top: 0;}
 	display: block;
 }
 
+.twitter-loading:after {
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: bottom;
+	-webkit-animation: ellipsis steps(10,end) 900ms infinite;
+	animation: ellipsis steps(10,end) 900ms infinite;
+	content: "\2026"; /* ascii code for the ellipsis character */
+	width: 0px;
+}
+
+@keyframes ellipsis {
+	to {
+		width: 30px;
+	}
+}
+
+@-webkit-keyframes ellipsis {
+	to {
+		width: 30px;
+	}
+}
+
 // PUBLICATIONS
 // ============
 .class-publications .section-header-arrow {display:none;}

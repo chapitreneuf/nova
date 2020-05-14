@@ -128,7 +128,7 @@
 <contents name="warning_empty_query" textgroup="site" status="2">You have a mistake</contents>
 <contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Author resources in other databases</contents>
 <contents name="tweets" textgroup="site" status="2">Latest tweets</contents>
-<contents name="twitter_loading" textgroup="site" status="2">Loading tweets…</contents>
+<contents name="twitter_loading" textgroup="site" status="2">Loading tweets</contents>
 <contents name="twitter_alt" textgroup="site" status="2">This Twitter timeline has been blocked by your browser or Ad Blocker.</contents>
 <contents name="twitter_link" textgroup="site" status="2">View this timeline on Twitter</contents>
 </texts>

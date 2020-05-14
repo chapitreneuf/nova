@@ -38,8 +38,13 @@ window.fnLoader = {
 					dnt: true
 				};
 
-				function twttrError() {
-					$(".side-twitter__message").each(function () {
+				function twttrError(err, $el) {
+					console.error(err);
+					
+					var selector = ".side-twitter__message";
+					var $msg = $el ? $el.find(selector) : $(selector);
+
+					$msg.each(function () {
 						$(this).addClass("error");
 					});
 				}
@@ -85,8 +90,11 @@ window.fnLoader = {
 						)
 						.then(function () {
 							$container.next(".side-twitter__message").remove();
+							twttr.widgets.load($container.get(0));
 						})
-						.catch(console.error);
+						.catch(function (err) {
+							twttrError(err, $container);
+						});
 					});
 
 					twttr.widgets.load(

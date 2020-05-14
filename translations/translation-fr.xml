@@ -127,7 +127,7 @@
 <contents name="rss" textgroup="site" status="2">Fils d'infos</contents>
 <contents name="warning_empty_query" textgroup="site" status="2">Vous avez une erreur</contents>
 <contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Autres ressources du même auteur </contents>
-<contents name="tweets" textgroup="site" status="2">Tweets</contents>
+<contents name="tweets" textgroup="site" status="2">Derniers tweets</contents>
 <contents name="twitter_loading" textgroup="site" status="2">Chargement des tweets en cours…</contents>
 <contents name="twitter_alt" textgroup="site" status="2">L'affichage des tweets a été bloqué par votre navigateur ou votre bloqueur de publicités.</contents>
 <contents name="twitter_link" textgroup="site" status="2">Consulter le fil sur Twitter</contents>

@@ -27,6 +27,72 @@ window.fnLoader = {
 			});
 		},
 
+		loadTweets: function () {
+			$(function () {
+				var $twitterContainers = $("[data-twitter-src]");
+				if ($twitterContainers.length === 0) return;
+
+				var timelineDefaultOptions = {
+					chrome: "noheader, nofooter",
+					tweetLimit: 3,
+					dnt: true
+				};
+
+				function twttrError() {
+					$(".side-twitter__message").each(function () {
+						$(this).addClass("error");
+						$(this).text("[@TWITTER_ALT]");
+					});
+				}
+
+				// Load Twitter script
+				window.twttr = (function (d, s, id) {
+					var js, fjs = d.getElementsByTagName(s)[0],
+						t = window.twttr || {};
+					if (d.getElementById(id)) return t;
+					js = d.createElement(s);
+					js.id = id;
+					js.onerror = twttrError;
+					js.src = "https://platform.twitter.com/widgets.js";
+					fjs.parentNode.insertBefore(js, fjs);
+
+					t._e = [];
+					t.ready = function (f) {
+						t._e.push(f);
+					};
+
+					return t;
+				}(document, "script", "twitter-wjs"));
+
+				// When Twitter script is ready, create timelines
+				window.twttr.ready(function (twttr) {
+					$twitterContainers.each(function () {
+						var $container = $(this),
+							src = $container.attr("data-twitter-src"),
+							maxItems = Number($container.attr("data-twitter-max-items"));
+
+						var options = Object.assign({}, timelineDefaultOptions);
+						if (maxItems) {
+							options.tweetLimit = maxItems;
+						}
+
+						twttr.widgets.createTimeline(
+							{
+								sourceType: 'url',
+								url: src
+							},
+							$container.get(0),
+							options
+						)
+						.then(function () {
+							$container.next(".side-twitter__message").remove();
+						})
+						.catch(console.error);
+					});
+				});
+			});
+		},
+
 		// Ajouter des ancres aux paragraphes
 		pAnchors: function () {
 			// Ready

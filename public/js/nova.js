@@ -35,7 +35,8 @@ window.fnLoader = {
 				var timelineDefaultOptions = {
 					chrome: "noheader, nofooter",
 					tweetLimit: 3,
-					dnt: true
+					dnt: true,
+					lang: $("body").attr("data-sitelang")
 				};
 
 				function twttrError(err, $el) {

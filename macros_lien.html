@@ -8,6 +8,10 @@
 		[#TITRE|removenotes|textebrut] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
 	</LET>
 
+	<IF COND="[#URLFIL] LIKE /^https?:\/\/twitter\.com\//">
+		<LET VAR="IS_TWITTER" GLOBAL="1">1</LET>
+	</IF>
+
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
 </DEFMACRO>
@@ -32,7 +36,11 @@
 			<MACRO NAME="LIEN_TEXTE" />
 		</div>
 	</IF>
-	<MACRO NAME="LIEN_RSS" />
+	<IF COND="[%IS_TWITTER]">
+		<MACRO NAME="LIEN_TWEETS" />
+	<ELSE />
+		<MACRO NAME="LIEN_RSS" />
+	</IF>
 </DEFMACRO>
 
 /**
@@ -110,6 +118,18 @@
 			</BLOCK>
 
 			<a rel="external" class="btn btn-block" href="[#URLFIL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@LIEN_RSS]</a>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Affichage des tweets.
+ */
+<DEFMACRO NAME="LIEN_TWEETS">
+	<IF COND="[#URLFIL]">
+		<section class="lien-tweets">
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
+			<MACRO NAME="BASE_TWITTER_CONTAINER" />
 		</section>
 	</IF>
 </DEFMACRO>

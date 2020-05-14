@@ -497,17 +497,23 @@
 				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TWEETS]" />
 		</BEFORE>
 		<DO>
-			<IF COND="![#URL]">
-				<LET VAR="url">[#URLFIL]</LET>
-			</IF>
-
 			<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
-			<div class="side-twitter__container" data-twitter-src="[#URLFIL]" data-twitter-max-items="[#NOMBREMAXITEMS]"></div>
-			<p class="side-twitter__message">[@TWITTER_LOADING]</p>
-			<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
+			<MACRO NAME="BASE_TWITTER_CONTAINER" />
 		</DO>
 		<AFTER>
 			</section>
 		</AFTER>
 	</LOOP>
+</DEFMACRO>
+
+/**
+ * Twitter container.
+ */
+<DEFMACRO NAME="BASE_TWITTER_CONTAINER">
+	<IF COND="![#URL]">
+		<LET VAR="url">[#URLFIL]</LET>
+	</IF>
+	<div class="side-twitter__container" data-twitter-src="[#URLFIL]" data-twitter-max-items="[#NOMBREMAXITEMS]"></div>
+	<p class="side-twitter__message">[@TWITTER_LOADING]</p>
+	<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
 </DEFMACRO>

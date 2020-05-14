@@ -41,7 +41,6 @@ window.fnLoader = {
 				function twttrError() {
 					$(".side-twitter__message").each(function () {
 						$(this).addClass("error");
-						$(this).text("[@TWITTER_ALT]");
 					});
 				}
 

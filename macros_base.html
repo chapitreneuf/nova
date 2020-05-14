@@ -514,6 +514,9 @@
 		<LET VAR="url">[#URLFIL]</LET>
 	</IF>
 	<div class="side-twitter__container" data-twitter-src="[#URLFIL]" data-twitter-max-items="[#NOMBREMAXITEMS]"></div>
-	<p class="side-twitter__message">[@TWITTER_LOADING]</p>
+	<p class="side-twitter__message">
+		<span class="twitter-loading">[@TWITTER_LOADING]</span>
+		<span class="twitter-error">[@TWITTER_ALT]</span>
+	</p>
 	<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
 </DEFMACRO>

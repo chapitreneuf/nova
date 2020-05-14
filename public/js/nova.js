@@ -89,6 +89,10 @@ window.fnLoader = {
 						})
 						.catch(console.error);
 					});
+
+					twttr.widgets.load(
+						document.getElementById("main-container")
+					);
 				});
 			});
 		},

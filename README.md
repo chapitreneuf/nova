@@ -95,7 +95,12 @@ Pendant l'intégration CSS, il est possible d'exécuter LESS directement dans le
 <LET VAR="dev_mode" GLOBAL="1">1</LET>
 ```
 
-:warning: **Cette fonctionnalité ne doit jamais être utilisée en production. Pensez à la désactiver avant de publier la maquette.**
+Il est alors possible d'utiliser l'API LESS dans la console du navigateur :
+
+* `less.refresh()` : rafraîchir les CSS (sans recharger toute la page),
+* `less.watch()` : mettre à jour les CSS à chaque modification du fichier LESS.
+
+:warning: **Cette fonctionnalité est réservée au développement et ne doit jamais être utilisée en production pour des questions de performance. Pensez à la désactiver avant de publier la maquette.**
 
 ### Personnaliser le JavaScript
 

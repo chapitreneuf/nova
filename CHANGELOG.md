@@ -1,5 +1,9 @@
 # Changelog Nova
 
+## 1.2.0 (21/07/2020)
+
+Ajout de la variable `[%DEV_MODE]` qui lorsqu'elle est vraie permet l'exécution de LESS dans le navigateur (à utiliser pendant le développement uniquement).
+
 ## 1.1.0 (18/05/2020)
 
 La mise à niveau depuis une version antérieure requiert de mettre à jour les traductions du site.

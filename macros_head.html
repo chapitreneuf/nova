@@ -108,14 +108,22 @@
  * Insertion CSS.
  */
 <DEFMACRO NAME="HEAD_INSERT_CSS">
-	<!-- Bootstrap -->
+	<!--[ Bootstrap ]-->
 	<link href="[%DIR_VENDOR]/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-	<!-- Largetable -->
+	<!--[ Largetable ]-->
 	<link href="[%DIR_VENDOR]/largetable/largetable.css" rel="stylesheet">
 
-	<!-- Site -->
-	<link rel="stylesheet" type="text/css" href="[%DIR_PUBLIC]/css/site.css" />
+	<!--[ Site ]-->
+	<IF COND="[%DEV_MODE]">
+		<!--[ Execution de LESS dans le navigateur pour le développement. 
+		NE PAS UTILISER EN PRODUCTION ! ]-->
+		<link rel="stylesheet/less" type="text/css" href="tpl/less/site.less" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.12.2/less.min.js" type="text/javascript"></script>
+	<ELSE />
+		<!--[ Mode normal : on sert les CSS précompilées. ]-->
+		<link rel="stylesheet" type="text/css" href="[%DIR_PUBLIC]/css/site.css" />
+	</IF>
 </DEFMACRO>
 
 /**

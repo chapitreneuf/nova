@@ -87,6 +87,16 @@ Il est ainsi possible de modifier une variable de couleur utilisée dans `site.l
 
 de modifier un mixin ou encore d'ajouter des déclarations CSS qui seront ajoutées à la suite des styles par défaut de la maquette Nova.
 
+#### Exécuter LESS dans le navigateur (développement uniquement)
+
+Pendant l'intégration CSS, il est possible d'exécuter LESS directement dans le navigateur pour éviter l'étape de compilation sur le serveur. Il faut pour cela ajouter la déclaration de variable suivante dans la macro `CUSTOM_INIT` : 
+
+```html
+<LET VAR="dev_mode" GLOBAL="1">1</LET>
+```
+
+:warning: **Cette fonctionnalité ne doit jamais être utilisée en production. Pensez à la désactiver avant de publier la maquette.**
+
 ### Personnaliser le JavaScript
 
 Il est possible d'appeler un script en plus du script par défaut en indiquant le chemin relatif dans la globale Lodelscript `[%CUSTOM_SCRIPT_PATH]`.
@@ -178,3 +188,4 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+

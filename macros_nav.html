@@ -60,14 +60,6 @@
 			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">9<ELSE/>12</IF> nav-entities-col-parent">
 				<!--[ Publications parentes ]-->
 				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
-
-				<!--[ Texte parent (image d'accroche de texte) ]-->
-				<IF COND="[#TYPE] EQ 'imageaccroche'">
-				  <LOOP NAME="nav_entities_texte_parent" SELECT="id, titre" TABLE="textes, relations" WHERE="id2 = '[#ID]' AND id1 = textes.identity">
-						<span class="doc-parent-separator">&gt;</span>
-						<a href="[#ID|makeurlwithid]">[#TITRE]</a>
-				  </LOOP>
-				</IF>
 			</div>
 			<IF COND="[#SHOW_BUTTONS]">
 				<div class="hidden-xs col-sm-3 nav-entities-col-siblings">

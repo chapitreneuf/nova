@@ -280,9 +280,7 @@
  */
 <DEFMACRO NAME="ARTICLE_REFERENCE_PAPIER">
 	<LET VAR="isnumero">[#ID|getParentByType('numero')]</LET>
-	<IF COND="[#NOTICEBIBLIO]">
-		[#NOTICEBIBLIO]
-	<ELSEIF COND="[#PAGINATION] AND [#ISNUMERO]"/>
+	<IF COND="[#PAGINATION] AND [#ISNUMERO]"/>
 		[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <em>[#OPTIONS.METADONNEESSITE.TITRESITE]</em><LOOP NAME="reference_papier_numero" SELECT="id, titre, numero, datepublipapier, datepubli, periode" TABLE="relations, publications" WHERE="id2 = '[#ID]' AND type IN ('numero', 'rubrique') AND nature = 'P' AND id1 = publications.identity" ORDER="degree DESC" LIMIT="2"><BEFORE>, </BEFORE><IF COND="[#COUNT] EQ 1" /><IF COND="[#TYPE] EQ 'numero'">[#NUMERO]&nbsp;|&nbsp;[#DATEPUBLIPAPIER|formateddate('%Y')]<ELSE/>[#TITRE]</IF><ELSE />, [#TITRE]</IF></LOOP>, [#PAGINATION].
 	</IF>
 </DEFMACRO>

@@ -1,5 +1,10 @@
 # Changelog Nova
 
+## 1.2.4 (17/09/2020)
+
+* Correction de l'affichage de la référence papier
+* Correction du chemin de la webfont par défaut (#75)
+
 ## 1.2.3 (30/07/2020)
 
 * Correction du fil d'ariane sur les images d'accroche.

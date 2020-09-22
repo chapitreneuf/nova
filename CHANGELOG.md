@@ -1,5 +1,10 @@
 # Changelog Nova
 
+## 1.2.5 (22/09/2020)
+
+* macros_publications.html devient une dépendance commune (appelée une fois pour toutes dans macros_page.html). Cela corrige le problème de certaines macros non-surchargeables dans macros_custom.html.
+* Fonction BASE_ACCROCHE_PUBLICATION : ajout de la possibilité de faire pointer le lien sur l'image vers l'#ID de l'imageaccroche en renseignant "self" dans l'attribut HREF.
+
 ## 1.2.4 (17/09/2020)
 
 * Correction de l'affichage de la référence papier

@@ -1,5 +1,13 @@
 # Changelog Nova
 
+## 1.2.7 (22/09/2020)
+
+* Suppression d'un élément en double (section.home-latest-issue).
+
+## 1.2.6 (22/09/2020)
+
+* Correction du chemin des webfonts : introduction de la variable LESS @webfontsDir qui change selon qu'on utilise LESS côté serveur ou browser.
+
 ## 1.2.5 (22/09/2020)
 
 * macros_publications.html devient une dépendance commune (appelée une fois pour toutes dans macros_page.html). Cela corrige le problème de certaines macros non-surchargeables dans macros_custom.html.

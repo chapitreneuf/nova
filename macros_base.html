@@ -275,7 +275,7 @@
  * @param {int} size - Taille maximale du plus grand côté de la vignette.
  * @param {string} [classname] - Classe de l'image.
  * @param {boolean} [notext] - Afficher lien + crédits.
- * @param {string} [href] - Lien sur l'image.
+ * @param {string} [href] - Lien sur l'image. Si égal à "self" alors l'URL sera celle de l'imageaccroche.
  */
 <DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href">
 	<LOOP NAME="base_accroche_publication" 
@@ -288,7 +288,11 @@
 			<div class="accroche">
 				<LET VAR="accroche"><IF COND="[#VIGNETTE]">[#VIGNETTE|vignette([#SIZE])]<ELSE/>[#DOCUMENT|vignette([#SIZE])]</IF></LET>
 				<IF COND="[#HREF]">
-					<a href="[#HREF]">
+					<IF COND="[#HREF] EQ 'self'">
+						<a href="[#ID|makeurlwithid]">
+					<ELSE />
+						<a href="[#HREF]">
+					</IF>
 				</IF>
 				<img class="accroche__img accroche__img--exists [#CLASSNAME]" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
 				<IF COND="[#HREF]">

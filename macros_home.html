@@ -45,17 +45,15 @@
  * Affichage du dernier numéro.
  */
 <DEFMACRO NAME="HOME_LATEST_ISSUE">
-	<section id="home-latest-issue" class="home-latest-issue">
-		<LOOP NAME="home_latest_issue" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="datepubli DESC" LIMIT="0,1">
-			<BEFORE>
-				<section id="home-latest-issue" class="home-latest-issue">
-			</BEFORE>
-			<MACRO NAME="PUBLICATION_PUBLI" />
-			<AFTER>
-				</section>
-			</AFTER>
-		</LOOP>
-	</section>
+	<LOOP NAME="home_latest_issue" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1" ORDER="datepubli DESC" LIMIT="0,1">
+		<BEFORE>
+			<section id="home-latest-issue" class="home-latest-issue">
+		</BEFORE>
+		<MACRO NAME="PUBLICATION_PUBLI" />
+		<AFTER>
+			</section>
+		</AFTER>
+	</LOOP>
 </DEFMACRO>
 
 /**

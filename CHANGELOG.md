@@ -4,6 +4,7 @@
 
 * Revert de la modification de 1.2.5 : macros_publications.html n'est plus une dépendance commune.
 * Modification de l'ordre d'appel et d'initialisation des macros. Corrige le problème de certaines macros non-surchargeables dans macros_custom.html.
+* Agrandissement de la taille des couvertures.
 
 ## 1.2.7 (22/09/2020)
 

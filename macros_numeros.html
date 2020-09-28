@@ -46,12 +46,12 @@
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
 			<IF COND="[#IMG_ACCROCHE]">
-				<div class="issue__accroche-col col-md-2">
+				<div class="issue__accroche-col col-md-4">
 					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
 				</div>	
 			</IF>
 
-			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">10<ELSE/>12</IF>">
+			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF>">
 				
 				<!--[ Titre ]-->
 				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>

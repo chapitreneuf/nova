@@ -11,6 +11,11 @@
     "watch:css": "onchange -i \"less/**/*.less\" -- npm run css",
     "gulp": "npm run css"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edinum/nova"
+  },
+  "license": "GPL-3.0",
   "private": true,
   "devDependencies": {
     "less": "^2.7.3",

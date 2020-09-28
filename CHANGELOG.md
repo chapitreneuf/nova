@@ -1,5 +1,10 @@
 # Changelog Nova
 
+## 1.2.8 (28/09/2020)
+
+* Revert de la modification de 1.2.5 : macros_publications.html n'est plus une dépendance commune.
+* Modification de l'ordre d'appel et d'initialisation des macros. Corrige le problème de certaines macros non-surchargeables dans macros_custom.html.
+
 ## 1.2.7 (22/09/2020)
 
 * Suppression d'un élément en double (section.home-latest-issue).

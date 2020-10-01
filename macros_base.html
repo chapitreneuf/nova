@@ -13,6 +13,20 @@
 	<!--[ Langue de la publication/du document ]-->
 	<LET VAR="pagelang" GLOBAL="1"><IF COND="[#LANGUE]">[#LANGUE]<ELSE/>[%MAINLANG]</IF></LET>
 
+	<!--[ Nom et URL diffuseur site ]-->
+	<!--[ Affiche les informations du portail quand ces deux variables sont définies dans les options ]-->
+	<IF COND="[#OPTIONS.EXTRA.PORTAIL_NOM]">
+		<LET VAR="diffuseursite" GLOBAL="1">[#OPTIONS.EXTRA.PORTAIL_NOM]</LET>
+	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
+		<LET VAR="diffuseursite" GLOBAL="1">[#OPTIONS.METADONNEESSITE.DIFFUSEURSITE]</LET>
+	</IF>
+
+	<IF COND="[#OPTIONS.EXTRA.PORTAIL_URL]">
+		<LET VAR="urldiffuseursite" GLOBAL="1">[#OPTIONS.EXTRA.PORTAIL_URL]</LET>
+	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
+		<LET VAR="urldiffuseursite" GLOBAL="1">[#OPTIONS.NOVA.URLDIFFUSEURSITE]</LET>
+	</IF>
+
 	<!--[ class du body ]-->
 	<IF COND="[#TYPE]">
 		<IF COND="[#TYPE|is_array]">

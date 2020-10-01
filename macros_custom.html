@@ -15,11 +15,6 @@
 	<!--[ Option : chemin vers le logo du site. Quand cette variable n'est pas définie le titre du site s'affiche à la place du logo ]-->
 	<!--[ <LET VAR="site_logo_path" GLOBAL="1">tpl/images/logo.svg</LET> ]-->
 
-	<!--[ Option : nom et lien diffuseur site.
-			Par défaut ils sont définis via les options dans Lodel. ]-->
-	<LET VAR="diffuseursite" GLOBAL="1">[#OPTIONS.METADONNEESSITE.DIFFUSEURSITE]</LET>
-	<LET VAR="urldiffuseursite" GLOBAL="1">[#OPTIONS.NOVA.URLDIFFUSEURSITE]</LET>
-
-		<!--[ Mode développement : décommenter la ligne suivante pour exécuter LESS directement dans le navigateur pendant l'intégration. ATTENTION, NE PAS UTILISER EN PRODUCTION ! ]-->
-		<!--[ <LET VAR="dev_mode" GLOBAL="1">1</LET> ]-->
+	<!--[ Mode développement : décommenter la ligne suivante pour exécuter LESS directement dans le navigateur pendant l'intégration. ATTENTION, NE PAS UTILISER EN PRODUCTION ! ]-->
+	<!--[ <LET VAR="dev_mode" GLOBAL="1">1</LET> ]-->
 </DEFMACRO>

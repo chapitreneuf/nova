@@ -21,9 +21,11 @@ En plus des champs habituellement supportés par le le modèle éditorial d'Open
   * Installer le template nova dans un dossier nommé tpl/ à l'intérieur du dossier du nouveau site
   * Compiler le CSS
 * Traductions
-  * utiliser les fichiers translations/translation-{fr,en}.xml fournis dans ce dépôt et les importer depuis l'interface du site lodel.
-* Script d'ajout des champs au ME (optionel)
+  * Utiliser les fichiers translations/translation-{fr,en}.xml fournis dans ce dépôt et les importer depuis l'interface du site lodel.
+* Script d'ajout des champs au ME (optionnel)
   * Voir la branche outils
+* Options "extra" (optionnel) utilisées pour configurer l'affichage des DOI et du lien vers le portail
+  * Voir le dépôt [lodel-options-extra](https://github.com/edinum/lodel-options-extra)
 
 ## Personnalisation de la maquette d'un site
 
@@ -116,25 +118,21 @@ Les fonctions sont exécutées après tous les appels javascript.
 
 Il faut définir le préfixe du DOI, c'est-à-dire la chaîne de caractères qui doit préfixer l'identifiant numérique de l'article pour former le DOI.
 
-**Option 1 :** créer dans le ME le champ d'options `[#OPTIONS.NOVA.PREFIXEDOI]`, puis dans les options du site y renseigner le préfixe DOI.
+:warning: **Depuis la Nova 1.3 la méthode a changé.**
 
-**Option 2 :** modifier la valeur de la variable `[%PREFIXEDOI]` dans `macros_custom.html` pour y ajouter directement le préfixe DOI.
-
-Exemple :
-
-```xml
-<LET VAR="prefixedoi" GLOBAL="1">10.35562/marevue.</LET>
-```
+1. Installer le groupe d'options "extra" avec le script distribué ici : [lodel-options-extra](https://github.com/edinum/lodel-options-extra)
+2. Dans l'espace privé, naviguer jusqu'à l'onglet "Administration" > Section "Configuration" > Options du site > Sélectionner "Extra" dans le menu déroulant
+3. Compléter l'option "Préfixe des DOI"
 
 #### Comment définir le lien du diffuseur (en haut du menu latéral) ?
 
-Le nom du bouton est déterminé par le champ `diffuseursite` dans les options du site (groupe métadonnées).
+:warning: **Depuis la Nova 1.3 la méthode a changé.**
 
-Le lien du bouton peut être défini via l'une des deux options suivantes :
+1. Installer le groupe d'options "extra" avec le script distribué ici : [lodel-options-extra](https://github.com/edinum/lodel-options-extra)
+2. Dans l'espace privé, naviguer jusqu'à l'onglet "Administration" > Section "Configuration" > Options du site > Sélectionner "Extra" dans le menu déroulant
+3. Compléter les options "Nom du portail" et "URL du portail"
 
-**Option 1 :** créer dans le ME le champ d'options `[#OPTIONS.NOVA.URLDIFFUSEURSITE]`, puis dans les options du site y renseigner l'URL du lien.
-
-**Option 2 :** modifier la valeur de la variable `[%URLDIFFUSEURSITE]` dans `macros_custom.html` avec l'URL du lien.
+Le bloc ne sera affiché dans la maquette que si ces deux options sont définies.
 
 #### Comment attacher un fichier TEI à un article ?
 

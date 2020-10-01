@@ -13,6 +13,14 @@
 	<!--[ Pas de colonne de droite sur les articles ]-->
 	<LET VAR="side_contents" GLOBAL="1"></LET>
 
+	<!--[ Prefixe DOI ]-->
+	<!--[ Par défaut on utilise le champ des options [#OPTIONS.EXTRA.DOI_PREFIXE] ]-->
+	<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">
+		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.EXTRA.DOI_PREFIXE]</LET>
+	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
+		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.NOVA.PREFIXEDOI]</LET>
+	</IF>
+
 	<!--[ Détecter les entrées d'index et créer une globale %HASENTRIES ]-->
 	<LOOP NAME="hasentries" TABLE="relations, entries, entrytypes" SELECT="COUNT(entries.id)" WHERE="nature = 'E' AND id1 = [#ID] AND id2 = entries.id AND class != 'indexavances'">
 		<IF COND="[#NBRESULTATS] GT 0">

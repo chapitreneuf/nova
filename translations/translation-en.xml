@@ -83,6 +83,7 @@
 <contents name="precedent" textgroup="site" status="2">Previous</contents>
 <contents name="presentation" textgroup="site" status="2">Presentation</contents>
 <contents name="publications_de" textgroup="site" status="2">Publications of</contents>
+<contents name="publisher" textgroup="site" status="2">Publisher</contents>
 <contents name="recherche" textgroup="site" status="2">Search</contents>
 <contents name="reference_electronique" textgroup="site" status="2">Electronic reference</contents>
 <contents name="reference_oeuvre" textgroup="site" status="2">Bibliographical reference</contents>

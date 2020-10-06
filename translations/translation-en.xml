@@ -103,6 +103,7 @@
 <contents name="suivant" textgroup="site" status="2">Next</contents>
 <contents name="table_des_illustrations" textgroup="site" status="2">Illustrations</contents>
 <contents name="telecharger_facsimile" textgroup="site" status="2">Facsimile</contents>
+<contents name="telecharger_pdf" textgroup="site" status="2">PDF</contents>
 <contents name="texte" textgroup="site" status="2">Text</contents>
 <contents name="texte_extrait" textgroup="site" status="2">Excerpt</contents>
 <contents name="texte_integral" textgroup="site" status="2">Text</contents>

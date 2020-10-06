@@ -202,19 +202,32 @@
 		<div class="article__buttons">
 			<ul class="article__buttons-list nav nav-pills">
 				<!--[ Bouton fac-similé ]-->
-				<IF COND="[#ALTERFICHIER]"/>
-					<li class="article__button article__button--facsimile">
-						<a href="[#ID|makeurlwithid|query_string('file', '1')]">
-							<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="Facsimile" />
-						</a>
-					</li>
-				</IF>
+				<MACRO NAME="ARTICLE_BOUTON_PDF" />
 				<!--[ Bouton de téléchargement de la TEI ]-->
 				<MACRO NAME="ARTICLE_BOUTON_TEI" />
 				<!--[ Boutons de partage ]-->
 				<MACRO NAME="ARTICLE_LIENS_PARTAGE" />
 			</ul>
 		</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Bouton de téléchargement du PDF.
+ */
+<DEFMACRO NAME="ARTICLE_BOUTON_PDF">
+	<IF COND="[#ALTERFICHIER]"/>
+		<li class="article__button article__button--facsimile">
+			<a role="button" href="[#ID|makeurlwithid|query_string('file', '1')]">
+				<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="[@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])" />
+			</a>
+		</li>
+	<ELSEIF COND="[#PDFGEN_URL]"/>
+		<li class="article__button article__button--facsimile article__button--pdfgen">
+			<a role="button" href="[#PDFGEN_URL]">
+				<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="[@TELECHARGER_PDF]" />
+			</a>
+		</li>
 	</IF>
 </DEFMACRO>
 

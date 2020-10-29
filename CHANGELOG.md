@@ -1,5 +1,11 @@
 # Changelog Nova
 
+## 1.3.1 (06/10/2020)
+
+* Support du générateur de PDF https://github.com/edinum/pdfgen : intégration du bouton de téléchargement sur la page article.
+
+Mise à niveau depuis la version 1.2.x : voir "Version 1.3.0" ci-dessous.
+
 ## 1.3.0 (01/10/2020)
 
 * Utilisation des options "extra" (voir [lodel-options-extra](https://github.com/edinum/lodel-options-extra)) comme méthode conseillée pour renseigner le préfixe du DOI, le nom et l'URL du portail. Les méthodes d'insertion précédentes sont toujours supportées, bien que dépréciées.

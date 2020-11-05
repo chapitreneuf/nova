@@ -40,7 +40,6 @@
  * Affichage des textes associés à l'entrée.
  */
 <DEFMACRO NAME="ENTREE_LISTE_TEXTES">
-	<LET VAR="where_clause"><IF COND="[#TYPE.CLASS] EQ 'auteurs'">idperson<ELSE/>identry</IF>='[#ID]'</LET>
 	<LOOP NAME="entree_liste_textes" 
 		TABLE="textes" 
 		WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]" 

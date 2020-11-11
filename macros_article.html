@@ -345,7 +345,7 @@
 			TABLE="relations, entries, entrytypes" 
 			SELECT="DISTINCT(idtype), title, altertitle, type AS entrytype" 
 			WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes'" 
-			ORDER="entrytypes.rank">
+			ORDER="CASE WHEN type LIKE 'motscles%' THEN 0 ELSE 1 END, entrytypes.rank">
 
 			<BEFORE>
 				<div class="col-12 col-lg-10 article__entries-title">

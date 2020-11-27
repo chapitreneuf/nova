@@ -1,5 +1,13 @@
 # Changelog Nova
 
+## 1.3.2 (27/11/2020)
+
+* Masquer le lien vers le générateur de PDF sur les articles non publiés (#77).
+* Correction de l'affichage des références papier (#78).
+* Branche "outils" : correction de l'import TEI du champ "chapo" (#74).
+
+Mise à niveau depuis la version 1.2.x : voir "Version 1.3.0" ci-dessous.
+
 ## 1.3.1 (06/10/2020)
 
 * Support du générateur de PDF https://github.com/edinum/pdfgen : intégration du bouton de téléchargement sur la page article.

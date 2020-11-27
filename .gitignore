@@ -1,0 +1,15 @@
+# Node
+logs/
+*.log
+npm-debug.log*
+node_modules/
+jspm_packages/
+.npm
+.node_repl_history
+
+# Public
+public/css
+public/vendor/
+
+# VSCode
+.vscode/

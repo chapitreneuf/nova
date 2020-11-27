@@ -55,7 +55,7 @@ while ($siteName = $sites->fetch()) {
                 'cond' => '*',
                 'edition' => 'importable',
                 'status' => '32',
-                'otx' => '/tei:TEI/tei:text/tei:front/child::*',
+                'otx' => '/tei:TEI/tei:text/tei:front/tei:argument/child::*',
             ]);
             if ($tf_chapo->error) {
                 print "Erreur lors de la création du champ «chapo»\n";

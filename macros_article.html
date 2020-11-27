@@ -222,7 +222,7 @@
 				<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="[@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])" />
 			</a>
 		</li>
-	<ELSEIF COND="[#PDFGEN_URL]"/>
+	<ELSEIF COND="[#PDFGEN_URL] AND [#STATUS] GT 0"/>
 		<li class="article__button article__button--facsimile article__button--pdfgen">
 			<a role="button" href="[#PDFGEN_URL]">
 				<!--[ On n'affiche la traduction que si disponible (retrocompatibilité) ]-->

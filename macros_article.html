@@ -46,8 +46,29 @@
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] article-fulltext</LET>
 	</IF>
 
+	<!--[ Références ]-->
+	<LET VAR="reference_papier" GLOBAL="1" ><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
+	<LET VAR="reference_electronique" GLOBAL="1" ><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" /></LET>
+
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
+</DEFMACRO>
+
+/**
+ * Référence papier.
+ */
+<DEFMACRO NAME="ARTICLE_REFERENCE_PAPIER">
+	<LET VAR="isnumero">[#ID|getParentByType('numero')]</LET>
+	<IF COND="[#PAGINATION] AND [#ISNUMERO]"/>
+		[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <em>[#OPTIONS.METADONNEESSITE.TITRESITE]</em><LOOP NAME="reference_papier_numero" SELECT="id, titre, numero, datepublipapier, datepubli, periode" TABLE="relations, publications" WHERE="id2 = '[#ID]' AND type IN ('numero', 'rubrique') AND nature = 'P' AND id1 = publications.identity" ORDER="degree DESC" LIMIT="2"><BEFORE>, </BEFORE><IF COND="[#COUNT] EQ 1" /><IF COND="[#TYPE] EQ 'numero'">[#NUMERO]&nbsp;|&nbsp;[#DATEPUBLIPAPIER|formateddate('%Y')]<ELSE/>[#TITRE]</IF><ELSE />, [#TITRE]</IF></LOOP>, [#PAGINATION].
+	</IF>
+</DEFMACRO>
+
+/**
+ * Référence électronique.
+ */
+<DEFMACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE">
+	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. URL&nbsp;: [#SITEINFOS.URL]/[#ID|makeurlwithid]
 </DEFMACRO>
 
 /**
@@ -290,32 +311,17 @@
 			<IF COND="[%REFERENCE_PAPIER]">
 				<h3>[@REFERENCE_PAPIER]</h3>
 				<p class="article__quotation-print">
-					<MACRO NAME="ARTICLE_REFERENCE_PAPIER"/>
+					[%REFERENCE_PAPIER]
 				</p>
 			</IF>
-			<h3>[@REFERENCE_ELECTRONIQUE]</h3>
-			<p class="article__quotation-digital">
-				<MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" />
-			</p>
+			<IF COND="[%REFERENCE_ELECTRONIQUE]">
+				<h3>[@REFERENCE_ELECTRONIQUE]</h3>
+				<p class="article__quotation-digital">
+					[%REFERENCE_ELECTRONIQUE]
+				</p>
+			</IF>
 		</div>
 	</section>
-</DEFMACRO>
-
-/**
- * Référence papier.
- */
-<DEFMACRO NAME="ARTICLE_REFERENCE_PAPIER">
-	<LET VAR="isnumero">[#ID|getParentByType('numero')]</LET>
-	<IF COND="[#PAGINATION] AND [#ISNUMERO]"/>
-		[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <em>[#OPTIONS.METADONNEESSITE.TITRESITE]</em><LOOP NAME="reference_papier_numero" SELECT="id, titre, numero, datepublipapier, datepubli, periode" TABLE="relations, publications" WHERE="id2 = '[#ID]' AND type IN ('numero', 'rubrique') AND nature = 'P' AND id1 = publications.identity" ORDER="degree DESC" LIMIT="2"><BEFORE>, </BEFORE><IF COND="[#COUNT] EQ 1" /><IF COND="[#TYPE] EQ 'numero'">[#NUMERO]&nbsp;|&nbsp;[#DATEPUBLIPAPIER|formateddate('%Y')]<ELSE/>[#TITRE]</IF><ELSE />, [#TITRE]</IF></LOOP>, [#PAGINATION].
-	</IF>
-</DEFMACRO>
-
-/**
- * Référence électronique.
- */
-<DEFMACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE">
-	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. URL&nbsp;: [#SITEINFOS.URL]/[#ID|makeurlwithid]
 </DEFMACRO>
 
 /**

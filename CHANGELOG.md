@@ -1,5 +1,12 @@
 # Changelog Nova
 
+## 1.3.3 (14/12/20)
+
+* Correction des URLs dans les flux RSS (suppression du protocol ajouté dans certains contextes).
+* Ajout des variables de traductions en Espagnol, Italien et Portuguais.
+
+Mise à niveau depuis la version 1.2.x : voir "Version 1.3.0" ci-dessous.
+
 ## 1.3.2 (27/11/2020)
 
 * Masquer le lien vers le générateur de PDF sur les articles non publiés (#77).

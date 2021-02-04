@@ -1,5 +1,9 @@
 # Changelog Nova
 
+## 1.3.4 (04/02/21)
+
+* Compatibilité avec Métopes version 2.3 : affichage correct des sauts de lignes séparant les différentes affiliations d'un même auteur.
+
 ## 1.3.3 (14/12/20)
 
 * Correction des URLs dans les flux RSS (suppression du protocol ajouté dans certains contextes).

@@ -729,9 +729,13 @@
 					<a href="[#IDPERSON|makeurlwithid]">[#PRENOM] <span class="family-name">[#NOMFAMILLE]</span></a>
 				</h3>
 				<IF COND="[#DESCRIPTION]">
-					<p class="article__person-description">
-						[#DESCRIPTION|removetags("p")]
-					</p>
+					<IF COND="false SNE [#DESCRIPTION|strpos('<br')]">
+						[#DESCRIPTION]
+					<ELSEIF COND="false SNE [#DESCRIPTION|strpos('<p')]" />
+						[#DESCRIPTION|replace('class="description','class="article__person-description')]
+					<ELSE />
+						<p class="article__person-description">[#DESCRIPTION]</p>
+					</IF>
 				</IF>
 				<IF COND="[#COURRIEL]">
 					<a class="article__person-email" href="mailto:[#COURRIEL]">[#COURRIEL]</a>

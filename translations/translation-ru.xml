@@ -1,0 +1,142 @@
+<lodeltranslations>
+<translations>
+<row><lang>ru</lang>
+<title>Русский</title>
+<textgroups>site</textgroups>
+<translators>Natalia Gamalova</translators>
+<modificationdate>2020-04-20</modificationdate>
+<creationdate>2020-04-20</creationdate>
+<texts>
+<contents name="skip_to_content" textgroup="site" status="2">Перейти к содержанию статьи</contents>
+<contents name="recherche" textgroup="site" status="2">Поиск</contents>
+<contents name="nav_a_paraitre" textgroup="site" status="2">Ближайшие выпуски журнала</contents>
+<contents name="nav_resumes" textgroup="site" status="2">Последние выпуски</contents>
+<contents name="nav_texte_integral" textgroup="site" status="2">Полный текст статей</contents>
+<contents name="tous_les_numeros" textgroup="site" status="2">Все выпуски</contents>
+<contents name="index" textgroup="site" status="2">Указатель</contents>
+<contents name="index_par_annees" textgroup="site" status="2">по году выпуска</contents>
+<contents name="index_par_langues" textgroup="site" status="2">по языку</contents>
+<contents name="lien_accroche" textgroup="site" status="2">Об иллюстрации</contents>
+<contents name="credits" textgroup="site" status="2">Аккредитации</contents>
+<contents name="directeur_publication" textgroup="site" status="2">Под редакцией</contents>
+<contents name="and" textgroup="site" status="2">и</contents>
+<contents name="site_editeur" textgroup="site" status="2">Сайт издателя</contents>
+<contents name="commander_numero" textgroup="site" status="2">Заказать этот выпуск</contents>
+<contents name="ndlr" textgroup="site" status="2">Примечания редактора</contents>
+<contents name="historique" textgroup="site" status="2">история</contents>
+<contents name="annonce_alias" textgroup="site" status="2">Зеркало сайта</contents>
+<contents name="docannexes" textgroup="site" status="2">Материалы</contents>
+<contents name="docannexe" textgroup="site" status="2">Дополнительный материал</contents>
+<contents name="rubriques" textgroup="site" status="2">Разделы журнала</contents>
+<contents name="sommaire_de_cette_rubrique" textgroup="site" status="2">Оглавление рубрики</contents>
+<contents name="actualites" textgroup="site" status="2">Новости</contents>
+<contents name="visiter_site" textgroup="site" status="2">Посетить сайт</contents>
+<contents name="rss" textgroup="site" status="2">RSS</contents>
+<contents name="issn_electronique" textgroup="site" status="2">Электронный ISSN</contents>
+<contents name="plan_du_site" textgroup="site" status="2">Карта сайта</contents>
+<contents name="edite_avec_lodel" textgroup="site" status="2">Опубликовано с Lodel</contents>
+<contents name="lodel_admin" textgroup="site" status="2">Доступ ограничен</contents>
+<contents name="accueil" textgroup="site" status="2">Главная</contents>
+<contents name="afficher_accroche" textgroup="site" status="2">Показать изображение</contents>
+<contents name="annexe" textgroup="site" status="2">Приложение</contents>
+<contents name="article_precedent" textgroup="site" status="2">Предыдущая статья</contents>
+<contents name="article_suivant" textgroup="site" status="2">Следующая статья</contents>
+<contents name="article_traduction_de" textgroup="site" status="2">Перевод c :</contents>
+<contents name="article_traductions" textgroup="site" status="2">Перевод(ы)</contents>
+<contents name="article_traductions_autres" textgroup="site" status="2">Другой(ие) перевод(ы) статьи</contents>
+<contents name="aucun_resultat" textgroup="site" status="2">По Вашему запросу ничего не найдено</contents>
+<contents name="auteur" textgroup="site" status="2">Автор</contents>
+<contents name="auteurs" textgroup="site" status="2">Авторы</contents>
+<contents name="autres_numeros_recents" textgroup="site" status="2">других выпусков</contents>
+<contents name="avertissement_texte_integral" textgroup="site" status="2">Данный материал будет опубликован полностью в режиме на сайте</contents>
+<contents name="bibliographie" textgroup="site" status="2">Библиография</contents>
+<contents name="chercher" textgroup="site" status="2">Поиск</contents>
+<contents name="citation" textgroup="site" status="2">Цитата</contents>
+<contents name="consulte_le" textgroup="site" status="2">Дата обращения</contents>
+<contents name="dedicace" textgroup="site" status="2">Посвящение</contents>
+<contents name="dernier_numero" textgroup="site" status="2">Последний выпуск</contents>
+<contents name="dernieres_entrees_index" textgroup="site" status="2">Последние рубрики указателя</contents>
+<contents name="derniers_articles" textgroup="site" status="2">Последние статьи</contents>
+<contents name="description" textgroup="site" status="2">Описание</contents>
+<contents name="document_precedent" textgroup="site" status="2">Предыдущий материал</contents>
+<contents name="document_suivant" textgroup="site" status="2">Следующий материал</contents>
+<contents name="du_meme_auteur" textgroup="site" status="2">Статьи того же автора</contents>
+<contents name="en_ligne" textgroup="site" status="2">Онлайн</contents>
+<contents name="entrees_index" textgroup="site" status="2">Рубрики указателя</contents>
+<contents name="errata" textgroup="site" status="2">Errata</contents>
+<contents name="erreur_404" textgroup="site" status="2">Ошибка 404</contents>
+<contents name="fichier_original" textgroup="site" status="2">Исходный файл</contents>
+<contents name="heberge_par_edinum" textgroup="site" status="2">Творческая концепция и хостинг от Edinum</contents>
+<contents name="illustration_credits" textgroup="site" status="2">Аккредитации</contents>
+<contents name="illustration_legende" textgroup="site" status="2">Подпись под рисунком</contents>
+<contents name="illustration_titre" textgroup="site" status="2">Заголовок</contents>
+<contents name="licence" textgroup="site" status="2">Авторские права</contents>
+<contents name="lien_rss" textgroup="site" status="2">Подписаться на ленту новостей</contents>
+<contents name="lire_la_suite" textgroup="site" status="2">Читать дальше</contents>
+<contents name="lire_notice_site" textgroup="site" status="2">Прочитать уведомление сайта полностью</contents>
+<contents name="logos" textgroup="site" status="2">Аффилирование и партнерские программы</contents>
+<contents name="mis_en_ligne_le" textgroup="site" status="2">Опубликовано в сети</contents>
+<contents name="navigation" textgroup="site" status="2">Навигация по сайту</contents>
+<contents name="ndla" textgroup="site" status="2">Примечания автора</contents>
+<contents name="notefin" textgroup="site" status="2">Сноска в конце текста</contents>
+<contents name="notes" textgroup="site" status="2">Примечания</contents>
+<contents name="notice_revisee_le" textgroup="site" status="2">Пересмотренное уведомление сайта</contents>
+<contents name="numero_precedent" textgroup="site" status="2">Предыдущий выпуск</contents>
+<contents name="numero_suivant" textgroup="site" status="2">Следующий выпуск</contents>
+<contents name="numeros" textgroup="site" status="2">Выпуски</contents>
+<contents name="page_not_found" textgroup="site" status="2">Запрашиваемой страницы не существует</contents>
+<contents name="par" textgroup="site" status="2">par</contents>
+<contents name="partager" textgroup="site" status="2">Поделиться</contents>
+<contents name="paru_dans" textgroup="site" status="2">Напечатано в</contents>
+<contents name="pour_citer" textgroup="site" status="2">Цитировать</contents>
+<contents name="precedent" textgroup="site" status="2">Назад</contents>
+<contents name="presentation" textgroup="site" status="2">О журнале</contents>
+<contents name="publications_de" textgroup="site" status="2">публикации</contents>
+<contents name="reference_electronique" textgroup="site" status="2">Cсылка на электронный ресурс</contents>
+<contents name="reference_oeuvre" textgroup="site" status="2">Ссылка(и)</contents>
+<contents name="reference_papier" textgroup="site" status="2">Ссылка на бумажную публикацию</contents>
+<contents name="resume" textgroup="site" status="2">Аннотация</contents>
+<contents name="resumes" textgroup="site" status="2">Аннотации</contents>
+<contents name="retour_home" textgroup="site" status="2">Переход на главную страницу сайта</contents>
+<contents name="retour_index" textgroup="site" status="2">Переход к указателю</contents>
+<contents name="rubrique_precedente" textgroup="site" status="2">Предыдущий раздел</contents>
+<contents name="rubrique_suivante" textgroup="site" status="2">Следующий раздел</contents>
+<contents name="sommaire" textgroup="site" status="2">Оглавление</contents>
+<contents name="sommaire_complet_du_numero" textgroup="site" status="2">Полное оглавление выпуска</contents>
+<contents name="sommaire_de_ce_numero" textgroup="site" status="2">Оглавление выпуска</contents>
+<contents name="suivant" textgroup="site" status="2">Вперед</contents>
+<contents name="table_des_illustrations" textgroup="site" status="2">Иллюстрации</contents>
+<contents name="telecharger_facsimile" textgroup="site" status="2">скачать статью</contents>
+<contents name="texte" textgroup="site" status="2">Текст</contents>
+<contents name="texte_extrait" textgroup="site" status="2">Отрывок</contents>
+<contents name="texte_integral" textgroup="site" status="2">Текст</contents>
+<contents name="toc" textgroup="site" status="2">План</contents>
+<contents name="tous_les_textes" textgroup="site" status="2">Все тексты</contents>
+<contents name="tout_le_contenu" textgroup="site" status="2">Содержание полностью</contents>
+<contents name="traducteur" textgroup="site" status="2">Переводчик</contents>
+<contents name="traducteurs" textgroup="site" status="2">Переводчики</contents>
+<contents name="traduction_de" textgroup="site" status="2">Перевод</contents>
+<contents name="widgets_print" textgroup="site" status="2">Распечатать</contents>
+<contents name="zoomimage_agrandir" textgroup="site" status="2">Увеличить</contents>
+<contents name="zoomimage_fermer" textgroup="site" status="2">Закрыть</contents>
+<contents name="zoomimage_original" textgroup="site" status="2">Оригинал</contents>
+<contents name="zoomimage_precedent" textgroup="site" status="2">Назад</contents>
+<contents name="zoomimage_suivant" textgroup="site" status="2">Вперед</contents>
+<contents name="document" textgroup="site" status="2">Материал</contents>
+<contents name="permalien" textgroup="site" status="2">Постоянная ссылка</contents>
+<contents name="notes_suivantes" textgroup="site" status="2">Следующие примечания</contents>
+<contents name="warning_empty_query" textgroup="site" status="2">У Вас ошибка</contents>
+<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Другие ресурсы того же автора</contents>
+<contents name="nav_appels_a_contributions" textgroup="site" status="-2">призывы к взносам</contents>
+<contents name="nav_menu" textgroup="site" status="2">меню</contents>
+<contents name="erreur_500" textgroup="site" status="1"></contents>
+<contents name="internal_error" textgroup="site" status="1"></contents>
+<contents name="tweets" textgroup="site" status="1"></contents>
+<contents name="twitter_loading" textgroup="site" status="1"></contents>
+<contents name="twitter_alt" textgroup="site" status="1"></contents>
+<contents name="twitter_link" textgroup="site" status="1"></contents>
+<contents name="telecharger_pdf" textgroup="site" status="1"></contents>
+</texts>
+</row>
+</translations>
+</lodeltranslations>

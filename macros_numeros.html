@@ -18,10 +18,14 @@
  */
 <DEFMACRO NAME="NUMEROS_MAIN">
 	<LET VAR="NUMEROS_PAR_PAGE">10</LET>
+	<div class="row">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOUS_LES_NUMEROS]" />
 	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1 AND idparent = '[#ID]'" ORDER="rank DESC" SPLIT="[#NUMEROS_PAR_PAGE]">
 		<BEFORE>
-			<div id="issues" class="issues">
+			<IF COND="[#NBRESULTS] GT [#NUMEROS_PAR_PAGE]">
+				<MACRO NAME="NAV_PAGE_SCALE" />
+			</IF>
+			</div><div id="issues" class="issues">
 		</BEFORE>
 		<DO>
 			<MACRO NAME="NUMEROS_ISSUE" />

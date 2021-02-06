@@ -176,6 +176,8 @@ h7, .heading7 {color: @color-2;}
 
 
 .link-to-issues {color:@color-3;.font-size(1.6);}
+#main-content .section-header-container {flex:35%;}
+#main-content .section-header-container + nav.pagination-container {margin-top:25px;margin-right:15px;}
 
 .main-menu .publi-number {.font-size(1.6);}
 .map .publi-number {.font-size(1.8);}
@@ -624,6 +626,9 @@ p.encadre + p.encadre {margin-top: 0;}
 
 .separateur {text-align:center;}
 
+@media (max-width: @screen-xs) {
+	#main-content .section-header-container + nav.pagination-container {margin:10px 0 0 15px;flex:65%;}
+}
 @media (max-width: @screen-sm) {
 	.article__text-contents {padding: 0;}
 	.side-actualites__section {padding:0 30px 30px;}
@@ -681,9 +686,8 @@ p.encadre + p.encadre {margin-top: 0;}
 	.toc__contents--docannexes .toc__title span {.font-size(1.3);} 
 	.toc__contents--docannexes .toc__title{.font-size(1.3);} 
 	.article_text__section--buttons {padding-left:5px;}	
+	#main-content .section-header-container {margin-left:15px;}
 }
-
-
 @media (min-width: @screen-sm) {
 	.article_text__section {padding-right:30px;}
 	.side-actualites__section {margin-left:-15px;}

@@ -9,7 +9,7 @@
 
 	<!--[ Globales ]-->
 	<LET VAR="titre_page" GLOBAL="1">
-		[@RECHERCHE] &ldquo;[#QUERY]&rdquo; &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+		[@RECHERCHE] &ldquo;[#QUERY|htmlspecialchars|stripslashes]&rdquo; &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
 	</LET>
 	<LET VAR="resultats_par_page" GLOBAL="1">15</LET>
 </DEFMACRO>
@@ -18,7 +18,7 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="SEARCH_MAIN">
-	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RECHERCHE] &ldquo;[#QUERY]&rdquo;" />
+	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RECHERCHE] &ldquo;[#QUERY|htmlspecialchars|stripslashes]&rdquo;" />
 	<FUNC NAME="NAV_SEARCH_FORM" AUTOFOCUS="1" />
 	<MACRO NAME="SEARCH_RESULTS" />
 </DEFMACRO>

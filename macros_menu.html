@@ -181,11 +181,16 @@
  * @param {string} [filtre] - Filtre passé dans le WHERE de la requête.
  */
 <DEFFUNC NAME="MENU_ISSUES_ITEMS" REQUIRED="titre_section, id_collection" OPTIONAL="filtre">
+	<IF COND="![%MENU_MAX_ISSUES]">
+		<LET VAR="menu_max_issues" GLOBAL="1">10</LET>
+	</IF>
+
 	<LOOP NAME="menu_issues_items" 
 		TABLE="publications"
 		SELECT="id, numero, titre, altertitre, periode, datepubli, datepublipapier"
 		WHERE="idparent = '[#ID_COLLECTION]' [#FILTRE]"
-		ORDER="rank DESC">
+		ORDER="rank DESC"
+		LIMIT="[%MENU_MAX_ISSUES]">
 		<BEFORE>
 			<section class="main-menu__section main-menu__section--issues">
 				<h2 class="main-menu__section-title">[#TITRE_SECTION]</h2>

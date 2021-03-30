@@ -1,5 +1,11 @@
 # Changelog Nova
 
+## 1.4.0 (30/03/21)
+
+* Ajout de l'option MENU_MAX_ISSUES.
+* Ajout d'une marge pour le menu avec l'identifier "suivez-nous" (#83).
+* Correction de l'année de publication dans le fil d'ariane (#82).
+
 ## 1.3.5 (16/03/21)
 
 * Correction d'une vulnérabilité présente dans toutes les versions précédentes. La mise à niveau de la Nova vers la version 1.3.5 est fortement conseillée.

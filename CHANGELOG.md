@@ -1,5 +1,11 @@
 # Changelog Nova
 
+## 1.4.1 (21/04/21)
+
+* Corrections d'ancres (#87)
+* Correction de l'ordre des métadonnées (#90)
+* Correction du markup de la page tous les numéros (#85)
+
 ## 1.4.0 (30/03/21)
 
 * Ajout de l'option MENU_MAX_ISSUES.

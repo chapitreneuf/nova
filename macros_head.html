@@ -33,7 +33,7 @@
 
 	<meta name="URL" content="[#CURRENTURL]" />
 
-	<LOOP NAME="head_metadonnees_auteurs" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" ORDER="rank">
+	<LOOP NAME="head_metadonnees_auteurs" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" ORDER="degree, rank">
 		<meta name="author" content="[#NOMFAMILLE], [#PRENOM]" />
 	</LOOP>
 
@@ -93,7 +93,7 @@
 		<meta name="DC.subject" content="[#G_NAME]" />
 	</LOOP>
 
-	<LOOP NAME="head_metadonnees_dc_creator" TABLE="auteurs" WHERE="type='auteur'"  WHERE="iddocument='[#ID]'" ORDER="rank">
+	<LOOP NAME="head_metadonnees_dc_creator" TABLE="auteurs" WHERE="type='auteur'"  WHERE="iddocument='[#ID]'" ORDER="degree, rank">
 		<meta name="DC.creator" content="[#NOMFAMILLE], [#PRENOM]" />
 	</LOOP>
 

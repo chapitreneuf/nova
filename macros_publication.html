@@ -209,16 +209,16 @@
 							<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
 								<div class="toc__header">
 									<!--[ Titre ]-->
-									<h2 class="toc__title">[#TITRE]</h2>
+									<h2 class="toc__publi-title">[#TITRE]</h2>
 									<!--[ Sous-titre ]-->
 									<IF COND="[#SOUSTITRE]">
-										<div class="toc__subtitle">
+										<div class="toc__publi-subtitle">
 											[#SOUSTITRE]
 										</div>
 									</IF>
 									<!--[ Titres alternatifs ]-->
 									<IF COND="[#ALTERTITRE]">
-										<div class="toc__altertitle">
+										<div class="toc__publi-altertitle">
 											[#ALTERTITRE|replace('r2r:ml', 'p')]
 										</div>
 									</IF>
@@ -271,7 +271,7 @@
 		ORDER="rank">
 
 		<BEFORE>
-			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" AFFICHER_SOUSTITRE="1"/>
 		</BEFORE>
 
 		<DO>
@@ -296,34 +296,41 @@
 		</DOLAST>
 
 		<ALTERNATIVE>
-			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_TITRES_TRADUITS="1" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" AFFICHER_SOUSTITRE="1" />
 		</ALTERNATIVE>
 	</LOOP>
 </DEFFUNC>
 
 /**
  * Affiche le titre, le sous-titre d'un document avec la mention "texte intégral", et le numéro du doc.
+ * @param {boolean} [afficher_soustitre] - Affichage du sous-titre.
  * @param {boolean} [afficher_titres_traduits] - Affichage des titres traduits.
  * @param {boolean} [afficher_datepubli] - Affichage de la date de publication.
  */
-<DEFFUNC NAME="PUBLICATION_LI_DOCUMENT" OPTIONAL="afficher_titres_traduits, afficher_datepubli">
-	<!--[ Titre ]-->
-	<p class="toc__title">
-		<IF COND="[#DOCUMENTCLIQUABLE]">
-			<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
-		<ELSE/>
-			[#TITRE|removenotes]
+<DEFFUNC NAME="PUBLICATION_LI_DOCUMENT" OPTIONAL="afficher_soustitre, afficher_titres_traduits, afficher_datepubli">
+	<a class="toc__link" href="[#ID|makeurlwithid]">
+		<!--[ Titre ]-->
+		<p class="toc__title">[#TITRE|removenotes]</p>
+		
+		<!--[ Sous-titre ]-->
+		<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#SOUSTITRE]">
+			<p class="toc__subtitle">[#SOUSTITRE|removenotes]</p>
 		</IF>
-	</p>
-	<!--[ Titres traduits]-->
-	<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
-		<div class="toc__altertitle">
-			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-				<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
-			</LOOP>
-		</div>
-	</IF>
+		
+		<!--[ Titres traduits]-->
+		<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
+			<div class="toc__altertitle">
+				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+					<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
+				</LOOP>
+			</div>
+		</IF>
 
+		<!--[ Date de publication si publié dans une rubrique électronique ]-->
+		<IF COND="[#AFFICHER_DATEPUBLI]">
+			<p class="toc__datepubli">[#DATEPUBLI|humandate]</p>
+		</IF>
+	</a>
 </DEFFUNC>
 
 /**

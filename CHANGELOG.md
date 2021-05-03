@@ -1,10 +1,15 @@
 # Changelog Nova
 
+## 1.5.0 (03/05/21)
+
+* Amélioration des titres dans la table des matières : ajout du sous-titre, ajout de la date de publication dans les rubriques (#86).
+* Ajout des styles des notes de fin dans les articles.
+
 ## 1.4.1 (21/04/21)
 
-* Corrections d'ancres (#87)
-* Correction de l'ordre des métadonnées (#90)
-* Correction du markup de la page tous les numéros (#85)
+* Corrections d'ancres (#87).
+* Correction de l'ordre des métadonnées (#90).
+* Correction du markup de la page tous les numéros (#85).
 
 ## 1.4.0 (30/03/21)
 

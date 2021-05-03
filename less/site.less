@@ -443,7 +443,7 @@ h2#home-latest-issue {margin-top: 0;}
 #article-translator {.font-size(1.7);}
 .article__doi {color:@color-6;.font-size(1.5);text-align:right;}
 
-h2#footnotes {border-bottom :2px dotted @color-6;}
+h2#footnotes, h2#endnotes {border-bottom :2px dotted @color-6;}
 h2#toc {border-bottom :2px dotted @color-6;}
 h2#illustrations {border-bottom :2px dotted @color-6;}
 h2#quotation {border-bottom :2px dotted @color-6;}
@@ -469,7 +469,7 @@ p.texte {margin-top: 15px;}
 	text-align: center;
 }
 
-.footnotecall {
+.footnotecall, .endnotecall {
 	position: relative;
 	font-size: 10px;
 	line-height: 0;
@@ -482,7 +482,7 @@ p.texte {margin-top: 15px;}
 	font-style:normal;
 	text-align:left;
 }
-.FootnoteSymbol {font-weight:bold;color:@color-3;.font-size(1.6);padding-right: 5px;}
+.FootnoteSymbol, .EndnoteSymbol {font-weight:bold;color:@color-3;.font-size(1.6);padding-right: 5px;}
 
 
 .page-shortcuts__item {
@@ -498,9 +498,9 @@ p.texte {margin-top: 15px;}
 .breadcrumb {background-color:transparent;padding: 0;}
 .ariane__link {color:@color-5;font-size:85%;}
 
-.article__footnotes-contents {text-align: justify;.font-size(1.5);}
-.article__footnotes-contents p:first-child {margin-top:10px;}
-.article__footnotes-contents p {margin:10px 0;.font-size(1.5);line-height:1.2em;}
+.article__footnotes-contents, .article__endnotes-contents {text-align: justify;.font-size(1.5);}
+.article__footnotes-contents p:first-child, .article__endnotes-contents p:first-child {margin-top:10px;}
+.article__footnotes-contents p, .article__endnotes-contents p {margin:10px 0;.font-size(1.5);line-height:1.2em;}
 
 .article__quotation-digital, .article__quotation-print {text-align: justify;.font-size(1.5);}
 .article__person-description {text-align: justify;line-height:1.2em;margin-bottom: 5px;}
@@ -617,7 +617,7 @@ p.encadre + p.encadre {margin-top: 0;}
 
 .remerciements {margin-left:20px;font-style:italic;text-align:left;}
 .article__sidenotes .remerciements {margin-left:0;font-style:normal;}
-.article__footnotes-contents .remerciements {font-style:normal;margin-left:0;}
+.article__footnotes-contents .remerciements, .article__endnotes-contents .remerciements {font-style:normal;margin-left:0;}
 .epigraphe {margin-left:20%;text-align:right;.font-size(1.6);}
 .citation {margin-left:20px;.font-size(1.5);text-align:justify;line-height: 1.4em;}
 .question {color: @color-6;font-style:italic;margin-top:10px;}
@@ -652,8 +652,8 @@ p.encadre + p.encadre {margin-top: 0;}
 	.article__appendix-contents {.font-size(1.3);}
 	.toc__contents--docannexes {.font-size(1.3);}
 	.article__quotation-digital, .article__quotation-digital {.font-size(1.3);}
-	.article__footnotes-contents p {.font-size(1.3);}
-	.article__footnotes-contents {.font-size(1.3);}
+	.article__footnotes-contents p, .article__endnotes-contents p {.font-size(1.3);}
+	.article__footnotes-contents, .article__endnotes-contents {.font-size(1.3);}
 	.creditillustration {.font-size(1.3);}
 	.article__quotation h3{.font-size(1.5);}
 	.toc__title {.font-size(1.5);}
@@ -674,7 +674,7 @@ p.encadre + p.encadre {margin-top: 0;}
 	.article__biblio {padding-left: 0;padding-right: 0;}
 	.article__appendix {padding-left: 0;padding-right: 0;}
 	.article__illustrations {padding-left: 0;padding-right: 0;}
-	.article__footnotes {padding-left: 0;padding-right: 0;.font-size(1.3);}
+	.article__footnotes, .article__endnotes {padding-left: 0;padding-right: 0;.font-size(1.3);}
 	.section-header-arrow {right: 0;}
 	h3{.font-size(1.5);}
 	.article__ndla h2 {.font-size(1.5);}
@@ -686,7 +686,7 @@ p.encadre + p.encadre {margin-top: 0;}
 	.article__errata h2 {.font-size(1.5);}
 	.article__errata {.font-size(1.5);}
 	.article__entries-title{padding-right:0;}
-	.FootnoteSymbol{.font-size(1.3);} 
+	.FootnoteSymbol, .EndnoteSymbol {.font-size(1.3);} 
 	.legendeillustration {.font-size(1.3);} 
 	.toc__contents--docannexes .toc__title span {.font-size(1.3);} 
 	.toc__contents--docannexes .toc__title{.font-size(1.3);} 
@@ -710,7 +710,7 @@ p.encadre + p.encadre {margin-top: 0;}
 	.article__entries-content {padding-right:0}
 }
 @media (min-width: @screen-md) {
-	.article__footnotes {margin-left: -15px;.font-size(1.5);}
+	.article__footnotes, .article__endnotes {margin-left: -15px;.font-size(1.5);}
 	.article__illustrations {margin-left: -15px;}
 	.article__quotation {margin-left: -15px;}
 	.article__persons-infos {margin-left: -15px;}
@@ -787,8 +787,8 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] h1 {font-size: 165%;}
 [data-zoom-level="small"] .main-content h1 a{font-size: 80%;}
 [data-zoom-level="big"] .main-content h1 a{font-size: 130%;}
-[data-zoom-level="small"] .main-content h1 .footnotecall{font-size: 50%;}
-[data-zoom-level="big"] .main-content h1 .footnotecall{font-size: 64%;}
+[data-zoom-level="small"] .main-content h1 .footnotecall, [data-zoom-level="small"] .main-content h1 .endnotecall {font-size: 50%;}
+[data-zoom-level="big"] .main-content h1 .footnotecall, [data-zoom-level="big"] .main-content h1 .endnotecall {font-size: 64%;}
 [data-zoom-level="small"] .main-content h2 a{font-size: 84%;}
 [data-zoom-level="big"] .main-content h2 a{font-size: 130%;}
 [data-zoom-level="small"] h2.section-header {font-size: 100%;}
@@ -874,12 +874,12 @@ p.encadre + p.encadre {margin-top: 0;}
 [data-zoom-level="big"] .article__appendix h2 {font-size: 110%;}
 [data-zoom-level="small"] .article__appendix-contents {font-size: 80%;}
 [data-zoom-level="big"] .article__appendix-contents {font-size:84%;}
-[data-zoom-level="small"] h2#footnotes  {font-size: 91%;}
-[data-zoom-level="big"] h2#footnotes {font-size: 162%;}
-[data-zoom-level="small"] .article__footnotes-contents p {font-size: 80%;}
-[data-zoom-level="big"] .article__footnotes-contents p {font-size: 124%;}
-[data-zoom-level="small"] .FootnoteSymbol  {font-size: 85%;}
-[data-zoom-level="big"] .FootnoteSymbol {font-size: 95%;}
+[data-zoom-level="small"] h2#footnotes, [data-zoom-level="small"] h2#endnotes {font-size: 91%;}
+[data-zoom-level="big"] h2#footnotes, [data-zoom-level="big"] h2#endnotes {font-size: 162%;}
+[data-zoom-level="small"] .article__footnotes-contents p, [data-zoom-level="small"] .article__endnotes-contents p {font-size: 80%;}
+[data-zoom-level="big"] .article__footnotes-contents p, [data-zoom-level="big"] .article__endnotes-contents p {font-size: 124%;}
+[data-zoom-level="small"] .FootnoteSymbol, [data-zoom-level="small"] .EndnoteSymbol {font-size: 85%;}
+[data-zoom-level="big"] .FootnoteSymbol, [data-zoom-level="big"] .EndnoteSymbol {font-size: 95%;}
 [data-zoom-level="small"] .article__quotation-contents h3{font-size: 92%;}
 [data-zoom-level="big"] .article__quotation-contents h3{font-size:84%;}
 [data-zoom-level="small"] .article__quotation-digital, [data-zoom-level="small"] .article__quotation-print {font-size: 80%;}

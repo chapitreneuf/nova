@@ -27,6 +27,17 @@ window.fnLoader = {
 			});
 		},
 
+		linkIsUrl: function() {
+			$(function() {
+				$("a[href^='http://'], a[href^='https://']").each(function () {
+					var text = $(this).text();
+					if (text.match(/^(https?:\/\/|www\.)/)) {
+						$(this).addClass("link-is-url");
+					}
+				});
+			});
+		},
+
 		loadTweets: function () {
 			$(function () {
 				var $twitterContainers = $("[data-twitter-src]");

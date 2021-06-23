@@ -40,6 +40,9 @@
 <contents name="document_suivant" textgroup="site" status="2">Next document</contents>
 <contents name="du_meme_auteur" textgroup="site" status="2">By this author</contents>
 <contents name="edite_avec_lodel" textgroup="site" status="2">Published with Lodel</contents>
+<contents name="edite_par" textgroup="site" status="2">Edited by</contents>
+<contents name="editeur_scientifique" textgroup="site" status="2">Editors</contents>
+<contents name="editeurs_scientifiques" textgroup="site" status="2">Editor</contents>
 <contents name="entrees_index" textgroup="site" status="2">Index terms</contents>
 <contents name="en_ligne" textgroup="site" status="2">Online</contents>
 <contents name="errata" textgroup="site" status="2">Errata</contents>

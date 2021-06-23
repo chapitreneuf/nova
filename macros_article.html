@@ -98,6 +98,7 @@
 		<MACRO NAME="ARTICLE_POURCITER" />
 	</IF>
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" SECTION_ID="authors-infos" />
+	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="editeurscientifique" SECTION_ID="editors-infos" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" SECTION_ID="translators-infos" />
 	<MACRO NAME="ARTICLE_LICENSE" />
 	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" />
@@ -136,6 +137,9 @@
 
 		<!--[ Auteurs ]-->
 		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_ID="article-author" WRAP_CLASS="article__author" HREF="#authors-infos"/>
+
+		<!--[ Editeurs scientifiques ]-->
+		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="editeurscientifique" WRAP_ID="article-editor" WRAP_CLASS="article__author" PREPEND="[@EDITE_PAR] " HREF="#editors-infos" />
 
 		<!--[ Traducteurs ]-->
 		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="traducteur" WRAP_ID="article-translator" WRAP_CLASS="article__author" PREPEND="[@TRADUCTION_DE] " HREF="#translators-infos" />
@@ -712,6 +716,8 @@
 			<section class="article__persons-infos col-12 col-lg-10">
 				<IF COND="[#TYPE] EQ 'traducteur'">
 					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@TRADUCTEURS]<ELSE/>[@TRADUCTEUR]</IF></LET>
+				<ELSEIF COND="[#TYPE] EQ 'editeurscientifique'">
+					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@EDITEURS_SCIENTIFIQUES]<ELSE/>[@EDITEUR_SCIENTIFIQUE]</IF></LET>
 				<ELSE />
 					<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></LET>
 				</IF>

@@ -40,6 +40,9 @@
 <contents name="document_suivant" textgroup="site" status="2">Document suivant</contents>
 <contents name="du_meme_auteur" textgroup="site" status="2">Articles du même auteur</contents>
 <contents name="edite_avec_lodel" textgroup="site" status="2">Édité avec Lodel</contents>
+<contents name="edite_par" textgroup="site" status="2">Édité par</contents>
+<contents name="editeur_scientifique" textgroup="site" status="2">Éditeur scientifique</contents>
+<contents name="editeurs_scientifiques" textgroup="site" status="2">Éditeurs scientifiques</contents>
 <contents name="en_ligne" textgroup="site" status="2">En ligne</contents>
 <contents name="entrees_index" textgroup="site" status="2">Entrées d’index</contents>
 <contents name="errata" textgroup="site" status="2">Errata</contents>

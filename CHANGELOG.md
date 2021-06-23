@@ -1,5 +1,13 @@
 # Changelog Nova
 
+## 1.5.1 (23/06/21)
+
+* Affichage de l'index editeurscientifique dans les articles (#93).
+* Traduction du titre du numéro courant dans le fil d'ariane (#94).
+* Découpage des URL dans les liens afin d'éviter les débordements de colonne (#88).
+* Correction de l'affichage des sous-titres dans la table des matières (#92).
+* Ne pas afficher les documents annexes s'ils n'ont pas de titre.
+
 ## 1.5.0 (03/05/21)
 
 * Amélioration des titres dans la table des matières : ajout du sous-titre, ajout de la date de publication dans les rubriques (#86).

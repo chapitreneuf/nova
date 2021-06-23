@@ -337,13 +337,7 @@
  * Affiche les documents annexes associés à un document.
  */
 <DEFMACRO NAME="PUBLICATION_ANNEXES">
-	<!--[ Liste des ID renvoyés par le filtre media ]-->
-	<!--[ TODO: à adapter selon le filtre media utilisé ]-->
-	<IF COND="[%ID_MEDIA]">
-		<LET VAR="inline_media"> AND entities.id NOT IN ([%ID_MEDIA|join(',')])</LET>
-	</IF>
-
-	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' [#INLINE_MEDIA] AND type LIKE '%annexe' AND identifier != 'tei'" ORDER="rank">
+	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' AND type LIKE '%annexe' AND identifier != 'tei' AND g_title != ''" ORDER="rank">
 
 		<BEFORE>
 			<section class="toc toc--docannexes col-md-10">

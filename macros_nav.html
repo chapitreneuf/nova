@@ -83,7 +83,7 @@
 	<IF COND="![#USE_ID]">
 		<LET VAR="use_id">[#ID]</LET>
 	</IF>
-	<LOOP NAME="nav_ariane" TABLE="relations, entities" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id" ORDER="degree DESC">
+	<LOOP NAME="nav_ariane" TABLE="relations, entities, publications" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id AND entities.id=publications.identity" ORDER="degree DESC">
 		<BEFORE>
 			<nav class="ariane" aria-label="breadcrumb">
 				<ol class="ariane__list breadcrumb">
@@ -94,7 +94,11 @@
 					<LOOP NAME="nav_ariane_numero" TABLE="publications" WHERE="type = 'numero' AND id = '[#ID]'" SELECT="numero, datepubli" />
 						[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" TEXTEBRUT="1" />&nbsp;:&#32;
 					</LOOP>
-					[#G_TITLE|couper(50)]<IF COND="[#G_TITLE|hasbeencut]"><span class="ariane__cut">…</span></IF>
+					<IF COND="[#ALTERTITRE:#SITELANG]">
+						[#ALTERTITRE:#SITELANG|couper(50)]<IF COND="[#ALTERTITRE|hasbeencut]"><span class="ariane__cut">…</span></IF>
+					<ELSE />
+						[#G_TITLE|couper(50)]<IF COND="[#G_TITLE|hasbeencut]"><span class="ariane__cut">…</span></IF>
+					</IF>
 				</a>
 			</li>
 		</DO>

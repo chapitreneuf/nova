@@ -1,5 +1,9 @@
 # Changelog Nova
 
+## 1.5.2 (09/07/21)
+
+* Correction de la taille des logos partenaires.
+
 ## 1.5.1 (23/06/21)
 
 * Affichage de l'index editeurscientifique dans les articles (#93).

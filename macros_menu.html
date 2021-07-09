@@ -305,7 +305,7 @@
 	<IF COND="![#PUBLI_IDENTIFIER]">
 		<LET VAR="publi_identifier">partenaires</LET>
 	</IF>
-	<LET VAR="size">120</LET>
+	<LET VAR="size">180</LET>
 
 	<LOOP NAME="menu_partenaires" TABLE="liens" WHERE="type = 'noticedesite' AND parent = '[#PUBLI_IDENTIFIER]'" SELECT="titre, url, vignette" ORDER="rank">
 		<BEFORE>

@@ -1,0 +1,391 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8" />
+/**
+ * @name META_DUBLIN_CORE_PLUS
+ * @used macros_meta_plus
+ * @description affiche les meta Dublin Core supplémentaires
+ * - DC.identifier : DOI si renseigné
+ */
+<DEFMACRO NAME="META_DUBLIN_CORE_PLUS">
+  <IF COND="[#TYPE] EQ 'article'">
+	<!--[ DC.identifier (DOI) ]-->
+	<meta name="DC.identifier" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
+  </IF>
+</DEFMACRO>
+/**
+ * @name META_GOOGLE_SCHOLAR
+ * @used macros_meta_plus
+ * @description affiche les meta pour Google Scholar
+ * - citation_journal_title : TITRESITE + SOUSTITRESITE si renseigné
+ * - citation_publisher : EDITEUR
+ * - citation_authors
+ * - citation_title : titre + sous-titre si renseigné
+ * - citation_issn : ISSN ou ISSN_ELECTRONIQUE si renseigné
+ * - citation_isbn : ISBN si renseigné
+ * - citation_volume : volume si renseigné
+ * - citation_issue : numéro si renseigné
+ * - citation_firstpage : début pagination si renseigné
+ * - citation_lastpage : fin pagination si renseigné
+ * - citation_language : langue si renseigné, sinon 'fr'
+ * - citation_keywords : toutes les entrées d'index, séparées par des points virgules
+ * - citation_abstract : les résumés dans les différentes langues ou les 500 premiers caractères du texte
+ * - citation_abstract_html_url : URL courante
+ * - citation_fulltext_html_url : URL courante ou de la ressource sur Cairn
+ * - citation_pdf_url : URL du fac-similé ou du PDF généré
+ */
+<DEFMACRO NAME="META_GOOGLE_SCHOLAR">
+  <IF COND="[#TYPE] EQ 'article'">
+
+	<!--[ Nom de la revue ]-->
+	<meta name="citation_journal_title" content="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark]<IF COND="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]">. [#OPTIONS.METADONNEESSITE.SOUSTITRESITE|textebrut|cleanBadChars|replacequotationmark]</IF>" />
+	<!--[ Éditeur ]-->
+	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
+		<meta name="citation_publisher" content="[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark]" />
+	</IF>
+	<!--[ Auteurs ]-->
+	<LOOP NAME="gs_authors" SELECT="nomfamille,prenom" TABLE="auteurs" WHERE="type = 'auteur' AND iddocument='[#ID]'" ORDER="degree">
+		<BEFORE><meta name="citation_authors" content="</BEFORE>
+		<DO>[#NOMFAMILLE|textebrut], [#PRENOM|textebrut]; </DO>
+		<DOLAST>[#NOMFAMILLE|textebrut], [#PRENOM|textebrut]</DOLAST>
+		<AFTER>" /></AFTER>
+		<ALTERNATIVE><meta name="citation_authors" content="no author" /></ALTERNATIVE>
+	</LOOP>
+	<!--[ Titre ]-->
+	<meta name="citation_title" content="[#TITRE|removenotes|textebrut|cleanBadChars|replacequotationmark]<IF COND="[#SOUSTITRE]">. [#SOUSTITRE|removenotes|textebrut|cleanBadChars|replacequotationmark]</IF>" />
+	<!--[ Date]-->
+	<IF COND="[#DATEPUBLIPAPIER|isadate] AND [#DATEPUBLIPAPIER] NE '0000-00-00' AND [#DATEPUBLIPAPIER] NE NULL">
+		<meta name="citation_publication_date" content="[#DATEPUBLIPAPIER|formateddate('%Y/%m/%d')]" />
+	<!--[<ELSEIF COND="[#DATEPUBLINUMERO|isadate] AND [#DATEPUBLINUMERO] NE '0000-00-00' AND [#DATEPUBLINUMERO] NE NULL" />
+		<meta name="citation_publication_date" content="[#DATEPUBLINUMERO|formateddate('%Y/%m/%d')]" />]-->
+	<ELSEIF COND="[#DATEPUBLI|isadate] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL" />
+		<meta name="citation_publication_date" content="[#DATEPUBLI|formateddate('%Y/%m/%d')]" />
+	<ELSEIF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" />
+		<meta name="citation_publication_date" content="[#DATEMISENLIGNE|formateddate('%Y/%m/%d')]" />
+	</IF>
+	<!--[<IF COND="[#DATEPUBLINUMERO|isadate] AND [#DATEPUBLINUMERO] NE '0000-00-00' AND [#DATEPUBLINUMERO] NE NULL">
+		<meta name="citation_online_date" content="[#DATEPUBLINUMERO|formateddate('%Y/%m/%d')]" />]-->
+	<IF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" />
+		<meta name="citation_online_date" content="[#DATEMISENLIGNE|formateddate('%Y/%m/%d')]" />
+	<ELSEIF COND="[#DATEPUBLI|isadate] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL" />
+		<meta name="citation_online_date" content="[#DATEPUBLI|formateddate('%Y/%m/%d')]" />
+	</IF>
+	<!--[ ISSN ]-->
+	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN]">
+		<meta name="citation_issn" content="[#OPTIONS.METADONNEESSITE.ISSN]" />
+	<ELSEIF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]"/>
+		<meta name="citation_issn" content="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]" />
+	</IF>
+	<!--[ ISBN ]-->
+	<IF COND="[#ISBN]">
+		<meta name="citation_isbn" content="[#ISBN]" />
+	<ELSEIF COND="[%IDNUMERO]"/>
+		<LOOP NAME="gs_isbn" TABLE="publications" SELECT="isbn" WHERE="id = '[%IDNUMERO]' AND isbn != '' AND isbn IS NOT NULL">
+			<meta name="citation_isbn" content="[#ISBN]" />
+		</LOOP>
+	</IF>
+	<!--[ Volume ]-->
+	<IF COND="[#VOLUME]">
+		<meta name="citation_volume" content="[#VOLUME]" />
+	</IF>
+	<!--[ Numéro ]-->
+	<IF COND="[%IDNUMERO]">
+		<LOOP NAME="gs_issue" TABLE="publications" SELECT="numero" WHERE="id = '[%IDNUMERO]' AND numero != '' AND numero IS NOT NULL">
+			<meta name="citation_issue" content="[#NUMERO]" />
+		</LOOP>
+	</IF>
+	<!--[ Pagination ]-->
+	<IF COND="[#PAGINATION]">
+		<LET ARRAY="pages">[#PAGINATION|lexplode('-')]</LET>
+		<meta name="citation_firstpage" content="[#PAGES.0]" />
+		<meta name="citation_lastpage" content="[#PAGES.1]" />
+	</IF>
+	<!--[ Langue ]-->
+	<IF COND="![#LANGUE]"><LET VAR="langue">fr</LET></IF>
+	<meta name="citation_language" content="[#LANGUE]" />
+	<!--[ Mots-clés (toutes les entrées d'index) ]-->
+	<LOOP NAME="gs_keywords" TABLE="relations, entries, entrytypes" SELECT="g_name" GROUPBY="g_name" WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND class != 'indexavances'" ORDER="entrytypes.rank, entries.rank">
+		<BEFORE><meta name="citation_keywords" content="</BEFORE>
+		<DO>[#G_NAME|textebrut]; </DO>
+		<DOLAST>[#G_NAME|textebrut]</DOLAST>
+		<AFTER>" /></AFTER>
+	</LOOP>
+	<!--[ Résumés ]-->
+	<IF COND="![#RESUME] AND [#TEXTE]"> 
+		<meta name="citation_abstract" content="[#TEXTE|removenotes|textebrut|cleanBadChars|replacequotationmark|cuttext(500, true)]" />
+	<ELSEIF COND="[#RESUME] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
+			<meta name="citation_abstract" xml:lang="[#VALUE]" lang="[#VALUE]" content="[#RESUME:#VALUE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" />
+		</LOOP>
+	</IF>
+	<!--[ URLs ]-->
+	<IF COND="[#RESUME]"/>
+		<meta name="citation_abstract_html_url" content="[#CURRENTURL]" />
+	</IF>
+	<LET VAR="fulltext_url"></LET>
+	<IF COND="[#DATEMISENLIGNE] LT today()">
+		<meta name="citation_fulltext_html_url" content="[#CURRENTURL]" />
+		<IF COND="[#OPTIONS.METADONNEESSITE.PDF]">
+			<meta name="citation_pdf_url" content="[#SITEINFOS.URL]/pdf/[#ID]" />
+		<ELSEIF COND="[#ALTERFICHIER]"/>
+			<meta name="citation_pdf_url" content="[#SITEINFOS.URL]/[#ID|makeurlwithfile]" />
+		</IF>
+	</IF>
+  </IF>
+</DEFMACRO>
+/**
+ * @name META_PRISM
+ * @used macros_meta_plus
+ * @description affiche les metas pour un texte ou une image
+ * - lien schema(PRISM)
+ * - prism.url : URL courante
+ * - prism.publicationName : titre du site
+ * - prism.number : 'numero' de la publication
+ * - prism.volume : volume du numéro
+ * - prism.issueName : titre du numéro
+ * - prism.startingPage, prism.endingPage : première et dernière pages de la pagination du document
+ * - prism.publicationDate : date de publication papier (du document, ou à défaut de la publication), ou électronique
+ * - prism.issn : issn
+ * - prism.eIssn : issn électronique
+ * - prism.teaser : 500 premiers caractères du texte
+ * - prism.section : titre de la rubrique dans laquelle est paru le document
+ */
+<DEFMACRO NAME="META_PRISM">
+  <IF COND="[#TYPE] EQ 'article'">
+    <!--[ schema(PRISM) ]-->
+    <link title="schema(PRISM)" rel="schema.prism" href="http://prismstandard.org/namespaces/basic/2.0/"/>
+
+    <!--[ prism.url ]-->
+    <meta name="prism.url" content="[#CURRENTURL]"/>
+
+    <!--[ prism.publicationName ]-->
+    <meta name="prism.publicationName" content="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark]"/>
+
+    <!--[ prism.issn ]-->
+    <IF COND="[#OPTIONS.METADONNEESSITE.ISSN]">
+        <meta name="prism.issn" content="[#OPTIONS.METADONNEESSITE.ISSN]"/>
+    </IF>
+
+    <!--[ prism.eIssn ]-->
+    <IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
+        <meta name="prism.eIssn" content="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]"/>
+    </IF>
+
+    <IF COND="[%IDNUMERO]">
+        <!--[ Numéro : prism.number, prism.volume, prism.issueName ]-->
+        <LOOP NAME="prism_issue" TABLE="publications" WHERE="id = '[%IDNUMERO]'">
+            <IF COND="[#NUMERO]">
+                <meta name="prism.number" content="[#NUMERO|textebrut]"/>
+            </IF>
+            <IF COND="[#VOLUME]">
+                <meta name="prism.volume" content="[#VOLUME|textebrut]"/>
+            </IF>
+            <meta name="prism.issueName" content="[#TITRE|textebrut|cleanBadChars|replacequotationmark]"/>
+        </LOOP>
+    </IF>
+
+    <!--[ prism.startingPage, prism.endingPage ]-->
+    <IF COND="[#PAGINATION]">
+        <LET ARRAY="pages">[#PAGINATION|lexplode('-')]</LET>
+        <meta name="prism.startingPage" content="[#PAGES.0]" />
+        <meta name="prism.endingPage" content="[#PAGES.1]" />
+    </IF>
+
+    <!--[ prism.publicationDate ]-->
+    <IF COND="[#DATEPUBLIPAPIER] AND [#DATEPUBLIPAPIER] NE '0000-00-00' AND [#DATEPUBLIPAPIER] NE NULL">
+        <meta name="prism.publicationDate" content="<?php echo date(DATE_W3C, mysql2TS($context['datepublipapier']));?>"/>
+    <ELSEIF COND="[#DATEMISENLIGNE] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL"/>
+        <meta name="prism.publicationDate" content="<?php echo date(DATE_W3C, mysql2TS($context['datemisenligne']));?>"/>
+    <ELSEIF COND="[#DATEPUBLI] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL"/>
+        <meta name="prism.publicationDate" content="<?php echo date(DATE_W3C, mysql2TS($context['datepubli']));?>"/>
+    </IF>
+
+    <!--[ prism.teaser ]-->
+    <IF COND="[#TEXTE]">
+        <meta name="prism.teaser" content="[#TEXTE|removenotes|textebrut|cleanBadChars|replacequotationmark|cuttext(500,true)]"/>
+    </IF>
+
+    <!--[ prism.section ]-->
+    <IF COND="[%IDRUBRIQUE]">
+        <LOOP NAME="getRubriqueTitle" TABLE="publications" SELECT="titre" WHERE="id='[%IDRUBRIQUE]'">
+            <DO><meta name="prism.section" content="[#TITRE|textebrut|cleanBadChars|replacequotationmark]"/></DO>
+            <ALTERNATIVE>
+                <LOOP NAME="getSousPartieTitle" TABLE="publications" SELECT="titre" WHERE="id='[%IDSOUSPARTIE]'">
+                    <meta name="prism.section" content="[#TITRE|textebrut|cleanBadChars|replacequotationmark]"/>
+                </LOOP>
+            </ALTERNATIVE>
+        </LOOP>
+    </IF>
+  </IF>
+</DEFMACRO>
+<DEFMACRO NAME="META_OG">
+	<LET VAR="ogtitle"><IF COND="[%TITRE_PAGE]">[%TITRE_PAGE|trim()]</IF></LET>
+	<LET VAR="ogtitle">[#OGTITLE|textebrut|cleanBadChars|replacequotationmark|cuttext(70, true)]</LET>
+	<meta name="twitter:card" content="summary" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="[#CURRENTURL]" />
+	<meta property="og:title" content="[#OGTITLE]" />
+	<IF COND="[#TEXTE]">
+		<meta property="og:description" content="[#TEXTE|textebrut|cleanBadChars|replacequotationmark|cuttext(200, true)]" />
+	<ELSEIF COND="[#INTRODUCTION]" />
+		<meta property="og:description" content="[#INTRODUCTION|textebrut|cleanBadChars|replacequotationmark|cuttext(200, true)]" />
+	</IF>
+	<LOOP NAME="ogimage" TABLE="fichiers" WHERE="type IN ('couverture1','imageaccroche') AND idparent = '[#ID]'" ORDER="type,rank" LIMIT="1">
+		<DO>
+         <IF COND="[#VIGNETTE]">
+             <LET VAR="ogimage" GLOBAL="1">[#SITEURL]/[#VIGNETTE]</LET>
+         <ELSEIF COND="[#DOCUMENT]">
+             <LET VAR="ogimage" GLOBAL="1">[#SITEURL]/[#DOCUMENT|vignette(500)]</LET>
+         </IF>
+		</DO>
+	</LOOP>
+	<IF COND="[%OGIMAGE]">
+	    <meta property="og:image" content="[%OGIMAGE]" />
+	</IF>
+</DEFMACRO>
+/**
+ * @name META_JSON_LD
+ * @used macros_meta_plus
+ * @description affiche les metas au format json_ld pour un numero ou un article
+ * - lien schema(schema.org)
+ * - @type de publication :  numéro de périodique
+ * - issueNumber : numéro de la publication
+ * - headline : titre du numéro               
+ * - datePublished : date de publication (mise en ligne),
+ * - name : nom de la revue,
+ * - issn : issn
+ * - publisher : responsable de la publication
+ * ---------
+ * - isPartOf : entité parente de l'article
+ * - description : résumés
+ * - sameAs : identifiant(s)
+ * - licence : type de licence
+ * - keywords : mots-clés
+ * - pagination : page de début et page de fin si disponible
+ * - datePublished : date de publication (mise en ligne),
+ * - dateModified : date de la dernière modification, 
+ * - headline : thème de l'article
+ * - inLanguage : langue de l'article,
+ * - author : auteur(s)
+	 - name : nom complet
+	 - givenName : prénom
+	 - familyName : nom de famille,
+	 - sameAs : identifiant(s),
+	 - affiliation : affiliation
+ * - mainEntityOfPage : url de la page
+ * - publisher : responsable de la publication
+	 - name : nom
+	 - url : url
+	 - logo : url de l'image
+*/
+<DEFMACRO NAME="META_JSON_LD">
+<IF COND="[#TYPE] EQ 'article' OR [#TYPE] EQ 'numero'">
+  <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@graph": [
+            {
+                "@id": "#issue",
+                "@type": [
+                    "PublicationIssue",
+                    "Periodical"
+                ],
+                <IF COND="[#TYPE] EQ 'article'"><LOOP NAME="issue_number" SELECT="numero,titre" TABLE="relations,entities,publications,types" WHERE="relations.id1=entities.id AND entities.id=publications.identity" WHERE="entities.idtype=types.id AND types.type='numero' AND relations.id2='[#ID]'"><BEFORE>"issueNumber":</BEFORE><DO> "[#NUMERO]",
+                "headline": "[#TITRE|textebrut]<IF COND="[#SOUSTITRE]"> : [#SOUSTITRE|textebrut]</IF>",</DO></LOOP>
+                <ELSE />"issueNumber": "[#NUMERO]",
+                "headline": "[#TITRE|textebrut]<IF COND="[#SOUSTITRE]"> : [#SOUSTITRE|textebrut]</IF>",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "[#CURRENTURL]"
+                },
+               
+                 </IF>
+
+                "datePublished": "[#DATEMISENLIGNE]",
+                "name": "[#OPTIONS.METADONNEESSITE.TITRESITE]",
+                "issn": [
+                    <IF COND="[#OPTIONS.METADONNEESSITE.ISSN]">"[#OPTIONS.METADONNEESSITE.ISSN]", </IF> "[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]"
+                ],
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "[#OPTIONS.METADONNEESSITE.EDITEUR]",
+                    "url" : "[#SITEURL]"
+                }
+            }<IF COND="[#TYPE] EQ 'article'">,
+            {
+                "@type": "ScholarlyArticle",
+                "isPartOf": "#issue",
+                "description": "[#RESUME|textebrut]",
+                "sameAs": "https://dx.doi.org/[%PREFIXEDOI][#ID]",
+                "licence": "CC BY-ND 2.0",
+                <LOOP NAME="meta_jsonld_motscles" TABLE="relations, entries, entrytypes" WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes' "><BEFORE>"keywords": "</BEFORE><DOFIRST>[#G_NAME]</DOFIRST><DO>,[#G_NAME]</DO><AFTER>",</AFTER></LOOP>
+
+                <IF COND="[#PAGINATION|strpos('-')]">"pagination": "[#PAGINATION]",
+                <ELSEIF COND="[#PAGINATION]" > 
+                "pageStart": "[#PAGINATION]",
+                 </IF>
+
+                "datePublished": "[#DATEMISENLIGNE]",
+                <IF COND="[#MODIFICATIONDATE] GT [#DATEMISENLIGNE]">"dateModified": "[#MODIFICATIONDATE|formateddate("%Y-%m-%d")]",</IF> 
+                "headline": "[#TITRE|textebrut]<IF COND="[#SOUSTITRE]"> : [#SOUSTITRE|textebrut]</IF>",
+                "inLanguage": "[%PAGELANG]",
+                "author" : [
+                <LOOP NAME="auteurs" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" ORDER="rank">
+                <DO>    {
+                        "@type" : "Person",
+                        "name" : "[#PRENOM] [#NOMFAMILLE]",
+                        "givenName" : "[#PRENOM]",
+                        "familyName" : "[#NOMFAMILLE]",
+                        <IF COND="[#DESCRIPTION]">"affiliation": "[#DESCRIPTION|textebrut|trim]"</IF>
+
+                        <IF COND="[#COURRIEL]">,"email": "[#COURRIEL]"</IF>
+
+                    }<IF COND="[#COUNT] < [#NBRESULTS]">,</IF>
+                 </DO>
+                </LOOP>
+
+                ],
+                <LOOP NAME="traducteurs" TABLE="auteurs" WHERE="type='traducteur'" WHERE="iddocument='[#ID]'" ORDER="rank">
+                <BEFORE>"translator": [</BEFORE>
+                <DO>    
+                    {
+                        "@type" : "Person",
+                        "name" : "[#PRENOM] [#NOMFAMILLE]",
+                        "givenName" : "[#PRENOM]",
+                        "familyName" : "[#NOMFAMILLE]",
+                        <IF COND="[#DESCRIPTION]">"affiliation": "[#DESCRIPTION|textebrut|trim]"</IF>
+                        <IF COND="[#COURRIEL]">,"email": "[#COURRIEL]"</IF>
+
+                    }<IF COND="[#COUNT] < [#NBRESULTS]">,</IF>
+                 </DO>
+                <AFTER>
+
+                ],</AFTER>
+                </LOOP>
+                <LOOP NAME="editeurs" TABLE="auteurs" WHERE="type='editeurscientifique'" WHERE="iddocument='[#ID]'" ORDER="rank">
+                <BEFORE>"editor": [</BEFORE> 
+                <DO>    
+                    {
+                        "@type" : "Person",
+                        "name" : "[#PRENOM] [#NOMFAMILLE]",
+                        "givenName" : "[#PRENOM]",
+                        "familyName" : "[#NOMFAMILLE]",
+                        <IF COND="[#DESCRIPTION]">"affiliation": "[#DESCRIPTION|textebrut|trim]"</IF>
+
+                        <IF COND="[#COURRIEL]">,"email": "[#COURRIEL]"</IF>
+
+                    }<IF COND="[#COUNT] < [#NBRESULTS]">,</IF>
+                 </DO>
+                 <AFTER>
+
+                ],</AFTER>
+                </LOOP> 
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "[#CURRENTURL]"
+                }
+            }</IF> 
+        ]
+    }
+  </script>
+</IF>
+</DEFMACRO>
+

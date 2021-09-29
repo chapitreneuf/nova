@@ -4,9 +4,15 @@
  * Macro principale appelée par les templates pour consituer le head.
  */
 <DEFMACRO NAME="HEAD_MAIN">
+	<USE MACROFILE="macros_metaplus.html" />
 	<MACRO NAME="HEAD_DEBUT" />
 	<title>[%TITRE_PAGE|trim()]</title>
 	<MACRO NAME="HEAD_METADONNEES" />
+	<MACRO NAME="META_DUBLIN_CORE_PLUS" />
+	<MACRO NAME="META_GOOGLE_SCHOLAR" />
+	<MACRO NAME="META_PRISM" />
+	<MACRO NAME="META_OG" />
+	<MACRO NAME="META_JSON_LD" />
 	<MACRO NAME="HEAD_INSERT_CSS" />
 	<MACRO NAME="HEAD_INSERT_RSS" />
 	<MACRO NAME="HEAD_INSERT_JS" />

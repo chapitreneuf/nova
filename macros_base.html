@@ -41,6 +41,9 @@
 		[#OPTIONS.METADONNEESSITE.TITRESITE]<IF COND="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]"> &ndash; [#OPTIONS.METADONNEESSITE.SOUSTITRESITE]</IF>
 	</LET>
 
+	<!--[ Fix de #CURRENTURL (protocole) ]-->
+	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')]</LET>
+
 	<!--[ ID des parents de l'entité courante ]-->
 	<LOOP NAME="base_init_liste_parents" 
 		TABLE="publications, relations" 
@@ -537,4 +540,125 @@
 		<span class="twitter-error">[@TWITTER_ALT]</span>
 	</p>
 	<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
+</DEFMACRO>
+
+/**
+ * Concaténation d'un titre et d'un sous-titre.
+ * @param {string} titre - Titre.
+ * @param {string} [soustitre] - Sous-titre.
+ * @param {string} [separator] - Séparateur. Défaut : ". ".
+ */
+<DEFFUNC NAME="BASE_CONCAT_TITLES" REQUIRED="titre" OPTIONAL="soustitre, separator">
+	<IF COND="![#SEPARATOR]">
+		<LET VAR="separator">. </LET>
+	</IF>
+	<IF COND="![#TITRE] OR ![#SOUSTITRE]">
+		[#TITRE][#SOUSTITRE]
+	<ELSEIF COND="[#TITRE|textebrut|trim] LIKE /[\….;:!?,]$/">
+		[#TITRE] [#SOUSTITRE]
+	<ELSE/>
+		[#TITRE]. [#SOUSTITRE]
+	</IF>
+</DEFFUNC>
+/**
+ * Générer une description d'article pour les métadonnées.
+ */
+<DEFMACRO NAME="BASE_META_DESCRIPTION">
+	<IF COND="[#RESUME] AND [#RESUME:#LANGUE]">
+		[#RESUME:#LANGUE|textebrut|cleanBadChars|replacequotationmark]
+	<ELSEIF COND="[#INTRODUCTION] AND [#INTRODUCTION:#LANGUE]" />
+		[#INTRODUCTION:#LANGUE|textebrut|cleanBadChars|replacequotationmark]
+	<ELSEIF COND="[#RESUME] AND [#RESUME:#MAINLANG]">
+		[#RESUME:#MAINLANG|textebrut|cleanBadChars|replacequotationmark]
+	<ELSEIF COND="[#INTRODUCTION] AND [#INTRODUCTION:#MAINLANG]" />
+		[#INTRODUCTION:#MAINLANG|textebrut|cleanBadChars|replacequotationmark]
+	<ELSEIF COND="[#TEXTE]" />
+		[#TEXTE|textebrut|cleanBadChars|replacequotationmark|cuttext(500, true)]
+	<ELSEIF COND="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE]" />
+		[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark|trim]
+	</IF>
+</DEFMACRO>
+
+/**
+ * Afficher les métadonnées COinS de l'article en cours.
+ */
+<DEFMACRO NAME="BASE_COINS">
+	<LET VAR="entity_url">[#SITEINFOS.URL]<IF COND="[#ID]">/[#ID|makeurlwithid]</IF></LET>
+
+	<LET ARRAY="coins"></LET>
+
+	<LET ARRAY="coins.atitle"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#TITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#SOUSTITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
+	<LET ARRAY="coins.jtitle"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
+	<LET ARRAY="coins.date">[#DATEPUBLI|formateddate('%Y/%m/%d')]</LET>
+
+	<LET ARRAY="coins.issue">
+		<LOOP NAME="base_coins_numero" TABLE="publications, relations" SELECT="id, numero" WHERE="id2 = '[#ID]' AND id1 = publications.identity AND type = 'numero' AND numero">
+			[#NUMERO]
+		</LOOP>
+	</LET>
+
+	<IF COND="[#PAGINATION]">
+		<LET ARRAY="coins.pages">[#PAGINATION]</LET>
+		<LET ARRAY="pagination_part">[#PAGINATION|trim|lexplode('-')]</LET>
+		<LET ARRAY="coins.spage">[#PAGINATION_PART.0]</LET>
+		<IF COND="[#PAGINATION_PART.1]">
+			<LET ARRAY="coins.epage">[#PAGINATION_PART.1]</LET>
+		</IF>
+	</IF>
+
+	<IF COND="[#NUMERODOCUMENT]">
+		<LET ARRAY="coins.artnum">[#NUMERODOCUMENT]</LET>
+	</IF>
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN]">
+		<LET ARRAY="coins.issn">[#OPTIONS.METADONNEESSITE.ISSN]</LET>
+	<ELSEIF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
+		<LET ARRAY="coins.issn">[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]</LET>
+	</IF>
+	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
+		<LET ARRAY="coins.eissn">[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]</LET>
+	</IF>
+	<IF COND="[#ISBN]">
+		<LET ARRAY="coins.isbn">[#ISBN]</LET>
+	</IF>
+
+	<IF COND="[#CLASS] EQ 'publications'">
+		<LET ARRAY="coins.genre">issue</LET>
+	<ELSEIF COND="[#CLASS] EQ 'textes'">
+		<LET ARRAY="coins.genre">article</LET>
+	</IF>
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
+		<LET ARRAY="coins.pub">[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark|trim]</LET>
+	</IF>
+	
+	<IF COND="[#LANGUE]">
+		<LET ARRAY="coins.language">[#LANGUE]</LET>
+	<ELSE/>
+		<LET ARRAY="coins.language">[#MAINLANG]</LET>
+	</IF>
+
+	<LET ARRAY="coins.description"><MACRO NAME="BASE_META_DESCRIPTION" /></LET>
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]">
+		<LET ARRAY="coins.rights">[#OPTIONS.METADONNEESSITE.DROITSAUTEUR|textebrut|cleanBadChars|replacequotationmark|trim]</LET>
+	</IF>
+
+	<LET VAR="coins_metadata">
+		<LOOP NAME="foreach" ARRAY="[#COINS]">
+			<IF COND="[#KEY] AND [#VALUE]">
+				&amp;rft.[#KEY]=[#VALUE|rawurlencode]
+			</IF>
+		</LOOP>
+
+		<LOOP NAME="base_coins_authors" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" SELECT="prenom, nomfamille" ORDER="degree, rank">
+			&amp;rft.au=[#NOMFAMILLE|textebrut|cleanBadChars|replacequotationmark|trim|rawurlencode],+[#PRENOM|textebrut|cleanBadChars|replacequotationmark|trim|rawurlencode]
+		</LOOP>
+	</LET>
+
+	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
+		<LET VAR="coins_doi">&amp;rft_id=info:doi/[%PREFIXEDOI][#ID]</LET>
+	</IF>
+
+	<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft_id=[#ENTITY_URL][#COINS_DOI][#COINS_METADATA|reg_replace('/\r|\n/', '')]"></span>
 </DEFMACRO>

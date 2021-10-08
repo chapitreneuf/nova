@@ -3,9 +3,7 @@
 /**
  * Macro principale appelée par les templates pour consituer le head.
  */
-<DEFMACRO NAME="HEAD_MAIN">
-	<MACRO NAME="HEAD_DEBUT" />
-	<title>[%TITRE_PAGE|trim()]</title>
+<DEFMACRO NAME="HEAD_MAIN">	
 	<MACRO NAME="HEAD_METADONNEES" />
 	<MACRO NAME="HEAD_INSERT_CSS" />
 	<MACRO NAME="HEAD_INSERT_RSS" />
@@ -13,34 +11,76 @@
 </DEFMACRO>
 
 /**
- * Charset et autres bidules.
- */
-<DEFMACRO NAME="HEAD_DEBUT">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-</DEFMACRO>
-
-/**
  * Métadonnées.
  */
 <DEFMACRO NAME="HEAD_METADONNEES">
+	<MACRO NAME="HEAD_META_INIT"/>
+	<MACRO NAME="HEAD_META_HTML"/>
+	<MACRO NAME="HEAD_META_DC"/>
+	<IF COND="[#CLASS] EQ 'textes'">
+		<MACRO NAME="HEAD_META_HWP"/>
+	</IF>
+	<MACRO NAME="HEAD_META_OG"/>
+	<MACRO NAME="HEAD_META_TWITTER"/>
+</DEFMACRO>
+
+/**
+ * Initialisation de variables pour constituer les métadonnées.
+ */
+<DEFMACRO NAME="HEAD_META_INIT">
+		<!--[ Variables utiles ]-->
+		<LET VAR="titre_complet"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#TITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#SOUSTITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
+		<LET VAR="titresite_complet"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
+	
+		<!--[ Dates ]-->
+		<LET VAR="publication_date"></LET>
+		<LET VAR="online_date"></LET>
+		<LET VAR="modification_date"></LET>
+	
+		<IF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" >
+			<LET VAR="publication_date">[#DATEMISENLIGNE]</LET>
+			<LET VAR="online_date">[#DATEMISENLIGNE]</LET>
+			<LET VAR="modification_date">[#DATEMISENLIGNE]</LET>
+		</IF>
+		<IF COND="[#DATEPUBLI|isadate] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL" >
+			<LET VAR="publication_date">[#DATEPUBLI]</LET>
+			<LET VAR="online_date">[#DATEPUBLI]</LET>
+		</IF>
+		<IF COND="[#DATEPUBLIPAPIER|isadate] AND [#DATEPUBLIPAPIER] NE '0000-00-00' AND [#DATEPUBLIPAPIER] NE NULL">
+			<LET VAR="publication_date">[#DATEPUBLIPAPIER]</LET>
+		</IF>
+		<IF COND="[#MODIFICATIONDATE|isadate] AND [#MODIFICATIONDATE] NE '0000-00-00' AND [#MODIFICATIONDATE] NE NULL">
+			<LET VAR="modification_date">[#MODIFICATIONDATE]</LET>
+		</IF>
+</DEFMACRO>
+
+/**
+ * HTML meta tags.
+ */
+<DEFMACRO NAME="HEAD_META_HTML">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>[%TITRE_PAGE|trim()]</title>
+
 	<meta name="generator" content="Lodel [#VERSION]" />
 
 	<IF COND="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE]">
-		<meta name="description" content="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark]" />
+		<meta name="description" content="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
 
-	<meta name="URL" content="[#CURRENTURL]" />
+	<meta name="URL" content="[#CURRENTURL_FIXED]" />
 
-	<LOOP NAME="head_metadonnees_auteurs" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" ORDER="degree, rank">
-		<meta name="author" content="[#NOMFAMILLE], [#PRENOM]" />
-	</LOOP>
+	<FUNC NAME="HEAD_META_AUTHORS" NAME_VALUE="author" />
 
-	<LOOP NAME="head_metadonnees_motscles" TABLE="relations, entries" WHERE="id1 = '[#ID]' AND id2 = entries.id">
-		<meta name="keywords" content="[#G_NAME]" />
-	</LOOP>
+	<FUNC NAME="HEAD_META_KEYWORDS" NAME_VALUE="keywords" />
+</DEFMACRO>
 
+/**
+ * Metadonnées Dublin Core.
+ */
+<DEFMACRO NAME="HEAD_META_DC">
 	<!--[ schema.DC ]-->
 	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
 
@@ -52,25 +92,24 @@
 	</IF>
 	<IF COND="[#ML_DESCRIPTION] AND [#ML_DESCRIPTION] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-			<meta name="DC.description" xml:lang="[#VALUE]" lang="[#VALUE]" content="[#ML_DESCRIPTION:#VALUE|textebrut|replacequotationmark]" />
+			<meta name="DC.description" xml:lang="[#VALUE]" lang="[#VALUE]" content="[#ML_DESCRIPTION:#VALUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
 		</LOOP>
 	<ELSEIF COND="[#TEXTE]" />
-		<meta name="DC.description" xml:lang="[#VALUE]" lang="fr" content="[(#TEXTE|textebrut|replacequotationmark|couper(1500))]" />
+		<meta name="DC.description" xml:lang="[#LANGUE|defaultvalue([#MAINLANG])]" lang="[#LANGUE|defaultvalue([#MAINLANG])]" content="[#TEXTE|textebrut|cleanBadChars|replacequotationmark|cuttext(500, true)]" />
 	<ELSEIF COND="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE]" />
-		<meta name="DC.description" xml:lang="[#VALUE]" lang="fr" content="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark]" />
+		<meta name="DC.description" xml:lang="[#LANGUE|defaultvalue([#MAINLANG])]" lang="[#LANGUE|defaultvalue([#MAINLANG])]" content="[#OPTIONS.METADONNEESSITE.DESCRIPTIONSITE|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
 
 	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
-		<meta name="DC.publisher" content="[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark]" />
+		<meta name="DC.publisher" content="[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
 
 	<IF COND="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR]">
-		<meta name="DC.rights" content="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR|textebrut|cleanBadChars|replacequotationmark]" />
+		<meta name="DC.rights" content="[#OPTIONS.METADONNEESSITE.DROITSAUTEUR|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
 
 	<meta name="DC.source" content="[#SITEINFOS.URL]" />
 
-	<meta name="DC.type" content="text" />
 	<IF COND="[#CLASS] EQ 'publications'">
 		<meta name="DC.type" content="collection" />
 	<ELSEIF COND="[#CLASS] EQ 'textes'" />
@@ -80,29 +119,174 @@
 	<meta name="DC.format" content="text/html" />
 	<meta name="DC.language" scheme="RFC3066" content="[%PAGELANG]" />
 
-	<meta name="DC.identifier" scheme="DCTERMS.URI" content="[#CURRENTURL]" />
+	<meta name="DC.identifier" scheme="DCTERMS.URI" content="[#CURRENTURL_FIXED]" />
 	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
-		<meta name="DC.identifier" scheme="DCTERMS.URI" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]" />
-  </IF>
-
-	<IF COND="[#TITRE]">
-		<meta name="DC.title" content="[#TITRE|textebrut|replacequotationmark] [#SOUSTITRE|replacequotationmark|textebrut]" />
+		<meta name="DC.identifier" scheme="DCTERMS.URI" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
+	</IF>
+	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
+		<meta name="DC.identifier" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
 	</IF>
 
-	<LOOP NAME="head_metadonnees_dc_subject" TABLE="relations, entries" WHERE="id1 = '[#ID]' AND id2 = entries.id">
-		<meta name="DC.subject" content="[#G_NAME]" />
-	</LOOP>
+	<IF COND="[#TITRE_COMPLET]">
+		<meta name="DC.title" content="[#TITRE_COMPLET]" />
+	</IF>
 
-	<LOOP NAME="head_metadonnees_dc_creator" TABLE="auteurs" WHERE="type='auteur'"  WHERE="iddocument='[#ID]'" ORDER="degree, rank">
-		<meta name="DC.creator" content="[#NOMFAMILLE], [#PRENOM]" />
-	</LOOP>
+	<FUNC NAME="HEAD_META_AUTHORS" NAME_VALUE="DC.creator" />
 
-	<IF COND="[#DATEPUBLI]">
+	<FUNC NAME="HEAD_META_KEYWORDS" NAME_VALUE="DC.subject" />
+
+	<IF COND="[#DATEPUBLI|isadate] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL">
 		<meta name="DC.date" scheme="W3CDTF" content="[#DATEPUBLI]" />
-	<ELSEIF COND="[#DATE]" />
-		<meta name="DC.date" scheme="W3CDTF" content="[#DATE]" />
+	<ELSEIF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" />
+		<meta name="DC.date" scheme="W3CDTF" content="[#DATEMISENLIGNE]" />
 	</IF>
 </DEFMACRO>
+
+/**
+ * Métadonnées Highwire Press (Google Scholar).
+ */
+<DEFMACRO NAME="HEAD_META_HWP">
+	<IF COND="[#TITRE_COMPLET]">
+		<meta name="citation_title" content="[#TITRE_COMPLET]" />
+	</IF>
+
+	<IF COND="[#PUBLICATION_DATE]">
+		<meta name="citation_publication_date" content="[#PUBLICATION_DATE|formateddate('%Y/%m/%d')]" />
+	</IF>
+	
+	<IF COND="[#ONLINE_DATE]">
+		<meta name="citation_online_date" content="[#ONLINE_DATE|formateddate('%Y/%m/%d')]" />
+	</IF>
+
+	<FUNC NAME="HEAD_META_AUTHORS" NAME_VALUE="citation_author" />
+
+	<IF COND="[#PAGINATION]">
+		<LET ARRAY="pagination_part">[#PAGINATION|trim|lexplode('-')]</LET>
+		<meta name="citation_firstpage" content="[#PAGINATION_PART.0]" />
+		<IF COND="[#PAGINATION_PART.1]">
+			<meta name="citation_lastpage" content="[#PAGINATION_PART.1]" />
+		</IF>
+	</IF>
+
+	<IF COND="[#ALTERFICHIER]"/>
+		<meta name="citation_pdf_url" content="[#ID|makeurlwithid|query_string('file', '1')]" />
+	<ELSEIF COND="[#PDFGEN_URL] AND [#STATUS] GT 0"/>
+		<meta name="citation_pdf_url" content="[#PDFGEN_URL]" />
+	</IF>
+
+	<meta name="citation_journal_title" content="[#TITRESITE_COMPLET]" />
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]" />
+		<meta name="citation_issn" content="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]" />
+	</IF>
+
+	<!--[ Metadonnées du numéro ]-->
+	<LOOP NAME="head_meta_hwp_issue" TABLE="publications" WHERE="id IN ('[#ID]', '[%IDNUMERO]')" SELECT="numero, isbn">
+		<IF COND="[#NUMERO]">
+			<meta name="citation_issue" content="[#NUMERO]" />
+		</IF>
+		<IF COND="[#ISBN]">
+			<meta name="citation_isbn" content="[#ISBN]" />
+		</IF>
+	</LOOP>
+
+	<!--[ Les métadonnées qui suivent font partie des specs Highwire Press mais ne sont pas utilisées par Google Scholar.
+		https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
+		https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar
+	]-->
+	
+	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
+		<meta name="citation_doi" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
+	</IF>
+
+	<meta name="citation_fulltext_html_url" content="[#CURRENTURL_FIXED]" />
+
+	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
+		<meta name="citation_publisher" content="[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark|trim]" />
+	</IF>
+
+	<meta name="citation_language" content="[%PAGELANG]" />
+
+	<FUNC NAME="HEAD_META_KEYWORDS" NAME_VALUE="citation_keywords" />
+</DEFMACRO>
+
+/**
+ * Métadonnées OpenGraph.
+ */
+<DEFMACRO NAME="HEAD_META_OG">
+	<meta property="og:title" content="[%TITRE_PAGE|textebrut|cleanBadChars|replacequotationmark|trim]" />
+
+	<IF COND="[#CLASS] EQ 'textes'">
+		<meta property="og:type" content="article" />
+
+		<IF COND="[#PUBLICATION_DATE]">
+			<meta property="article:published_time" content="[#PUBLICATION_DATE]" />
+		</IF>
+
+		<IF COND="[#MODIFICATION_DATE]">
+			<meta property="article:modified_time" content="[#MODIFICATION_DATE]" />
+		</IF>
+
+		<FUNC NAME="HEAD_META_AUTHORS" NAME_KEY="property" NAME_VALUE="article:author" />
+
+		<FUNC NAME="HEAD_META_KEYWORDS" NAME_KEY="property" NAME_VALUE="article:tag" />
+	<ELSE/>
+		<meta property="og:type" content="website" />
+	</IF>
+
+	<LOOP NAME="head_meta_og_image" TABLE="fichiers" WHERE="type IN ('couverture1','imageaccroche') AND idparent = '[#ID]' AND (vignette OR document)" ORDER="rank" LIMIT="1">
+		<IF COND="[#VIGNETTE]">
+			<meta property="og:image" content="[#SITEINFOS.URL]/[#VIGNETTE]" />
+		<ELSEIF COND="[#DOCUMENT]">
+			<meta property="og:image" content="[#SITEINFOS.URL]/[#DOCUMENT|vignette(500)]" />
+		</IF>
+	</LOOP>
+
+	<meta property="og:url" content="[#CURRENTURL_FIXED]" />
+
+	<LET VAR="meta_description"><MACRO NAME="BASE_META_DESCRIPTION" /></LET>
+	<IF COND="[#META_DESCRIPTION]">
+		<meta property="og:description" content="[#META_DESCRIPTION]" />
+	</IF>
+
+	<meta property="og:site_name" content="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" />
+</DEFMACRO>
+
+/**
+ * Métadonnées Twitter.
+ */
+<DEFMACRO NAME="HEAD_META_TWITTER">
+	<meta name="twitter:card" content="summary" />
+</DEFMACRO>
+
+/**
+ * Affichage des metas auteurs.
+ * @param {string} name_value - Attribut name des balises meta.
+ * @param {string} [name_key] - Nom de l'attribut. Defaut : "name".
+ */
+<DEFFUNC NAME="HEAD_META_AUTHORS" REQUIRED="name_value" OPTIONAL="name_key" >
+	<IF COND="![#NAME_KEY]">
+		<LET VAR="name_key">name</LET>
+	</IF>
+	<LOOP NAME="head_meta_authors" TABLE="auteurs" WHERE="type='auteur'" WHERE="iddocument='[#ID]'" SELECT="prenom, nomfamille" ORDER="degree, rank">
+		<LET VAR="separator"><IF COND="[#PRENOM] AND [#NOMFAMILLE]">, </IF></LET>
+		<meta [#NAME_KEY]="[#NAME_VALUE]" content="[#NOMFAMILLE|textebrut|cleanBadChars|replacequotationmark|trim][#SEPARATOR][#PRENOM|textebrut|cleanBadChars|replacequotationmark|trim]" />
+	</LOOP>
+</DEFFUNC>
+
+/**
+ * Affichage des metas keywords.
+ * @param {string} name_value - Attribut name des balises meta.
+ * @param {string} [name_key] - Nom de l'attribut. Defaut : "name".
+ */
+ <DEFFUNC NAME="HEAD_META_KEYWORDS" REQUIRED="name_value" OPTIONAL="name_key" >
+	<IF COND="![#NAME_KEY]">
+		<LET VAR="name_key">name</LET>
+	</IF>
+	<LOOP NAME="head_meta_keywords" TABLE="relations, entries" WHERE="id1 = '[#ID]' AND id2 = entries.id">
+		<meta [#NAME_KEY]="[#NAME_VALUE]" content="[#G_NAME|textebrut|cleanBadChars|replacequotationmark|trim]" />
+	</LOOP>
+</DEFFUNC>
 
 /**
  * Insertion CSS.

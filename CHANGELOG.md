@@ -1,5 +1,14 @@
 # Changelog Nova
 
+## 1.6.0 (08/10/21)
+
+* Amélioration de l'import des pages web dans Zotero.
+* Ajout des métadonnées OpenGraph et Twitter.
+* Ajout des métadonnées Highwire Press (Google Scholar) pour les articles.
+* Ajout des métadonnées COinS pour les sommaires des publications.
+* Correction du filtrage des métadonnées dans le head.
+* Correction du protocole :443 encore présent dans certaines URL.
+
 ## 1.5.2 (09/07/21)
 
 * Correction de la taille des logos partenaires.

@@ -1,3 +1,8 @@
+function onImagesLoaded(fn) {
+	// https://stackoverflow.com/a/60949881
+	Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(fn);
+}
+
 window.fnLoader = {
 	// Système de chargement des fonctions
 	load: function () {
@@ -191,10 +196,17 @@ window.fnLoader = {
 				});
 			};
 
-			// Run when page is ready + on viwport resize
-			$(setSidenotesPosition);
-			$(window).resize(setSidenotesPosition);
-			$(document).on("zoomLevelChanged", setSidenotesPosition);
+			var waitAndRun = function() {
+				window.setTimeout(function() {
+					setSidenotesPosition();
+				}, 100);
+			};
+
+			// Run when page is ready + when all images are loaded + on viewport resize
+			$(waitAndRun);
+			onImagesLoaded(waitAndRun);
+			$(window).resize(waitAndRun);
+			$(document).on("zoomLevelChanged", waitAndRun);
 		},
 
 		// Zoom

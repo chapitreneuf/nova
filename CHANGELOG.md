@@ -1,5 +1,11 @@
 # Changelog Nova
 
+## 1.6.1 (10/02/22)
+
+* Correction du positionnement des notes marginales (#100).
+* Corrections mineures de styles.
+* Correction d'un paramètre dans PUBLICATION_LI_DOCUMENT.
+
 ## 1.6.0 (08/10/21)
 
 * Amélioration de l'import des pages web dans Zotero.

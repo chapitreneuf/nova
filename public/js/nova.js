@@ -156,13 +156,8 @@ window.fnLoader = {
 				var minTop = 0;
 				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 20;
 
-				var $more = $("#sidenotes .notesbaspage--more");
-				$more.hide();
-
-				var hideThisAndNext = function($el, href) {
+				var hideThisAndNext = function($el) {
 					$el.add($el.nextAll()).hide();
-					$more.find("a").attr("href", href);
-					$more.show().offset({ top: top });
 				};
 
 				$("#sidenotes > p:not(.notesbaspage--more)").each(function () {
@@ -193,7 +188,7 @@ window.fnLoader = {
 							// Vérifier qu'il n'y a pas la place au dessus
 							var $prev = $(this).prev("p");
 							if ($prev.length !== 1) {
-								hideThisAndNext($(this), href);
+								hideThisAndNext($(this));
 								return false;
 							}
 
@@ -201,7 +196,7 @@ window.fnLoader = {
 							var emptyY = $prev.offset().top + $prev.height() + margin;
 
 							if (requiredTop <= emptyY) {
-								hideThisAndNext($(this), href);
+								hideThisAndNext($(this));
 								return false;
 							}
 

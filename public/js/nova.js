@@ -205,7 +205,7 @@ window.fnLoader = {
 			// Run when page is ready + when all images are loaded + on viewport resize
 			$(waitAndRun);
 			onImagesLoaded(waitAndRun);
-			$(window).resize(waitAndRun);
+			$(window).on("resize", waitAndRun);
 			$(document).on("zoomLevelChanged", waitAndRun);
 		},
 

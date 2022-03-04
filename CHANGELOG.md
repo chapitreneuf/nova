@@ -1,5 +1,10 @@
 # Changelog Nova
 
+## 1.6.2 (04/03/22)
+
+* Amélioration du positionnement des notes marginales (#89).
+* Suppression du lien "Notes suivantes" dans les notes marginales.
+
 ## 1.6.1 (10/02/22)
 
 * Correction du positionnement des notes marginales (#100).

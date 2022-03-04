@@ -154,11 +154,16 @@ window.fnLoader = {
 
 				var margin = 10;
 				var minTop = 0;
-				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 100;
+				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 20;
 
-				// Lien "notes suivantes"
 				var $more = $("#sidenotes .notesbaspage--more");
 				$more.hide();
+
+				var hideThisAndNext = function($el, href) {
+					$el.add($el.nextAll()).hide();
+					$more.find("a").attr("href", href);
+					$more.show().offset({ top: top });
+				};
 
 				$("#sidenotes > p:not(.notesbaspage--more)").each(function () {
 					try {
@@ -180,15 +185,32 @@ window.fnLoader = {
 						if (top <= minTop) {
 							top = minTop;
 						}
-						$(this).offset({ top: top });
-						var bottom = top + $(this).height();
-						minTop = bottom + margin;
+						$(this).offset({ top: top }); // afficher pour lire height
+						var height = $(this).height();
+						var bottom = top + height;
+
 						if (bottom > maxBottom) {
-							$(this).add($(this).nextAll()).hide();
-							$more.find("a").attr("href", href);
-							$more.show().offset({ top: top });
-							return false;
+							// Vérifier qu'il n'y a pas la place au dessus
+							var $prev = $(this).prev("p");
+							if ($prev.length !== 1) {
+								hideThisAndNext($(this), href);
+								return false;
+							}
+
+							var requiredTop = maxBottom - height;
+							var emptyY = $prev.offset().top + $prev.height() + margin;
+
+							if (requiredTop <= emptyY) {
+								hideThisAndNext($(this), href);
+								return false;
+							}
+
+							$(this).offset({ top: requiredTop });
+							bottom = requiredTop + height;
 						}
+
+						minTop = bottom + margin;
+						
 					} catch (error) {
 						$(this).hide();
 						console.error(error, $(this));

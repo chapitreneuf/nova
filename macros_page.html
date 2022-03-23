@@ -32,6 +32,7 @@
 		<MACRO NAME="HEAD_MAIN" />
 	</head>
 	<body class="[%BODY_CLASS]" data-sitelang="[#SITELANG]">
+		<MACRO NAME="PAGE_DEV_MODE_WARNING"/>
 		<MACRO NAME="HEADER_MAIN" />
 		<div id="main-container" class="main-container container">
 			<div class="row">
@@ -57,4 +58,13 @@
 			<MACRO NAME="FOOTER_MAIN" />
 		</body>
 	</html>
+</DEFMACRO>
+
+/**
+ * Avertissement pour les rédacteurs si DEV_MODE est activé.
+ */
+<DEFMACRO NAME="PAGE_DEV_MODE_WARNING">
+	<IF COND="[%DEV_MODE] AND [#LODELUSER.RIGHTS] GT 5">
+		<div class="devmode-warning" style="padding: 5px 10px; font-size: 12px; background-color: #a9e1fc; border-bottom: 1px solid #8cc9e5;">Ce site est actuellement en mode de développement et présente des performances réduites. Lors de la mise en production du site n'oubliez pas de vider la variable DEV_MODE dans le template macros_custom.html. <br>Ce message n'est visible que pour les utilisateurs identifiés.</div>
+	</IF>
 </DEFMACRO>

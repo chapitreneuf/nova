@@ -15,11 +15,11 @@
   },
   "license": "GPL-3.0",
   "private": true,
-  "devDependencies": {
-    "less": "^2.7.3",
-    "less-plugin-autoprefix": "^1.5.1"
-  },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "devDependencies": {
+    "less": "^4.1.2",
+    "less-plugin-autoprefix": "^2.0.0"
+  }
 }

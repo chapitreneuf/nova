@@ -7,7 +7,6 @@
     "build": "npm run css",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
     "postinstall": "npm run css",
-    "watch:css": "onchange -i \"less/**/*.less\" -- npm run css",
     "gulp": "npm run css"
   },
   "repository": {
@@ -19,9 +18,6 @@
   "devDependencies": {
     "less": "^2.7.3",
     "less-plugin-autoprefix": "^1.5.1"
-  },
-  "optionalDependencies": {
-    "onchange": "^6.0.0"
   },
   "browserslist": [
     "defaults"

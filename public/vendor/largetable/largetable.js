@@ -81,7 +81,7 @@
 				fixShadowsHeight($scroller);
 			}
 
-			if (options.enableMaximize) {
+			if (options && options.enableMaximize) {
 				initMaximize.bind($scroller)();
 				initKeypress();
 			}

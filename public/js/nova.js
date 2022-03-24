@@ -1,241 +1,241 @@
 function onImagesLoaded(fn) {
-	// https://stackoverflow.com/a/60949881
-	Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(fn);
+  // https://stackoverflow.com/a/60949881
+  Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = img.onerror = resolve; }))).then(fn);
 }
 
 window.fnLoader = {
-	// Système de chargement des fonctions
-	load: function () {
-		var fns = this.fns;
-		for (var fnName in fns) {
-			if (fns.hasOwnProperty(fnName) && typeof fns[fnName] === "function") {
-				fns[fnName]();
-			}
-		}
-	},
+  // Système de chargement des fonctions
+  load: function () {
+    var fns = this.fns;
+    for (var fnName in fns) {
+      if (fns.hasOwnProperty(fnName) && typeof fns[fnName] === "function") {
+        fns[fnName]();
+      }
+    }
+  },
 
-	// Déclaration des fonctions à charger par défaut
-	fns: {
-		// Hamburger menu
-		hamburger: function () {
-			$(function () {
-				$("#main-menu-toggler").on("click", function () {
-					$("#main-menu-container").toggleClass("d-none");
-				});
-			});
-		},
+  // Déclaration des fonctions à charger par défaut
+  fns: {
+    // Hamburger menu
+    hamburger: function () {
+      $(function () {
+        $("#main-menu-toggler").on("click", function () {
+          $("#main-menu-container").toggleClass("d-none");
+        });
+      });
+    },
 
-		initLargetable: function () {
-			$(function () {
-				if (!$("body").hasClass("class-textes")) return;
-				$(".article__text table").largetable({ enableMaximize: true });
-			});
-		},
+    initLargetable: function () {
+      $(function () {
+        if (!$("body").hasClass("class-textes")) return;
+        $(".article__text table").largetable({ enableMaximize: true });
+      });
+    },
 
-		linkIsUrl: function() {
-			$(function() {
-				$("a[href^='http://'], a[href^='https://']").each(function () {
-					var text = $(this).text();
-					if (text.match(/^(https?:\/\/|www\.)/)) {
-						$(this).addClass("link-is-url");
-					}
-				});
-			});
-		},
+    linkIsUrl: function() {
+      $(function() {
+        $("a[href^='http://'], a[href^='https://']").each(function () {
+          var text = $(this).text();
+          if (text.match(/^(https?:\/\/|www\.)/)) {
+            $(this).addClass("link-is-url");
+          }
+        });
+      });
+    },
 
-		loadTweets: function () {
-			$(function () {
-				var $twitterContainers = $("[data-twitter-src]");
-				if ($twitterContainers.length === 0) return;
+    loadTweets: function () {
+      $(function () {
+        var $twitterContainers = $("[data-twitter-src]");
+        if ($twitterContainers.length === 0) return;
 
-				var timelineDefaultOptions = {
-					chrome: "noheader, nofooter",
-					tweetLimit: 3,
-					dnt: true,
-					lang: $("body").attr("data-sitelang")
-				};
+        var timelineDefaultOptions = {
+          chrome: "noheader, nofooter",
+          tweetLimit: 3,
+          dnt: true,
+          lang: $("body").attr("data-sitelang")
+        };
 
-				function twttrError(err, $el) {
-					console.error(err);
-					
-					var selector = ".side-twitter__message";
-					var $msg = $el ? $el.find(selector) : $(selector);
+        function twttrError(err, $el) {
+          console.error(err);
 
-					$msg.each(function () {
-						$(this).addClass("error");
-					});
-				}
+          var selector = ".side-twitter__message";
+          var $msg = $el ? $el.find(selector) : $(selector);
 
-				// Load Twitter script
-				window.twttr = (function (d, s, id) {
-					var js, fjs = d.getElementsByTagName(s)[0],
-						t = window.twttr || {};
-					if (d.getElementById(id)) return t;
-					js = d.createElement(s);
-					js.id = id;
-					js.onerror = twttrError;
-					js.src = "https://platform.twitter.com/widgets.js";
-					fjs.parentNode.insertBefore(js, fjs);
+          $msg.each(function () {
+            $(this).addClass("error");
+          });
+        }
 
-					t._e = [];
-					t.ready = function (f) {
-						t._e.push(f);
-					};
+        // Load Twitter script
+        window.twttr = (function (d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+          if (d.getElementById(id)) return t;
+          js = d.createElement(s);
+          js.id = id;
+          js.onerror = twttrError;
+          js.src = "https://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js, fjs);
 
-					return t;
-				}(document, "script", "twitter-wjs"));
+          t._e = [];
+          t.ready = function (f) {
+            t._e.push(f);
+          };
 
-				// When Twitter script is ready, create timelines
-				window.twttr.ready(function (twttr) {
-					$twitterContainers.each(function () {
-						var $container = $(this),
-							src = $container.attr("data-twitter-src"),
-							maxItems = Number($container.attr("data-twitter-max-items"));
+          return t;
+        }(document, "script", "twitter-wjs"));
 
-						var options = Object.assign({}, timelineDefaultOptions);
-						if (maxItems) {
-							options.tweetLimit = maxItems;
-						}
+        // When Twitter script is ready, create timelines
+        window.twttr.ready(function (twttr) {
+          $twitterContainers.each(function () {
+            var $container = $(this),
+              src = $container.attr("data-twitter-src"),
+              maxItems = Number($container.attr("data-twitter-max-items"));
 
-						twttr.widgets.createTimeline(
-							{
-								sourceType: 'url',
-								url: src
-							},
-							$container.get(0),
-							options
-						)
-						.then(function () {
-							$container.next(".side-twitter__message").remove();
-							twttr.widgets.load($container.get(0));
-						})
-						.catch(function (err) {
-							twttrError(err, $container);
-						});
-					});
+            var options = Object.assign({}, timelineDefaultOptions);
+            if (maxItems) {
+              options.tweetLimit = maxItems;
+            }
 
-					twttr.widgets.load(
-						document.getElementById("main-container")
-					);
-				});
-			});
-		},
+            twttr.widgets.createTimeline(
+              {
+                sourceType: 'url',
+                url: src
+              },
+              $container.get(0),
+              options
+            )
+            .then(function () {
+              $container.next(".side-twitter__message").remove();
+              twttr.widgets.load($container.get(0));
+            })
+            .catch(function (err) {
+              twttrError(err, $container);
+            });
+          });
 
-		// Ajouter des ancres aux paragraphes
-		pAnchors: function () {
-			// Ready
-			$(function () {
-				$(".article__text-contents > p.texte").each(function (index) {
-					var num = index + 1;
-					$(this).attr("id", "p" + num);
-				});
-			});
-		},
+          twttr.widgets.load(
+            document.getElementById("main-container")
+          );
+        });
+      });
+    },
 
-		// Generation des page-shortcuts
-		pageShortcuts: function () {
-			$(function () {
-				var $list = $(".page-shortcuts__list");
-				var $targets = $("h2.section-header[id]");
-				var html = "";
-				$targets.each(function () {
-					var id = $(this).attr("id");
-					var title = $(this).text();
-					html += "<li class='page-shortcuts__item'><a href='#" + id + "' class='page-shortcuts__link'>" + title + "</a></li>\n";
-				});
-				$list.html(html);
-			});
-		},
+    // Ajouter des ancres aux paragraphes
+    pAnchors: function () {
+      // Ready
+      $(function () {
+        $(".article__text-contents > p.texte").each(function (index) {
+          var num = index + 1;
+          $(this).attr("id", "p" + num);
+        });
+      });
+    },
 
-		// Sidenotes
-		sidenotes: function () {
-			var setSidenotesPosition = function () {
-				if ($("#sidenotes").length === 0) return;
+    // Generation des page-shortcuts
+    pageShortcuts: function () {
+      $(function () {
+        var $list = $(".page-shortcuts__list");
+        var $targets = $("h2.section-header[id]");
+        var html = "";
+        $targets.each(function () {
+          var id = $(this).attr("id");
+          var title = $(this).text();
+          html += "<li class='page-shortcuts__item'><a href='#" + id + "' class='page-shortcuts__link'>" + title + "</a></li>\n";
+        });
+        $list.html(html);
+      });
+    },
 
-				var margin = 10;
-				var minTop = 0;
-				var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 20;
+    // Sidenotes
+    sidenotes: function () {
+      var setSidenotesPosition = function () {
+        if ($("#sidenotes").length === 0) return;
 
-				var hideThisAndNext = function($el) {
-					$el.add($el.nextAll()).hide();
-				};
+        var margin = 10;
+        var minTop = 0;
+        var maxBottom = $("#sidenotes").offset().top + $("#sidenotes").innerHeight() - 20;
 
-				$("#sidenotes > p:not(.notesbaspage--more)").each(function () {
-					try {
-						$(this).show();
-						var $a = $(this).find("a.FootnoteSymbol");
-						if ($a.length === 0) return;
-						
-						var href = $a.attr("href");
-						var targetId = href.replace("#ftn", "#bodyftn");
-						var $target = $(targetId);
+        var hideThisAndNext = function($el) {
+          $el.add($el.nextAll()).hide();
+        };
 
-						// Barriere mobile
-						if ($target.length === 0) {
-							$(this).hide();
-							return;
-						}
+        $("#sidenotes > p:not(.notesbaspage--more)").each(function () {
+          try {
+            $(this).show();
+            var $a = $(this).find("a.FootnoteSymbol");
+            if ($a.length === 0) return;
 
-						var top = $target.offset().top;
-						if (top <= minTop) {
-							top = minTop;
-						}
-						$(this).offset({ top: top }); // afficher pour lire height
-						var height = $(this).height();
-						var bottom = top + height;
+            var href = $a.attr("href");
+            var targetId = href.replace("#ftn", "#bodyftn");
+            var $target = $(targetId);
 
-						if (bottom > maxBottom) {
-							// Vérifier qu'il n'y a pas la place au dessus
-							var $prev = $(this).prev("p");
-							if ($prev.length !== 1) {
-								hideThisAndNext($(this));
-								return false;
-							}
+            // Barriere mobile
+            if ($target.length === 0) {
+              $(this).hide();
+              return;
+            }
 
-							var requiredTop = maxBottom - height;
-							var emptyY = $prev.offset().top + $prev.height() + margin;
+            var top = $target.offset().top;
+            if (top <= minTop) {
+              top = minTop;
+            }
+            $(this).offset({ top: top }); // afficher pour lire height
+            var height = $(this).height();
+            var bottom = top + height;
 
-							if (requiredTop <= emptyY) {
-								hideThisAndNext($(this));
-								return false;
-							}
+            if (bottom > maxBottom) {
+              // Vérifier qu'il n'y a pas la place au dessus
+              var $prev = $(this).prev("p");
+              if ($prev.length !== 1) {
+                hideThisAndNext($(this));
+                return false;
+              }
 
-							$(this).offset({ top: requiredTop });
-							bottom = requiredTop + height;
-						}
+              var requiredTop = maxBottom - height;
+              var emptyY = $prev.offset().top + $prev.height() + margin;
 
-						minTop = bottom + margin;
-						
-					} catch (error) {
-						$(this).hide();
-						console.error(error, $(this));
-					}
-				});
-			};
+              if (requiredTop <= emptyY) {
+                hideThisAndNext($(this));
+                return false;
+              }
 
-			var waitAndRun = function() {
-				window.setTimeout(function() {
-					setSidenotesPosition();
-				}, 100);
-			};
+              $(this).offset({ top: requiredTop });
+              bottom = requiredTop + height;
+            }
 
-			// Run when page is ready + when all images are loaded + on viewport resize
-			$(waitAndRun);
-			onImagesLoaded(waitAndRun);
-			$(window).on("resize", waitAndRun);
-			$(document).on("zoomLevelChanged", waitAndRun);
-		},
+            minTop = bottom + margin;
 
-		// Zoom
-		zoom: function () {
-			$(function () {
-				$("[data-set-zoom-level]").click(function () {
-					var zoomLevel = $(this).attr("data-set-zoom-level");
-					if (!zoomLevel) return;
-					$("body").attr("data-zoom-level", zoomLevel);
-					$(document).trigger("zoomLevelChanged");
-				});
-			});
-		}
-	}
+          } catch (error) {
+            $(this).hide();
+            console.error(error, $(this));
+          }
+        });
+      };
+
+      var waitAndRun = function() {
+        window.setTimeout(function() {
+          setSidenotesPosition();
+        }, 100);
+      };
+
+      // Run when page is ready + when all images are loaded + on viewport resize
+      $(waitAndRun);
+      onImagesLoaded(waitAndRun);
+      $(window).on("resize", waitAndRun);
+      $(document).on("zoomLevelChanged", waitAndRun);
+    },
+
+    // Zoom
+    zoom: function () {
+      $(function () {
+        $("[data-set-zoom-level]").click(function () {
+          var zoomLevel = $(this).attr("data-set-zoom-level");
+          if (!zoomLevel) return;
+          $("body").attr("data-zoom-level", zoomLevel);
+          $(document).trigger("zoomLevelChanged");
+        });
+      });
+    }
+  }
 };

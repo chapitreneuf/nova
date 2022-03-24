@@ -38,7 +38,6 @@
 		</DO>
 		<AFTER>
 			</section>
-			<hr/>
 		</AFTER>
 	</LOOP>
 </DEFMACRO>
@@ -65,7 +64,7 @@
 	<LET VAR="id_collection_rubriques">
 		<LOOP NAME="home_rubriques_get_id_collection_rubriques" TABLE="publications" SELECT="id" WHERE="type='collection' AND identifier='rubriques'">[#ID]</LOOP>
 	</LET>
-	<LOOP NAME="home_rubriques" 
+	<LOOP NAME="home_rubriques"
 		TABLE="publications"
 		SELECT="id, titre, altertitre"
 		WHERE="idparent = '[#ID_COLLECTION_RUBRIQUES]' AND type = 'rubrique'"

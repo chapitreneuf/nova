@@ -224,18 +224,6 @@ window.fnLoader = {
       onImagesLoaded(waitAndRun);
       $(window).on("resize", waitAndRun);
       $(document).on("zoomLevelChanged", waitAndRun);
-    },
-
-    // Zoom
-    zoom: function () {
-      $(function () {
-        $("[data-set-zoom-level]").click(function () {
-          var zoomLevel = $(this).attr("data-set-zoom-level");
-          if (!zoomLevel) return;
-          $("body").attr("data-zoom-level", zoomLevel);
-          $(document).trigger("zoomLevelChanged");
-        });
-      });
     }
   }
 };

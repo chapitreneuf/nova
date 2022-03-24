@@ -7,7 +7,6 @@
 	<nav id="main-menu" class="main-menu">
 		<div class="main_menu__section row">
 			<MACRO NAME="MENU_SITELANG" />
-			<MACRO NAME="MENU_ZOOM" />
 			<MACRO NAME="MENU_BRAND" />
 			<MACRO NAME="MENU_SEARCH" />
 		</div>
@@ -53,23 +52,6 @@
 			</AFTER>
 		</LOOP>
 	</IF>
-</DEFMACRO>
-
-/**
- * Boutons d'ajustement de la taille de la police.
- */
-<DEFMACRO NAME="MENU_ZOOM">
-	<section class="main-menu__zoom col d-none d-md-block">
-		<button class="main-menu__zoom-btn btn" data-set-zoom-level="small">
-			<span style="font-size:60%;">A</span>
-		</button>
-		<button class="main-menu__zoom-btn btn" data-set-zoom-level="medium">
-			<span style="font-size:80%;">A</span>
-		</button>
-		<button class="main-menu__zoom-btn btn" data-set-zoom-level="big">
-			<span style="font-size:100%;">A</span>
-		</button>
-	</section>
 </DEFMACRO>
 
 /**
@@ -146,8 +128,8 @@
  * Liste des numéros dans le menu.
  */
 <DEFMACRO NAME="MENU_ISSUES">
-	<LOOP NAME="menu_issues" 
-		TABLE="publications" 
+	<LOOP NAME="menu_issues"
+		TABLE="publications"
 		SELECT="id, titre, altertitre, identifier"
 		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID])"
 		ORDER="(identifier='numeros') DESC, rank">
@@ -185,7 +167,7 @@
 		<LET VAR="menu_max_issues" GLOBAL="1">10</LET>
 	</IF>
 
-	<LOOP NAME="menu_issues_items" 
+	<LOOP NAME="menu_issues_items"
 		TABLE="publications"
 		SELECT="id, numero, titre, altertitre, periode, datepubli, datepublipapier"
 		WHERE="idparent = '[#ID_COLLECTION]' [#FILTRE]"
@@ -216,9 +198,9 @@
  * Affichage du lien vers tous les numéros.
  */
 <DEFMACRO NAME="MENU_ISSUES_LINK">
-	<LOOP NAME="menu_issues_link" 
-		TABLE="publications" 
-		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID]) AND identifier = 'numeros'" 
+	<LOOP NAME="menu_issues_link"
+		TABLE="publications"
+		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID]) AND identifier = 'numeros'"
 		SELECT="id" LIMIT="0,1" ORDER="rank" />
 		<a href="[#ID|makeurlwithid]" class="link-to-issues">[@TOUS_LES_NUMEROS]</a>
 	</LOOP>
@@ -286,7 +268,7 @@
 								</a>
 							</li>
 						</IF>
-					
+
 				</DO>
 
 				<AFTER>

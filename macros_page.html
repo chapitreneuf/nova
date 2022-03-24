@@ -29,6 +29,7 @@
 	<!DOCTYPE html>
 	<html lang="[%PAGELANG]">
 	<head>
+		<MACRO NAME="PAGE_DEV_MODE_INIT"/>
 		<MACRO NAME="HEAD_MAIN" />
 	</head>
 	<body class="[%BODY_CLASS]" data-sitelang="[#SITELANG]">
@@ -61,10 +62,21 @@
 </DEFMACRO>
 
 /**
+ * Initialisation du DEV_MODE.
+ */
+<DEFMACRO NAME="PAGE_DEV_MODE_INIT">
+		<LET VAR="dev_mode_active" GLOBAL="1"></LET>
+		<LET VAR="dist_css_path">./tpl/public/css/site.css</LET>
+		<IF COND="![#DIST_CSS_PATH|file_exists] OR [%DEV_MODE]">
+			<LET VAR="dev_mode_active" GLOBAL="1">1</LET>
+		</IF>
+</DEFMACRO>
+
+/**
  * Avertissement pour les rédacteurs si DEV_MODE est activé.
  */
 <DEFMACRO NAME="PAGE_DEV_MODE_WARNING">
-	<IF COND="[%DEV_MODE] AND [#LODELUSER.RIGHTS] GT 5">
-		<div class="devmode-warning" style="padding: 5px 10px; font-size: 12px; background-color: #a9e1fc; border-bottom: 1px solid #8cc9e5;">Ce site est actuellement en mode de développement et présente des performances réduites. Lors de la mise en production du site n'oubliez pas de vider la variable DEV_MODE dans le template macros_custom.html. <br>Ce message n'est visible que pour les utilisateurs identifiés.</div>
+	<IF COND="[%DEV_MODE_ACTIVE] AND [#LODELUSER.RIGHTS] GT 5">
+		<div id="devmode-warning" class="devmode-warning" style="padding: 5px 10px; font-size: 12px; background-color: #a9e1fc; border-bottom: 1px solid #8cc9e5;"><b>Ce site est actuellement en mode de développement et présente des performances réduites.</b><br>Le mode de développement ne devrait jamais être utilisé sur un site accessible au public. <a href="https://github.com/edinum/nova#readme" target="_blank">En savoir plus…</a></div>
 	</IF>
 </DEFMACRO>

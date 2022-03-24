@@ -314,14 +314,14 @@
 	<a class="toc__link" href="[#ID|makeurlwithid]">
 		<!--[ Titre ]-->
 		<p class="toc__title">[#TITRE|removenotes]</p>
-		
+
 		<!--[ Sous-titre ]-->
 		<IF COND="[#AFFICHER_SOUSTITRE] AND [#SOUSTITRE]">
 			<p class="toc__subtitle">[#SOUSTITRE|removenotes]</p>
 		</IF>
-		
+
 		<!--[ Titres traduits]-->
-		<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/"> 
+		<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/">
 			<div class="toc__altertitle">
 				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 					<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
@@ -366,11 +366,11 @@
 							<a href="[#HREF]">[#TITRE]</a>
 						<!--[ Fichier ]-->
 						<ELSEIF COND="[#DOCUMENT]" />
-							<a href="[#HREF]">[#TITRE]</a><br/> <span class="toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>
+							<a href="[#HREF]">[#TITRE]</a> <span class="toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>
 						<ELSEIF COND="[#URLACCESMEDIA]" />
-							<a href="[#URLACCESMEDIA]">[#TITRE]</a><br/> <span class="toc__additional-info">([#URLACCESMEDIA])</span>
+							<a href="[#URLACCESMEDIA]">[#TITRE]</a> <span class="toc__additional-info">([#URLACCESMEDIA])</span>
 						<ELSEIF COND="[#URLMEDIA]" />
-							<a href="[#URLMEDIA]">[#TITRE]</a><br/> <span class="toc__additional-info">([#URLMEDIA])</span>
+							<a href="[#URLMEDIA]">[#TITRE]</a> <span class="toc__additional-info">([#URLMEDIA])</span>
 						<ELSE />
 							[#TITRE]
 						</IF>
@@ -435,10 +435,10 @@
  * Affiche le sommaire d'une collection.
  */
 <DEFMACRO NAME="PUBLICATION_COLLECTION">
-	<LOOP NAME="publication_collection" 
-		TABLE="relations, entities, types" 
-		SELECT="entities.id" 
-		WHERE="id2 = entities.id AND id1 = '[#ID]' AND nature = 'P' AND degree = 1 AND entities.idtype = types.id" 
+	<LOOP NAME="publication_collection"
+		TABLE="relations, entities, types"
+		SELECT="entities.id"
+		WHERE="id2 = entities.id AND id1 = '[#ID]' AND nature = 'P' AND degree = 1 AND entities.idtype = types.id"
 		ORDER="entities.rank">
 		<BEFORE>
 			<div class="toc">
@@ -463,10 +463,10 @@
  */
 <DEFMACRO NAME="PUBLICATION_ANNEES">
 	<LET VAR="CURRENTID">[#ID]</LET>
-	<LOOP NAME="publication_annees" 
-		TABLE="publications" 
-		SELECT="id, titre, altertitre" 
-		WHERE="idparent = [#IDPARENT] AND type = 'rubriqueannuelle'" 
+	<LOOP NAME="publication_annees"
+		TABLE="publications"
+		SELECT="id, titre, altertitre"
+		WHERE="idparent = [#IDPARENT] AND type = 'rubriqueannuelle'"
 		ORDER="rank DESC">
 		<BEFORE>
 			<div class="page-shortcuts">

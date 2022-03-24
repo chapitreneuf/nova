@@ -45,10 +45,10 @@
 	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')]</LET>
 
 	<!--[ ID des parents de l'entité courante ]-->
-	<LOOP NAME="base_init_liste_parents" 
-		TABLE="publications, relations" 
-		SELECT="id" 
-		WHERE="id2 = '[#ID]' AND id1 = publications.identity" 
+	<LOOP NAME="base_init_liste_parents"
+		TABLE="publications, relations"
+		SELECT="id"
+		WHERE="id2 = '[#ID]' AND id1 = publications.identity"
 		ORDER="degree">
 
 		<IF COND="[#NBRESULTS] EQ 1">
@@ -65,9 +65,9 @@
 	</LOOP>
 
 	<!--[ Liste des ID des traductions de textes. Permet également de conditionner les boucles relatives aux traductions. ]-->
-	<LOOP NAME="base_init_relations_traduction" 
-		SELECT="id1" 
-		TABLE="relations" 
+	<LOOP NAME="base_init_relations_traduction"
+		SELECT="id1"
+		TABLE="relations"
 		WHERE="nature = 'traduction'">
 		<LET ARRAY="relations_traduction[]" GLOBAL="1">[#ID1]</LET>
 	</LOOP>
@@ -76,14 +76,14 @@
 	<LET VAR="not_in_traductions"><IF COND="![%RELATIONS_TRADUCTION]">IS NOT NULL<ELSE/>NOT IN ([%RELATIONS_TRADUCTION|implode(',')])</IF></LET>
 
 	<!--[ Liste des ID des traductions de textes qui se trouvent dans la même rubrique que l'origial. Permet également de conditionner les boucles relatives aux traductions. ]-->
-	<LOOP NAME="base_init_get_original_with_translation" 
-		SELECT="relations.id1, entities.idparent" 
-		TABLE="relations, entities" 
+	<LOOP NAME="base_init_get_original_with_translation"
+		SELECT="relations.id1, entities.idparent"
+		TABLE="relations, entities"
 		WHERE="relations.nature = 'traduction' AND entities.id = relations.id2">
 
-		<LOOP NAME="base_init_get_id_translation_same_parent" 
-			SELECT="entities.id" 
-			TABLE="entities" 
+		<LOOP NAME="base_init_get_id_translation_same_parent"
+			SELECT="entities.id"
+			TABLE="entities"
 			WHERE="idparent = '[#IDPARENT]' AND id = '[#ID1]'">
 			<LET ARRAY="relations_traduction_parent_unique[]" GLOBAL="1">[#ID]</LET>
 		</LOOP>
@@ -94,9 +94,9 @@
 
 	<!--[ ID des collections contenant des numéros ]-->
 	<LET VAR="issues_collections_id">
-		<LOOP NAME="base_init_get_issues_collections_id" 
-			TABLE="publications" 
-			SELECT="distinct idparent as idcollection" 
+		<LOOP NAME="base_init_get_issues_collections_id"
+			TABLE="publications"
+			SELECT="distinct idparent as idcollection"
 			WHERE="TYPE EQ 'numero'">
 		<DO>[#IDCOLLECTION],</DO>
 		<DOLAST>[#IDCOLLECTION]</DOLAST>
@@ -123,7 +123,7 @@
 		<IF COND="[#ALTERTITLE:#SITELANG]">[#ALTERTITLE:#SITELANG]<ELSE/>[#TITLE]</IF>
 	<ELSE />
 		<IF COND="[#ALTERTITRE:#SITELANG]">[#ALTERTITRE:#SITELANG]<ELSE/>[#TITRE]</IF>
-	</IF>	
+	</IF>
 </DEFFUNC>
 
 /**
@@ -209,7 +209,7 @@
 				<LET VAR="dir_titre">[#TITRE]</LET>
 			</IF>
 
-			<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span><br/>
+			<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span>
 			<IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]">
 				<IF COND="[#SEPARATOR]"> [#SEPARATOR] </IF><span class="publi-title-text">[#DIR_TITRE]</span>
 			</IF>
@@ -295,10 +295,10 @@
  * @param {string} [href] - Lien sur l'image. Si égal à "self" alors l'URL sera celle de l'imageaccroche.
  */
 <DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href">
-	<LOOP NAME="base_accroche_publication" 
-		TABLE="fichiers" 
-		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'" 
-		ORDER="rank" 
+	<LOOP NAME="base_accroche_publication"
+		TABLE="fichiers"
+		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'"
+		ORDER="rank"
 		LIMIT="1">
 
 		<DO>
@@ -631,7 +631,7 @@
 	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
 		<LET ARRAY="coins.pub">[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark|trim]</LET>
 	</IF>
-	
+
 	<IF COND="[#LANGUE]">
 		<LET ARRAY="coins.language">[#LANGUE]</LET>
 	<ELSE/>

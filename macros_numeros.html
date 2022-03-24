@@ -50,18 +50,18 @@
 <DEFMACRO NAME="NUMEROS_ISSUE">
 	<!--[ Image d'accroche ]-->
 	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" /></LET>
-	
+
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
 			<IF COND="[#IMG_ACCROCHE]">
 				<div class="issue__accroche-col col-md-4">
 					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
-				</div>	
+				</div>
 			</IF>
 
 			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF>">
-				
+
 				<!--[ Titre ]-->
 				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
 
@@ -75,9 +75,8 @@
 
 				<!--[ Directeur publication ]-->
 				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-				<br/>
 			</div>
-	
+
 			<div class="issue__infos-col">
 				<MACRO NAME="NUMEROS_ISSUE_INFOS" />
 			</div>
@@ -95,7 +94,7 @@
  */
 <DEFMACRO NAME="NUMEROS_ISSUE_INFOS">
 	<div class="issue__infos">
-		
+
 		<!--[ Introduction ]-->
 		<IF COND="[#INTRODUCTION]">
 			<section id="publi-introduction" class="publi__introduction">

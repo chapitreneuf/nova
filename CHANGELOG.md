@@ -1,5 +1,9 @@
 # Changelog Nova
 
+## 1.6.3 (14/04/22)
+
+* Introduction de la variable LESS publicDir qui change selon l'environnement dev ou production.
+
 ## 1.6.2 (04/03/22)
 
 * Amélioration du positionnement des notes marginales (#89).

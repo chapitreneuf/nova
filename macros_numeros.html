@@ -54,12 +54,6 @@
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
-			<IF COND="[#IMG_ACCROCHE]">
-				<div class="issue__accroche-col col-md-4">
-					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
-				</div>
-			</IF>
-
 			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF>">
 
 				<!--[ Titre ]-->
@@ -76,6 +70,12 @@
 				<!--[ Directeur publication ]-->
 				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
 			</div>
+
+			<IF COND="[#IMG_ACCROCHE]">
+				<div class="issue__accroche-col col-md-4">
+					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
+				</div>
+			</IF>
 
 			<div class="issue__infos-col">
 				<MACRO NAME="NUMEROS_ISSUE_INFOS" />

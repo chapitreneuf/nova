@@ -33,6 +33,7 @@
 		<MACRO NAME="HEAD_MAIN" />
 	</head>
 	<body class="[%BODY_CLASS]" data-sitelang="[#SITELANG]">
+		<MACRO NAME="PAGE_ACCES"/>
 		<MACRO NAME="PAGE_DEV_MODE_WARNING"/>
 		<MACRO NAME="HEADER_MAIN" />
 		<div id="main-container" class="main-container container">
@@ -60,6 +61,13 @@
 			<MACRO NAME="FOOTER_MAIN" />
 		</body>
 	</html>
+</DEFMACRO>
+
+/**
+ * Lien "Aller au contenu".
+ */
+<DEFMACRO NAME="PAGE_ACCES">
+	<a class="skip-to-content" href="#main-content"><span>[@SKIP_TO_CONTENT]</span></a>
 </DEFMACRO>
 
 /**

@@ -1,26 +1,87 @@
-// Fonts
+// FONT-SIZE
+// =========
 
-@font-1: Verdana, "DejaVu Sans", "Bitstream Vera Sans", Geneva, sans-serif;
-@font-2: Ubuntu, "DejaVu Sans", "Bitstream Vera Sans", Geneva, sans-serif;
+// Facteur de taille des polices.
+@size-factor: 1;
+
+// POLICES
+// =======
+@font-1: "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", "Luxi Sans", sans-serif;
+@font-2: Georgia, "DejaVu Serif", Norasi, serif;
+
+// Police de l'élément HTML utilisée par défaut.
+@font-global: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+// Police du texte
+@font-text: @font-2;
+
+// Police des menus
+@font-menu: @font-global;
+
+// Police des titres des documents
+@font-doc-title: @font-1;
+
+// Police des intertitres du document
+@font-doc-headings: @font-2;
+
+// Police des légendes
+@font-captions: @font-1;
+
+// Police des intertitres des sections
+@font-section-headings: @font-1;
+
+// Police des métadonnées
+@font-metadata: @font-1;
+
+// Police monospace (code)
 @font-mono: "Courier New", Courier, "Liberation Mono", monospace;
 
-// Colors
-@color-1: #000;
-@color-2: #00365f;//bleu foncé
-@color-3: #e0a126;//orange
-@color-4: #dee2e6; //gris
-@color-5: #bbb; //gris foncé
-@color-6: #777; //gris tres foncé
-@color-7: #00457B;//bleu moyen
-@color-8: #005799;//bleu clair
-@color-9: #397BAE;//bleu tres clair
+// COULEURS
+// ========
+@color-accent: #366297;
+@color-accent-light: lighten(@color-accent, 10%);
+@color-accent-dark: darken(@color-accent, 10%);
 
-@color-bg: #ccc;
-@color-bg-1: #fff;
-@color-bg-2: #f2f2f2;
-@color-bg-3: #dfdfdf;
+@color-black: #000;
+@color-grey0: #2e3440;
+@color-grey1: #3b4252;
+@color-grey2: #434c5e;
+@color-grey3: #4c566a;
+@color-grey4: #d8dee9;
+@color-grey5: #e5e9f0;
+@color-grey6: #eceff4;
+@color-grey7: #f6f8fa;
+@color-white: #fff;
 
-// Breakpoints
+@color-global: @color-grey0;
+@color-global-bg: @color-grey7;
+@color-link: @color-accent;
+@color-link-hover: @color-accent-light;
+@color-link-contrast: @color-white;
+
+@color-header: @color-global;
+@color-header-bg: @color-grey6;
+
+@color-main: @color-global;
+@color-main-bg: @color-white;
+
+@color-menu: @color-header;
+@color-menu-bg: @color-header-bg;
+@color-menu-link: @color-link;
+@color-menu-link-hover: @color-link-hover;
+
+@color-side: @color-main;
+@color-side-bg: @color-main-bg;
+
+@color-footer: @color-header;
+@color-footer-bg: @color-header-bg;
+@color-footer-link: @color-link;
+@color-footer-link-hover: @color-link-hover;
+
+@color-ariane: @color-grey3;
+
+// BREAKPOINTS
+// ===========
 @screen-xs: 480px;
 @screen-sm: 768px;
 @screen-md: 992px;

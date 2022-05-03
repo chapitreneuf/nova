@@ -51,9 +51,8 @@ img {
 // LAYOUT
 // ======
 
-.main-header, .main-container, .main-footer {
+.main-header, .main-menu-container, .main-content, .main-aside, .main-footer {
   padding: 40px 30px;
-  box-sizing: content-box;
 }
 
 // MAIN HEADER
@@ -103,15 +102,149 @@ img {
 // MAIN CONTENT
 // ============
 
-.main-content {
-  padding: 0 30px 30px;
+// MAIN MENU
+// =========
+
+.main-menu-container {
+  background-color: @color-menu-bg;
+  color: @color-menu;
+  padding-top: 0;
 }
 
-// MAIN NAV
-// ========
+.main-menu-container a {
+  color: @color-menu-link
+}
 
-// SIDE
-// ====
+.main-menu-container a:hover {
+  color: @color-menu-link
+}
+
+.main-menu__section:not(:first-child) {
+  margin-top: 30px;
+}
+
+.main-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-menu__item .publi-number {
+  font-weight: bold;
+}
+
+// LOGOS PARTENAIRES
+// =================
+
+.main-menu__logos {
+  list-style-type: none;
+  padding: 0;
+}
+
+.main-menu__logo {
+  margin: 20px 0;
+}
+
+.main-menu__logo-image {
+  max-width: 100px;
+  max-height: 100px;
+  margin: 0 auto;
+  display: block;
+}
+
+// MAIN ASIDE
+// ==========
+
+.main-aside {
+  border-left: 1px solid @color-border;
+}
+
+.main-aside ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.side__section:not(:first-child) {
+  margin-top: 30px;
+}
+
+.side-actualites-section__item {
+  margin: 10px 0;
+}
+
+.side-rss-item {
+  margin-bottom: 25px;
+}
+
+.side-rss-item__title {
+  color: @color-black;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.side-rss-item__entry {
+  margin-top: 10px;
+}
+
+.side-rss-item__link {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+
+.lien-rss__list {
+  padding-left: 15px;
+}
+
+.lien-rss__list li {
+  margin-bottom: 15px;
+}
+
+.link-rss__description {
+  margin: 0;
+}
+
+.side-twitter__container {
+  margin: 10px -10px;
+}
+
+.side-twitter__message {
+  .font-size(1.4);
+  color: @color-grey3;
+  line-height: 1.2;
+}
+
+.twitter-error,
+.side-twitter__message.error .twitter-loading {
+  display: none;
+}
+
+.side-twitter__message.error .twitter-error {
+  display: block;
+}
+
+.twitter-loading:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(10, end) 900ms infinite;
+  animation: ellipsis steps(10, end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 30px;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 30px;
+  }
+}
 
 // MAIN FOOTER
 // ===========

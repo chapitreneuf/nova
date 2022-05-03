@@ -448,7 +448,7 @@
 	<LOOP NAME="base_side_actualites" TABLE="textes" WHERE="type='actualite'"
 		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
 		<BEFORE>
-			<section id="side-actualites__section" class="side-actualites__section">
+			<section id="side-actualites__section" class="side-actualites__section side__section">
 				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@ACTUALITES]" />
 				<ul class="side-actualites_section__list">
 		</BEFORE>
@@ -471,7 +471,7 @@
 <DEFMACRO NAME="BASE_SIDE_RSS">
 	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil NOT LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
-			<section id="side-rss__section" class="side-actualites__section">
+			<section id="side-rss__section" class="side-rss__section side__section">
 				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RSS]" />
 				<ul class="side-rss_section__list">
 		</BEFORE>
@@ -479,7 +479,7 @@
 			<!--[<BLOCK ID="2" REFRESH="1800"> ]-->
 				<LOOP NAME="rss" URL="[#URLFIL]">
 					<li class="side-rss-item">
-						<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
+						<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
 						<ul class="side-rss-item__entries">
 							<IF COND="![#NOMBREMAXITEMS]">
 								<LET VAR="nombremaxitems">10</LET>
@@ -493,10 +493,10 @@
 									</li>
 								</IF>
 							</LOOP>
-							<IF COND="[#URL]">
-								<a class="side-rss-item__link external" rel="external" href="[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@VISITER_SITE]</a>
-							</IF>
 						</ul>
+						<IF COND="[#URL]">
+							<a class="side-rss-item__link external" rel="external" href="[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@VISITER_SITE]</a>
+						</IF>
 					</li>
 				</LOOP>
 			<!--[</BLOCK>]-->
@@ -514,11 +514,11 @@
 <DEFMACRO NAME="BASE_SIDE_TWITTER">
 	<LOOP NAME="base_side_twitter" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
-			<section id="side-twitter__section" class="side-actualites__section side-twitter__section">
+			<section id="side-twitter__section" class="side__section side-twitter__section">
 				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TWEETS]" />
 		</BEFORE>
 		<DO>
-			<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
+			<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
 			<MACRO NAME="BASE_TWITTER_CONTAINER" />
 		</DO>
 		<AFTER>

@@ -343,7 +343,7 @@
 	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' AND type LIKE '%annexe' AND identifier != 'tei' AND g_title != ''" ORDER="rank">
 
 		<BEFORE>
-			<section class="toc toc--docannexes col-md-10">
+			<section class="toc toc--docannexes">
 				<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@DOCANNEXES]<ELSE />[@DOCANNEXE]</IF></LET>
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="folder-open" SECTION_ID="docannexes" />
 				<ul class="toc__contents toc__contents--docannexes">
@@ -358,7 +358,7 @@
 						<LET VAR="href">[#ID|makeurlwithfile]</LET>
 					</IF>
 					<IF COND="[#VIGNETTE]">
-						<img src="[#VIGNETTE|vignette(300)]" alt="[#TITRE|textebrut]" />
+						<img class="toc__vignette" src="[#VIGNETTE|vignette(300)]" alt="[#TITRE|textebrut]" />
 					</IF>
 					<p class="toc__title">
 						<!--[ Lien ]-->

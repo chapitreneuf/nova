@@ -39,6 +39,20 @@ img {
 // UTILS
 // =====
 
+.nav-tabs {
+  border-color: @color-border;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  border-color: @color-border @color-border #fff;
+}
+
+.tab-content {
+  padding: 20px 30px 15px 30px;
+  border: 1px solid @color-border;
+  border-top: none;
+}
+
 .link-is-url {
   overflow-wrap: anywhere;
 }
@@ -255,6 +269,62 @@ img {
   text-align: center;
 }
 
+// HOME
+// ====
+
+.home-billet {
+  border-bottom: 1px solid @color-border;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.home-latest-issue {
+  margin-top: 30px;
+}
+
+// PUBLICATION
+// ===========
+
+.publi-title-text {
+  display: block;
+}
+
+.toc__contents {
+  list-style: none;
+  margin-top: 30px;
+  padding: 0;
+}
+
+.toc__contents .toc__contents {
+  margin: 0;
+}
+
+.toc__li {
+  margin: 20px 0;
+}
+
+.toc__li p {
+  margin: 0;
+}
+
+.toc__li--class-publications {
+  margin: 30px 0;
+  border-left: 4px solid @color-border;
+  padding-left: 20px;
+}
+
+.toc__author {
+  font-weight: bold;
+}
+
+.toc__subtitle {
+  color: @color-link-light;
+}
+
+.toc__vignette {
+  width: 200px;
+  margin: 5px 0;
+}
 
 // INCLUSION DES STYLES DE PERSONNALISATION
 // IMPORTANT : ne rien ajouter après cette ligne.

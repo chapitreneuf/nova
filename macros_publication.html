@@ -93,7 +93,7 @@
 		<!--[ NDLR ]-->
 		<IF COND="[#NDLR]">
 			<section class="publi__ndlr">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" ICON="pencil" SECTION_ID="ndlr"/>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" SECTION_ID="ndlr"/>
 				[#NDLR]
 			</section>
 		</IF>
@@ -101,7 +101,7 @@
 		<!--[ Historique ]-->
 		<IF COND="[#HISTORIQUE]">
 			<section class="publi__historique">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" ICON="time" SECTION_ID="historique"/>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@HISTORIQUE]" SECTION_ID="historique"/>
 				[#HISTORIQUE]
 			</section>
 		</IF>
@@ -345,7 +345,7 @@
 		<BEFORE>
 			<section class="toc toc--docannexes">
 				<LET VAR="TITRE_SECTION"><IF COND="[#NBRESULTATS] GT 1">[@DOCANNEXES]<ELSE />[@DOCANNEXE]</IF></LET>
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" ICON="folder-open" SECTION_ID="docannexes" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE_SECTION]" SECTION_ID="docannexes" />
 				<ul class="toc__contents toc__contents--docannexes">
 		</BEFORE>
 

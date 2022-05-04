@@ -265,10 +265,10 @@
  * Bouton de téléchargement de la TEI.
  */
 <DEFMACRO NAME="ARTICLE_BOUTON_TEI">
-	<LOOP NAME="article_bouton_tei" 
-		TABLE="fichiers" 
-		WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = 'tei' AND document != ''" 
-		ORDER="rank" 
+	<LOOP NAME="article_bouton_tei"
+		TABLE="fichiers"
+		WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = 'tei' AND document != ''"
+		ORDER="rank"
 		LIMIT="0,1">
 		<li class="article__button article__button--tei">
 			<a href="[#ID|makeurlwithfile]">
@@ -335,9 +335,9 @@
 	<!--[ Résumés ]-->
 	<IF COND="[#RESUME]">
 		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
-			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
 		<ELSE/>
-			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
 		</IF>
 		<div class="article__abstract-contents col-12 col-lg-10">
 			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
@@ -351,22 +351,22 @@
 <DEFMACRO NAME="ARTICLE_MOTSCLES">
 	<!--[ Entrées d'index]-->
 	<IF COND="[%HASENTRIES]">
-		<LOOP NAME="article_motscles" 
-			TABLE="relations, entries, entrytypes" 
-			SELECT="DISTINCT(idtype), title, altertitle, type AS entrytype" 
-			WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes'" 
+		<LOOP NAME="article_motscles"
+			TABLE="relations, entries, entrytypes"
+			SELECT="DISTINCT(idtype), title, altertitle, type AS entrytype"
+			WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes'"
 			ORDER="CASE WHEN type LIKE 'motscles%' THEN 0 ELSE 1 END, entrytypes.rank">
 
 			<BEFORE>
 				<div class="col-12 col-lg-10 article__entries-title">
-					<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@INDEX]" SECTION_ID="article-entries" />
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@INDEX]" SECTION_ID="article-entries" />
 				</div>
 				<div class="article__entries-content col-12 col-lg-10">
 			</BEFORE>
 			<DO>
-				<LOOP NAME="article_motscles_entrees" 
-					TABLE="entries" SELECT="id, g_name" 
-					WHERE="idtype = '[#IDTYPE]' AND iddocument = '[#ID]'" 
+				<LOOP NAME="article_motscles_entrees"
+					TABLE="entries" SELECT="id, g_name"
+					WHERE="idtype = '[#IDTYPE]' AND iddocument = '[#ID]'"
 					ORDER="degree">
 					<BEFORE>
 						<!--[ Support index rtl ]-->
@@ -403,7 +403,7 @@
 		<LOOP NAME="toc" TEXT="[#TEXTE]">
 			<BEFORE>
 				<section class="article__toc col-12 col-lg-10">
-					<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TOC]" SECTION_ID="toc" />
+					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" SECTION_ID="toc" />
 					<div class="article__toc-contents">
 						<ul>
 			</BEFORE>
@@ -449,7 +449,7 @@
 	<!--[ Errata ]-->
 	<IF COND="[#ADDENDUM]">
 		<section class="article__errata col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@ERRATA]" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERRATA]" />
 			<div class="article__errata-contents">
 				[#ADDENDUM|cleanCallNotes|tocss]
 			</div>
@@ -459,7 +459,7 @@
 	<!--[ Dédicace ]-->
 	<IF COND="[#DEDICACE]">
 		<section class="article__dedication col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@DEDICACE]" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DEDICACE]" />
 			<div class="article__dedication-contents">
 				[#DEDICACE|cleanCallNotes|tocss]
 			</div>
@@ -469,7 +469,7 @@
 	<!--[ NDLR ]-->
 	<IF COND="[#NDLR]">
 		<section class="article__ndlr col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@NDLR]" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLR]" />
 			<div class="article__ndlr-contents">
 				[#NDLR|cleanCallNotes|tocss]
 			</div>
@@ -479,7 +479,7 @@
 	<!--[ NDLA ]-->
 	<IF COND="[#NDLA]">
 		<section class="article__ndla col-12 col-lg-10">
-			<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@NDLA]" />
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NDLA]" />
 			<div class="article__ndla-contents">
 				[#NDLA|cleanCallNotes|tocss]
 			</div>
@@ -504,13 +504,10 @@
 				<div class="article_text__section article_text__section--border">
 					<div class="row">
 						<div class="col col-md-3">
-							<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
+							<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TEXT_SECTION_TITLE]" SECTION_ID="text" />
 						</div>
 						<div class="col-7 col-md-8 article_text__section--buttons">
 							<MACRO NAME="ARTICLE_BOUTONS" />
-						</div>
-						<div class="col-1">
-						<a class="section-header-arrow" href="#main-content"><img class="icon icon_arrow_top" title="arrow top" src="tpl/public/icons/arrow-top.svg" /></a>
 						</div>
 					</div>
 				</div>
@@ -558,10 +555,10 @@
  * Image d'accroche du document.
  */
 <DEFMACRO NAME="ARTICLE_IMAGEACCROCHE">
-	<LOOP NAME="article_imageaccroche" 
-		TABLE="fichiers" 
-		WHERE="type = 'imageaccroche' AND idparent = [#ID]" 
-		ORDER="rank" 
+	<LOOP NAME="article_imageaccroche"
+		TABLE="fichiers"
+		WHERE="type = 'imageaccroche' AND idparent = [#ID]"
+		ORDER="rank"
 		LIMIT="0,1">
 
 		<IF COND="[#VIGNETTE]">
@@ -705,12 +702,12 @@
  * @param {string} section_id - Id de la section.
  */
 <DEFFUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" REQUIRED="type, section_id">
-	<LOOP NAME="article_description_personnes" 
-		SELECT="persons.id" 
-		TABLE="relations, persons" 
+	<LOOP NAME="article_description_personnes"
+		SELECT="persons.id"
+		TABLE="relations, persons"
 		WHERE="id1 = '[%ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'"
 		ORDER="degree">
-		
+
 		<BEFORE>
 			<section class="article__persons-infos col-12 col-lg-10">
 				<IF COND="[#TYPE] EQ 'traducteur'">
@@ -725,9 +722,9 @@
 		</BEFORE>
 
 		<DO>
-			<LOOP NAME="article_description_personnes_auteur" 
-				SELECT="idperson, nomfamille, prenom, description, courriel" 
-				TABLE="auteurs" 
+			<LOOP NAME="article_description_personnes_auteur"
+				SELECT="idperson, nomfamille, prenom, description, courriel"
+				TABLE="auteurs"
 				WHERE="id = '[#ID]' AND iddocument='[%ID]'">
 
 				<h3 class="article__persons-infos-identity">

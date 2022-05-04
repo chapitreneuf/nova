@@ -163,16 +163,12 @@
  * Affiche un header de section.
  * @param {string} title - Titre.
  * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
-	* @param {boolean} [no_arrow] - Ne pas afficher la fleche de retour en haut.
 */
-<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id, no_arrow">
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id">
 	<IF COND="[#SECTION_ID]">
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
 	<div class="section-header-container">
-		<IF COND="![#NO_ARROW]">
-			<a class="section-header-arrow" href="#main-content"><img class="icon icon_arrow_top" title="arrow top" src="tpl/public/icons/arrow-top.svg" /></a>
-		</IF>
 		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
 	</div>
 </DEFFUNC>
@@ -449,7 +445,7 @@
 		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
 		<BEFORE>
 			<section id="side-actualites__section" class="side-actualites__section side__section">
-				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@ACTUALITES]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" />
 				<ul class="side-actualites_section__list">
 		</BEFORE>
 		<DO>
@@ -472,7 +468,7 @@
 	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil NOT LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
 			<section id="side-rss__section" class="side-rss__section side__section">
-				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RSS]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RSS]" />
 				<ul class="side-rss_section__list">
 		</BEFORE>
 		<DO>
@@ -515,7 +511,7 @@
 	<LOOP NAME="base_side_twitter" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
 			<section id="side-twitter__section" class="side__section side-twitter__section">
-				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TWEETS]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
 		</BEFORE>
 		<DO>
 			<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>

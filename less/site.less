@@ -26,6 +26,7 @@ hr {
 
 a {
   color: @color-link;
+  transition: .2s color linear;
 }
 
 a:hover {
@@ -56,6 +57,7 @@ img {
   padding: 20px 30px 15px 30px;
   border: 1px solid @color-border;
   border-top: none;
+  border-radius: 0 0 .25rem .25rem;
 }
 
 .link-is-url {
@@ -211,7 +213,6 @@ img {
   margin-top: 10px;
 }
 
-
 .lien-rss__list {
   padding-left: 15px;
 }
@@ -287,6 +288,18 @@ img {
   margin-top: 30px;
 }
 
+.home-rubrique {
+  margin: 40px 0;
+}
+
+.home-rubrique__more {
+  .btn();
+}
+
+.home-rubrique__more::after {
+  content: " »";
+}
+
 // PUBLICATION
 // ===========
 
@@ -296,7 +309,7 @@ img {
 
 .toc__contents {
   list-style: none;
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 0;
 }
 
@@ -329,6 +342,14 @@ img {
 .toc__vignette {
   width: 200px;
   margin: 5px 0;
+}
+
+.toc__additional-info {
+  color: @color-grey3;
+}
+
+.toc__datepubli {
+  color: @color-grey3;
 }
 
 // INCLUSION DES STYLES DE PERSONNALISATION

@@ -7,3 +7,18 @@
   font-size: ~"@{px-value}px";
   font-size: ~"@{rem-value}rem";
 }
+
+.btn() {
+  color: @color-link;
+  background-color: @color-grey6;
+  padding: 5px 10px;
+  border-radius: .25rem;
+  cursor: pointer;
+  transition: .2s all linear;
+
+  &:hover, &:focus {
+    color: @color-link-dark;
+    background-color: @color-grey5;
+    text-decoration: none;
+  }
+}

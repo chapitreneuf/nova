@@ -73,7 +73,6 @@
 		<BEFORE>
 			<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
 			<section id="home-rubriques" class="home-rubriques">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RUBRIQUES]" ICON="folder-open" SECTION_ID="home-rubriques" />
 				<div class="home-rubriques__contents">
 		</BEFORE>
 
@@ -103,8 +102,8 @@
 
 		<BEFORE>
 			<div class="home-rubrique">
-				<h3 class="home-rubrique__titre"><a href="[#ID_RUBRIQUE]">[#TITRE]</a></h3>
-				<ul class="toc-contents toc-contents--home-rubrique">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+				<ul class="toc__contents toc__contents--home-rubrique">
 		</BEFORE>
 
 		<DO>

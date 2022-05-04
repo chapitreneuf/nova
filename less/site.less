@@ -16,8 +16,16 @@ body {
   font-family: @font-global;
   background-color: @color-global-bg;
   position: relative;
-  .font-size(1.6);
+  .font-size(m);
 }
+
+// Apply hx font-size
+each(range(6), {
+  h@{value} {
+    @arg: ~"h@{value}";
+    .font-size(@arg);
+  }
+});
 
 hr {
   border-top: 1px solid @color-grey4;
@@ -277,6 +285,10 @@ img {
 
 // HOME
 // ====
+
+.home-billets {
+  .font-size(l);
+}
 
 .home-billet {
   border-bottom: 1px solid @color-border;

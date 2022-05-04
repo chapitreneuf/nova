@@ -1,13 +1,17 @@
-// Font-size safe rem
-// https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
-.font-size(@size-value) {
+// Fonction de définition des font-size.
+// Exemples d'utilisation :
+//  .font-size(xs);
+//  .font-size(1.4);
+.font-size(@size-arg) {
+  @size-value: if(isnumber(@size-arg), @size-arg, @sizes[@@size-arg]);
   @factorized-value: @size-value * @size-factor;
   @rem-value: @factorized-value;
   @px-value: (@factorized-value * 10);
-  font-size: ~"@{px-value}px";
+  font-size: ~"@{px-value}px"; // old browsers
   font-size: ~"@{rem-value}rem";
 }
 
+// Styles de bouton.
 .btn() {
   color: @color-link;
   background-color: @color-grey6;

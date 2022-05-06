@@ -47,22 +47,23 @@
 /**
  * Nav entities : entité parente/précédente/suivante.
  * @param {boolean} [show_buttons] - Afficher les boutons précédent/suivant.
+ * @param {string} [classname] - Classname additionnelle.
  */
-<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons">
+<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons, classname">
 	<!--[ Pour les rubriques annuelles on loope sur la rubrique parente ]-->
 	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
 		<LET VAR="nav_id">[#IDPARENT]</LET>
 	<ELSE />
 		<LET VAR="nav_id">[#ID]</LET>
 	</IF>
-	<nav class="nav-entities">
+	<nav class="nav-entities [#CLASSNAME]">
 		<div class="row">
-			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">9<ELSE/>12</IF> nav-entities-col-parent">
+			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">10<ELSE/>12</IF> nav-entities-col-parent">
 				<!--[ Publications parentes ]-->
 				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 			</div>
 			<IF COND="[#SHOW_BUTTONS]">
-				<div class="hidden-xs col-sm-3 nav-entities-col-siblings">
+				<div class="hidden-xs col-sm-2 nav-entities-col-siblings">
 					<IF COND="[#TYPE] NE 'imageaccroche'">
 						<!--[ Précédent ]-->
 						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
@@ -147,7 +148,7 @@
 
 		<!--[ Traduction ]-->
 		<IF COND="[#DIRECTION] EQ 'previous'">
-			<LET VAR="btn_icon">step-backward</LET>
+			<LET VAR="btn_icon">chevron-left</LET>
 			<SWITCH TEST="[#ENTITY_TYPE]">
 				<DO CASE="numero"><LET VAR="btn_trad">[@NUMERO_PRECEDENT]</LET></DO>
 				<DO CASES="rubrique, rubriqueannuelle"><LET VAR="btn_trad">[@RUBRIQUE_PRECEDENTE]</LET></DO>
@@ -155,7 +156,7 @@
 				<DO CASE="default"><LET VAR="btn_trad">[@DOCUMENT_PRECEDENT]</LET></DO>
 			</SWITCH>
 		<ELSE />
-			<LET VAR="btn_icon">step-forward</LET>
+			<LET VAR="btn_icon">chevron-right</LET>
 			<SWITCH TEST="[#ENTITY_TYPE]">
 				<DO CASE="numero"><LET VAR="btn_trad">[@NUMERO_SUIVANT]</LET></DO>
 				<DO CASES="rubrique, rubriqueannuelle"><LET VAR="btn_trad">[@RUBRIQUE_SUIVANTE]</LET></DO>

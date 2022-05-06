@@ -75,7 +75,7 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="ARTICLE_MAIN">
-	<FUNC NAME="NAV_ENTITIES" />
+	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" />
 	<MACRO NAME="ARTICLE_HEADER" />
 	<MACRO NAME="ARTICLE_BOUTONS" />
 	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
@@ -101,7 +101,7 @@
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="editeurscientifique" SECTION_ID="editors-infos" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" SECTION_ID="translators-infos" />
 	<MACRO NAME="ARTICLE_LICENSE" />
-	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" />
+	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--bottom" />
 </DEFMACRO>
 
 /**

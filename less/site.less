@@ -79,10 +79,24 @@ img {
   height: 16px;
 }
 
-.ariane__list {
-  padding: 1rem 0;
-  background-color: transparent;
+.nav-entities {
+  padding: 1rem;
+}
+
+.nav-entities--top {
   border-bottom: 1px solid @color-border;
+  margin-bottom: 3rem;
+}
+
+.nav-entities--bottom {
+  border-top: 1px solid @color-border;
+  margin-top: 6rem;
+}
+
+.ariane__list {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
 }
 
 .ariane__item a {
@@ -92,6 +106,25 @@ img {
 .ariane__item + .ariane__item::before {
   color: @color-grey-d5;
   content: ">";
+}
+
+.nav-entities-col-siblings {
+  text-align: right;
+}
+
+.nav-entities .row {
+  align-items: baseline;
+}
+
+.nav-entities .icon {
+  width: 20px;
+  height: 20px;
+  opacity: .5;
+  transition: .2s opacity linear;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 // LAYOUT

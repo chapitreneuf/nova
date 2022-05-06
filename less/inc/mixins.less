@@ -14,7 +14,7 @@
 // Styles de bouton.
 .btn() {
   color: @color-link;
-  background-color: @color-grey6;
+  background-color: @color-grey-l2;
   padding: 5px 10px;
   border-radius: .25rem;
   cursor: pointer;
@@ -22,7 +22,36 @@
 
   &:hover, &:focus {
     color: @color-link-dark;
-    background-color: @color-grey5;
+    background-color: @color-grey-l3;
     text-decoration: none;
+  }
+}
+
+// Numérotation des paragraphes
+@numbered-left-padding: 40px;
+.numbered() {
+  @media (min-width : 576px) {
+    & {
+      counter-reset: p; /* Set the p counter to 0 */
+      position: relative;
+      padding-left: @numbered-left-padding;
+    }
+
+    & > p.texte {
+      position: relative;
+      counter-increment: p; /* Increment the p counter */
+    }
+
+    & > p.texte:before {
+      content: counter(p); /* Display the counter */
+      position: absolute;
+      left: -(@numbered-left-padding - 5);
+      font-size: .8em;
+      color: @color-grey-d5;
+    }
+
+    & > ul.texte, & > ol.texte {
+      padding-left: 50px;
+    }
   }
 }

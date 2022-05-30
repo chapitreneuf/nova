@@ -257,18 +257,35 @@
  * Affiche un texte multilingue par onglets
  * @param {string} tab_texte - Texte multilingue
  * @param {string} tab_id - Préfixe pour l'attribut ID des DIV
+ * @param {string} [header_title] - Titre du section_header pour inclusion des tabs (tabs classiques si vide)
+ * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
  */
-<DEFFUNC NAME="BASE_ML_ONGLETS" REQUIRED="tab_texte, tab_id">
+<DEFFUNC NAME="BASE_ML_ONGLETS" REQUIRED="tab_texte, tab_id" OPTIONAL="header_title, section_id">
 	<IF COND="[#TAB_TEXTE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 		<LET VAR="lang_exists">[#SITELANG|in_array([#MATCHES.1])]</LET>
 		<IF COND="[#MATCHES.0|count] GT 1">
-			<ul class="nav nav-tabs" role="tablist">
+			<!--[ Open section header]-->
+			<IF COND="[#HEADER_TITLE]">
+				<IF COND="[#SECTION_ID]">
+					<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
+				</IF>
+				<div class="section-header-container">
+					<h2 [#ID_ATTR] class="section-header">[#HEADER_TITLE]</h2>
+			</IF>
+
+			<!--[ Tabs ]-->
+			<ul class="nav nav-tabs #ADD_CLASSNAME" role="tablist">
 				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 					<li class="nav-item">
 						<a class="nav-link<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> active</IF>" href="#[#TAB_ID]-[#VALUE]" aria-controls="#[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
 					</li>
 				</LOOP>
 			</ul>
+
+			<!--[ Close section header]-->
+			<IF COND="[#HEADER_TITLE]">
+				</div>
+			</IF>
 		</IF>
 		<div class="tab-content">
 			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">

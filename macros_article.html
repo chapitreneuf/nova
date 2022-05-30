@@ -355,12 +355,17 @@
 	<!--[ Résumés ]-->
 	<IF COND="[#RESUME]">
 		<IF COND="[#RESUME|substr_count('<r2r:ml')] GT 1">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUMES]" SECTION_ID="article-abstract" />
+			<LET VAR="header_title">[@RESUMES]</LET>
 		<ELSE/>
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RESUME]" SECTION_ID="article-abstract" />
+			<LET VAR="header_title">[@RESUME]</LET>
 		</IF>
 		<div class="article__abstract">
-			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
+			<IF COND="[%ABSTRACT_LEGACY_TABS]">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#HEADER_TITLE]" SECTION_ID="article-abstract" />
+				<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" />
+			<ELSE/>
+				<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#RESUME]" TAB_ID="abstract" HEADER_TITLE="[#HEADER_TITLE]" SECTION_ID="article-abstract" />
+			</IF>
 		</div>
 	</IF>
 </DEFMACRO>

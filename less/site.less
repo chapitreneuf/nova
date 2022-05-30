@@ -40,15 +40,22 @@ img {
 // UTILS & COMPONENTS
 // ==================
 
-.section-header {
+.section-header-container {
   font-family: @font-section-headers;
   color: @color-grey-d4;
   border-bottom: 4px solid @color-border;
-  text-transform: uppercase;
-  .font-size(m);
-  padding-bottom: 5px;
+  .font-size(s);
   margin-top: 50px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.section-header {
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  margin: 0;
 }
 
 .nav-tabs {
@@ -68,6 +75,21 @@ img {
   border: 1px solid @color-border;
   border-top: none;
   border-radius: 0 0 .25rem .25rem;
+}
+
+// Tabs included in section-header
+.section-header-container .nav-tabs {
+  border: none;
+}
+
+.section-header-container .nav-tabs .nav-link.active {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.section-header-container + .tab-content {
+  padding: 0;
+  border: 0;
 }
 
 .link-is-url {

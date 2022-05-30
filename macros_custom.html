@@ -2,7 +2,7 @@
 
 /**
  * ==========
- * Le template macros_custom est toujours appelé en fin d'inclusions. Il est ainsi possible de redéclarer ici les macros et fonctions des autres templates afin de les écraser. 
+ * Le template macros_custom est toujours appelé en fin d'inclusions. Il est ainsi possible de redéclarer ici les macros et fonctions des autres templates afin de les écraser.
  * Cela permet de personnaliser les sites sans avoir à modifier la maquette de base. Toutes les personnalisations sont ainsi contenues dans le fichier macros_custom, ce qui facilite la maintenance et l'évolution des sites.
  * ==========
  */
@@ -17,6 +17,9 @@
 
 	<!--[ Option : nombre de numeros max affichés dans le menu ]-->
 	<LET VAR="menu_max_issues" GLOBAL="1">10</LET>
+
+	<!--[ Option : utilisation des anciens onglets dans les résumés ]-->
+	<LET VAR="abstract_legacy_tabs" GLOBAL="1"></LET>
 
 	<!--[ Option : chemin vers un script supplémentaire ]-->
 	<LET VAR="custom_script_path" GLOBAL="1" ></LET>

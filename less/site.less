@@ -150,6 +150,27 @@ img {
   }
 }
 
+.page-shortcuts {
+  line-height: 1.5;
+  margin: 20px 0;
+}
+
+.page-shortcuts__item {
+  display: inline-block;
+  margin-right: 10px;
+
+  &::after {
+    content: "|";
+    display: inline-block;
+    margin-left: 10px;
+    color: @color-border;
+  }
+}
+
+.page-shortcuts__item:last-child::after {
+  content: none;
+}
+
 // LAYOUT
 // ======
 

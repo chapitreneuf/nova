@@ -84,7 +84,7 @@
 			<MACRO NAME="ARTICLE_BOUTONS" />
 		</div>
 	</div>
-	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+	<IF COND="[%ARTICLE_DISPLAY_SHORTCUTS] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<MACRO NAME="ARTICLE_RACCOURCIS" />
 	</IF>
 	<MACRO NAME="ARTICLE_INFO_BM" />

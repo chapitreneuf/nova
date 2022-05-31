@@ -76,8 +76,14 @@
  */
 <DEFMACRO NAME="ARTICLE_MAIN">
 	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" />
-	<MACRO NAME="ARTICLE_HEADER" />
-	<MACRO NAME="ARTICLE_BOUTONS" />
+	<div class="row">
+		<div class="col-md-9">
+			<MACRO NAME="ARTICLE_HEADER" />
+		</div>
+		<div class="col-md-3">
+			<MACRO NAME="ARTICLE_BOUTONS" />
+		</div>
+	</div>
 	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<MACRO NAME="ARTICLE_RACCOURCIS" />
 	</IF>
@@ -223,85 +229,68 @@
  * Boutons du header (facsimilé, print, partage).
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS">
-	<IF COND="[#TEXTE_ACCESSIBLE]" />
-		<div class="article__buttons">
-			<ul class="article__buttons-list nav nav-pills">
-				<!--[ Bouton fac-similé ]-->
-				<MACRO NAME="ARTICLE_BOUTON_PDF" />
-				<!--[ Bouton de téléchargement de la TEI ]-->
-				<MACRO NAME="ARTICLE_BOUTON_TEI" />
-				<!--[ Boutons de partage ]-->
-				<MACRO NAME="ARTICLE_LIENS_PARTAGE" />
-			</ul>
-		</div>
-	</IF>
+	<div class="article-buttons">
+		<!--[ Boutons de partage ]-->
+		<MACRO NAME="ARTICLE_BOUTONS_PARTAGE" />
+
+		<!--[ Citer cet article ]-->
+		<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+			<div class="article-buttons__reference">
+				<h2>[@CITATION]</h2>
+				<a href="#">[@POUR_CITER]</a>
+			</div>
+		</IF>
+
+		<!--[ Formats detachables ]-->
+		<IF COND="[#TEXTE_ACCESSIBLE]" />
+			<div class="article-buttons__download">
+				<h2>[@TELECHARGER]</h2>
+				<MACRO NAME="ARTICLE_BOUTONS_PDF" />
+				<MACRO NAME="ARTICLE_BOUTONS_TEI" />
+			</div>
+		</IF>
+	</div>
 </DEFMACRO>
 
 /**
  * Bouton de téléchargement du PDF.
  */
-<DEFMACRO NAME="ARTICLE_BOUTON_PDF">
+<DEFMACRO NAME="ARTICLE_BOUTONS_PDF">
 	<IF COND="[#ALTERFICHIER]"/>
-		<li class="article__button article__button--facsimile">
-			<a role="button" href="[#ID|makeurlwithid|query_string('file', '1')]">
-				<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="[@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])" />
-			</a>
-		</li>
+		<a href="[#ID|makeurlwithid|query_string('file', '1')]"><FUNC NAME="BASE_ICON" ICON="facsimile" /> [@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>
 	<ELSEIF COND="[#PDFGEN_URL] AND [#STATUS] GT 0"/>
-		<li class="article__button article__button--facsimile article__button--pdfgen">
-			<a role="button" href="[#PDFGEN_URL]">
-				<!--[ On n'affiche la traduction que si disponible (retrocompatibilité) ]-->
-				<IF COND="[@TELECHARGER_PDF] AND [@TELECHARGER_PDF] NE '@telecharger_pdf'">
-					<FUNC NAME="BASE_ICON" ICON="facsimile" TITLE="[@TELECHARGER_PDF]" />
-				<ELSE />
-					<FUNC NAME="BASE_ICON" ICON="facsimile" />
-				</IF>
-			</a>
-		</li>
+		<a href="[#PDFGEN_URL]">[@TELECHARGER_PDF]</a>
 	</IF>
 </DEFMACRO>
 
 /**
  * Bouton de téléchargement de la TEI.
  */
-<DEFMACRO NAME="ARTICLE_BOUTON_TEI">
-	<LOOP NAME="article_bouton_tei"
-		TABLE="fichiers"
-		WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = 'tei' AND document != ''"
-		ORDER="rank"
-		LIMIT="0,1">
-		<li class="article__button article__button--tei">
-			<a href="[#ID|makeurlwithfile]">
-				<FUNC NAME="BASE_ICON" ICON="xml-tei" TITLE="XML TEI" />
-			</a>
-		</li>
+<DEFMACRO NAME="ARTICLE_BOUTONS_TEI">
+	<LOOP NAME="article_boutons_tei" TABLE="fichiers" WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = 'tei' AND document != ''" ORDER="rank" LIMIT="0,1">
+		<a href="[#ID|makeurlwithfile]">[@TELECHARGER_TEI]</a>
 	</LOOP>
 </DEFMACRO>
 
 /**
  * Boutons de partage.
  */
-<DEFMACRO NAME="ARTICLE_LIENS_PARTAGE">
-	<li class="article__button article__button--social article__button--social--break">
+<DEFMACRO NAME="ARTICLE_BOUTONS_PARTAGE">
+	<h2>[@PARTAGER]</h2>
+	<div class="article-buttons__partage">
 		<a href="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut]" title="Facebook" target="_blank">
-			<FUNC NAME="BASE_ICON" ICON="facebook-square" TITLE="Facebook" />
+			<FUNC NAME="BASE_ICON" ICON="facebook" TITLE="Facebook" />
 		</a>
-	</li>
-	<li class="article__button article__button--social">
 		<a href="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Twitter">
 			<FUNC NAME="BASE_ICON" ICON="twitter" TITLE="Twitter" />
 		</a>
-	</li>
-	<li class="article__button article__button--social">
 		<a href="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim]" target="_blank" title="LinkedIn">
 			<FUNC NAME="BASE_ICON" ICON="linkedin" TITLE="LinkedIn" />
 		</a>
-	</li>
-	<li class="article__button article__button--social">
 		<a href="mailto:?subject=[#TITRE|textebrut]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Email">
-			<FUNC NAME="BASE_ICON" ICON="envelope" TITLE="Email" />
+			<FUNC NAME="BASE_ICON" ICON="mail" TITLE="Email" />
 		</a>
-	</li>
+	</div>
 </DEFMACRO>
 
 /**

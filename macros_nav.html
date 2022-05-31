@@ -181,12 +181,12 @@
 		<LET VAR="autofocus">autofocus</LET>
 	</IF>
 	<form class="search-form" action="./" method="get">
+		<input name="page" type="hidden" value="search" />
 		<div class="input-group input-group-lg">
-			<input name="page" type="hidden" value="search" />
 			<input name="query" type="text" class="form-control" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit"><FUNC NAME="BASE_ICON" ICON="search" /></button>
-			</span>
+			<div class="input-group-append">
+				<button class="btn" type="submit"><FUNC NAME="BASE_ICON" ICON="search" /></button>
+			</div>
 		</div>
 	</form>
 </DEFFUNC>

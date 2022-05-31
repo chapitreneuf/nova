@@ -25,7 +25,7 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="IMAGE_MAIN">
-	<FUNC NAME="NAV_ENTITIES" />
+	<FUNC NAME="NAV_ENTITIES" CLASSNAME="nav-entities--top" />
 	<MACRO NAME="IMAGE_TITLE" />
 	<MACRO NAME="IMAGE_THUMBNAIL" />
 	<MACRO NAME="IMAGE_CAPTION" />
@@ -40,7 +40,7 @@
  */
 <DEFMACRO NAME="IMAGE_THUMBNAIL">
 	<IF COND="[#IMAGE]">
-		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette(480)]" /></a>
+		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette(800)]" /></a>
 	</IF>
 </DEFMACRO>
 

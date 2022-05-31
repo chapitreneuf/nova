@@ -49,7 +49,7 @@
  */
 <DEFMACRO NAME="NUMEROS_ISSUE">
 	<!--[ Image d'accroche ]-->
-	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" /></LET>
+	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="400" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" /></LET>
 
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
@@ -73,7 +73,7 @@
 
 			<IF COND="[#IMG_ACCROCHE]">
 				<div class="issue__accroche-col col-md-4">
-					<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="300" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
+					[#IMG_ACCROCHE]
 				</div>
 			</IF>
 

@@ -15,11 +15,11 @@
  */
 <DEFMACRO NAME="PUBLICATION_MAIN">
 	<IF COND="[#IDPARENT] NE 0">
-		<FUNC NAME="NAV_ENTITIES" />
+		<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" />
 	</IF>
 	<MACRO NAME="PUBLICATION_PUBLI" />
 	<IF COND="[#IDPARENT] NE 0">
-		<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" />
+		<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--bottom" />
 	</IF>
 </DEFMACRO>
 
@@ -40,7 +40,7 @@
  */
 <DEFFUNC NAME="PUBLICATION_HEADER" OPTIONAL="cliquable">
 	<!--[ Image d'accroche ]-->
-	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche" /></LET>
+	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="400" CLASSNAME="publi__accroche" HREF="self" /></LET>
 
 	<header class="publi__header">
 		<div class="row">

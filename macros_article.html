@@ -575,14 +575,13 @@
 		LIMIT="0,1">
 
 		<IF COND="[#VIGNETTE]">
-			<LET VAR="accroche">[#VIGNETTE|vignette(350)]</LET>
+			<LET VAR="accroche">[#VIGNETTE|vignette(400)]</LET>
 		<ELSE/>
-			<LET VAR="accroche">[#DOCUMENT|vignette(350)]</LET>
+			<LET VAR="accroche">[#DOCUMENT|vignette(400)]</LET>
 		</IF>
 		<div class="article__accroche">
 			<a href="[#ID|makeurlwithid]">
 				<img alt="[#TITRE|textebrut]" src="[#ACCROCHE|trim]" />
-				<p class="article__accroche-lien accroche-lien">[@AFFICHER_ACCROCHE]</p>
 			</a>
 			<IF COND="[#CREDITS]">
 				<p class="article__accroche-credits accroche-credits">[#CREDITS]</p>

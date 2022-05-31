@@ -134,6 +134,10 @@ window.fnLoader = {
 
     // Generation des dots-shortcuts
     dotShortcuts: function() {
+      if (!window.activateDotShortcuts) {
+        return;
+      }
+
       function waitAndRun() {
         $(".dot-shortcut").remove();
         var documentHeight = $(document).height();

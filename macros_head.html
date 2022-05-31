@@ -298,6 +298,13 @@
 	<!--[ Largetable ]-->
 	<link href="[%DIR_VENDOR]/largetable/largetable.css" rel="stylesheet">
 
+	<!--[ Dot-shortcuts ]-->
+	<IF COND="[%DOT_SHORTCUTS]">
+		<script>
+			window.activateDotShortcuts = true;
+		</script>
+	</IF>
+
 	<!--[ Site ]-->
 	<IF COND="[%DEV_MODE_ACTIVE]">
 		<!--[ Execution de LESS dans le navigateur pour le développement.

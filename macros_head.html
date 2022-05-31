@@ -3,7 +3,7 @@
 /**
  * Macro principale appelée par les templates pour consituer le head.
  */
-<DEFMACRO NAME="HEAD_MAIN">	
+<DEFMACRO NAME="HEAD_MAIN">
 	<MACRO NAME="HEAD_METADONNEES" />
 	<MACRO NAME="HEAD_INSERT_CSS" />
 	<MACRO NAME="HEAD_INSERT_RSS" />
@@ -31,12 +31,12 @@
 		<!--[ Variables utiles ]-->
 		<LET VAR="titre_complet"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#TITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#SOUSTITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
 		<LET VAR="titresite_complet"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
-	
+
 		<!--[ Dates ]-->
 		<LET VAR="publication_date"></LET>
 		<LET VAR="online_date"></LET>
 		<LET VAR="modification_date"></LET>
-	
+
 		<IF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" >
 			<LET VAR="publication_date">[#DATEMISENLIGNE]</LET>
 			<LET VAR="online_date">[#DATEMISENLIGNE]</LET>
@@ -153,7 +153,7 @@
 	<IF COND="[#PUBLICATION_DATE]">
 		<meta name="citation_publication_date" content="[#PUBLICATION_DATE|formateddate('%Y/%m/%d')]" />
 	</IF>
-	
+
 	<IF COND="[#ONLINE_DATE]">
 		<meta name="citation_online_date" content="[#ONLINE_DATE|formateddate('%Y/%m/%d')]" />
 	</IF>
@@ -194,7 +194,7 @@
 		https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
 		https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar
 	]-->
-	
+
 	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
 		<meta name="citation_doi" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
 	</IF>
@@ -300,10 +300,13 @@
 
 	<!--[ Site ]-->
 	<IF COND="[%DEV_MODE_ACTIVE]">
-		<!--[ Execution de LESS dans le navigateur pour le développement. 
+		<!--[ Execution de LESS dans le navigateur pour le développement.
 		NE PAS UTILISER EN PRODUCTION ! ]-->
 		<link rel="stylesheet/less" type="text/css" href="tpl/less/site.less" />
-		<script>less = { env: 'development', modifyVars: { webfontsDir: '../public/webfonts' } };</script>
+		<script>
+			window.devMode = true;
+			less = { env: 'development', modifyVars: { webfontsDir: '../public/webfonts' } };
+		</script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.2/less.min.js" type="text/javascript"></script>
 	<ELSE />
 		<!--[ Mode normal : on sert les CSS précompilées. ]-->
@@ -317,7 +320,7 @@
 <DEFMACRO NAME="HEAD_INSERT_JS">
 	<!--[ jQuery ]-->
 	<script src="[%DIR_VENDOR]/jquery/jquery.slim.min.js"></script>
-		
+
 	<!-- Bootstrap -->
 	<script src="[%DIR_VENDOR]/bootstrap/js/bootstrap.bundle.min.js"></script>
 

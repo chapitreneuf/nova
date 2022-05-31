@@ -132,6 +132,37 @@ window.fnLoader = {
       });
     },
 
+    // Generation des dots-shortcuts
+    dotShortcuts: function() {
+      function waitAndRun() {
+        $(".dot-shortcut").remove();
+        var documentHeight = $(document).height();
+        var viewportHeight = $(window).height();
+        var $targets = $("h2.section-header[id]");
+        $targets.each(function () {
+          var id = $(this).attr("id");
+          var title = $(this).text().trim();
+          var top = $(this).offset().top;
+          var y = (top / documentHeight) * viewportHeight;
+          $("<a class='dot-shortcut' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-hidden='true'></a>").appendTo("body");
+        });
+
+      }
+
+      // Run when page is ready + when all images are loaded + on viewport resize
+      $(function() {
+        if (devMode) {
+          // In dev mode, wait for less to be ready
+          window.setTimeout(waitAndRun, 1000);
+        } else {
+          waitAndRun();
+        }
+      });
+      onImagesLoaded(waitAndRun);
+      $(window).on("resize", waitAndRun);
+      $(document).on("zoomLevelChanged", waitAndRun);
+    },
+
     // Generation des page-shortcuts
     pageShortcuts: function () {
       $(function () {

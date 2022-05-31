@@ -356,10 +356,22 @@
 						<LET VAR="href">[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]</LET>
 					<ELSEIF COND="[#DOCUMENT]" />
 						<LET VAR="href">[#ID|makeurlwithfile]</LET>
+					<ELSEIF COND="[#URLACCESMEDIA]" />
+						<LET VAR="href">[#URLACCESMEDIA]</LET>
+					<ELSEIF COND="[#URLMEDIA]" />
+						<LET VAR="href">[#URLMEDIA]</LET>
 					</IF>
+
 					<IF COND="[#VIGNETTE]">
+						<IF COND="[#HREF]">
+							<a href="[#HREF]">
+						</IF>
 						<img class="toc__vignette" src="[#VIGNETTE|vignette(300)]" alt="[#TITRE|textebrut]" />
+						<IF COND="[#HREF]">
+							</a>
+						</IF>
 					</IF>
+					
 					<p class="toc__title">
 						<!--[ Lien ]-->
 						<IF COND="[#TYPE] EQ 'lienannexe' AND [#URL]">
@@ -367,10 +379,8 @@
 						<!--[ Fichier ]-->
 						<ELSEIF COND="[#DOCUMENT]" />
 							<a href="[#HREF]">[#TITRE]</a> <span class="toc__additional-info">([#DOCUMENT|getFileMime]&nbsp;| [#DOCUMENT|nicefilesize])</span>
-						<ELSEIF COND="[#URLACCESMEDIA]" />
-							<a href="[#URLACCESMEDIA]">[#TITRE]</a> <span class="toc__additional-info">([#URLACCESMEDIA])</span>
-						<ELSEIF COND="[#URLMEDIA]" />
-							<a href="[#URLMEDIA]">[#TITRE]</a> <span class="toc__additional-info">([#URLMEDIA])</span>
+						<ELSEIF COND="[#HREF]" />
+							<a href="[#HREF]">[#TITRE]</a> <span class="toc__additional-info">([#HREF])</span>
 						<ELSE />
 							[#TITRE]
 						</IF>

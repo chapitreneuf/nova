@@ -9,7 +9,7 @@
 
 /**
  * Initialisation des macros spécifiques au site.
- * Cette macro est appelée en dernier lors de l'initialisation des page. Elle permet donc d'écraser n'importe quelle variable.
+ * Cette macro est appelée en dernier lors de l'initialisation des age. Elle permet donc d'écraser n'importe quelle variable.
  */
 <DEFMACRO NAME="CUSTOM_INIT">
 	<!--[ Option : chemin vers le logo du site. Quand cette variable n'est pas définie le titre du site s'affiche à la place du logo ]-->
@@ -26,6 +26,11 @@
 
 	<!--[ Option : chemin vers un script supplémentaire ]-->
 	<LET VAR="custom_script_path" GLOBAL="1" ></LET>
+
+	<!--[ Option : afficher la barre latérale droite sur toutes les pages sauf les articles ]-->
+	<!--[
+		<LET VAR="side_contents" GLOBAL="1"><IF COND="[#VIEW.TPL] NE 'article'">1</IF></LET>
+	]-->
 
 	<!--[ Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION ! ]-->
 	<LET VAR="dev_mode" GLOBAL="1"></LET>

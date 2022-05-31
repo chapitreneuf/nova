@@ -21,19 +21,17 @@
 	<!--[ Option : utilisation des anciens onglets dans les résumés ]-->
 	<LET VAR="abstract_legacy_tabs" GLOBAL="1"></LET>
 
+	<!--[ Option : définition des pages sur lesquelles afficher la barre latérale à droite ]-->
+	<LET VAR="side_contents" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'index'">1</IF></LET>
+
 	<!--[ Option : définition des pages sur lesquelles afficher les raccourcis "points" ]-->
 	<LET VAR="dot_shortcuts" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'article'">1</IF></LET>
 
-	<!--[ Option : affichage des raccourcis dans les articles ]-->
+	<!--[ Option : affichage des anciens raccourcis dans les articles ]-->
 	<LET VAR="article_display_shortcuts" GLOBAL="1"></LET>
 
 	<!--[ Option : chemin vers un script supplémentaire ]-->
 	<LET VAR="custom_script_path" GLOBAL="1" ></LET>
-
-	<!--[ Option : afficher la barre latérale droite sur toutes les pages sauf les articles ]-->
-	<!--[
-		<LET VAR="side_contents" GLOBAL="1"><IF COND="[#VIEW.TPL] NE 'article'">1</IF></LET>
-	]-->
 
 	<!--[ Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION ! ]-->
 	<LET VAR="dev_mode" GLOBAL="1"></LET>

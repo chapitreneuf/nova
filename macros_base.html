@@ -274,7 +274,7 @@
 			</IF>
 
 			<!--[ Tabs ]-->
-			<ul class="nav nav-tabs #ADD_CLASSNAME" role="tablist">
+			<ul class="nav nav-tabs" role="tablist">
 				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 					<li class="nav-item">
 						<a class="nav-link<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> active</IF>" href="#[#TAB_ID]-[#VALUE]" aria-controls="#[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
@@ -287,7 +287,7 @@
 				</div>
 			</IF>
 		</IF>
-		<div class="tab-content">
+		<div class="tab-content tab-content--count-[#MATCHES.0|count]">
 			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 				<LET VAR="tab_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#VALUE]"/></LET>
 				<div role="tabpanel" id="[#TAB_ID]-[#VALUE]" class="tab-pane lang-[#VALUE] dir-[#TAB_DIR]<IF COND="!((![#LANG_EXISTS] AND [#KEY] GT 0) OR ([#LANG_EXISTS] AND [#VALUE] NE [#SITELANG]))"> active</IF>" lang="[#VALUE]" xml:lang="[#VALUE]">

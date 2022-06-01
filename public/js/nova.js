@@ -165,7 +165,10 @@ window.fnLoader = {
 
       // Run when page is ready + when all images are loaded + on viewport resize
       $(function() {
-        var $container = $("<div class='dot-shortcuts-container'></div>").appendTo("body");
+        var $lodelContainer = $("#lodel-container");
+        var $root = $lodelContainer.length === 0 ? $("body") : $lodelContainer;
+        $("<div class='dot-shortcuts-placeholder'><div class='dot-shortcuts-container'></div></div>").appendTo($root);
+        var $container = $(".dot-shortcuts-container");
 
         if (devMode) {
           // In dev mode, wait for less to be ready

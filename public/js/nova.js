@@ -134,7 +134,8 @@ window.fnLoader = {
 
     // Generation des dots-shortcuts
     dotShortcuts: function() {
-      if (!window.activateDotShortcuts) {
+      var activate = window.activateDotShortcuts;
+      if (!activate || activate === "none") {
         return;
       }
 
@@ -150,17 +151,21 @@ window.fnLoader = {
         var viewportHeight = $(window).height() - (scrollbarArrowHeight * 2);
 
         // Main title
-        addDot(10, "main-header", $("main-title").text(), "dot-shortcut--top");
+        if (activate === "all" || activate === "top") {
+          addDot(10, "main-header", $("main-title").text(), "dot-shortcut--top");
+        }
 
         // Page sections
-        var $targets = $("h2.section-header[id]");
-        $targets.each(function () {
-          var id = $(this).attr("id");
-          var title = $(this).text().trim();
-          var top = $(this).offset().top;
-          var y = ((top / documentHeight) * viewportHeight) + scrollbarArrowHeight;
-          addDot(y, id, title, "dot-shortcut--section");
-        });
+        if (activate === "all" || activate === "sections") {
+          var $targets = $("h2.section-header[id]");
+          $targets.each(function () {
+            var id = $(this).attr("id");
+            var title = $(this).text().trim();
+            var top = $(this).offset().top;
+            var y = ((top / documentHeight) * viewportHeight) + scrollbarArrowHeight;
+            addDot(y, id, title, "dot-shortcut--section");
+          });
+        }
       }
 
       // Run when page is ready + when all images are loaded + on viewport resize

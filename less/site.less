@@ -192,60 +192,67 @@ img {
 
 // Dot shortcuts
 .dot-shortcuts-placeholder {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 40px;
+  display: none;
 }
 
-.dot-shortcuts-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 40px;
-}
-
-.dot-shortcut {
-  position: absolute;
-  right: 10px;
-  opacity: 0;
-  transition: background-color .2s linear, opacity .4s ease-in;
-}
-
-@supports (position: sticky) or (position: -webkit-sticky) {
-  .dot-shortcuts-container {
-    position: -webkit-sticky;
-    position: sticky;
+@media (min-width: @screen-xs) and (min-height: 500px) and (hover: hover) {
+  .dot-shortcuts-placeholder {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 40px;
   }
-}
 
-.dot-shortcut--top {
-  height : 0;
-  width : 0;
-  border-right : 5px solid transparent;
-  border-bottom : 9px solid @color-dot-shortcut;
-  border-left : 5px solid transparent;
-}
+  .dot-shortcuts-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 40px;
+  }
 
-.dot-shortcut--top:hover {
-  border-bottom-color: @color-dot-shortcut-hover;
-}
+  .dot-shortcut {
+    position: absolute;
+    right: 10px;
+    opacity: 0;
+    transition: background-color .2s linear, opacity .4s ease-in;
+  }
 
-.dot-shortcut--section {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: @color-dot-shortcut;
-}
+  @supports (position: sticky) or (position: -webkit-sticky) {
+    .dot-shortcuts-container {
+      position: -webkit-sticky;
+      position: sticky;
+    }
+  }
 
-.dot-shortcut--section:hover {
-  background-color: @color-dot-shortcut-hover;
-}
+  .dot-shortcut--top {
+    height : 0;
+    width : 0;
+    border-right : 5px solid transparent;
+    border-bottom : 9px solid @color-dot-shortcut;
+    border-left : 5px solid transparent;
+  }
 
-.dot-shortcuts-container:hover .dot-shortcut, .dot-shortcuts-container.visible .dot-shortcut {
-  opacity: 1;
+  .dot-shortcut--top:hover {
+    border-bottom-color: @color-dot-shortcut-hover;
+  }
+
+  .dot-shortcut--section {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: @color-dot-shortcut;
+  }
+
+  .dot-shortcut--section:hover {
+    background-color: @color-dot-shortcut-hover;
+  }
+
+  .dot-shortcuts-container:hover .dot-shortcut, .dot-shortcuts-container.visible .dot-shortcut {
+    opacity: 1;
+  }
 }
 
 // LAYOUT

@@ -10,6 +10,7 @@
 html {
   font-size: 62.5%; // https://snook.ca/archives/html_and_css/font-size-with-rem
   font-family: @font-global;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -181,14 +182,27 @@ img {
 }
 
 // Dot shortcuts
-.dot-shortcut {
+.dot-shortcuts-container {
   position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 40px;
+}
+
+.dot-shortcut {
+  position: absolute;
   right: 10px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background-color: @color-grey-l4;
-  transition: background-color .2s linear;
+  transition: background-color .2s linear, opacity .4s ease-in;
+  opacity: 0;
+}
+
+.dot-shortcuts-container:hover .dot-shortcut, .dot-shortcuts-container.visible .dot-shortcut {
+  opacity: 1;
 }
 
 .dot-shortcut:hover {

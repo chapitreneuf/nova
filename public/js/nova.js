@@ -139,6 +139,7 @@ window.fnLoader = {
       }
 
       function waitAndRun() {
+        const $container = $(".dot-shortcuts-container");
         $(".dot-shortcut").remove();
         var scrollbarArrowHeight = 15;
         var documentHeight = $(document).height();
@@ -149,22 +150,41 @@ window.fnLoader = {
           var title = $(this).text().trim();
           var top = $(this).offset().top;
           var y = ((top / documentHeight) * viewportHeight) + scrollbarArrowHeight;
-          $("<a class='dot-shortcut' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-hidden='true'></a>").appendTo("body");
+          $("<a class='dot-shortcut' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-hidden='true'></a>").appendTo($container);
         });
       }
 
       // Run when page is ready + when all images are loaded + on viewport resize
       $(function() {
+        var $container = $("<div class='dot-shortcuts-container'></div>").appendTo("body");
+
         if (devMode) {
           // In dev mode, wait for less to be ready
           window.setTimeout(waitAndRun, 1000);
         } else {
           waitAndRun();
         }
+        onImagesLoaded(waitAndRun);
+        $(window).on("resize", waitAndRun);
+        $(document).on("zoomLevelChanged", waitAndRun);
+
+        // Display on hover and scroll events
+        var timeoutId;
+        function hideContainer() {
+          $container.removeClass("visible");
+          timeoutId = undefined;
+        }
+        function displayContainer() {
+          if (timeoutId) {
+            window.clearTimeout(timeoutId);
+          } else {
+            $container.addClass("visible");
+          }
+          timeoutId = window.setTimeout(hideContainer, 1000);
+        }
+        $(window).on("scroll", displayContainer);
+        $container.hover(displayContainer);
       });
-      onImagesLoaded(waitAndRun);
-      $(window).on("resize", waitAndRun);
-      $(document).on("zoomLevelChanged", waitAndRun);
     },
 
     // Generation des page-shortcuts

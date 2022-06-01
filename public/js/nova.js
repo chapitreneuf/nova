@@ -138,19 +138,28 @@ window.fnLoader = {
         return;
       }
 
-      function waitAndRun() {
+      function addDot(y, id, title, classname) {
         const $container = $(".dot-shortcuts-container");
+        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-hidden='true'></a>").appendTo($container);
+      }
+
+      function waitAndRun() {
         $(".dot-shortcut").remove();
         var scrollbarArrowHeight = 15;
         var documentHeight = $(document).height();
         var viewportHeight = $(window).height() - (scrollbarArrowHeight * 2);
+
+        // Main title
+        addDot(10, "main-header", $("main-title").text(), "dot-shortcut--top");
+
+        // Page sections
         var $targets = $("h2.section-header[id]");
         $targets.each(function () {
           var id = $(this).attr("id");
           var title = $(this).text().trim();
           var top = $(this).offset().top;
           var y = ((top / documentHeight) * viewportHeight) + scrollbarArrowHeight;
-          $("<a class='dot-shortcut' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-hidden='true'></a>").appendTo($container);
+          addDot(y, id, title, "dot-shortcut--section");
         });
       }
 

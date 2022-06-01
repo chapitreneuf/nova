@@ -28,7 +28,17 @@ window.fnLoader = {
     initLargetable: function () {
       $(function () {
         if (!$("body").hasClass("class-textes")) return;
-        $(".article__text table").largetable({ enableMaximize: true });
+
+        function waitAndRun() {
+          $(".article__text table").largetable({ enableMaximize: true });
+        }
+
+        if (devMode) {
+          // In dev mode, wait for less to be ready
+          window.setTimeout(waitAndRun, 1000);
+        } else {
+          waitAndRun();
+        }
       });
     },
 

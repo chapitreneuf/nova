@@ -262,7 +262,7 @@ img {
 }
 
 @media (min-width: @screen-lg) {
-  .main-header, .main-container, .main-footer {
+  .topbar, .main-header, .main-container, .main-footer {
     max-width: @screen-lg;
   }
 }
@@ -273,13 +273,8 @@ img {
   padding-right: 50px;
 }
 
-// MAIN HEADER
-// ===========
-
-.main-header {
-  background-color: @color-header-bg;
-  color: @color-header;
-}
+// SKIP TO CONTENT
+// ===============
 
 .skip-to-content {
   background: @color-link;
@@ -306,6 +301,57 @@ img {
 .skip-to-content:hover {
   color: @color-link-contrast;
   text-decoration: underline;
+}
+
+// TOPBAR
+// ======
+
+.topbar {
+  padding: 10px 0;
+  .font-size(m);
+}
+
+.topbar a {
+  color: @color-topbar-link;
+}
+
+.topbar a:hover {
+  color: @color-topbar-link-hover;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.topbar .navbar-nav {
+  margin-left: auto;
+}
+
+.topbar .nav-item {
+  margin: 5px 0;
+  padding: 0 10px;
+}
+
+.topbar .nav-item + .nav-item {
+  border-left: 1px solid @color-border;
+}
+
+.topbar .nav-link {
+  line-height: 1.2;
+  padding: 2px 10px;
+}
+
+.topbar .dropdown-menu {
+  .font-size(m);
+  border: 1px solid @color-border;
+  border-radius: 0;
+  margin-top: 10px;
+}
+
+// MAIN HEADER
+// ===========
+
+.main-header {
+  background-color: @color-header-bg;
+  color: @color-header;
 }
 
 .site-logo-container {

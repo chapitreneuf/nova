@@ -1,0 +1,70 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Macro principale d'affichage du menu appelée par les templates.
+ */
+<DEFMACRO NAME="TOPBAR_MAIN">
+	<nav id="topbar" class="topbar container navbar navbar-expand-lg">
+		<ul class="navbar-nav">
+			<MACRO NAME="TOPBAR_BRAND"/>
+			<MACRO NAME="TOPBAR_SITELANG"/>
+		</ul>
+	</nav>
+</DEFMACRO>
+
+/**
+ * Nom du diffuseur du site.
+ */
+<DEFMACRO NAME="TOPBAR_BRAND">
+	<IF COND="[%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
+		<li class="nav-item">
+			<a class="nav-link brand-link" href="[%URLDIFFUSEURSITE]">[%DIFFUSEURSITE]</a>
+		</li>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Sélecteur de langue (pour les visiteurs non identifiés ou les visiteurs access membre seulement).
+ */
+<DEFMACRO NAME="TOPBAR_SITELANG">
+	<IF COND="[#LODELUSER.RIGHTS] LE 5">
+		<LOOP NAME="menu_lang" TABLE="translations" SELECT="lang, title" ORDER="rank">
+			<BEFORE>
+				<IF COND="[#NBRESULTS] GT 1">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+							<LOOP NAME="menu_lang_current" TABLE="translations" SELECT="title" WHERE="lang EQ '[#SITELANG]'">
+								<DO>
+									[#TITLE]
+								</DO>
+								<ALTERNATIVE>
+									[#SITELANG|humanlang|defaultvalue([#SITELANG])]
+								</ALTERNATIVE>
+							</LOOP>
+						</a>
+						<!--[ TODO: vartrads ]-->
+						<div class="dropdown-menu" aria-label="[@SELECT_LANG]">
+				</IF>
+			</BEFORE>
+			<DO>
+				<IF COND="[#NBRESULTS] GT 1">
+					<IF COND="[#SITELANG] EQ [#LANG]">
+						<a class="dropdown-item disabled">
+							[#TITLE]
+						</a>
+					<ELSE />
+						<a class="dropdown-item" href="[#CURRENTURL_FIXED|query_string('lang', [#LANG])]">
+							[#TITLE]
+						</a>
+					</IF>
+				</IF>
+			</DO>
+			<AFTER>
+				<IF COND="[#NBRESULTS] GT 1">
+						</li>
+					</div>
+				</IF>
+			</AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>

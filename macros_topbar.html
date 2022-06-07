@@ -7,8 +7,8 @@
 	<nav id="topbar" class="topbar container navbar navbar-expand-lg">
 		<ul class="navbar-nav">
 			<MACRO NAME="TOPBAR_BRAND"/>
-			<MACRO NAME="TOPBAR_SITELANG"/>
 			<MACRO NAME="TOPBAR_LINKS"/>
+			<MACRO NAME="TOPBAR_SITELANG"/>
 		</ul>
 	</nav>
 </DEFMACRO>
@@ -74,13 +74,20 @@
  * Liens vers les réseaux sociaux.
  */
 <DEFMACRO NAME="TOPBAR_LINKS">
+	<!--[ Find SVG icons in public/icons/ ]-->
+	<LET VAR="glob_expression">./tpl/public/icons/*.svg</LET>
+	<LET ARRAY="svg_icons" GLOBAL="1"></LET>
+	<LOOP NAME="foreach" ARRAY="[#GLOB_EXPRESSION|glob]">
+		<LET ARRAY="svg_icons[]" GLOBAL="1">[#VALUE|replace('./tpl/public/icons/', '')|replace('.svg', '')]</LET>
+	</LOOP>
+
 	<LOOP NAME="topbar_links" TABLE="publications" WHERE="identifier IN ('topbar', 'reseaux-sociaux', 'reseauxsociaux')" SELECT="id" LIMIT="0,1">
 		<LOOP NAME="topbar_links_items" TABLE="liens" WHERE="idparent = '[#ID]'" SELECT="identifier, titre, altertitre, url, vignette" ORDER="rank">
 			<li class="nav-item">
 				<a class="nav-link" href="[#URL]">
 					<IF COND="[#VIGNETTE]">
 						<img src="[#VIGNETTE|vignette(200)]" class="topbar-icon topbar-icon--identifier-[#IDENTIFIER|strtolower]" alt="[#TITRE]" title="[#TITRE]" />
-					<ELSEIF COND="[#IDENTIFIER] EQ 'facebook' OR [#IDENTIFIER] EQ 'twitter' OR [#IDENTIFIER] EQ 'linkedin'">
+					<ELSEIF COND="[#IDENTIFIER|in_array([%SVG_ICONS])]">
 						<FUNC NAME="BASE_ICON" ICON="[#IDENTIFIER]" TITLE="[#TITRE]" CLASSNAME="topbar-icon topbar-icon--identifier-[#IDENTIFIER|strtolower]" />
 					<ELSE/>
 						<FUNC NAME="BASE_ML_TITRE" />

@@ -573,12 +573,35 @@ img {
 // PUBLICATION
 // ===========
 
-.publi-title-text {
-  display: block;
+.publi__accroche {
+  float: right;
+  clear: right;
+  max-width: 33%;
+  min-width: 100px;
 }
 
 .accroche__img {
   border: 1px solid @color-border;
+}
+
+.publi__header {
+  font-family: @font-1;
+}
+
+.main-title .publi-number {
+  font-size: 60%;
+}
+
+.publi-title-text {
+  display: block;
+}
+
+.publi__introduction {
+  margin: 2rem 0;
+}
+
+.toc--publi {
+  margin-top: 50px;
 }
 
 .toc__contents {
@@ -637,11 +660,17 @@ img {
 .main-title {
   font-family: @font-doc-title;
   .font-size(xxl);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .main-subtitle {
   font-family: @font-doc-title;
+  .font-size(l);
+}
+
+.main-title + .main-subtitle {
+  margin-top: -.5rem;
+  margin-bottom: 2rem;
 }
 
 .main-title a {
@@ -682,10 +711,6 @@ img {
   font-variant: small-caps;
   line-height: 125%;
   margin-bottom: .8rem;
-}
-
-.article__title {
-  margin-bottom: 1rem;
 }
 
 .article__subtitle {
@@ -820,7 +845,7 @@ img {
 }
 
 .article__abstract .tab-content {
-  font-family: @font-text;
+  font-family: @font-abstract;
 }
 
 .article__index {
@@ -834,7 +859,7 @@ img {
 }
 
 .entry {
-  font-family: @font-text;
+  font-family: @font-keyword;
 }
 
 // ADDENDUM
@@ -850,7 +875,7 @@ img {
 // ===========
 
 .article__toc-contents {
-  .font-size(l);
+  .font-size(m);
   font-family: @font-outline;
 }
 

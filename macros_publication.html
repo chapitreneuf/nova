@@ -28,7 +28,6 @@
  */
 <DEFMACRO NAME="PUBLICATION_PUBLI">
 	<div class="publi">
-		<MACRO NAME="PUBLICATION_ACCROCHE"/>
 		<FUNC NAME="PUBLICATION_HEADER" CLIQUABLE="1" />
 		<MACRO NAME="PUBLICATION_TOC" />
 		<MACRO NAME="PUBLICATION_ANNEXES" />
@@ -39,7 +38,7 @@
  * Image d'accroche de la publication.
  */
 <DEFMACRO NAME="PUBLICATION_ACCROCHE">
-	<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="400" CLASSNAME="publi__accroche" HREF="self" />
+	<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche col-sm-4" HREF="self" />
 </DEFMACRO>
 
 /**
@@ -48,19 +47,25 @@
  */
 <DEFFUNC NAME="PUBLICATION_HEADER" OPTIONAL="cliquable">
 	<header class="publi__header">
-		<!--[ Titre ]-->
-		<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
+		<div class="row">
+			<MACRO NAME="PUBLICATION_ACCROCHE"/>
 
-		<!--[ Sous-titre ]-->
-		<IF COND="[#SOUSTITRE]">
-				<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
-		</IF>
+			<div class="col order-first">
+				<!--[ Titre ]-->
+				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="[#CLIQUABLE]" /></h1>
 
-		<!--[ Altertitles ]-->
-		<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+				<!--[ Sous-titre ]-->
+				<IF COND="[#SOUSTITRE]">
+						<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
+				</IF>
 
-		<!--[ Directeur publication ]-->
-		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+				<!--[ Altertitles ]-->
+				<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle" />
+
+				<!--[ Directeur publication ]-->
+				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+			</div>
+		</div>
 
 		<!--[ Introduction ]-->
 		<IF COND="[#INTRODUCTION]">

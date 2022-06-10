@@ -49,6 +49,22 @@ img {
 // UTILS & COMPONENTS
 // ==================
 
+// Styles de bouton.
+.button {
+  color: @color-link;
+  background-color: @color-grey-l2;
+  padding: 5px 10px;
+  border-radius: .25rem;
+  cursor: pointer;
+  transition: .2s all linear;
+
+  &:hover, &:focus {
+    color: @color-link-dark;
+    background-color: @color-grey-l3;
+    text-decoration: none;
+  }
+}
+
 .section-header-container {
   font-family: @font-section-headers;
   color: @color-grey-d4;
@@ -59,6 +75,10 @@ img {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+}
+
+.section-header-container:first-child {
+  margin-top: 0;
 }
 
 .section-header {
@@ -618,10 +638,6 @@ img {
   margin: 40px 0;
 }
 
-.home-rubrique__more {
-  .btn();
-}
-
 .home-rubrique__more::after {
   content: " »";
 }
@@ -673,10 +689,6 @@ img {
 
 .publi__urlpublicationediteur {
   margin: 20px 0;
-}
-
-.publi__order-button {
-  .btn();
 }
 
 .toc--publi {
@@ -1424,6 +1436,13 @@ table.texte td {
 .article__license-contents p {
   font-family: @font-1;
   .font-size(m);
+}
+
+// PAGES D'ERREUR
+// ==============
+
+.error {
+  margin-bottom: 20px;
 }
 
 // INCLUSION DES STYLES DE PERSONNALISATION

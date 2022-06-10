@@ -6,7 +6,7 @@
 <DEFMACRO NAME="ENTREE_INIT">
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
-	
+
 	<LET VAR="titre_page" GLOBAL="1">
 		<IF COND="[#TYPE.TITLE]"><IF COND="[#TYPE.ALTERTITLE:#SITELANG]">[#TYPE.ALTERTITLE:#SITELANG]<ELSE/>[#TYPE.TITLE]</IF></IF><IF COND="[#NOMFAMILLE] AND [#PRENOM]"/> - [#NOMFAMILLE] [#PRENOM]<ELSEIF COND="[#IDENTRY] AND [#NOM]"/> - [#NOM]</IF> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
 	</LET>
@@ -40,9 +40,9 @@
  * Affichage des textes associés à l'entrée.
  */
 <DEFMACRO NAME="ENTREE_LISTE_TEXTES">
-	<LOOP NAME="entree_liste_textes" 
-		TABLE="textes" 
-		WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]" 
+	<LOOP NAME="entree_liste_textes"
+		TABLE="textes"
+		WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]"
 		ORDER="datepubli DESC">
 		<BEFORE>
 			<section id="entry-type" class="toc toc--entry">
@@ -64,5 +64,5 @@
  * Bouton "Retour à l'index".
  */
 <DEFMACRO NAME="ENTREE_RETOUR">
-	<a rev="index" class="entry__retour-btn btn btn-block" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_INDEX]</a>
+	<a rev="index" class="entry__retour-button button" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_INDEX]</a>
 </DEFMACRO>

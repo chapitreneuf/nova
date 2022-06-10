@@ -203,31 +203,7 @@
 					<SWITCH TEST="[#CLASS]">
 						<!--[ Publications ]-->
 						<DO CASE="publications">
-							<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
-								<div class="toc__header">
-									<!--[ Titre ]-->
-									<h2 class="toc__publi-title">[#TITRE]</h2>
-									<!--[ Sous-titre ]-->
-									<IF COND="[#SOUSTITRE]">
-										<div class="toc__publi-subtitle">
-											[#SOUSTITRE]
-										</div>
-									</IF>
-									<!--[ Titres alternatifs ]-->
-									<IF COND="[#ALTERTITRE]">
-										<div class="toc__publi-altertitle altertitle">
-											[#ALTERTITRE|replace('r2r:ml', 'p')]
-										</div>
-									</IF>
-									<!--[ Directeur de la publication ]-->
-									<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="toc__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-									<!--[ Introduction ]-->
-									<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
-								</div>
-								<!--[ Sommaire ]-->
-								<LET VAR="id_publi">[#ID]</LET>
-								<LOOP NAME="publication_sommaire"></LOOP>
-							</IF>
+							<MACRO NAME="PUBLICATION_LI_PUBLICATIONS"/>
 						</DO>
 						<!--[ Textes ]-->
 						<DO CASE="textes">
@@ -247,6 +223,37 @@
 			<FUNC NAME="PUBLICATION_ALIASES" ID_PUBLI="[#ID_PUBLI]" />
 		</ALTERNATIVE>
 	</LOOP>
+</DEFMACRO>
+
+/**
+ * Afficher une publication dans le sommaire (rubrique, sous-partie).
+ */
+<DEFMACRO NAME="PUBLICATION_LI_PUBLICATIONS">
+	<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
+		<div class="toc__header">
+			<!--[ Titre ]-->
+			<h2 class="toc__publi-title">[#TITRE]</h2>
+			<!--[ Sous-titre ]-->
+			<IF COND="[#SOUSTITRE]">
+				<div class="toc__publi-subtitle">
+					[#SOUSTITRE]
+				</div>
+			</IF>
+			<!--[ Titres alternatifs ]-->
+			<IF COND="[#ALTERTITRE]">
+				<div class="toc__publi-altertitle altertitle">
+					[#ALTERTITRE|replace('r2r:ml', 'p')]
+				</div>
+			</IF>
+			<!--[ Directeur de la publication ]-->
+			<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="toc__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+			<!--[ Introduction ]-->
+			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
+		</div>
+		<!--[ Sommaire ]-->
+		<LET VAR="id_publi">[#ID]</LET>
+		<LOOP NAME="publication_sommaire"></LOOP>
+	</IF>
 </DEFMACRO>
 
 /**

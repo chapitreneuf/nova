@@ -1484,6 +1484,37 @@ table.texte td {
   font-family: @font-global;
 }
 
+.index-list__list--hierarchique .index-list__list {
+  margin-left: 20px;
+  padding: 0;
+
+  .index-list__list {
+    margin-left: 30px;
+  }
+
+  li {
+    margin-left: 10px;
+    border-left: 2px solid @color-border;
+  }
+
+  li:last-child {
+    border-left: none;
+  }
+
+  li:before {
+    width: 10px;
+    height: 20px;
+    margin-right: 10px;
+    border-bottom: 2px solid @color-border;
+    content: "";
+    display: inline-block;
+  }
+
+  li:last-child:before {
+    border-left: 2px solid @color-border;
+  }
+}
+
 // PAGES D'ERREUR
 // ==============
 

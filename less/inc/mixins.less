@@ -57,3 +57,14 @@
     }
   }
 }
+
+// Affichage de la langue (badge).
+.lang() {
+  &[lang]::after {
+    content: ' [' attr(lang) '] ';
+    font-size: 80%;
+    color: @color-grey-d4;
+    font-style: normal;
+    font-family: @font-global;
+  }
+}

@@ -203,7 +203,7 @@
 				<ELSEIF COND="[#COUNT] EQ 2 AND [%HAS_ORIGINAL]"/>
 					<dt>[@ARTICLE_TRADUCTIONS_AUTRES]</dt>
 				</IF>
-				<dd class="translations__title<IF COND="[#LANGUE] EQ [#SITELANG]"> translations__title--sitelang</IF><IF COND="![#ORIGINAL]"> translations__title--translated</IF>">
+				<dd class="translations__title<IF COND="[#LANGUE] EQ [#SITELANG]"> translations__title--sitelang</IF><IF COND="![#ORIGINAL]"> translations__title--translated</IF>" xml:lang="[#LANGUE]" lang="[#LANGUE]">
 					<a href="[#ID|makeurlwithid]">[#TITRE]</a>
 				</dd>
 			</DO>

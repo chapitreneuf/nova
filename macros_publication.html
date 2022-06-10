@@ -272,12 +272,12 @@
 		</BEFORE>
 
 		<DO>
-			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" CLASSNAME="translation" />
 			<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
 		</DO>
 
 		<DOLAST>
-			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]"/>
+			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" CLASSNAME="translation" />
 			<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
 
 			<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
@@ -306,11 +306,15 @@
  * @param {boolean} [afficher_soustitre] - Affichage du sous-titre.
  * @param {boolean} [afficher_titres_traduits] - Affichage des titres traduits.
  * @param {boolean} [afficher_datepubli] - Affichage de la date de publication.
+ * @param {string} [classname] - Attribut class optionnel de l'élément.
  */
 <DEFFUNC NAME="PUBLICATION_LI_DOCUMENT" OPTIONAL="afficher_soustitre, afficher_titres_traduits, afficher_datepubli">
-	<a class="toc__link" href="[#ID|makeurlwithid]">
+	<a class="toc__link [#CLASSNAME]" href="[#ID|makeurlwithid]">
 		<!--[ Titre ]-->
-		<p class="toc__title">[#TITRE|removenotes]</p>
+		<IF COND="[#LANGUE]">
+			<LET VAR="lang_attr">xml:lang="[#LANGUE]" lang="[#LANGUE]"</LET>
+		</IF>
+		<p class="toc__title" [#LANG_ATTR]>[#TITRE|removenotes]</p>
 
 		<!--[ Sous-titre ]-->
 		<IF COND="[#AFFICHER_SOUSTITRE] AND [#SOUSTITRE]">

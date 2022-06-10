@@ -709,6 +709,10 @@ img {
   padding-left: 20px;
 }
 
+.toc__link.translation .toc__title[lang] {
+  .lang();
+}
+
 .toc__author {
   font-weight: bold;
 }
@@ -781,12 +785,8 @@ img {
   font-style: normal;
 }
 
-.altertitle p[lang]::after {
-  content: ' [' attr(lang) '] ';
-  font-size: 80%;
-  color: @color-grey-d4;
-  font-style: normal;
-  font-family: @font-global;
+.altertitle p {
+  .lang();
 }
 
 .accroche {
@@ -859,6 +859,10 @@ img {
   text-transform: uppercase;
   .font-size(m);
   margin-bottom: 10px;
+}
+
+.translations__title {
+  .lang();
 }
 
 .article__oeuvre {

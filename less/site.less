@@ -54,7 +54,7 @@ img {
   color: @color-link;
   background-color: @color-grey-l2;
   padding: 5px 10px;
-  border-radius: .25rem;
+  border-radius: @radius-button;
   cursor: pointer;
   transition: .2s all linear;
 
@@ -425,12 +425,16 @@ img {
 
 .search-form .form-control {
   .font-size(m);
+  border-top-left-radius: @radius-search-form;
+  border-bottom-left-radius: @radius-search-form;
 }
 
 .search-form .btn {
   opacity: .7;
   transition: opacity linear .2s, background-color linear .2s;
   border: 1px solid #ced4da;
+  border-top-right-radius: @radius-search-form !important;
+border-bottom-right-radius: @radius-search-form !important;
 }
 
 .search-form .btn:hover {

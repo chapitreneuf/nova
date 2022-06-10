@@ -325,13 +325,13 @@
 					</IF>
 				</IF>
 				<img class="accroche__img accroche__img--exists" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
-				<IF COND="[#HREF]">
-					</a>
-				</IF>
 				<IF COND="![#NOTEXT]">
 					<IF COND="[#CREDITS]">
 						<p class="accroche__credits">[@CREDITS]&#160;: [#CREDITS]</p>
 					</IF>
+				</IF>
+				<IF COND="[#HREF]">
+					</a>
 				</IF>
 			</div>
 		</DO>

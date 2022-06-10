@@ -54,7 +54,7 @@ img {
   color: @color-grey-d4;
   border-bottom: 4px solid @color-border;
   .font-size(s);
-  margin-top: 30px;
+  margin-top: 40px;
   margin-bottom: 20px;
   display: flex;
   align-items: baseline;
@@ -66,7 +66,6 @@ img {
   padding-bottom: 5px;
   margin: 0;
   margin-top: 3px;
-  padding-top: 20px;
   .font-size(xl);
 }
 
@@ -84,7 +83,7 @@ img {
 }
 
 .tab-content {
-  padding: 10px 0;
+  padding-top: 10px;
   border: none;
   font-family: @font-1;
 }
@@ -659,12 +658,28 @@ img {
   display: block;
 }
 
+.publi__altertitle {
+  margin-bottom: 20px;
+}
+
 .publi__introduction {
-  margin: 2rem 0;
+  margin-top: 40px;
+}
+
+.publi__descriptionouvrage, .publi__isbn {
+  color: @color-grey-d4;
+}
+
+.publi__urlpublicationediteur {
+  margin: 20px 0;
+}
+
+.publi__order-button {
+  .btn();
 }
 
 .toc--publi {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .toc__contents {
@@ -672,6 +687,7 @@ img {
   margin-top: 20px;
   padding: 0;
   font-family: @font-1;
+  .font-size(m);
 }
 
 .toc__contents .toc__contents {
@@ -717,6 +733,18 @@ img {
   color: @color-grey-d4;
 }
 
+.toc__header .nav-tabs {
+  margin-top: 20px;
+}
+
+.toc__publi-subtitle, .toc__publi-altertitle p {
+  margin-bottom: 5px;
+}
+
+.toc--docannexes {
+  .font-size(m);
+}
+
 // STYLES GENERIQUES DE TEXTE
 // ==========================
 
@@ -738,6 +766,26 @@ img {
 
 .main-title a {
   color: inherit;
+}
+
+.altertitle {
+  line-height: 125%;
+  font-style: italic;
+  color: @color-grey-d4;
+  font-family: @font-doc-title;
+  line-height: 125%;
+}
+
+.altertitle em, .altertitle i {
+  font-style: normal;
+}
+
+.altertitle p[lang]::after {
+  content: ' [' attr(lang) '] ';
+  font-size: 80%;
+  color: @color-grey-d4;
+  font-style: normal;
+  font-family: @font-global;
 }
 
 .accroche {
@@ -890,17 +938,6 @@ img {
 
 .article__abstracts .tab-pane > :not(:first-child) {
   margin-top: 3rem;
-}
-
-.article__altertitle {
-  font-family: @font-doc-title;
-  line-height: 125%;
-  font-style: italic;
-  color: @color-grey-d4;
-}
-
-.article__altertitle em, .article__altertitle i {
-  font-style: normal;
 }
 
 .article__abstract {
@@ -1243,13 +1280,6 @@ table.texte td {
   margin-right: 1ch;
   font-size: .9em;
   text-decoration: none;
-}
-
-// DOCANNEXES
-// ==========
-
-.toc--docannexes {
-  .font-size(s);
 }
 
 // TABLE DES ILLUSTRATIONS

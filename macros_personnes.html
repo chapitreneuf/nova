@@ -31,11 +31,11 @@
  * Raccourcis vers les autres personnes.
  */
 <DEFMACRO NAME="PERSONNES_RACCOURCIS">
-	<LOOP NAME="personnes_raccourcis" 
+	<LOOP NAME="personnes_raccourcis"
 		TABLE="persons, persontypes"
-		SELECT="idtype, type AS ptype, title, altertitle" 
-		WHERE="persons.idtype = persontypes.id" 
-		GROUPBY="persontypes.type" 
+		SELECT="idtype, type AS ptype, title, altertitle"
+		WHERE="persons.idtype = persontypes.id"
+		GROUPBY="persontypes.type"
 		ORDER="persontypes.rank">
 
 		<BEFORE>
@@ -47,8 +47,8 @@
 
 		<DO>
 			<IF COND="[#NBLIGNES] GT 1">
-				<LET VAR="active_class"><IF COND="[#TYPE.TYPE] EQ [#PTYPE]">class="active"</IF></LET>
-				<li [#ACTIVE_CLASS]><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="1" /></a></li>
+				<LET VAR="active_class"><IF COND="[#TYPE.TYPE] EQ [#PTYPE]">active</IF></LET>
+				<li class="page-shortcuts__item [#ACTIVE_CLASS]"><a href="[#IDTYPE|makeurlwithid]"><FUNC NAME="BASE_ML_TITRE" INDEX="1" /></a></li>
 			</IF>
 		</DO>
 
@@ -66,8 +66,8 @@
  */
 <DEFMACRO NAME="PERSONNES_NOMBRE_ENTITES">
 	<LOOP NAME="personnes_nombre_entites"
-		TABLE="relations, entities" 
-		SELECT="count(id) AS n" 
+		TABLE="relations, entities"
+		SELECT="count(id) AS n"
 		WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id [#NOT_IN_TRADUCTIONS]">
 		<span class="index-list__count">([#N])</span>
 	</LOOP>
@@ -101,7 +101,7 @@
 								</h2>
 							</div>
 							<div class="index-list__contents-col col-sm-8">
-								<ul xml:lang="[#TYPE.LANG]" lang="[#TYPE.LANG]">
+								<ul class="index-list__list index-list__list--plat index-list__list--personnes">
 				</BEFORE>
 
 				<DO>

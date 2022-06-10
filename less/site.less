@@ -205,6 +205,11 @@ img {
   }
 }
 
+.page-shortcuts__item.active a {
+  color: @color-grey-d1;
+  font-weight: bold;
+}
+
 .page-shortcuts__item:last-child::after {
   content: none;
 }
@@ -767,7 +772,7 @@ img {
 
 .main-title {
   font-family: @font-doc-title;
-  .font-size(xxl);
+  .font-size(xxxl);
   margin-bottom: 2rem;
 }
 
@@ -1436,6 +1441,47 @@ table.texte td {
 .article__license-contents p {
   font-family: @font-1;
   .font-size(m);
+}
+
+// INDEXES
+// =======
+
+.alphabet {
+  margin: 40px 0;
+  border-top: 1px solid @color-border;
+  border-bottom: 1px solid @color-border;
+}
+
+.alphabet__btn {
+  .font-size(m);
+}
+
+.alphabet__btn:not(.disabled):hover {
+  text-decoration: underline;
+}
+
+.index-list {
+  margin-top: 40px;
+}
+
+.index-list__list {
+  padding: 0;
+  list-style: none;
+}
+
+.index-list__letter {
+  .font-size(xxl);
+  font-weight: normal;
+}
+
+.index-list__letter a {
+  color: @color-grey-d5;
+}
+
+.index-list__count {
+  color: @color-grey-d5;
+  .font-size(s);
+  font-family: @font-global;
 }
 
 // PAGES D'ERREUR

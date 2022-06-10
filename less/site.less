@@ -1369,16 +1369,45 @@ table.texte td {
   margin: 0;
 }
 
-.article__person-related {
+.article__person-idnos, .article__person-related {
   .font-size(m);
   margin-top: 1.5rem;
   padding-left: 1rem;
   border-left: 4px solid @color-border;
+
+  h4 {
+    font-weight: bold;
+    font-size: 1em;
+  }
 }
 
-.article__person-related h4 {
-  font-weight: bold;
-  font-size: 1em;
+.article__person-idnos + .article__person-related {
+  margin-top: 0;
+  padding-top: 2rem;
+}
+
+.article__person-idnos-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 10px 0 0 0;
+}
+
+.article__person-idno:not(:first-child) {
+  margin-left: 15px;
+}
+
+.article__person-idno-icon {
+  width: auto;
+  height: 24px;
+  filter: grayscale(1);
+  opacity: .8;
+  transition: filter linear .2s, opacity linear .2s;
+}
+
+.article__person-idno-icon:hover {
+  opacity: 1;
+  filter: grayscale(0);
 }
 
 .article__person-related .toc__contents {

@@ -232,7 +232,13 @@
 	<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
 		<div class="toc__header">
 			<!--[ Titre ]-->
-			<h2 class="toc__publi-title">[#TITRE]</h2>
+			<h2 class="toc__publi-title">
+				<IF COND="[%TOC_DOC_ALTERTITRE]">
+					[#TITRE]
+				<ELSE/>
+					<FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" />
+				</IF>
+			</h2>
 			<!--[ Sous-titre ]-->
 			<IF COND="[#SOUSTITRE]">
 				<div class="toc__publi-subtitle">
@@ -240,7 +246,7 @@
 				</div>
 			</IF>
 			<!--[ Titres alternatifs ]-->
-			<IF COND="[#ALTERTITRE]">
+			<IF COND="[%TOC_DOC_ALTERTITRE] AND [#ALTERTITRE]">
 				<div class="toc__publi-altertitle altertitle">
 					[#ALTERTITRE|replace('r2r:ml', 'p')]
 				</div>
@@ -287,7 +293,7 @@
 			<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" CLASSNAME="translation" />
 			<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
 
-			<IF COND="[%TOC_ALTERTITRES]">
+			<IF COND="[%TOC_DOC_ALTERTITRE]">
 				<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
 				<IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 					<div class="toc__altertitle toc__altertitle--sauf-traductions altertitle">

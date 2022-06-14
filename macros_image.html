@@ -65,7 +65,7 @@
  */
 <DEFMACRO NAME="IMAGE_DESCRIPTION">
 	<IF COND="[#DESCRIPTION]">
-		<h2>[@DESCRIPTION]</h2>
+		<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DESCRIPTION]" />
 		<div class="image__description">[#DESCRIPTION]</div>
 	</IF>
 </DEFMACRO>
@@ -76,7 +76,8 @@
 <DEFMACRO NAME="IMAGE_AUTHORS">
 	<LOOP NAME="image_authors" SELECT="prenom, nomfamille" TABLE="auteurs" WHERE="type = 'auteur' AND iddocument = '[#ID]'" ORDER="rank">
 		<BEFORE>
-			<h2><IF COND="[#NBRESULTS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></h2>
+			<LET VAR="section_title"><IF COND="[#NBRESULTS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></LET>
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#SECTION_TITLE]" />
 			<p class="image__author">
 		</BEFORE>
 		<DO>
@@ -93,7 +94,7 @@
  */
 <DEFMACRO NAME="IMAGE_CREDITS">
 	<IF COND="[#CREDITS]">
-		<h2>[@CREDITS]</h2>
+		<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@CREDITS]" />
 		<p class="image__credits">[#CREDITS]</p>
 	</IF>
 </DEFMACRO>
@@ -103,7 +104,7 @@
  */
 <DEFMACRO NAME="IMAGE_FILE">
 	<IF COND="[#IMAGE]">
-		<h2>[@FICHIER_ORIGINAL]</h2>
+		<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@FICHIER_ORIGINAL]" />
 		<p class="image__file">
 			<a href="[#IMAGE_URL]">[#IMAGE|basename]</a> ([#IMAGE|getFileMime] &#8211; [#IMAGE|nicefilesize])
 		</p>

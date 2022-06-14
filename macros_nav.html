@@ -4,44 +4,40 @@
  * Récupérer la vraie TOC du parent pour créer des liens précédent/suivant corrects.
  */
 <DEFMACRO NAME="NAV_ENTITIES_FIX">
-	<LET VAR="current_parent_id">
-		<IF COND="[%IDRUBRIQUEANNUELLE]">
-			[%IDRUBRIQUEANNUELLE]
-		<ELSE />
-			[%IDREALPARENT]
-		</IF>
-	</LET>
-	<LOOP NAME="nav_entities_fix_numero_children"
-		  TABLE="entities, types"
-		  SELECT="id, class, type"
-		  WHERE="idparent = '[#CURRENT_PARENT_ID]' AND type NOT IN ('fluxdesyndication','imageaccroche','rubriqueannuelle', 'imageaccrochelibrairie') AND type NOT LIKE '%annexe%' AND entities.idtype = types.id"
-		  ORDER="entities.rank">
-		<IF COND="[#CLASS] EQ 'publications' AND [#TYPE] EQ 'souspartie'">
-			<LET VAR="current_parent_id">[#ID]</LET>
-			<LOOP NAME="nav_entities_fix_numero_children"></LOOP>
-		<ELSE />
-			<LET ARRAY="parent_real_toc[]" GLOBAL="1">[#ID]</LET>
-		</IF>
-	</LOOP>
+	<IF COND="[#IDREALPARENT]">
+		<LET VAR="current_parent_id">[#IDREALPARENT]</LET>
+		<LOOP NAME="nav_entities_fix_numero_children"
+				TABLE="entities, types"
+				SELECT="id, class, type"
+				WHERE="idparent = '[#CURRENT_PARENT_ID]' AND type NOT IN ('fluxdesyndication','imageaccroche','rubriqueannuelle', 'imageaccrochelibrairie') AND type NOT LIKE '%annexe%' AND entities.idtype = types.id"
+				ORDER="entities.rank">
+			<IF COND="[#CLASS] EQ 'publications' AND [#TYPE] EQ 'souspartie'">
+				<LET VAR="current_parent_id">[#ID]</LET>
+				<LOOP NAME="nav_entities_fix_numero_children"></LOOP>
+			<ELSE />
+				<LET ARRAY="parent_real_toc[]" GLOBAL="1">[#ID]</LET>
+			</IF>
+		</LOOP>
 
-	<!--[ %ID_ARTICLE_PRECEDENT ]-->
-	<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
-		<IF COND="[#VALUE] EQ [#ID]">
-			<LET VAR="id_article_precedent" GLOBAL="1">[%PREV_ID]</LET>
-		</IF>
-		<LET VAR="prev_id" GLOBAL="1">[#VALUE]</LET>
-	</LOOP>
+		<!--[ %ID_ARTICLE_PRECEDENT ]-->
+		<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
+			<IF COND="[#VALUE] EQ [#ID]">
+				<LET VAR="id_article_precedent" GLOBAL="1">[%PREV_ID]</LET>
+			</IF>
+			<LET VAR="prev_id" GLOBAL="1">[#VALUE]</LET>
+		</LOOP>
 
-	<!--[ %ID_ARTICLE_SUIVANT ]-->
-	<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
-		<IF COND="[%ID_IS_NEXT] EQ 1">
-			<LET VAR="id_article_suivant" GLOBAL="1">[#VALUE]</LET>
-			<LET VAR="ID_IS_NEXT" GLOBAL="1">0</LET>
-		</IF>
-		<IF COND="[#VALUE] EQ [#ID]">
-			<LET VAR="ID_IS_NEXT" GLOBAL="1">1</LET>
-		</IF>
-	</LOOP>
+		<!--[ %ID_ARTICLE_SUIVANT ]-->
+		<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
+			<IF COND="[%ID_IS_NEXT] EQ 1">
+				<LET VAR="id_article_suivant" GLOBAL="1">[#VALUE]</LET>
+				<LET VAR="ID_IS_NEXT" GLOBAL="1">0</LET>
+			</IF>
+			<IF COND="[#VALUE] EQ [#ID]">
+				<LET VAR="ID_IS_NEXT" GLOBAL="1">1</LET>
+			</IF>
+		</LOOP>
+	</IF>
 </DEFMACRO>
 
 /**

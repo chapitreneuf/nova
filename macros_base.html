@@ -44,25 +44,14 @@
 	<!--[ Fix de #CURRENTURL (protocole) ]-->
 	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')]</LET>
 
-	<!--[ ID des parents de l'entité courante ]-->
-	<LOOP NAME="base_init_liste_parents"
-		TABLE="publications, relations"
-		SELECT="id"
-		WHERE="id2 = '[#ID]' AND id1 = publications.identity"
-		ORDER="degree">
-
-		<IF COND="[#NBRESULTS] EQ 1">
-			<LET VAR="idrealparent" GLOBAL="1">[#ID]</LET>
-		<ELSE/>
-			<IF COND="[#COUNT] EQ [#NBRESULTS|lmath('-',1)]"><LET VAR="idrealparent" GLOBAL="1">[#ID]</LET></IF>
-			<SWITCH TEST="[#TYPE]">
-				<DO CASE="numero"><LET VAR="idnumero" GLOBAL="1">[#ID]</LET></DO>
-				<DO CASE="rubrique"><LET VAR="idrubrique" GLOBAL="1">[#ID]</LET></DO>
-				<DO CASE="souspartie"><LET VAR="idsouspartie" GLOBAL="1">[#ID]</LET></DO>
-				<DO CASE="rubriqueannuelle"><LET VAR="idrubriqueannuelle" GLOBAL="1">[#ID]</LET></DO>
-			</SWITCH>
-		</IF>
-	</LOOP>
+	 <!--[ ID du numero, rubrique ou rubrique annuelle ]-->
+	 <LET VAR="idrealparent">[#ID|getParentByType('numero')]</LET>
+	 <IF COND="![#IDREALPARENT]">
+		 <LET VAR="idrealparent">[#ID|getParentByType('rubriqueannuelle')]</LET>
+	 </IF>
+	 <IF COND="![#IDREALPARENT]">
+		<LET VAR="idrealparent">[#ID|getParentByType('rubrique')]</LET>
+	</IF>
 
 	<!--[ Liste des ID des traductions de textes. Permet également de conditionner les boucles relatives aux traductions. ]-->
 	<LOOP NAME="base_init_relations_traduction"

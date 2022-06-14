@@ -181,7 +181,8 @@
 	</IF>
 
 	<!--[ Metadonnées du numéro ]-->
-	<LOOP NAME="head_meta_hwp_issue" TABLE="publications" WHERE="id IN ('[#ID]', '[%IDNUMERO]')" SELECT="numero, isbn">
+	<LET VAR="idnumero">[#ID|getParentByType('numero')]</LET>
+	<LOOP NAME="head_meta_hwp_issue" TABLE="publications" WHERE="id = '[#ID]' OR id = '[#IDNUMERO]'" SELECT="numero, isbn">
 		<IF COND="[#NUMERO]">
 			<meta name="citation_issue" content="[#NUMERO]" />
 		</IF>

@@ -1452,8 +1452,12 @@ table.texte td {
   .font-size(m);
 }
 
-.alphabet__btn:not(.disabled):hover {
+.alphabet__btn:not(.disabled) {
+  color: @color-link;
+
+  &:hover {
   text-decoration: underline;
+  }
 }
 
 .index-list {

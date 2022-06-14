@@ -154,6 +154,7 @@ img {
   height: 16px;
 }
 
+// Nav entities / ariane
 .nav-entities {
   padding-top: 1rem;
   padding-bottom: 1rem;padding-top: 1rem;
@@ -206,6 +207,31 @@ img {
   }
 }
 
+// Pagination
+.pagination {
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+}
+
+.page-item .page-link {
+  color: @color-accent;
+}
+
+.page-item:not(.active) .page-link:hover {
+  color: @color-accent-dark;
+}
+
+.page-item.active .page-link {
+  background-color: @color-accent;
+  border-color: @color-accent;
+
+  &:hover {
+    background-color: @color-accent-dark;
+  border-color: @color-accent-dark;
+  }
+}
+
+// Page shortcuts
 .page-shortcuts {
   line-height: 1.5;
   margin: 20px 0;

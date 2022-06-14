@@ -50,6 +50,7 @@
 	<LET VAR="img_accroche"><FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="400" CLASSNAME="issue__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" /></LET>
 
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
+
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
 			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF>">
@@ -67,6 +68,16 @@
 
 				<!--[ Directeur publication ]-->
 				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
+
+				<!--[ Introduction du numéro ]-->
+				<IF COND="[%ISSUES_SHOW_INTRODUCTION] AND [#INTRODUCTION]">
+					<div class="publi__introduction">
+						<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
+					</div>
+				</IF>
+
+				<!--[ Bouton sommaire ]-->
+				<a class="issue__button button" href="[#ID|makeurlwithid]">[@SOMMAIRE_DE_CE_NUMERO]</a>
 			</div>
 
 			<IF COND="[#IMG_ACCROCHE]">
@@ -74,29 +85,6 @@
 					[#IMG_ACCROCHE]
 				</div>
 			</IF>
-
-			<div class="issue__infos-col">
-				<MACRO NAME="NUMEROS_ISSUE_INFOS" />
-			</div>
 		</div>
-		<div class="row">
-			<!--[ Bouton sommaire ]-->
-			<a class="issue__btn btn" href="[#ID|makeurlwithid]">[@SOMMAIRE_DE_CE_NUMERO]</a>
-		</div>
-	</div>
-</DEFMACRO>
-
-/**
- * Informations sur le numéro.
- */
-<DEFMACRO NAME="NUMEROS_ISSUE_INFOS">
-	<div class="issue__infos">
-
-		<!--[ Introduction ]-->
-		<IF COND="[#INTRODUCTION]">
-			<section id="publi-introduction" class="publi__introduction">
-				<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
-			</section>
-		</IF>
 	</div>
 </DEFMACRO>

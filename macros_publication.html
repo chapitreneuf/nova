@@ -467,11 +467,11 @@
 		WHERE="id2 = entities.id AND id1 = '[#ID]' AND nature = 'P' AND degree = 1 AND entities.idtype = types.id"
 		ORDER="entities.rank">
 		<BEFORE>
-			<div class="toc">
-				<ul class="toc__contents toc__contents--collection">
+			<div class="toc toc--collection">
+				<ul class="toc__contents">
 		</BEFORE>
 		<DO>
-			<li class="[#TYPE]">
+			<li class="toc__li toc__li--type-[#TYPE]">
 				<a href="[#ID|makeurlwithid]">
 					<FUNC NAME="BASE_TITRE_ENTITE" />
 				</a>

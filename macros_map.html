@@ -33,9 +33,9 @@
 	<LET VAR="idrec">0</LET>
 	<LET VAR="classes">'publications'</LET>
 
-	<LOOP NAME="map_tree" 
-		TABLE="entities, types" 
-		SELECT="entities.id, type, class" 
+	<LOOP NAME="map_tree"
+		TABLE="entities, types"
+		SELECT="entities.id, type, class"
 		WHERE="idparent = '[#IDREC]' AND types.id = entities.idtype AND class IN ([#CLASSES]) AND identifier != 'partenaires' AND identifier != 'reseaux-sociaux' AND type !='souspartie'" ORDER="entities.rank">
 		<BEFORE>
 			<IF COND="[#IDREC] EQ 1"><ul class="map"><ELSEIF COND="[#IDREC] GT 1"/><ul></IF>
@@ -52,7 +52,7 @@
 					<LOOP NAME="map_tree_textes_titre" SELECT="id,titre,documentcliquable,langue" TABLE="textes" WHERE="id = '[#ID]'">
 						<!--[ Titre ]-->
 						<p class="toc__title">
-								<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>	
+								<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
 						</p>
 					</LOOP>
 				</DO>
@@ -68,9 +68,11 @@
 
 				<!--[ Publications ]-->
 				<DO CASE="publications">
-					<LOOP NAME="map_tree_publications_titre" SELECT="id, titre, numero, datepubli, datepublipapier, type" TABLE="publications" WHERE="id = '[#ID]'">
+					<LOOP NAME="map_tree_publications_titre" TABLE="publications" SELECT="id, titre, numero, datepubli, datepublipapier, type" WHERE="id = '[#ID]'">
 						<IF COND="[#IDREC] EQ 0">
-							<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+							<LOOP NAME="map_tree_publications_has_children" TABLE="entities" WHERE="idparent = [#ID] AND class IN ('textes', 'fichiers', 'publications')" SELECT="id AS idchild" LIMIT="0,1">
+								<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+							</LOOP>
 						<ELSE />
 							<FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" />
 						</IF>

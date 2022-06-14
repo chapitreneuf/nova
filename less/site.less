@@ -65,6 +65,21 @@ img {
   }
 }
 
+.button-back-container {
+  border-top: 1px solid @color-border;
+  margin-top: 40px;
+  padding: 1rem;
+}
+
+.button-back, .button-back:hover {
+  color: @color-grey-d4;
+}
+
+.button-back::before {
+  content: "< "
+}
+
+// Sections headers
 .section-header-container {
   font-family: @font-section-headers;
   color: @color-grey-d4;

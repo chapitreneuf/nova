@@ -265,7 +265,7 @@
 <DEFMACRO NAME="NAV_ERREUR_404">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERREUR_404]" />
 	<p class="error error-404">[@PAGE_NOT_FOUND]</p>
-	<a rev="index" class="button" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
+	<MACRO NAME="NAV_BACK_BUTTON" />
 </DEFMACRO>
 
 /**
@@ -274,5 +274,14 @@
 <DEFMACRO NAME="NAV_ERREUR_500">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERREUR_500]" />
 	<p class="error error-500">[@INTERNAL_ERROR]</p>
-	<a rev="index" class="button" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
+	<MACRO NAME="NAV_BUTTON_BACK" />
+</DEFMACRO>
+
+/**
+ * Bouton "Retour à l'acceuil".
+ */
+<DEFMACRO NAME="NAV_BUTTON_BACK">
+	<div class="button-back-container">
+		<a rev="index" class="button-back" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
+	</div>
 </DEFMACRO>

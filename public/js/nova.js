@@ -160,9 +160,9 @@ window.fnLoader = {
         var documentHeight = $(document).height();
         var viewportHeight = $(window).height() - (scrollbarArrowHeight * 2);
 
-        // Main title
+        // Top anchor
         if (activate === "all" || activate === "top") {
-          addDot(10, "main-header", $("main-title").text(), "dot-shortcut--top");
+          addDot(10, "", $("main-title").text(), "dot-shortcut--top");
         }
 
         // Page sections

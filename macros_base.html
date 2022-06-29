@@ -302,6 +302,32 @@
 	</IF>
 </DEFFUNC>
 
+/**
+ * Récupérer l'ID de la traduction du texte si elle existe.
+ * @param {int} texte_id - Identifiant du texte.
+ * @param {string} [lang] - Langue de la traduction recherchée. Défaut : #SITELANG.
+ * @param {string} [default] - Valeur optionnelle à retourner si pas de résultat.
+ */
+<DEFFUNC NAME="BASE_GET_TRANSLATION_ID" REQUIRED="texte_id" OPTIONAL="lang, default">
+	<IF COND="![#LANG]">
+		<LET VAR="lang">[#SITELANG]</LET>
+	</IF>
+
+	<LOOP NAME="base_get_translation_id" SELECT="id" TABLE="textes, relations"
+		WHERE="((id2 = [#ID] AND id1 = textes.identity)
+			OR (id1 = [#ID] AND id2 = textes.identity)
+			OR (id2 = (SELECT id2 FROM relations WHERE id1 = [#ID] AND nature = 'traduction' LIMIT 1)) AND id1 != [#ID] AND id1 = textes.identity)
+			AND (langue = '[#LANG]')"
+		LIMIT="0,1">
+		<DO>
+			[#ID]
+		</DO>
+		<ALTERNATIVE>
+			[#DEFAULT]
+		</ALTERNATIVE>
+	</LOOP>
+</DEFFUNC>
+
 **
  * Affiche l'image d'accroche d'une entité.
  * @param {int} size - Taille maximale du plus grand côté de la vignette.

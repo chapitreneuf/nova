@@ -6,7 +6,7 @@
 <DEFMACRO NAME="FOOTER_MAIN">
 	<footer id="main-footer" class="main-footer container" role="contentinfo">
 		<MACRO NAME="FOOTER_ISSN" />
-		<FUNC NAME="FOOTER_MAP" PUBLI_IDENTIFIER="informations" />
+		<FUNC NAME="FOOTER_INFORMATIONS" PUBLI_IDENTIFIER="informations" />
 		<MACRO NAME="FOOTER_LODEL" />
 	</footer>
 </DEFMACRO>
@@ -25,16 +25,19 @@
  * Map et pages d'informations dans le footer.
  * @param {string} [publi_identifier] - Identifiant de la collection des informations (défaut : "informations").
  */
-<DEFFUNC NAME="FOOTER_MAP" OPTIONAL="publi_identifier">
+<DEFFUNC NAME="FOOTER_INFORMATIONS" OPTIONAL="publi_identifier">
 	<IF COND="![#PUBLI_IDENTIFIER]">
 		<LET VAR="publi_identifier">informations</LET>
 	</IF>
 
 	<p class="main-footer__line main-footer__line--map">
 		<a class="main-footer__link" href="[#SITEINFOS.URL]/?page=map">[@PLAN_DU_SITE]</a>
-		<LOOP NAME="footer_map" SELECT="id" TABLE="publications" WHERE="type='collection' AND identifier='[#PUBLI_IDENTIFIER]'">
-			<LOOP NAME="footer_map_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]' AND langue = '[#SITELANG]'" ORDER="rank">
-				<a class="main-footer__link" href="[#ID|makeurlwithid]">[#TITRE]</a>
+		<LOOP NAME="footer_informations" SELECT="id" TABLE="publications" WHERE="type='collection' AND identifier='[#PUBLI_IDENTIFIER]'">
+			<LOOP NAME="footer_informations_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]'" ORDER="rank">
+				<LET VAR="id_trad"><FUNC NAME="BASE_GET_TRANSLATION_ID" TEXTE_ID="[#ID]" DEFAULT="[#ID]" /></LET>
+				<LOOP NAME="footer_informations_item" TABLE="textes" WHERE="id = '[#ID_TRAD]'" SELECT="id, titre, altertitre" >
+					<a class="main-footer__link" href="[#ID|makeurlwithid]"><FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="1" /></a>
+				</LOOP>
 			</LOOP>
 		</LOOP>
 	</p>

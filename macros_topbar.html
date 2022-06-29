@@ -42,9 +42,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="[#URL]">
 					<IF COND="[#VIGNETTE]">
-						<img src="[#VIGNETTE|vignette(200)]" class="topbar-icon topbar-icon--identifier-[#IDENTIFIER|strtolower]" alt="[#TITRE]" title="[#TITRE]" />
+						<img src="[#VIGNETTE|vignette(200)]" class="topbar-icon topbar-icon--src topbar-icon--identifier-[#IDENTIFIER|strtolower]" alt="[#TITRE]" title="[#TITRE]" />
 					<ELSEIF COND="[#IDENTIFIER|in_array([%SVG_ICONS])]">
-						<FUNC NAME="BASE_ICON" ICON="[#IDENTIFIER]" TITLE="[#TITRE]" CLASSNAME="topbar-icon topbar-icon--identifier-[#IDENTIFIER|strtolower]" />
+						<FUNC NAME="BASE_ICON" ICON="[#IDENTIFIER]" TITLE="[#TITRE]" CLASSNAME="topbar-ico topbar-icon--inline topbar-icon--identifier-[#IDENTIFIER|strtolower]" INLINE="1" />
 					<ELSE/>
 						<FUNC NAME="BASE_ML_TITRE" />
 					</IF>
@@ -60,7 +60,7 @@
 <DEFMACRO NAME="TOPBAR_RSS">
 	<li class="nav-item">
 		<a class="nav-link" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss">
-			<FUNC NAME="BASE_ICON" ICON="rss" TITLE="[@RSS]" CLASSNAME="topbar-icon topbar-icon--identifier-rss" />
+			<FUNC NAME="BASE_ICON" ICON="rss" TITLE="[@RSS]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-rss" INLINE="1" />
 		</a>
 	</li>
 </DEFMACRO>

@@ -149,7 +149,7 @@ img {
   overflow-wrap: anywhere;
 }
 
-.icon {
+.icon--src, .icon--inline svg {
   width: 16px;
   height: 16px;
 }
@@ -196,7 +196,7 @@ img {
   align-items: baseline;
 }
 
-.nav-entities .icon {
+.nav-entities .icon--src, .nav-entities .icon--inline svg {
   width: 20px;
   height: 20px;
   opacity: .5;
@@ -415,15 +415,25 @@ img {
   margin-top: 10px;
 }
 
-.topbar-icon {
-  max-width: 16px;
-  max-height: 16px;
-  opacity: .7;
-  transition: opacity .3s linear;
+.topbar-icon--src {
+  opacity: .6;
 }
 
-.topbar-icon:hover {
+.topbar-icon--src:hover {
   opacity: 1;
+}
+
+.topbar-icon--src, .topbar-icon--inline svg {
+  max-width: 16px;
+  max-height: 16px;
+}
+
+.topbar-icon--inline svg {
+  stroke: @color-topbar-link;
+}
+
+.topbar-icon--inline:hover svg {
+  stroke: @color-topbar-link-hover;
 }
 
 // MAIN HEADER
@@ -483,7 +493,7 @@ img {
   transition: opacity linear .2s, background-color linear .2s;
   border: 1px solid #ced4da;
   border-top-right-radius: @radius-search-form !important;
-border-bottom-right-radius: @radius-search-form !important;
+  border-bottom-right-radius: @radius-search-form !important;
 }
 
 .search-form .btn:hover {
@@ -491,9 +501,10 @@ border-bottom-right-radius: @radius-search-form !important;
   background-color: @color-grey-l3;
 }
 
-.search-form .btn .icon {
+.search-form .btn .icon svg {
   width: 20px;
   height: 20px;
+  stroke: @color-grey-d3;
 }
 
 .main-menu__section:not(:first-child) {
@@ -972,16 +983,6 @@ border-bottom-right-radius: @radius-search-form !important;
   color: @color-grey-d1;
 }
 
-.article-buttons .icon {
-  opacity: .8;
-  transition: opacity .2s linear;
-}
-
-.article-buttons a:hover .icon {
-  border-bottom-color: @color-grey-d1;
-  opacity: 1;
-}
-
 .article-buttons__partage {
   display: flex;
   justify-content: space-between;
@@ -993,6 +994,19 @@ border-bottom-right-radius: @radius-search-form !important;
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
   box-sizing: content-box;
+
+  svg {
+    stroke: @color-grey-d4;
+    transition: stroke .3s ease;
+  }
+
+  &:hover {
+    border-bottom-color: @color-grey-d1;
+
+    svg {
+      stroke: @color-grey-d1;
+    }
+  }
 }
 
 .article-button--text {

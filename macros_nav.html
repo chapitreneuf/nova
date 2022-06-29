@@ -163,7 +163,7 @@
 
 		<!--[ Affichage ]-->
 		<a href="[#ID|makeurlwithid]" title="[#BTN_TRAD]" class="btn" aria-label="[#BTN_TRAD]">
-			<FUNC NAME="BASE_ICON" ICON="[#BTN_ICON]" />
+			<FUNC NAME="BASE_ICON" ICON="[#BTN_ICON]" INLINE="1" />
 		</a>
 	</LOOP>
 </DEFFUNC>
@@ -181,7 +181,7 @@
 		<div class="input-group input-group-lg">
 			<input name="query" type="text" class="form-control" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
 			<div class="input-group-append">
-				<button class="btn" type="submit"><FUNC NAME="BASE_ICON" ICON="search" /></button>
+				<button class="btn" type="submit"><FUNC NAME="BASE_ICON" ICON="search" INLINE="1" /></button>
 			</div>
 		</div>
 	</form>

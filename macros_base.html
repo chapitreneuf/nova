@@ -134,18 +134,31 @@
 </DEFFUNC>
 
 /**
- * Affiche une icone du dossier public/icons
- * @param {string} icon - Nom du fichier icone (sans l'extension).
+ * Affiche une icône du dossier public/icons
+ * @param {string} icon - Nom du fichier icône (sans l'extension).
  * @param {string} [classname] - Class optionnelle à appliquer au span.
- * @param {string} [title] - Attribut title optionnel.
- * @param {string} [extension] - Extension de fichier de l'icone. Par défaut : svg.
+ * @param {string} [title] - Attribut title optionnel. Pour un SVG, si ce paramètre est nul alors l'image sera considérée comme décorative et sera masquée pour les screen readers.
+ * @param {string} [extension] - Extension de fichier de l'icône. Par défaut : svg.
+ * @param {boolean} [inline] - Uniquement avec les fichiers SVG. Si vrai, le code de l'icône est directement inséré dans le HTML.
+ * Accessibilité : lire https://www.sarasoueidan.com/blog/accessible-icon-buttons/
 */
-<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title, extension">
-	<IF COND="[#TITLE]">
-		<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
-	</IF>
+<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title, extension, inline">
 	<IF COND="![#EXTENSION]"><LET VAR="extension">svg</LET></IF>
-	<img class="icon [#CLASSNAME]" [#TITLE_ATTR] src="tpl/public/icons/[#ICON].[#EXTENSION]" />
+	<LET VAR="icon_path">tpl/public/icons/[#ICON].[#EXTENSION]</LET>
+
+	<IF COND="[#INLINE] AND [#EXTENSION] EQ 'svg'">
+		<LET VAR="svg_data">[#ICON_PATH|file_get_contents]</LET>
+		<span class="icon icon--inline [#CLASSNAME]">
+			[#SVG_DATA|reg_replace('/<svg([^>]*)>/', '<svg\\1 aria-hidden="true" focusable="false">')]
+			<IF COND="[#TITLE]"><span class="sr-only">[#TITLE]</span></IF>
+		</span>
+
+	<ELSE />
+		<IF COND="[#TITLE]">
+			<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
+		</IF>
+		<img class="icon icon--src [#CLASSNAME]" [#TITLE_ATTR] src="[#ICON_PATH]" />
+	</IF>
 </DEFFUNC>
 
 /**

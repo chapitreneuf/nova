@@ -964,9 +964,16 @@ img {
   width: 200px;
   max-width: 100%;
   margin: 1.6rem 2rem 2rem 0;
+  border: 1px solid @color-border;
   float: left;
   clear: left;
-  border: 1px solid @color-border;
+  position: relative;
+  z-index: 8;
+  transition: border-color .3s linear;
+}
+
+.article__accroche:hover {
+  border-color: @color-grey-d4;
 }
 
 .article__info-bm {

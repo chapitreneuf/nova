@@ -265,17 +265,18 @@
 <DEFFUNC NAME="BASE_ML_ONGLETS" REQUIRED="tab_texte, tab_id" OPTIONAL="header_title, section_id">
 	<IF COND="[#TAB_TEXTE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 		<LET VAR="lang_exists">[#SITELANG|in_array([#MATCHES.1])]</LET>
-		<IF COND="[#MATCHES.0|count] GT 1">
-			<!--[ Open section header]-->
-			<IF COND="[#HEADER_TITLE]">
-				<IF COND="[#SECTION_ID]">
-					<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
-				</IF>
-				<div class="section-header-container">
-					<h2 [#ID_ATTR] class="section-header">[#HEADER_TITLE]</h2>
-			</IF>
 
-			<!--[ Tabs ]-->
+		<!--[ Open section header]-->
+		<IF COND="[#HEADER_TITLE]">
+			<IF COND="[#SECTION_ID]">
+				<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
+			</IF>
+			<div class="section-header-container">
+				<h2 [#ID_ATTR] class="section-header">[#HEADER_TITLE]</h2>
+		</IF>
+
+		<!--[ Tabs ]-->
+		<IF COND="[#MATCHES.0|count] GT 1">
 			<ul class="nav nav-tabs" role="tablist">
 				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 					<li class="nav-item">
@@ -283,12 +284,13 @@
 					</li>
 				</LOOP>
 			</ul>
-
-			<!--[ Close section header]-->
-			<IF COND="[#HEADER_TITLE]">
-				</div>
-			</IF>
 		</IF>
+
+		<!--[ Close section header]-->
+		<IF COND="[#HEADER_TITLE]">
+			</div>
+		</IF>
+
 		<div class="tab-content tab-content--count-[#MATCHES.0|count]">
 			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 				<LET VAR="tab_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#VALUE]"/></LET>

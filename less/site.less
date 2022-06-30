@@ -1255,6 +1255,7 @@ p.citationter {
 }
 
 table.texte {
+  margin: 0;
   border-collapse: collapse;
   border-spacing: 0;
   break-inside: avoid;
@@ -1280,27 +1281,31 @@ table.texte td {
 }
 
 .titreillustration, .media-titre {
-  margin-top: 5rem;
+  margin-top: 3rem;
   margin-bottom: 0;
   break-after: avoid;
   font-weight: bold;
 }
 
 :not(.largetable-scroller) > table.texte, .largetable:not(.largetable-maximized), .imageillustration, .doc-media-contents {
-  margin: 5rem 0;
+  margin: 3rem 0;
 }
 
 .titreillustration + table.texte, .titreillustration + .largetable:not(.largetable-maximized), .titreillustration + .imageillustration, .media-titre + .doc-media-contents {
   margin-top: 1rem;
 }
 
+.largetable:not(.largetable-maximized) + .largetable:not(.largetable-maximized) {
+  margin-top: -3rem;
+}
+
 .legendeillustration, .creditillustration, .media-urlaccesmedia {
-  margin-top: -4rem;
-  margin-bottom: 5rem;
+  margin-top: -2rem;
+  margin-bottom: 3rem;
 }
 
 .legendeillustration + .legendeillustration, .legendeillustration + .creditillustration, .creditillustration + .creditillustration, .doc-media-contents + .media-urlaccesmedia {
-  margin-top: -4.5rem;
+  margin-top: -2.5rem;
 }
 
 .creditillustration {

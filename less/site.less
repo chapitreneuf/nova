@@ -1093,7 +1093,7 @@ img {
   font-family: @font-text;
   line-height: @text-line-height;
   margin-top: 2rem;
-  .font-size(l);
+  .font-size(text);
 }
 
 body:not(.type-informations):not(.type-actualite) .article__text-contents {
@@ -1155,7 +1155,7 @@ each(range(6), {
 }
 
 ul.texte, ol.texte {
-  // font-size: .95em;
+  font-size: .95em;
   margin-top: 2rem;
   margin-bottom: 3rem;
   text-align: left;
@@ -1351,7 +1351,7 @@ table.texte td {
   font-family: @font-text;
   line-height: @text-line-height;
   margin-top: 2rem;
-  font-size: 1.8rem;
+  .font-size(text);
 }
 
 // ARTICLE BIBLIOGRAPHY
@@ -1362,7 +1362,7 @@ table.texte td {
   line-height: @text-line-height;
   display: block;
   text-align: left;
-  font-size: 1.6rem;
+  .font-size(text);
 }
 
 @media (min-width : 576px) {

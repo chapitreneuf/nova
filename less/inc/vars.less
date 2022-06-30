@@ -1,9 +1,10 @@
 // POLICES
 // =======
+
 @font-1: Helvetica, Arial, "Liberation Sans", FreeSans, sans-serif;
 @font-2: Georgia, "DejaVu Serif", Norasi, serif;
 
-// Police de l'élément HTML utilisée par défaut.
+// Police de l'élément HTML utilisée par défaut
 @font-global: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 
 // Police du texte
@@ -43,10 +44,10 @@
 // FONT-SIZE
 // =========
 
-// Facteur de taille de toutes les polices.
+// Facteur de taille de toutes les polices
 @size-factor: 1;
 
-// Tailles de polices.
+// Tailles de polices
 // Exemple d'utilisation : .font-size(xs);
 @sizes: {
   @xxs: 1.0;
@@ -66,14 +67,9 @@
   @h6: 1.8;
 }
 
-// TYPOGRAPHIE
-// ===========
-
-// Alignement des textes.
-@default-align: left;
-
 // COULEURS
 // ========
+
 @color-accent: #366297;
 @color-accent-light: lighten(@color-accent, 20%);
 @color-accent-dark: darken(@color-accent, 20%);
@@ -129,11 +125,20 @@
 // DIVERS
 // ======
 
+// Largeur de colonne
+// Bootstrap utilise par défaut 1140px. On monte à 1200px.
+@layout-max-width: @screen-lg;
+
+// Alignement des textes
+@default-align: left;
+
+// Border radius
 @radius-search-form: 2px;
 @radius-button: 2px;
 
-// BREAKPOINTS
-// ===========
+// BREAKPOINTS BOOTSTRAP
+// Ne pas modifier.
+// =====================
 
 @screen-xs: 576px;
 @screen-sm: 768px;

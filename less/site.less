@@ -331,7 +331,7 @@ img {
 
 @media (min-width: @screen-lg) {
   .topbar, .main-header, .main-container, .main-footer {
-    max-width: @screen-lg;
+    max-width: @layout-max-width;
   }
 }
 
@@ -1365,7 +1365,7 @@ table.texte td {
   .font-size(text);
 }
 
-@media (min-width : 576px) {
+@media (min-width : @screen-xs) {
   .article__biblio-contents {
     columns: 2;
     column-gap: 2rem;

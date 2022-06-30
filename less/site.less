@@ -9,12 +9,12 @@
 
 html {
   font-size: 62.5%; // https://snook.ca/archives/html_and_css/font-size-with-rem
-  font-family: @font-global;
+  font-family: @font-default;
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: @font-global;
+  font-family: @font-default;
   background-color: @color-global-bg;
   position: relative;
   .font-size(m);
@@ -107,7 +107,7 @@ img {
 
 .nav-tabs {
   border-color: @color-border;
-  font-family: @font-global;
+  font-family: @font-default;
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
@@ -121,7 +121,6 @@ img {
 .tab-content {
   padding-top: 1rem;
   border: none;
-  font-family: @font-1;
 }
 
 .tab-content--count-1 {
@@ -376,7 +375,6 @@ img {
 
 .topbar {
   padding: 1rem 0;
-  .font-size(m);
 }
 
 .topbar a {
@@ -444,7 +442,7 @@ img {
 }
 
 .site-logo-container {
-  font-family: @font-1;
+  font-family: @font-header;
   text-align: center;
 }
 
@@ -687,7 +685,6 @@ img {
   padding-bottom: 2rem;
   margin-bottom: 2rem;
   font-family: @font-billet;
-  .font-size(m);
 }
 
 .home-billet__titre {
@@ -734,10 +731,6 @@ img {
   color: @color-grey-d4;
 }
 
-.publi__header {
-  font-family: @font-1;
-}
-
 .main-title .publi-number {
   font-size: 60%;
 }
@@ -770,8 +763,6 @@ img {
   list-style: none;
   margin-top: 2rem;
   padding: 0;
-  font-family: @font-1;
-  .font-size(m);
 }
 
 .toc__contents .toc__contents {
@@ -827,10 +818,6 @@ img {
 
 .toc__publi-subtitle, .toc__publi-altertitle p {
   margin-bottom: .5rem;
-}
-
-.toc--docannexes {
-  .font-size(m);
 }
 
 // STYLES GENERIQUES DE TEXTE
@@ -889,10 +876,6 @@ img {
 // ARTICLE HEADER AND ACCROCHE
 // ===========================
 
-.article__header {
-  .font-size(m);
-}
-
 .article__number {
   color: @color-grey-d4;
   .font-size(xxl);
@@ -913,7 +896,6 @@ img {
 }
 
 .article__header .article__datepubli {
-  .font-size(m);
   color: @color-grey-d4;
 }
 
@@ -940,7 +922,6 @@ img {
   font-family: @font-section-headers;
   color: @color-grey-d4;
   text-transform: uppercase;
-  .font-size(m);
   margin-bottom: 1rem;
   margin-top: 2rem;
 }
@@ -983,7 +964,6 @@ img {
 // ===============
 
 .article-buttons {
-  .font-size(m);
   padding: 0 1.5rem 3rem 1.5rem;
   border-bottom: 1px solid @color-border;
 }
@@ -1047,12 +1027,10 @@ img {
 }
 
 .article__index {
-  .font-size(m);
   color: @color-grey-d3;
 }
 
 .entries-type {
-  .font-size(m);
   margin-top: 1rem;
 }
 
@@ -1073,7 +1051,6 @@ img {
 // ===========
 
 .article__toc-contents {
-  .font-size(m);
   font-family: @font-outline;
 }
 
@@ -1387,20 +1364,25 @@ table.texte td {
 .article__footnotes-contents, .article__endnotes-contents {
   font-family: @font-text;
   line-height: @text-line-height;
-  .font-size(m);
 }
 
 .FootnoteSymbol {
-  margin-right: 1ch;
-  font-size: .9em;
+  margin-right: .5ch;
   text-decoration: none;
+  .font-size(m);
+}
+
+.FootnoteSymbol::after {
+  content: ". ";
+  display: inline-block;
+  color: @color-grey-d4;
 }
 
 // TABLE DES ILLUSTRATIONS
 // =======================
 
 .article__illustrations {
-  font-family: @font-1;
+  font-family: @font-captions;
 }
 
 .article__illustration {
@@ -1452,11 +1434,6 @@ table.texte td {
 // POUR CITER
 // ==========
 
-.article__quotation-contents {
-  font-family: @font-1;
-  .font-size(m);
-}
-
 .article__quotation-contents h3 {
   font-size: 1em;
   font-weight: bold;
@@ -1469,17 +1446,11 @@ table.texte td {
 // INFOS AUTEURS
 // =============
 
-.article__persons-infos {
-  font-family: @font-1;
-  .font-size(m);
-}
-
 .article__person + .article__person {
   margin-top: 3rem;
 }
 
 .article__person-description {
-  .font-size(m);
   margin: 0;
 }
 
@@ -1532,14 +1503,6 @@ table.texte td {
   margin: 1rem 0;
 }
 
-// DROITS D'AUTEURS
-// ================
-
-.article__license-contents p {
-  font-family: @font-1;
-  .font-size(m);
-}
-
 // INDEXES
 // =======
 
@@ -1582,7 +1545,7 @@ table.texte td {
 .index-list__count {
   color: @color-grey-d5;
   .font-size(s);
-  font-family: @font-global;
+  font-family: @font-default;
 }
 
 .index-list__list--hierarchique .index-list__list {
@@ -1649,7 +1612,7 @@ table.texte td {
 }
 
 .image__caption, .image__description, .image__author, .image__credits, .image__file {
-  font-family: @font-1;
+  font-family: @font-captions;
 }
 
 // TPL LIEN

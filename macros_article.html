@@ -238,7 +238,7 @@
 		</IF>
 
 		<!--[ Formats detachables ]-->
-		<IF COND="[#TEXTE_ACCESSIBLE]" />
+		<IF COND="[#TEXTE_ACCESSIBLE] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'" />
 			<div class="article-buttons-group article-buttons__download">
 				<MACRO NAME="ARTICLE_BOUTONS_PDF" />
 				<MACRO NAME="ARTICLE_BOUTONS_TEI" />

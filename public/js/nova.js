@@ -306,6 +306,13 @@ window.fnLoader = {
       onImagesLoaded(waitAndRun);
       $(window).on("resize", waitAndRun);
       $(document).on("zoomLevelChanged", waitAndRun);
+    },
+
+    // Responsive iframes
+    reframe: function() {
+      $(function() {
+        reframe("iframe");
+      });
     }
   }
 };

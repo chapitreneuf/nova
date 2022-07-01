@@ -37,7 +37,7 @@
 		<LET ARRAY="svg_icons[]" GLOBAL="1">[#VALUE|replace('./tpl/public/icons/', '')|replace('.svg', '')]</LET>
 	</LOOP>
 
-	<LOOP NAME="topbar_links" TABLE="publications" WHERE="identifier IN ('topbar', 'reseaux-sociaux', 'reseauxsociaux')" SELECT="id" LIMIT="0,1">
+	<LOOP NAME="topbar_links" TABLE="publications" WHERE="identifier = '[%IDENTIFIER_TOPBAR]'" SELECT="id" LIMIT="0,1">
 		<LOOP NAME="topbar_links_items" TABLE="liens" WHERE="idparent = '[#ID]'" SELECT="identifier, titre, altertitre, url, vignette" ORDER="rank">
 			<li class="nav-item">
 				<a class="nav-link" href="[#URL]">

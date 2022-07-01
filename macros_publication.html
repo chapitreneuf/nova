@@ -356,7 +356,7 @@
  * Affiche les documents annexes associés à un document.
  */
 <DEFMACRO NAME="PUBLICATION_ANNEXES">
-	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' AND type LIKE '%annexe' AND identifier != 'tei' AND g_title != ''" ORDER="rank">
+	<LOOP NAME="publication_annexes" TABLE="entities" SELECT="id" WHERE="idparent = '[#ID]' AND type LIKE '%annexe' AND identifier != '[%IDENTIFIER_TEI]' AND g_title != ''" ORDER="rank">
 
 		<BEFORE>
 			<section class="toc toc--docannexes">

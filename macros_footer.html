@@ -6,7 +6,7 @@
 <DEFMACRO NAME="FOOTER_MAIN">
 	<footer id="main-footer" class="main-footer container" role="contentinfo">
 		<MACRO NAME="FOOTER_ISSN" />
-		<FUNC NAME="FOOTER_INFORMATIONS" PUBLI_IDENTIFIER="informations" />
+		<FUNC NAME="FOOTER_INFORMATIONS" PUBLI_IDENTIFIER="[%IDENTIFIER_INFORMATIONS]" />
 		<MACRO NAME="FOOTER_LODEL" />
 	</footer>
 </DEFMACRO>
@@ -23,11 +23,11 @@
 
 /**
  * Map et pages d'informations dans le footer.
- * @param {string} [publi_identifier] - Identifiant de la collection des informations (défaut : "informations").
+ * @param {string} [publi_identifier] - Identifiant de la collection des informations.
  */
 <DEFFUNC NAME="FOOTER_INFORMATIONS" OPTIONAL="publi_identifier">
 	<IF COND="![#PUBLI_IDENTIFIER]">
-		<LET VAR="publi_identifier">informations</LET>
+		<LET VAR="publi_identifier">[%IDENTIFIER_INFORMATIONS]</LET>
 	</IF>
 
 	<p class="main-footer__line main-footer__line--map">

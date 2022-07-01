@@ -36,7 +36,7 @@
 	<LOOP NAME="map_tree"
 		TABLE="entities, types"
 		SELECT="entities.id, type, class"
-		WHERE="idparent = '[#IDREC]' AND types.id = entities.idtype AND class IN ([#CLASSES]) AND identifier != 'partenaires' AND identifier != 'reseaux-sociaux' AND type !='souspartie'" ORDER="entities.rank">
+		WHERE="idparent = '[#IDREC]' AND types.id = entities.idtype AND class IN ([#CLASSES]) AND identifier != '[%IDENTIFIER_PARTENAIRES]' AND identifier != '[%IDENTIFIER_TOPBAR]' AND type !='souspartie'" ORDER="entities.rank">
 		<BEFORE>
 			<IF COND="[#IDREC] EQ 1"><ul class="map"><ELSEIF COND="[#IDREC] GT 1"/><ul></IF>
 		</BEFORE>

@@ -8,8 +8,8 @@
 		<MACRO NAME="MENU_SEARCH" />
 		<MACRO NAME="MENU_ISSUES" />
 		<MACRO NAME="MENU_INDEX" />
-		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'partenaires', 'topbar', 'reseaux-sociaux', 'reseauxsociaux', 'flux'" />
-		<FUNC NAME="MENU_PARTENAIRES" PUBLI_IDENTIFIER="partenaires" />
+		<FUNC NAME="MENU_COLLECTIONS" EXCLUDE="'[%IDENTIFIER_PARTENAIRES]', '[%IDENTIFIER_TOPBAR]', '[%IDENTIFIER_RSS]'" />
+		<FUNC NAME="MENU_PARTENAIRES" PUBLI_IDENTIFIER="[%IDENTIFIER_PARTENAIRES]" />
 	</nav>
 </DEFMACRO>
 
@@ -228,11 +228,11 @@
 
 /**
  * Partenaires dans le menu.
- * @param {string} [publi_identifier] - Identifiant de la collection partenaires (défaut : "partenaires").
+ * @param {string} [publi_identifier] - Identifiant de la collection partenaires.
  */
 <DEFFUNC NAME="MENU_PARTENAIRES" OPTIONAL="publi_identifier">
 	<IF COND="![#PUBLI_IDENTIFIER]">
-		<LET VAR="publi_identifier">partenaires</LET>
+		<LET VAR="publi_identifier">[%IDENTIFIER_PARTENAIRES]</LET>
 	</IF>
 
 	<LOOP NAME="menu_partenaires" TABLE="liens" WHERE="type = 'noticedesite' AND parent = '[#PUBLI_IDENTIFIER]'" SELECT="titre, url, vignette" ORDER="rank">

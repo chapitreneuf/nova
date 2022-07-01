@@ -38,6 +38,18 @@
 <LET VAR="dot_shortcuts" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'article'">all<ELSE/>top</IF></LET>
 
 <!--[
+	Identifiers utilisés dans la maquette.
+	Remarque : l'identifier 'numeros' est hardcodé pour des raisons techniques.
+	@type {string}
+]-->
+<LET VAR="identifier_billet_presentation" GLOBAL="1">presentation</LET>
+<LET VAR="identifier_informations" GLOBAL="1">informations</LET>
+<LET VAR="identifier_partenaires" GLOBAL="1">partenaires</LET>
+<LET VAR="identifier_rss" GLOBAL="1">flux</LET>
+<LET VAR="identifier_tei" GLOBAL="1">tei</LET>
+<LET VAR="identifier_topbar" GLOBAL="1">reseaux-sociaux</LET>
+
+<!--[
 	Afficher une pagination en haut de la page "Tous les numéros".
 	@type {boolean}
 ]-->

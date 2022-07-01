@@ -30,7 +30,7 @@
 				<LET VAR="ml_titre">
 					<FUNC NAME="BASE_ML_TITRE" />
 				</LET>
-				<IF COND="[#ML_TITRE] AND [#IDENTIFIER] NE 'presentation'">
+				<IF COND="[#ML_TITRE] AND [#IDENTIFIER] NE [%IDENTIFIER_BILLET_PRESENTATION]">
 					<h2 class="home-billet__titre">[#ML_TITRE]</h2>
 				</IF>
 				<FUNC NAME="BASE_ML_TEXTE" ML_VAR="[#TEXTE]" />

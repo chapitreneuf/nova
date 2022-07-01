@@ -288,7 +288,7 @@
  * Bouton de téléchargement de la TEI.
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS_TEI">
-	<LOOP NAME="article_boutons_tei" TABLE="fichiers" WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = 'tei' AND document != ''" ORDER="rank" LIMIT="0,1">
+	<LOOP NAME="article_boutons_tei" TABLE="fichiers" WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = '[%IDENTIFIER_TEI]' AND document != ''" ORDER="rank" LIMIT="0,1">
 		<a class="article-button--text" href="[#ID|makeurlwithfile]">[@TELECHARGER_TEI]</a>
 	</LOOP>
 </DEFMACRO>

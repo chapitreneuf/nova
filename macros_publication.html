@@ -38,7 +38,7 @@
  * Image d'accroche de la publication.
  */
 <DEFMACRO NAME="PUBLICATION_ACCROCHE">
-	<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="500" CLASSNAME="publi__accroche col-md-4" HREF="self" />
+	<FUNC NAME="BASE_ACCROCHE_PUBLICATION" SIZE="[%SIZE_ACCROCHE_PUBLICATION]" CLASSNAME="publi__accroche col-md-4" HREF="self" />
 </DEFMACRO>
 
 /**
@@ -382,7 +382,7 @@
 						<IF COND="[#HREF]">
 							<a href="[#HREF]">
 						</IF>
-						<img class="toc__vignette" src="[#VIGNETTE|vignette(300)]" alt="[#TITRE|textebrut]" />
+						<img class="toc__vignette" src="[#VIGNETTE|vignette([%SIZE_DOCANNEXE])]" alt="[#TITRE|textebrut]" />
 						<IF COND="[#HREF]">
 							</a>
 						</IF>

@@ -545,9 +545,9 @@
 			<!--[ Texte intégral ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
 			<IF COND="[#TEXTE_ACCESSIBLE]"/>
-				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations(800)|media]
+				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|media]
 			<ELSE />
-				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations(800)|cuttext(1000, true)|media]
+				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|cuttext(1000, true)|media]
 				<MACRO NAME="ARTICLE_INFO_BM" />
 			</IF>
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
@@ -569,9 +569,9 @@
 		LIMIT="0,1">
 
 		<IF COND="[#VIGNETTE]">
-			<LET VAR="accroche">[#VIGNETTE|vignette(400)]</LET>
+			<LET VAR="accroche">[#VIGNETTE|vignette([%SIZE_ACCROCHE_ARTICLE])]</LET>
 		<ELSE/>
-			<LET VAR="accroche">[#DOCUMENT|vignette(400)]</LET>
+			<LET VAR="accroche">[#DOCUMENT|vignette([%SIZE_ACCROCHE_ARTICLE])]</LET>
 		</IF>
 		<div class="article__accroche">
 			<a href="[#ID|makeurlwithid]">
@@ -601,7 +601,7 @@
 		<section class="article__biblio">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" SECTION_ID="biblio" />
 			<div class="article__biblio-contents">
-				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations(800, 'bibliographie')|media)]
+				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'bibliographie')|media)]
 			</div>
 		</section>
 	</IF>
@@ -616,7 +616,7 @@
 		<section class="article__appendix">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" SECTION_ID="appendix" />
 			<div class="article__appendix-contents">
-				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations(800, 'annexe')|media]
+				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'annexe')|media]
 			</div>
 		</section>
 	</IF>

@@ -40,7 +40,7 @@
  */
 <DEFMACRO NAME="IMAGE_THUMBNAIL">
 	<IF COND="[#IMAGE]">
-		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette(800)]" /></a>
+		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette([%SIZE_IMAGE])]" /></a>
 	</IF>
 </DEFMACRO>
 

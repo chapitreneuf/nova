@@ -1333,7 +1333,7 @@ table.texte td {
   font-family: @font-text;
   line-height: @text-line-height;
   margin-top: 2rem;
-  .font-size(text);
+  .font-size(appendix);
 }
 
 // ARTICLE BIBLIOGRAPHY
@@ -1344,7 +1344,7 @@ table.texte td {
   line-height: @text-line-height;
   display: block;
   text-align: left;
-  .font-size(text);
+  .font-size(biblio);
 }
 
 @media (min-width : @screen-xs) {
@@ -1369,6 +1369,7 @@ table.texte td {
 .article__footnotes-contents, .article__endnotes-contents {
   font-family: @font-text;
   line-height: @text-line-height;
+  .font-size(footnotes);
 }
 
 .FootnoteSymbol {

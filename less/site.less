@@ -1093,12 +1093,12 @@ body:not(.type-informations):not(.type-actualite) .article__text-contents {
 }
 
 // Default margin-top
-.annexe, .bibliographie, p.citation, p.citationbis, p.citationter, .code, .crditsillustration, .creditillustration, .encadre, .epigraphe, .latex, .legendeillustration, .mathlatex, .mathml, .notefin, .notesbaspage, .paragraphesansretrait, .question, .remerciements, .reponse, .separateur, .texte, .titreillustration {
+.annexe, .bibliographie, p.citation, p.citationbis, p.citationter, .code, .crditsillustration, .creditillustration, .encadre, .epigraphe, .latex, .legendeillustration, .mathlatex, .mathml, .media-description, .media-credits, .media-legende, .media-titre, .media-urlaccesmedia, .notefin, .notesbaspage, .paragraphesansretrait, .question, .remerciements, .reponse, .separateur, .texte, .titreillustration {
   margin-top: 1.6rem;
 }
 
 // Justification
-p.remerciements, p.texte, p.paragraphesansretrait, p.epigraphe, p.question, p.reponse, p.encadre, p.annexe, p.legendeillustration, p.creditillustration, p.crditsillustration, p.notesbaspage, p.notefin {
+p.remerciements, p.texte, p.paragraphesansretrait, p.epigraphe, p.question, p.reponse, p.encadre, p.annexe, p.legendeillustration, p.creditillustration, p.crditsillustration, p.notesbaspage, p.notefin, p.media-description, p.media-credits, p.media-legende {
   text-align: @default-align;
 }
 
@@ -1279,7 +1279,7 @@ table.texte td {
   padding: .3rem;
 }
 
-.titreillustration, .legendeillustration, .creditillustration, .media-titre, .media-urlaccesmedia {
+.titreillustration, .legendeillustration, .creditillustration, .media-titre, .media-description, .media-credits, .media-legende, .media-urlaccesmedia {
   break-inside: avoid;
   text-align: left;
   line-height: 130%;
@@ -1306,16 +1306,16 @@ table.texte td {
   margin-top: -3rem;
 }
 
-.legendeillustration, .creditillustration, .media-urlaccesmedia {
+.legendeillustration, .creditillustration, .media-description, .media-credits, .media-legende, .media-urlaccesmedia {
   margin-top: -2rem;
   margin-bottom: 3rem;
 }
 
-.legendeillustration + .legendeillustration, .legendeillustration + .creditillustration, .creditillustration + .creditillustration, .doc-media-contents + .media-urlaccesmedia {
+.legendeillustration + .legendeillustration, .legendeillustration + .creditillustration, .creditillustration + .creditillustration {
   margin-top: -2.5rem;
 }
 
-.creditillustration {
+.creditillustration, .media-credits {
   color: @color-grey-d4;
 }
 

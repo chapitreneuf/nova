@@ -242,7 +242,7 @@ window.fnLoader = {
           $el.add($el.nextAll()).hide();
         };
 
-        $("#sidenotes > p:not(.notesbaspage--more)").each(function () {
+        $("#sidenotes > p:not(.notesbaspage--more)").each(function() {
           try {
             $(this).show();
             var $a = $(this).find("a.FootnoteSymbol");
@@ -250,7 +250,7 @@ window.fnLoader = {
 
             var href = $a.attr("href");
             var targetId = href.replace("#ftn", "#bodyftn");
-            var $target = $(targetId);
+            var $target = $(".article__text-contents " + targetId);
 
             // Barriere mobile
             if ($target.length === 0) {

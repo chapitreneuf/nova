@@ -405,19 +405,8 @@
 					<IF COND="[#CLASS] EQ 'liens' AND [#TEXTE]">
 						<p class="toc__description">[#TEXTE]</p>
 
-					<ELSEIF COND="[#CLASS] EQ 'fichiers'" />
-						<IF COND="[#DESCRIPTION]">
-							<div class="toc__description">[#DESCRIPTION]</div>
-						</IF>
-						<IF COND="[#LEGENDE]">
-							<div class="toc__legende">[#LEGENDE]</div>
-						</IF>
-						<IF COND="[#CREDITS]">
-							<div class="toc__credits">[#CREDITS]</div>
-						</IF>
-
 					<ELSEIF COND="[#CLASS] EQ 'fichiers' OR [#CLASS] EQ 'fichiersexternes'"/>
-						<IF COND="[#OBJECT]"><div class="toc__object">[#OBJECT]</div></IF>
+						<IF COND="[#OBJECT] AND [%DISPLAY_IFRAMES_IN_ANNEXES]"><div class="toc__object">[#OBJECT]</div></IF>
 						<IF COND="[#DESCRIPTION]"><div class="toc__description">[#DESCRIPTION]</div></IF>
 						<IF COND="[#LEGENDE]"><div class="toc__legende">[#LEGENDE]</div></IF>
 						<IF COND="[#CREDITS]"><div class="toc__credits">[#CREDITS]</div></IF>

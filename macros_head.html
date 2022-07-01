@@ -306,6 +306,9 @@
 		</script>
 	</IF>
 
+	<!--[ Hook pour l'insertion de CSS ]-->
+	<MACRO NAME="HEAD_CUSTOM_CSS" />
+
 	<!--[ Site ]-->
 	<IF COND="[%DEV_MODE_ACTIVE]">
 		<!--[ Execution de LESS dans le navigateur pour le développement.
@@ -341,10 +344,8 @@
 	<!--[ JS site ]-->
 	<script type="text/javascript" src="tpl/public/js/nova.js"></script>
 
-	<!--[ Insertion de scripts optionnels : utiliser la globale [%CUSTOM_SCRIPT_PATH] pour le chemin du script ]-->
-	<IF COND="[%CUSTOM_SCRIPT_PATH]">
-		<script type="text/javascript" src="[%CUSTOM_SCRIPT_PATH]"></script>
-	</IF>
+	<!--[ Hook pour l'insertion de JS ]-->
+	<MACRO NAME="HEAD_CUSTOM_JS" />
 
 	<!--[ Loader : lancer les fonctions ]-->
 	<MACRO NAME="HEAD_JS_LOADER" />
@@ -369,4 +370,16 @@
 <DEFMACRO NAME="HEAD_INSERT_RSS">
 	<link rel="alternate" type="application/rss+xml" title="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark]" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss" />
 	<link rel="alternate" type="application/rss+xml" title="[%TITRE_PAGE|trim()]" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss&amp;identity=[#ID]" />
+</DEFMACRO>
+
+/**
+ * Hook pour l'insertion de CSS dans le head, à redéclarer dans macros_custom.html.
+ */
+<DEFMACRO NAME="HEAD_CUSTOM_CSS">
+</DEFMACRO>
+
+/**
+ * Hook pour l'insertion de JS dans le head, à redéclarer dans macros_custom.html.
+ */
+<DEFMACRO NAME="HEAD_CUSTOM_JS">
 </DEFMACRO>

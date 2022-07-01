@@ -9,6 +9,9 @@
 	<LET VAR="dir_public" GLOBAL="1">tpl/public</LET>
 	<LET VAR="dir_vendor" GLOBAL="1">[%DIR_PUBLIC]/vendor</LET>
 
+	<!--[ Options par défaut ]-->
+	<USE TEMPLATEFILE="default_options" />
+
 	<!--[ Dépendances communes ]-->
 	<USE MACROFILE="macros_base.html" />
 	<USE MACROFILE="macros_head.html" />

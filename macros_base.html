@@ -4,9 +4,6 @@
  * Initialisation des variables de base (communes à toutes les pages).
  */
 <DEFMACRO NAME="BASE_INIT">
-	<!--[ Option : nombre maximum d'actualités présentées dans la colonne de droite ]-->
-	<LET VAR="side_max_actualites" GLOBAL="1">5</LET>
-
 	<!--[ Langue principale du site ]-->
 	<LET VAR="mainlang" GLOBAL="1">[#OPTIONS.METADONNEESSITE.LANGUEPRINCIPALE]</LET>
 
@@ -98,9 +95,6 @@
 		<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] lang-[#LANGUE] dir-[#DIR]</LET>
 	</IF>
-
-	<!--[ Colonne de droite ]-->
-	<LET VAR="side_contents" GLOBAL="1"></LET>
 </DEFMACRO>
 
 /**

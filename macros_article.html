@@ -7,9 +7,6 @@
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
 
-	<!--[ Option : nombre de documents "du même auteur" affichés dans les articles ]-->
-	<LET VAR="article_meme_auteur_max_documents" GLOBAL="1">3</LET>
-
 	<!--[ Prefixe DOI ]-->
 	<!--[ Par défaut on utilise le champ des options [#OPTIONS.EXTRA.DOI_PREFIXE] ]-->
 	<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">
@@ -81,7 +78,7 @@
 			<MACRO NAME="ARTICLE_BOUTONS" />
 		</div>
 	</div>
-	<IF COND="[%ARTICLE_DISPLAY_SHORTCUTS] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<MACRO NAME="ARTICLE_RACCOURCIS" />
 	</IF>
 	<MACRO NAME="ARTICLE_INFO_BM" />
@@ -804,7 +801,7 @@
  * Liste des articles du même auteur.
  */
 <DEFMACRO NAME="ARTICLE_DU_MEME_AUTEUR">
-	<LET VAR="limit">[%ARTICLE_MEME_AUTEUR_MAX_DOCUMENTS]</LET>
+	<LET VAR="limit">[%MEME_AUTEUR_MAX_DOCUMENTS]</LET>
 
 	<LOOP NAME="article_du_meme_auteur"
 		SELECT="numerodocument,id,datepubli,langue,LEFT(texte,1) AS texte,LEFT(alterfichier,1) AS alterfichier,documentcliquable,titre,soustitre"

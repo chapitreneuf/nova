@@ -1,0 +1,105 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+<!--[
+	===============
+	Options par défaut de la maquette Nova.
+	/!\ Ces options ne devraient jamais être modifiées directement ici. Il faut plutôt les redéclarer dans la macro CUSTOM_INIT de macros_custom.html.
+	===============
+]-->
+
+<!--[
+	Utiliser les anciens onglets dans les résumés.
+	@type {boolean}
+]-->
+<LET VAR="abstract_legacy_tabs" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les anciens raccourcis (Nova 1) dans les articles.
+	@type {boolean}
+]-->
+<LET VAR="article_legacy_shortcuts" GLOBAL="1"></LET>
+
+<!--[
+	Chemin vers un script supplémentaire
+	@type {string}
+	TODO: array
+]-->
+<LET VAR="custom_script_path" GLOBAL="1"></LET>
+
+<!--[
+	Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION !
+	@type {boolean}
+]-->
+<LET VAR="dev_mode" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les iframes dans les annexes.
+	@type {boolean}
+]-->
+<LET VAR="display_iframes_in_annexes" GLOBAL="1"></LET>
+
+<!--[
+	Définition des pages sur lesquelles afficher les raccourcis "points". Valeurs possibles : all, top, none.
+	@type {string}
+]-->
+<LET VAR="dot_shortcuts" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'article'">all<ELSE/>top</IF></LET>
+
+<!--[
+	Afficher une pagination en haut de la page "Tous les numéros".
+	@type {boolean}
+]-->
+<LET VAR="issues_page_scale_top" GLOBAL="1"></LET>
+
+<!--[
+	Nombre de numéros par page sur "Tous les numéros".
+	@type {number}
+]-->
+<LET VAR="issues_per_page" GLOBAL="1">10</LET>
+
+<!--[
+	Afficher l'introduction du numéro sur la page "Tous les numéros".
+	@type {boolean}
+]-->
+<LET VAR="issues_show_introduction" GLOBAL="1"></LET>
+
+<!--[
+	Nombre de documents "du même auteur" affichés dans les articles.
+	@type {number}
+]-->
+<LET VAR="meme_auteur_max_documents" GLOBAL="1">3</LET>
+
+<!--[
+	Nombre de numeros max affichés dans le menu.
+	@type {number}
+]-->
+<LET VAR="menu_max_issues" GLOBAL="1">10</LET>
+
+<!--[
+	Définition des pages sur lesquelles afficher la barre latérale à droite.
+	@type {boolean}
+]-->
+<LET VAR="side_contents" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'index'">1</IF></LET>
+
+<!--[
+	Nombre maximum d'actualités présentées dans la colonne de droite.
+	@type {number}
+]-->
+<LET VAR="side_max_actualites" GLOBAL="1">5</LET>
+
+<!--[
+	Chemin vers le logo image du site. Si vide alors le titre du site s'affiche à la place du logo.
+	@type {string}
+]-->
+<LET VAR="site_logo_path" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les titres alternatifs des articles dans le sommaire des publications.
+	@type {boolean}
+]-->
+<LET VAR="toc_doc_altertitre" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les titres alternatifs des publications (sous-parties, rubriques) dans le sommaire des publications. Sinon le titre sera traduit dans la langue de navigation.
+	@type {boolean}
+]-->
+<LET VAR="toc_publi_altertitre" GLOBAL="1"></LET>

@@ -10,47 +10,9 @@
 /**
  * Initialisation des macros spécifiques au site.
  * Cette macro est appelée en dernier lors de l'initialisation des pages. Elle permet donc d'écraser n'importe quelle variable.
+ * Voir : default_options.html.
  */
 <DEFMACRO NAME="CUSTOM_INIT">
-	<!--[ Option : chemin vers le logo du site. Quand cette variable n'est pas définie le titre du site s'affiche à la place du logo ]-->
+	<!--[ Chemin vers le logo image du site. ]-->
 	<!--[ <LET VAR="site_logo_path" GLOBAL="1">tpl/public/images/logo.svg</LET> ]-->
-
-	<!--[ Option : nombre de numeros max affichés dans le menu ]-->
-	<LET VAR="menu_max_issues" GLOBAL="1">10</LET>
-
-	<!--[ Option : utilisation des anciens onglets dans les résumés ]-->
-	<LET VAR="abstract_legacy_tabs" GLOBAL="1"></LET>
-
-	<!--[ Option : définition des pages sur lesquelles afficher la barre latérale à droite ]-->
-	<LET VAR="side_contents" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'index'">1</IF></LET>
-
-	<!--[ Option : définition des pages sur lesquelles afficher les raccourcis "points". Valeurs possibles : all, top, none. ]-->
-	<LET VAR="dot_shortcuts" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'article'">all<ELSE/>top</IF></LET>
-
-	<!--[ Option : affichage des anciens raccourcis dans les articles ]-->
-	<LET VAR="article_display_shortcuts" GLOBAL="1"></LET>
-
-	<!--[ Option : afficher les titres alternatifs des articles dans le sommaire des publications ]-->
-	<LET VAR="toc_doc_altertitre" GLOBAL="1"></LET>
-
-	<!--[ Option : afficher les titres alternatifs des publications (sous-parties, rubriques) dans le sommaire des publications. Sinon le titre sera traduit dans la langue de navigation. ]-->
-	<LET VAR="toc_publi_altertitre" GLOBAL="1"></LET>
-
-	<!--[ Option : afficher une pagination en haut de la page "Tous les numéros". ]-->
-	<LET VAR="issues_page_scale_top" GLOBAL="1"></LET>
-
-	<!--[ Options : afficher l'introduction du numéro sur la page "Tous les numéros". ]-->
-	<LET VAR="issues_show_introduction" GLOBAL="1"></LET>
-
-	<!--[ Nombre de numéros par page sur la page "Tous les numéros" ]-->
-	<LET VAR="issues_per_page" GLOBAL="1">10</LET>
-
-	<!--[ Afficher les iframes dans les annexes ]-->
-	<LET VAR="display_iframes_in_annexes" GLOBAL="1"></LET>
-
-	<!--[ Option : chemin vers un script supplémentaire ]-->
-	<LET VAR="custom_script_path" GLOBAL="1" ></LET>
-
-	<!--[ Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION ! ]-->
-	<LET VAR="dev_mode" GLOBAL="1"></LET>
 </DEFMACRO>

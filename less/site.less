@@ -337,12 +337,11 @@ img {
   .topbar, .main-header, .main-container, .main-footer {
     max-width: @layout-max-width;
   }
-}
 
-// TODO: responsive
-.main-content {
-  padding-left: 5rem;
-  padding-right: 5rem;
+  .main-content {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }
 
 // SKIP TO CONTENT
@@ -582,7 +581,9 @@ img {
 // ==========
 
 .main-aside {
-  border-left: 1px solid @color-border;
+  padding: 0 3rem 4rem 3rem;
+  padding-top: 0;
+  margin-top: -3rem;
 }
 
 .main-aside .side__section:first-child .section-header-container {
@@ -629,8 +630,8 @@ img {
   margin: 0;
 }
 
-.side-twitter__container {
-  margin: 1rem -1rem;
+.side-twitter__container iframe {
+  min-width: 0 !important;
 }
 
 .side-twitter__message {
@@ -667,6 +668,18 @@ img {
 @-webkit-keyframes ellipsis {
   to {
     width: 30px;
+  }
+}
+
+@media (min-width: @screen-md) {
+  .main-aside {
+    padding: 4rem 3rem;
+    margin-top: 0;
+    border-left: 1px solid @color-border;
+  }
+
+  .side-twitter__container {
+    margin: 1rem -1rem;
   }
 }
 

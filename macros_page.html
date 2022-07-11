@@ -46,19 +46,23 @@
 				<div id="main-menu-container" class="main-menu-container col-md-3 d-md-block d-none">
 					<MACRO NAME="MENU_MAIN" />
 				</div>
-				<main id="main-content" class='main-content col-md-9 <IF COND="[%SIDE_CONTENTS]">col-lg-6<ELSE/>col-lg-9</IF>' role="main">
+				<div class="col">
+					<div class="row">
+						<main id="main-content" class='main-content col' role="main">
 </DEFMACRO>
 
 /**
  * Markup fin de page.
  */
 <DEFMACRO NAME="PAGE_END">
-					</main><!--[ .main-content ]-->
-					<IF COND="[%SIDE_CONTENTS]">
-						<aside id="main-aside" class="main-aside col-md-9 col-lg-3">
-							<MACRO NAME="BASE_SIDE_CONTENTS" />
-						</aside>
-					</IF>
+							</main><!--[ .main-content ]-->
+							<IF COND="[%SIDE_CONTENTS]">
+								<aside id="main-aside" class="main-aside col-lg-3">
+									<MACRO NAME="BASE_SIDE_CONTENTS" />
+								</aside>
+							</IF>
+						</div><!--[ .row ]-->
+					</div><!--[ .col ]-->
 				</div><!--[ .row ]-->
 			</div><!--[ .main-container ]-->
 			<MACRO NAME="FOOTER_MAIN" />

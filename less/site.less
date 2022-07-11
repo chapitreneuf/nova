@@ -741,6 +741,13 @@ img {
 
 .publi__accroche {
   min-width: 100px;
+  text-align: center;
+}
+
+@media (min-width: @screen-xs) {
+  .publi__accroche {
+    text-align: left;
+  }
 }
 
 .publi__accroche a {
@@ -749,6 +756,9 @@ img {
 
 .accroche__img {
   border: 1px solid @color-border;
+  max-height: 300px;
+  display: block;
+  margin: 0 auto;
 }
 
 .accroche__credits {

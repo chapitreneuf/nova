@@ -20,7 +20,7 @@ window.fnLoader = {
     hamburger: function () {
       $(function () {
         $("#main-menu-toggler").on("click", function () {
-          $("#main-menu-container").toggleClass("d-none");
+          $("body").toggleClass("menu-visible");
         });
       });
     },

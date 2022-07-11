@@ -445,6 +445,83 @@ img {
   stroke: @color-topbar-link-hover;
 }
 
+// HAMBURGER MENU
+// ==============
+
+.main-menu-toggler {
+  border: 1.5px solid @color-border;
+  border-radius: 2px;
+  padding: 2px;
+  transition: border-color .3s linear;
+  margin-left: auto;
+}
+
+.main-menu-toggler .icon--inline svg {
+  width: 32px;
+  height: 32px;
+  stroke: @color-topbar-link;
+  transition: stroke .3s linear;
+}
+
+.main-menu-toggler:hover {
+  border-color: @color-topbar-link-hover;
+
+  svg {
+    stroke: @color-topbar-link-hover;
+  }
+}
+
+@media (max-width: @screen-sm) {
+  .topbar .navbar-nav, .main-menu-container {
+    display: none;
+  }
+
+  body.menu-visible .main-menu-toggler {
+    background-color: @color-menu-bg;
+    border-color: @color-menu-bg;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  body.menu-visible .topbar {
+    padding-bottom: 0;
+  }
+
+  body.menu-visible .topbar .navbar-nav {
+    background-color: @color-menu-bg;
+    display: flex;
+    margin: 0;
+    width: 100%;
+    padding: 3rem 1rem;
+    justify-content: flex-start;
+  }
+
+  body.menu-visible .main-menu-container {
+    display: block;
+    padding-bottom: 2rem;
+  }
+
+  body.menu-visible .main-header {
+    display: none;
+  }
+
+  body.menu-visible .main-menu__section.main-menu__section--partenaires {
+    margin-top: 2rem;
+  }
+
+  body.menu-visible .main-menu__logos {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+  }
+}
+
+@media (max-width: @screen-xs) {
+  .main-menu-toggler {
+    margin-right: 2rem;
+  }
+}
+
 // MAIN HEADER
 // ===========
 

@@ -5,6 +5,7 @@
  */
 <DEFMACRO NAME="TOPBAR_MAIN">
 	<nav id="topbar" class="topbar container navbar navbar-expand-lg">
+		<MACRO NAME="TOPBAR_HAMBURGER" />
 		<ul class="navbar-nav">
 			<MACRO NAME="TOPBAR_BRAND"/>
 			<MACRO NAME="TOPBAR_LINKS"/>
@@ -12,6 +13,15 @@
 			<MACRO NAME="TOPBAR_SITELANG"/>
 		</ul>
 	</nav>
+</DEFMACRO>
+
+/**
+ * Bouton du hamburger menu.
+ */
+<DEFMACRO NAME="TOPBAR_HAMBURGER">
+	<button id="main-menu-toggler" class="main-menu-toggler btn d-md-none" type="button">
+		<FUNC NAME="BASE_ICON" ICON="menu" TITLE="[@HAMBURGER_MENU]" INLINE="1" />
+	</button>
 </DEFMACRO>
 
 /**

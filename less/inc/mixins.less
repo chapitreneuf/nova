@@ -52,3 +52,16 @@
     font-family: @font-default;
   }
 }
+
+// Crochets des appels de notes
+.note-brackets() {
+  &::before {
+    content: "[";
+    color: @color-grey-d5;
+  }
+
+  &::after {
+    content: "]";
+    color: @color-grey-d5;
+  }
+}

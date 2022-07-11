@@ -1328,11 +1328,19 @@ table.texte td {
 }
 
 .footnotecall {
-  font-size: .8em;
-  vertical-align: super;
+  font-family: @font-notecall;
   margin-left: .2em;
   text-decoration: none;
+}
+
+.footnotecall when not (@notecall-brackets = true) {
+  font-size: .8em;
+  vertical-align: super;
   line-height: 0;
+}
+
+.footnotecall when (@notecall-brackets = true) {
+  .note-brackets();
 }
 
 // APPENDIX
@@ -1383,15 +1391,20 @@ table.texte td {
 }
 
 .FootnoteSymbol {
+  font-family: @font-notecall;
   margin-right: .5ch;
-  text-decoration: none;
-  .font-size(m);
 }
 
-.FootnoteSymbol::after {
-  content: ". ";
-  display: inline-block;
-  color: @color-grey-d4;
+.FootnoteSymbol when not (@notecall-brackets = true) {
+  &::after {
+    content: ". ";
+    display: inline-block;
+    color: @color-grey-d4;
+  }
+}
+
+.FootnoteSymbol when (@notecall-brackets = true) {
+  .note-brackets();
 }
 
 // TABLE DES ILLUSTRATIONS

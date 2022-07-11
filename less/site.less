@@ -394,6 +394,9 @@ img {
 
 .topbar .navbar-nav {
   margin-left: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .topbar .nav-item {
@@ -401,8 +404,12 @@ img {
   padding: 0 1rem;
 }
 
-.topbar .nav-item + .nav-item {
-  border-left: 1px solid @color-border;
+.topbar .nav-item {
+  border-right: 1px solid @color-border;
+}
+
+.topbar .nav-item:last-child {
+  border: none;
 }
 
 .topbar .nav-link {
@@ -411,6 +418,7 @@ img {
 }
 
 .topbar .dropdown-menu {
+  position: absolute;
   .font-size(m);
   border: 1px solid @color-border;
   border-radius: 0;

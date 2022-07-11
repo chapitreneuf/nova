@@ -21,21 +21,10 @@
  */
 <DEFMACRO NAME="LIEN_MAIN">
 	<MACRO NAME="LIEN_HEADER" />
-	<IF COND="[#CAPTUREDECRAN] AND [#TEXTE]">
-		<div class="row lien">
-			<div class="col-sm-4">
-				<MACRO NAME="LIEN_CAPTURE" />
-			</div>
-			<div class="col-sm-8">
-				<MACRO NAME="LIEN_TEXTE" />
-			</div>
-		</div>
-	<ELSE />
-		<div class="row lien">
-			<MACRO NAME="LIEN_CAPTURE" />
-			<MACRO NAME="LIEN_TEXTE" />
-		</div>
-	</IF>
+	<div class="lien clearfix">
+		<MACRO NAME="LIEN_CAPTURE" />
+		<MACRO NAME="LIEN_TEXTE" />
+	</div>
 	<IF COND="[%IS_TWITTER]">
 		<MACRO NAME="LIEN_TWEETS" />
 	<ELSE />

@@ -96,7 +96,7 @@
 
 									<IF COND="[#DESCRIPTION] NE [#TITLE]">
 										<p class="link-rss__description">
-											[#DESCRIPTION|cleanBadChars|cuttext(500, true)|replace('[...]', '')]
+											[#DESCRIPTION|cleanBadChars|strip_tags('<p><span><br><em><strong><sup><i><b>')|cuttext(300, true)|replace('[...]', '')]
 										</p>
 									</IF>
 								</li>

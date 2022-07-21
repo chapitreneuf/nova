@@ -71,11 +71,11 @@
 <DEFMACRO NAME="ARTICLE_MAIN">
 	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" />
 	<div class="row">
-		<div class="col-md-9">
-			<MACRO NAME="ARTICLE_HEADER" />
-		</div>
-		<div class="col-md-3">
+		<div class="col-lg-3">
 			<MACRO NAME="ARTICLE_BOUTONS" />
+		</div>
+		<div class="col-lg-9 order-lg-first">
+			<MACRO NAME="ARTICLE_HEADER" />
 		</div>
 	</div>
 	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">

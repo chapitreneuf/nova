@@ -53,12 +53,12 @@
 	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
 			<IF COND="[#IMG_ACCROCHE]">
-				<div class="issue__accroche-col col-md-4">
+				<div class="issue__accroche-col col-sm-4">
 					[#IMG_ACCROCHE]
 				</div>
 			</IF>
 
-			<div class="col-md-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF> order-md-first">
+			<div class="col-sm-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF> order-sm-first">
 
 				<!--[ Titre ]-->
 				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>

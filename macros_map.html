@@ -51,9 +51,7 @@
 				<DO CASE="textes">
 					<LOOP NAME="map_tree_textes_titre" SELECT="id,titre,documentcliquable,langue" TABLE="textes" WHERE="id = '[#ID]'">
 						<!--[ Titre ]-->
-						<p class="toc__title">
-								<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
-						</p>
+						<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
 					</LOOP>
 				</DO>
 

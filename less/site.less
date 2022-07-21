@@ -96,6 +96,7 @@ img {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .main-content > .section-header-container:first-child {
@@ -104,7 +105,7 @@ img {
 
 .section-header {
   text-transform: uppercase;
-  padding-bottom: .5rem;
+  padding-bottom: .4rem;
   margin: 0;
   margin-top: .3rem;
   .font-size(xl);
@@ -137,6 +138,11 @@ img {
 // Tabs included in section-header
 .section-header-container .nav-tabs {
   border: none;
+  padding-top: .3rem;
+}
+
+.section-header-container .nav-link {
+  padding: .3rem .8rem;
 }
 
 .section-header-container .nav-tabs .nav-link.active {

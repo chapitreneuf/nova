@@ -53,22 +53,20 @@
 		<LET VAR="nav_id">[#ID]</LET>
 	</IF>
 	<nav class="nav-entities [#CLASSNAME]">
-		<div class="row">
-			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">10<ELSE/>12</IF> nav-entities-col-parent">
-				<!--[ Publications parentes ]-->
-				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
-			</div>
-			<IF COND="[#SHOW_BUTTONS]">
-				<div class="hidden-xs col-sm-2 nav-entities-col-siblings">
-					<IF COND="[#TYPE] NE 'imageaccroche'">
-						<!--[ Précédent ]-->
-						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
-						<!--[ Suivant ]-->
-						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
-					</IF>
-				</div>
-			</IF>
+		<div class="nav-entities-col nav-entities-col-parent">
+			<!--[ Publications parentes ]-->
+			<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 		</div>
+		<IF COND="[#SHOW_BUTTONS]">
+			<div class="nav-entities-col nav-entities-col-siblings">
+				<IF COND="[#TYPE] NE 'imageaccroche'">
+					<!--[ Précédent ]-->
+					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
+					<!--[ Suivant ]-->
+					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
+				</IF>
+			</div>
+		</IF>
 	</nav>
 </DEFFUNC>
 
@@ -83,7 +81,7 @@
 	<LOOP NAME="nav_ariane" TABLE="relations, entities, publications" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id AND entities.id=publications.identity" ORDER="degree DESC">
 		<BEFORE>
 			<nav class="ariane" aria-label="breadcrumb">
-				<ol class="ariane__list breadcrumb">
+				<ul class="ariane__list breadcrumb">
 		</BEFORE>
 		<DO>
 			<li class="ariane__item breadcrumb-item">
@@ -100,7 +98,7 @@
 			</li>
 		</DO>
 		<AFTER>
-				</ol>
+				</ul>
 			</nav>
 		</AFTER>
 	</LOOP>

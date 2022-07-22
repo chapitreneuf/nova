@@ -62,11 +62,13 @@ img {
   border-radius: @radius-button;
   cursor: pointer;
   transition: .2s all linear;
+  border: 1px solid transparent;
 
   &:hover, &:focus {
     color: @color-link-dark;
     background-color: @color-grey-l3;
     text-decoration: none;
+    border: 1px solid @color-link-light;
   }
 }
 
@@ -120,8 +122,8 @@ img {
   border-color: @color-border @color-border #fff;
 }
 
-.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-  border-color: #e9ecef #e9ecef transparent;
+.nav-tabs .nav-link:hover {
+  text-decoration: underline;
 }
 
 .tab-content {
@@ -228,15 +230,25 @@ img {
   align-items: baseline;
 }
 
-.nav-entities .icon--src, .nav-entities .icon--inline svg {
+.nav-entities .icon--inline svg {
+  stroke: @color-grey-d5;
   width: 20px;
   height: 20px;
-  opacity: .5;
-  transition: .2s opacity linear;
+  border-radius: 50%;
+  transition: .2s background-color linear, .2s filter linear;
 
   &:hover {
-    opacity: 1;
+    background-color: @color-grey-d4;
+    stroke: @color-white;
   }
+}
+
+.btn--previous svg {
+  padding-right: 1px;
+}
+
+.btn--next svg {
+  padding-left: 1px;
 }
 
 // Pagination
@@ -453,8 +465,18 @@ img {
   margin-top: 1rem;
 }
 
+.topbar-icon {
+  border-bottom: 1px solid transparent;
+}
+
+.topbar a:hover .topbar-icon {
+  border-bottom-color: @color-topbar-link-hover;
+}
+
 .topbar-icon--src {
   opacity: .6;
+  padding-bottom: 3px;
+  box-sizing: content-box;
 }
 
 .topbar-icon--src:hover {
@@ -468,6 +490,7 @@ img {
 
 .topbar-icon--inline svg {
   stroke: @color-topbar-link;
+  margin-top: -5px;
 }
 
 .topbar-icon--inline:hover svg {
@@ -609,10 +632,13 @@ img {
   border-top-right-radius: @radius-search-form !important;
   border-bottom-right-radius: @radius-search-form !important;
   background-color: @color-grey-l4;
+  border: 2px solid @color-grey-l4;
+  transition: border-color .3s;
 }
 
 .search-form .btn:hover {
   opacity: 1;
+  border-color: @color-grey-d5;
 }
 
 .search-form .btn .icon svg {
@@ -680,6 +706,11 @@ img {
   max-height: 100px;
   margin: 0 auto;
   display: block;
+  transition: filter .3s;
+}
+
+.main-menu__logo-image:hover {
+  filter: brightness(0.9);
 }
 
 // MAIN ASIDE
@@ -1009,6 +1040,11 @@ img {
   position: relative;
   font-weight: normal;
   margin: 2rem auto;
+  transition: filter .3s;
+}
+
+.accroche:hover {
+  filter: brightness(0.9);
 }
 
 .more {

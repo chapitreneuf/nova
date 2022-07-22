@@ -54,7 +54,7 @@
 					<IF COND="[#VIGNETTE]">
 						<img src="[#VIGNETTE|vignette([%SIZE_TOPBAR_ICON])]" class="topbar-icon topbar-icon--src topbar-icon--identifier-[#IDENTIFIER|strtolower]" alt="[#TITRE]" title="[#TITRE]" />
 					<ELSEIF COND="[#IDENTIFIER|in_array([%SVG_ICONS])]">
-						<FUNC NAME="BASE_ICON" ICON="[#IDENTIFIER]" TITLE="[#TITRE]" CLASSNAME="topbar-ico topbar-icon--inline topbar-icon--identifier-[#IDENTIFIER|strtolower]" INLINE="1" />
+						<FUNC NAME="BASE_ICON" ICON="[#IDENTIFIER]" TITLE="[#TITRE]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-[#IDENTIFIER|strtolower]" INLINE="1" />
 					<ELSE/>
 						<FUNC NAME="BASE_ML_TITRE" />
 					</IF>

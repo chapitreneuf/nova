@@ -177,9 +177,9 @@
 	<form class="search-form" action="./" method="get">
 		<input name="page" type="hidden" value="search" />
 		<div class="input-group input-group-lg">
-			<input name="query" type="text" class="form-control" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
+			<input name="query" type="text" class="form-control" aria-label="[@RECHERCHE]" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
 			<div class="input-group-append">
-				<button class="btn" type="submit"><FUNC NAME="BASE_ICON" ICON="search" INLINE="1" /></button>
+				<button class="btn" type="submit" aria-label="[@RECHERCHER]"><FUNC NAME="BASE_ICON" ICON="search" INLINE="1" /></button>
 			</div>
 		</div>
 	</form>

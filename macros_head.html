@@ -81,8 +81,9 @@
  * Metadonnées Dublin Core.
  */
 <DEFMACRO NAME="HEAD_META_DC">
-	<!--[ schema.DC ]-->
+	<!--[ Schemas ]-->
 	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+	<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
 
 	<!--[ DC.description ]-->
 	<IF COND="[#RESUME]">
@@ -117,14 +118,14 @@
 	</IF>
 
 	<meta name="DC.format" content="text/html" />
-	<meta name="DC.language" scheme="RFC3066" content="[%PAGELANG]" />
+	<meta name="DC.language" content="[%PAGELANG]" />
 
-	<meta name="DC.identifier" scheme="DCTERMS.URI" content="[#CURRENTURL_FIXED]" />
+	<meta name="DC.identifier" content="[#CURRENTURL_FIXED]" />
 	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
-		<meta name="DC.identifier" scheme="DCTERMS.URI" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
+		<meta name="DC.identifier" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
 	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<meta name="DC.identifier" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
+		<meta name="DC.identifier" content="doi:[%PREFIXEDOI][#ID]" />
 	</IF>
 
 	<IF COND="[#TITRE_COMPLET]">
@@ -136,9 +137,9 @@
 	<FUNC NAME="HEAD_META_KEYWORDS" NAME_VALUE="DC.subject" />
 
 	<IF COND="[#DATEPUBLI|isadate] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL">
-		<meta name="DC.date" scheme="W3CDTF" content="[#DATEPUBLI]" />
+		<meta name="DC.date" content="[#DATEPUBLI]" />
 	<ELSEIF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" />
-		<meta name="DC.date" scheme="W3CDTF" content="[#DATEMISENLIGNE]" />
+		<meta name="DC.date" content="[#DATEMISENLIGNE]" />
 	</IF>
 </DEFMACRO>
 
@@ -197,7 +198,7 @@
 	]-->
 
 	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<meta name="citation_doi" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
+		<meta name="citation_doi" content="[%PREFIXEDOI][#ID]" />
 	</IF>
 
 	<meta name="citation_fulltext_html_url" content="[#CURRENTURL_FIXED]" />

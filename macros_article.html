@@ -523,6 +523,7 @@
 		</section>
 	<!-- [ Si pas de texte on affiche le PDF ] -->
 	<ELSEIF COND="[#ALTERFICHIER] AND [#TEXTE_ACCESSIBLE]" />
+		<!--[ Si pas de texte on affiche le PDF ]-->
 		<section class="article__facsimile">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TEXTE]" SECTION_ID="facsimile" />
 			<a class="button" role="button" href="[#ID|makeurlwithid|query_string('file', '1')]" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@TELECHARGER_FACSIMILE] (PDF&#160;&#8211; [#ALTERFICHIER|nicefilesize])</a>

@@ -319,7 +319,7 @@
 			window.devMode = true;
 			less = { env: 'development', modifyVars: { webfontsDir: '../public/webfonts' } };
 		</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.2/less.min.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.2/less.min.js"></script>
 	<ELSE />
 		<!--[ Mode normal : on sert les CSS précompilées. ]-->
 		<link rel="stylesheet" type="text/css" href="[%DIR_PUBLIC]/css/site.css" />
@@ -343,7 +343,7 @@
 	<script src="[%DIR_VENDOR]/reframe/reframe.min.js"></script>
 
 	<!--[ JS site ]-->
-	<script type="text/javascript" src="tpl/public/js/nova.js"></script>
+	<script src="tpl/public/js/nova.js"></script>
 
 	<!--[ Hook pour l'insertion de JS ]-->
 	<MACRO NAME="HEAD_CUSTOM_JS" />

@@ -63,6 +63,7 @@ img {
   cursor: pointer;
   transition: .2s all linear;
   border: 1px solid transparent;
+  text-decoration: none;
 
   &:hover, &:focus {
     color: @color-link-dark;
@@ -1055,6 +1056,19 @@ img {
   content: " \00BB";
 }
 
+// Soulignement des liens dans les textes longs
+.tab-content, .home-billet, .article__abstract, .article__errata, .article__dedication, .article__ndlr, .article__ndla, .article__chapo, .article__text, .article__biblio, .article__appendix, .article__footnotes, .article__endnotes, .article__illustrations, .article__quotation, .article__license, .publi__introduction, .publi__ndlr, .publi__descriptionouvrage, .image__caption, .image__description, .image__credits, .lien__text {
+  & when (@text-underline-links = true) {
+    p a:not(.footnotecall, .FootnoteSymbol) {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 // ARTICLE HEADER AND ACCROCHE
 // ===========================
 
@@ -1542,6 +1556,10 @@ table.texte td {
   text-decoration: none;
 }
 
+.footnotecall:hover {
+  text-decoration: underline;
+}
+
 .footnotecall when not (@notecall-brackets = true) {
   font-size: .8em;
   vertical-align: super;
@@ -1602,6 +1620,11 @@ table.texte td {
 .FootnoteSymbol {
   font-family: @font-notecall;
   margin-right: .5ch;
+  text-decoration: none;
+}
+
+.FootnoteSymbol:hover {
+  text-decoration: underline;
 }
 
 .FootnoteSymbol when not (@notecall-brackets = true) {

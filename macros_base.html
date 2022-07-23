@@ -514,7 +514,7 @@
 			<!--[<BLOCK ID="2" REFRESH="1800"> ]-->
 				<LOOP NAME="rss" URL="[#URLFIL]">
 					<li class="side-rss-item">
-						<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
+						<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h3>
 						<ul class="side-rss-item__entries">
 							<IF COND="![#NOMBREMAXITEMS]">
 								<LET VAR="nombremaxitems">10</LET>
@@ -553,7 +553,7 @@
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
 		</BEFORE>
 		<DO>
-			<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
+			<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h3>
 			<MACRO NAME="BASE_TWITTER_CONTAINER" />
 		</DO>
 		<AFTER>

@@ -238,6 +238,7 @@
 	<LOOP NAME="menu_partenaires" TABLE="liens" WHERE="type = 'noticedesite' AND parent = '[#PUBLI_IDENTIFIER]'" SELECT="titre, url, vignette" ORDER="rank">
 		<BEFORE>
 			<section class="main-menu__section main-menu__section--partenaires">
+				<h2 class="main-menu__section-title sr-only">[@LOGOS]</h2>
 				<ul class="main-menu__logos">
 		</BEFORE>
 		<DO>

@@ -107,13 +107,12 @@
 
 /**
  * Affiche les titres traduits d'une publication.
- * @param string [wrap_id] - Valeur de l'attribut id du premier élément DIV conteneur.
  * @param string [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.
  */
-<DEFFUNC NAME="PUBLICATION_ALTERTITRE" OPTIONAL="wrap_id, wrap_class">
+<DEFFUNC NAME="PUBLICATION_ALTERTITRE" OPTIONAL="wrap_class">
 	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
 		<LOOP NAME="publication_altertitre_parent_altertitle" SELECT="altertitre AS parentaltertitle" TABLE="publications" WHERE="id = '[#IDPARENT]'">
-			<div id="[#WRAP_ID]" class="[#WRAP_CLASS]">
+			<IF COND="[#WRAP_CLASS]"><div class="[#WRAP_CLASS]"></IF>
 				<IF COND="[#PARENTALTERTITLE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 					<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 						<p lang="[#VALUE]" xml:lang="[#VALUE]">
@@ -121,12 +120,12 @@
 						</p>
 					</LOOP>
 				</IF>
-			</div>
+			<IF COND="[#WRAP_CLASS]"></div></IF>
 		</LOOP>
 	<ELSEIF COND="[#ALTERTITRE]"/>
-		<div id="[#WRAP_ID]" class="[#WRAP_CLASS]">
+		<IF COND="[#WRAP_CLASS]"><div class="[#WRAP_CLASS]"></IF>
 			[#ALTERTITRE|replace('r2r:ml', 'p')]
-		</div>
+		<IF COND="[#WRAP_CLASS]"></div></IF>
 	</IF>
 </DEFFUNC>
 

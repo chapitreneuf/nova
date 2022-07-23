@@ -250,16 +250,16 @@
 <DEFMACRO NAME="ARTICLE_BOUTONS_PARTAGE">
 	<!--[ TODO: aria ]-->
 
-	<a href="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut]" title="Facebook" target="_blank">
+	<a href="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut|urlencode]" title="Facebook" target="_blank">
 		<FUNC NAME="BASE_ICON" ICON="facebook" TITLE="Facebook" INLINE="1" />
 	</a>
-	<a href="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Twitter">
+	<a href="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut|urlencode]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Twitter">
 		<FUNC NAME="BASE_ICON" ICON="twitter" TITLE="Twitter" INLINE="1" />
 	</a>
-	<a href="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim]" target="_blank" title="LinkedIn">
+	<a href="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut|urlencode]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" target="_blank" title="LinkedIn">
 		<FUNC NAME="BASE_ICON" ICON="linkedin" TITLE="LinkedIn" INLINE="1" />
 	</a>
-	<a href="mailto:?subject=[#TITRE|textebrut]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" target="_blank" title="Email">
+	<a href="mailto:?subject=[#TITRE|textebrut|urlencode]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" target="_blank" title="Email">
 		<FUNC NAME="BASE_ICON" ICON="mail" TITLE="Email" INLINE="1" />
 	</a>
 </DEFMACRO>
@@ -386,9 +386,9 @@
 					<BEFORE>
 						<!--[ Support index rtl ]-->
 						<IF COND="[#ENTRYTYPE] LIKE /^motscles([a-z]*)$/">
-							<LET VAR="entrydir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#MATCHES.1.0]"/></LET>
+							<LET VAR="dir_attr">dir="<FUNC NAME="BASE_GET_LANG_DIR" LANG="[#MATCHES.1.0]"/>"</LET>
 						</IF>
-						<div class="article__index article__index--type-[#ENTRYTYPE]" dir="[#ENTRYDIR]">
+						<div class="article__index article__index--type-[#ENTRYTYPE]" [#DIR_ATTR]>
 							<h3 class="entries-type"><FUNC NAME="BASE_ML_TITRE" INDEX="true" /></h3>
 					</BEFORE>
 					<DOFIRST><a href="[#ID|makeurlwithid]" class="entry">[#G_NAME]</a></DOFIRST>

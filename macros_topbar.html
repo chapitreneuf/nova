@@ -84,7 +84,7 @@
 			<BEFORE>
 				<IF COND="[#NBRESULTS] GT 1">
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<LET VAR="selected_lang">
 							<LOOP NAME="menu_lang_current" TABLE="translations" SELECT="title" WHERE="lang EQ '[#SITELANG]'">
 								<DO>
 									[#TITLE]
@@ -93,18 +93,19 @@
 									[#SITELANG|humanlang|defaultvalue([#SITELANG])]
 								</ALTERNATIVE>
 							</LOOP>
-						</a>
-						<div class="dropdown-menu" aria-label="[@SELECT_SITELANG]">
+						</LET>
+						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="[@CHOISIR_SITELANG]. [@LANGUE_CHOISIE]: [#SELECTED_LANG]">[#SELECTED_LANG]</a>
+						<div class="dropdown-menu">
 				</IF>
 			</BEFORE>
 			<DO>
 				<IF COND="[#NBRESULTS] GT 1">
 					<IF COND="[#SITELANG] EQ [#LANG]">
-						<a class="dropdown-item disabled">
+						<a class="dropdown-item disabled" aria-label="[@LANGUE_CHOISIE]: [#TITLE]">
 							[#TITLE]
 						</a>
 					<ELSE />
-						<a class="dropdown-item" href="[#CURRENTURL_FIXED|query_string('lang', [#LANG])]">
+						<a class="dropdown-item" href="[#CURRENTURL_FIXED|query_string('lang', [#LANG])]" aria-label="[@CHOISIR_LANGUE]: [#TITLE]">
 							[#TITLE]
 						</a>
 					</IF>

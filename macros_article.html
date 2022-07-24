@@ -283,9 +283,9 @@
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS_PDF">
 	<IF COND="[#ALTERFICHIER]"/>
-		<a class="article-button--text" href="[#ID|makeurlwithid|query_string('file', '1')]" aria-label="[@TELECHARGER_VERSION] [@FACSIMILE]">[@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
+		<a class="article-button--text" role="button" href="[#ID|makeurlwithid|query_string('file', '1')]" aria-label="[@TELECHARGER_VERSION] [@FACSIMILE]">[@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
 	<ELSEIF COND="[#PDFGEN_URL] AND [#STATUS] GT 0"/>
-		<a class="article-button--text" href="[#PDFGEN_URL]" aria-label="[@TELECHARGER_VERSION] [@PDF]">[@PDF]</a>
+		<a class="article-button--text" role="button" href="[#PDFGEN_URL]" aria-label="[@TELECHARGER_VERSION] [@PDF]">[@PDF]</a>
 	</IF>
 </DEFMACRO>
 
@@ -294,7 +294,7 @@
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS_TEI">
 	<LOOP NAME="article_boutons_tei" TABLE="fichiers" WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = '[%IDENTIFIER_TEI]' AND document != ''" ORDER="rank" LIMIT="0,1">
-		<a class="article-button--text" href="[#ID|makeurlwithfile]" aria-label="[@TELECHARGER_VERSION] [@TEI]">[@TEI]</a>
+		<a class="article-button--text" role="button" href="[#ID|makeurlwithfile]" aria-label="[@TELECHARGER_VERSION] [@TEI]">[@TEI]</a>
 	</LOOP>
 </DEFMACRO>
 

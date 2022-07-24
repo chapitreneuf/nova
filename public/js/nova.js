@@ -149,9 +149,9 @@ window.fnLoader = {
         return;
       }
 
-      function addDot(y, id, title, classname) {
+      function addDot(y, id, title, label, classname) {
         const $container = $(".dot-shortcuts-container");
-        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-hidden='true'></a>").appendTo($container);
+        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-label ='" + label + "' aria-hidden='true'></a>").appendTo($container);
       }
 
       function waitAndRun() {
@@ -162,7 +162,8 @@ window.fnLoader = {
 
         // Top anchor
         if (activate === "all" || activate === "top") {
-          addDot(10, "", $("main-title").text(), "dot-shortcut--top");
+          var label = window.translations.retourEnHaut;
+          addDot(10, "", label, label, "dot-shortcut--top");
         }
 
         // Page sections
@@ -171,9 +172,10 @@ window.fnLoader = {
           $targets.each(function () {
             var id = $(this).attr("id");
             var title = $(this).text().trim();
+            var label = window.translations.atteindreSection + " " + title;
             var top = $(this).offset().top;
             var y = ((top / documentHeight) * viewportHeight) + scrollbarArrowHeight;
-            addDot(y, id, title, "dot-shortcut--section");
+            addDot(y, id, title, label, "dot-shortcut--section");
           });
         }
       }

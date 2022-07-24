@@ -50,7 +50,7 @@
 	<LOOP NAME="topbar_links" TABLE="publications" WHERE="identifier = '[%IDENTIFIER_TOPBAR]'" SELECT="id" LIMIT="0,1">
 		<LOOP NAME="topbar_links_items" TABLE="liens" WHERE="idparent = '[#ID]'" SELECT="identifier, titre, altertitre, url, vignette" ORDER="rank">
 			<li class="nav-item">
-				<a class="nav-link" href="[#URL]">
+				<a class="nav-link" href="[#URL]" aria-label="[@ACCEDER_PAGE] [#TITRE|textebrut]">
 					<IF COND="[#VIGNETTE]">
 						<img src="[#VIGNETTE|vignette([%SIZE_TOPBAR_ICON])]" class="topbar-icon topbar-icon--src topbar-icon--identifier-[#IDENTIFIER|strtolower]" alt="[#TITRE]" title="[#TITRE]" />
 					<ELSEIF COND="[#IDENTIFIER|in_array([%SVG_ICONS])]">
@@ -84,7 +84,7 @@
 			<BEFORE>
 				<IF COND="[#NBRESULTS] GT 1">
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<LOOP NAME="menu_lang_current" TABLE="translations" SELECT="title" WHERE="lang EQ '[#SITELANG]'">
 								<DO>
 									[#TITLE]
@@ -94,8 +94,7 @@
 								</ALTERNATIVE>
 							</LOOP>
 						</a>
-						<!--[ TODO: vartrads ]-->
-						<div class="dropdown-menu" aria-label="[@SELECT_LANG]">
+						<div class="dropdown-menu" aria-label="[@SELECT_SITELANG]">
 				</IF>
 			</BEFORE>
 			<DO>

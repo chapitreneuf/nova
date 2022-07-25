@@ -15,9 +15,9 @@
 <DEFMACRO NAME="HEADER_LOGO">
 	<div id="site-logo-container" class="site-logo-container">
 		<IF COND="[%SITE_LOGO_PATH]">
-			<h1 class="site-title site-title--image"><a href="[#SITEINFOS.URL]" aria-label="[@RETOUR_HOME]"><img src="[%SITE_LOGO_PATH]" class="site-logo" alt="[#OPTIONS.METADONNEESSITE.TITRESITE]" /></a></h1>
+			<div class="site-title site-title--image"><a href="[#SITEINFOS.URL]" aria-label="[@RETOUR_HOME]"><img src="[%SITE_LOGO_PATH]" class="site-logo" alt="[#OPTIONS.METADONNEESSITE.TITRESITE]" /></a></div>
 		<ELSE />
-			<h1 class="site-title site-title--text"><a href="[#SITEINFOS.URL]" aria-label="[@RETOUR_HOME]">[#OPTIONS.METADONNEESSITE.TITRESITE]</a></h1>
+			<p class="site-title site-title--text"><a href="[#SITEINFOS.URL]" aria-label="[@RETOUR_HOME]">[#OPTIONS.METADONNEESSITE.TITRESITE]</a></p>
 			<IF COND="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]">
 				<p class="site-subtitle">[#OPTIONS.METADONNEESSITE.SOUSTITRESITE]</p>
 			</IF>

@@ -102,7 +102,8 @@
 
 		<BEFORE>
 			<div class="home-rubrique">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+				<LET VAR="title"><FUNC NAME="BASE_ML_TITRE" /></LET>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITLE]" />
 				<ul class="toc__contents toc__contents--home-rubrique">
 		</BEFORE>
 
@@ -114,7 +115,8 @@
 
 		<AFTER>
 				</ul>
-				<a class="home-rubrique__more button" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE]</a>
+				<LET VAR="title"><FUNC NAME="BASE_ML_TITRE" /></LET>
+				<a class="home-rubrique__more button" href="[#ID_RUBRIQUE]" aria-label="[@SOMMAIRE_DE_LA_RUBRIQUE] : [#TITLE|textebrut]">[@SOMMAIRE_DE_LA_RUBRIQUE]</a>
 			</div>
 		</AFTER>
 	</LOOP>

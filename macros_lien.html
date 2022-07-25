@@ -106,7 +106,7 @@
 				</ul>
 			</BLOCK>
 
-			<a rel="external" class="lien-rss__button button" href="[#URLFIL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@LIEN_RSS]</a>
+			<a rel="external" class="lien-rss__button button" href="[#URLFIL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" aria-label="[@LIEN_RSS] : [#TITRE|textebrut]">[@LIEN_RSS]</a>
 		</section>
 	</IF>
 </DEFMACRO>
@@ -118,7 +118,7 @@
 	<IF COND="[#URLFIL]">
 		<section class="lien-tweets">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
-			<MACRO NAME="BASE_TWITTER_CONTAINER" />
+			<FUNC NAME="BASE_TWITTER_CONTAINER" TITLE="[#TITRE]" />
 		</section>
 	</IF>
 </DEFMACRO>

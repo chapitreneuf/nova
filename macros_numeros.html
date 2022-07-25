@@ -82,7 +82,8 @@
 				</IF>
 
 				<!--[ Bouton sommaire ]-->
-				<a class="issue__button button" href="[#ID|makeurlwithid]">[@SOMMAIRE_DE_CE_NUMERO]</a>
+				<LET VAR="aria_label">[@SOMMAIRE_DU_NUMERO] : <FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /></LET>
+				<a class="issue__button button" href="[#ID|makeurlwithid]" aria-label="[#ARIA_LABEL]">[@SOMMAIRE_DU_NUMERO]</a>
 			</div>
 		</div>
 	</div>

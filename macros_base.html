@@ -553,8 +553,9 @@
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
 		</BEFORE>
 		<DO>
-			<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h3>
-			<MACRO NAME="BASE_TWITTER_CONTAINER" />
+			<LET VAR="title"><FUNC NAME="BASE_ML_TITRE" /></LET>
+			<h3 class="side-rss-item__title">[#TITLE]</h3>
+			<FUNC NAME="BASE_TWITTER_CONTAINER" TITLE="[#TITLE]" />
 		</DO>
 		<AFTER>
 			</section>
@@ -564,8 +565,9 @@
 
 /**
  * Twitter container.
+ * @param {string} title - Titre du fil Twitter.
  */
-<DEFMACRO NAME="BASE_TWITTER_CONTAINER">
+<DEFFUNC NAME="BASE_TWITTER_CONTAINER" REQUIRED="title">
 	<IF COND="![#URL]">
 		<LET VAR="url">[#URLFIL]</LET>
 	</IF>
@@ -574,8 +576,8 @@
 		<span class="twitter-loading">[@TWITTER_LOADING]</span>
 		<span class="twitter-error">[@TWITTER_ALT]</span>
 	</p>
-	<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
-</DEFMACRO>
+	<a class="side-rss-item__link external" href="[#URL]" aria-label="[@TWITTER_LINK] : [#TITLE|textebrut]">[@TWITTER_LINK]</a>
+</DEFFUNC>
 
 /**
  * Concaténation d'un titre et d'un sous-titre.

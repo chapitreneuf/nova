@@ -147,10 +147,10 @@
  * Sommaire de la publication.
  */
 <DEFMACRO NAME="PUBLICATION_TOC">
-	<LET VAR="profondeur">0</LET>
+	<LET VAR="is_root">1</LET>
 	<LOOP NAME="publication_toc" TABLE="publications" WHERE="id = [#ID]">
 		<BEFORE>
-			<IF COND="[#PROFONDEUR] EQ 0">
+			<IF COND="[#IS_ROOT] EQ 1">
 				<section class="toc toc--publi">
 			</IF>
 		</BEFORE>
@@ -167,13 +167,13 @@
 		</DO>
 
 		<AFTER>
-			<IF COND="[#PROFONDEUR] EQ 0">
+			<IF COND="[#IS_ROOT] EQ 1">
 				</section>
 			</IF>
 		</AFTER>
 	</LOOP>
 	<!--[ Sommaire de la dernière sous-rubrique annuelle si elle existe]-->
-	<LET VAR="profondeur">1</LET>
+	<LET VAR="is_root">0</LET>
 	<LOOP NAME="publication_toc_rubriqueannuelle" TABLE="publications" SELECT="id" WHERE="idparent = [#ID] AND type = 'rubriqueannuelle'" ORDER="rank DESC" LIMIT="1">
 		<LOOP NAME="publication_toc"></LOOP>
 	</LOOP>
@@ -185,6 +185,7 @@
 <DEFMACRO NAME="PUBLICATION_SOMMAIRE">
 	<LET VAR="id_publi">[#ID]</LET>
 	<LET VAR="parent_is_rubrique"><IF COND="([#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'rubriqueannuelle') AND [#DATEPUBLI|isadate]">1</IF></LET>
+	<LET VAR="profondeur">0</LET>
 
 	<LOOP NAME="publication_sommaire"
 		TABLE="entities, types"
@@ -193,6 +194,9 @@
 		ORDER="entities.rank">
 
 		<BEFORE>
+			<IF COND="[#PROFONDEUR] EQ 0">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@SOMMAIRE]" />
+			</IF>
 			<ul class="toc__contents toc__contents--sommaire">
 		</BEFORE>
 
@@ -232,13 +236,17 @@
 	<IF COND="[#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'souspartie'">
 		<div class="toc__header">
 			<!--[ Titre ]-->
-			<h2 class="toc__publi-title">
+			<LET VAR="hlevel">[#PROFONDEUR|lmath('+', 3)]</LET>
+			<IF COND="[#HLEVEL] GT 6">
+				<LET VAR="hlevel">6</LET>
+			</IF>
+			<h[#HLEVEL] class="toc__publi-title">
 				<IF COND="[%TOC_DOC_ALTERTITRE]">
 					[#TITRE]
 				<ELSE/>
 					<FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="oui" />
 				</IF>
-			</h2>
+			</h[#HLEVEL]>
 			<!--[ Sous-titre ]-->
 			<IF COND="[#SOUSTITRE]">
 				<div class="toc__publi-subtitle">
@@ -258,6 +266,7 @@
 		</div>
 		<!--[ Sommaire ]-->
 		<LET VAR="id_publi">[#ID]</LET>
+		<LET VAR="profondeur">[#PROFONDEUR|lmath('+', 1)]</LET>
 		<LOOP NAME="publication_sommaire"></LOOP>
 	</IF>
 </DEFMACRO>

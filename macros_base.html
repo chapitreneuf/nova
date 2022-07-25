@@ -159,13 +159,17 @@
  * Affiche un header de section.
  * @param {string} title - Titre.
  * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
+ * @param {number} [level] - Niveau de l'élément <hx>. Défaut : 2.
 */
-<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id">
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id, level">
 	<IF COND="[#SECTION_ID]">
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
+	<IF COND="![#LEVEL]">
+		<LET VAR="level">2</LET>
+	</IF>
 	<div class="section-header-container">
-		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
+		<h[#LEVEL] [#ID_ATTR] class="section-header">[#TITLE]</h[#LEVEL]>
 	</div>
 </DEFFUNC>
 
@@ -485,7 +489,7 @@
 		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
 		<BEFORE>
 			<section id="side-actualites__section" class="side-actualites__section side__section">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ACTUALITES]" LEVEL="1" />
 				<ul class="side-actualites_section__list">
 		</BEFORE>
 		<DO>
@@ -508,14 +512,14 @@
 	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil NOT LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
 			<section id="side-rss__section" class="side-rss__section side__section">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RSS]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RSS]" LEVEL="1" />
 				<ul class="side-rss_section__list">
 		</BEFORE>
 		<DO>
 			<!--[<BLOCK ID="2" REFRESH="1800"> ]-->
 				<LOOP NAME="rss" URL="[#URLFIL]">
 					<li class="side-rss-item">
-						<h3 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h3>
+						<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
 						<ul class="side-rss-item__entries">
 							<IF COND="![#NOMBREMAXITEMS]">
 								<LET VAR="nombremaxitems">10</LET>
@@ -551,11 +555,11 @@
 	<LOOP NAME="base_side_twitter" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil LIKE 'http%://twitter.com/%'" ORDER="rank">
 		<BEFORE>
 			<section id="side-twitter__section" class="side__section side-twitter__section">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" LEVEL="1" />
 		</BEFORE>
 		<DO>
 			<LET VAR="title"><FUNC NAME="BASE_ML_TITRE" /></LET>
-			<h3 class="side-rss-item__title">[#TITLE]</h3>
+			<h2 class="side-rss-item__title">[#TITLE]</h2>
 			<FUNC NAME="BASE_TWITTER_CONTAINER" TITLE="[#TITLE]" />
 		</DO>
 		<AFTER>

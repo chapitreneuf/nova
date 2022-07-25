@@ -61,29 +61,27 @@
  * Affichage des rubriques.
  */
 <DEFMACRO NAME="HOME_RUBRIQUES">
-	<LET VAR="id_collection_rubriques">
-		<LOOP NAME="home_rubriques_get_id_collection_rubriques" TABLE="publications" SELECT="id" WHERE="type='collection' AND identifier='rubriques'">[#ID]</LOOP>
-	</LET>
-	<LOOP NAME="home_rubriques"
-		TABLE="publications"
-		SELECT="id, titre, altertitre"
-		WHERE="idparent = '[#ID_COLLECTION_RUBRIQUES]' AND type = 'rubrique'"
-		ORDER="rank">
+	<LOOP NAME="home_rubriques_get_parent" TABLE="publications" SELECT="id AS id_collection, titre, altertitre" WHERE="type='collection' AND identifier='rubriques'">
+		<LET VAR="titre_collection"><FUNC NAME="BASE_ML_TITRE" /></LET>
 
-		<BEFORE>
-			<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
-			<section id="home-rubriques" class="home-rubriques">
-				<div class="home-rubriques__contents">
-		</BEFORE>
+		<LOOP NAME="home_rubriques" TABLE="publications" SELECT="id, titre, altertitre"
+			WHERE="idparent = '[#ID_COLLECTION]' AND type = 'rubrique'" ORDER="rank">
+			<BEFORE>
+				<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
+				<section id="home-rubriques" class="home-rubriques">
+					<h1 class="home-rubriques__title">[#TITRE_COLLECTION]</h1>
+					<div class="home-rubriques__contents">
+			</BEFORE>
 
-		<DO>
-			<MACRO NAME="HOME_CONTENU_RUBRIQUE" />
-		</DO>
+			<DO>
+				<MACRO NAME="HOME_CONTENU_RUBRIQUE" />
+			</DO>
 
-		<AFTER>
-				</div>
-			</section>
-		</AFTER>
+			<AFTER>
+					</div>
+				</section>
+			</AFTER>
+		</LOOP>
 	</LOOP>
 </DEFMACRO>
 

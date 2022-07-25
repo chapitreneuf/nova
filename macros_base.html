@@ -201,7 +201,8 @@
 				<LET VAR="dir_titre">[#TITRE]</LET>
 			</IF>
 
-			<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span>
+			<LET VAR="aria_label">[@NUMERO] [#NUMERO|textebrut]<FUNC NAME="BASE_PERIODE_PUBLI" TEXTEBRUT="1" PREPEND=", " /></LET>
+			<span class="publi-number" aria-label="[#ARIA_LABEL]">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span>
 			<IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]">
 				<IF COND="[#SEPARATOR]"> [#SEPARATOR] </IF><span class="publi-title-text">[#DIR_TITRE]</span>
 			</IF>

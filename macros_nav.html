@@ -191,15 +191,19 @@
 <DEFMACRO NAME="NAV_ALPHABET">
 	<nav id="alphabet" class="alphabet">
 		<p class="sr-only">[@NAVIGUER_PAR_LETTRE]</p>
-		<div class="btn-group">
+		<ul class="btn-group">
 			<LOOP NAME="alphabetSpec">
 				<IF COND="[#NBRESULTS]">
-					<a class="alphabet__btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
+					<li class="alphabet__btn btn btn-default">
+						<a href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
+					</li>
 				<ELSE/>
-					<span class="alphabet__btn alphabet__btn--disabled btn btn-default disabled">[#LETTRE]</span>
+					<li class="alphabet__btn alphabet__btn--disabled btn btn-default disabled">
+						[#LETTRE]
+					</li>
 				</IF>
 			</LOOP>
-		</div>
+		</ul>
 	</nav>
 </DEFMACRO>
 

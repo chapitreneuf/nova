@@ -671,12 +671,12 @@
 	<IF COND="[#TEXTE_ACCESSIBLE]">
 		<LOOP NAME="foreach" ARRAY="[#IMAGES]">
 			<BEFORE>
-				<section class="article__illustrations">
+				<section class="article__illustrations illustrations">
 					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TABLE_DES_ILLUSTRATIONS]" SECTION_ID="illustrations" />
-					<div class="article__illustrations-contents">
+					<ul class="illustrations__list">
 			</BEFORE>
 			<DO>
-				<div class="article__illustration illustration row">
+				<li class="illustration row">
 					<div class="illustration__thumb col-4 col-md-2">
 						<IF COND="[#VALUE.TITRE]">
 							<LET VAR="DATA_FANCYBOX_TITLE">data-fancybox-title="[#VALUE.TITRE|textebrut]"</LET>
@@ -697,10 +697,10 @@
 							<p><a href="[#VALUE.SRC|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[#VALUE.SRC]</a></p>
 						</div>
 					</div>
-				</div>
+				</li>
 			</DO>
 			<AFTER>
-					</div>
+					</ul>
 				</section>
 			</AFTER>
 		</LOOP>

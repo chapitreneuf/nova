@@ -1088,7 +1088,7 @@ img {
 }
 
 // Soulignement des liens dans les textes longs
-.tab-content, .home-billet, .article__abstract, .article__errata, .article__dedication, .article__ndlr, .article__ndla, .article__chapo, .article__text, .article__biblio, .article__appendix, .article__footnotes, .article__endnotes, .article__illustrations, .article__quotation, .article__license, .publi__introduction, .publi__ndlr, .publi__descriptionouvrage, .image__caption, .image__description, .image__credits, .lien__text {
+.tab-content, .home-billet, .article__abstract, .article__errata, .article__dedication, .article__ndlr, .article__ndla, .article__chapo, .article__text, .article__biblio, .article__appendix, .article__footnotes, .article__endnotes, .illustrations, .article__quotation, .article__license, .publi__introduction, .publi__ndlr, .publi__descriptionouvrage, .image__caption, .image__description, .image__credits, .lien__text {
   & when (@text-underline-links = true) {
     p a:not(.footnotecall, .FootnoteSymbol) {
       text-decoration: underline;
@@ -1673,25 +1673,30 @@ table.texte td {
 // TABLE DES ILLUSTRATIONS
 // =======================
 
-.article__illustrations {
+.illustrations__list {
+  margin-bottom: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.illustration {
+  padding: 0;
+  padding-bottom: 2rem;
   font-family: @font-captions;
 }
 
-.article__illustration {
-  padding: 2rem 0;
-}
-
-.article__illustration + .article__illustration  {
+.illustration + .illustration  {
   border-top: 1px solid @color-border;
+  padding-top: 2rem;
 }
 
-.article__illustration p {
+.illustration p {
   margin: .5rem 0;
   padding: 0;
   .font-size(m);
 }
 
-.article__illustration p.titreillustration {
+.illustration p.titreillustration {
   margin-top: 0;
 }
 

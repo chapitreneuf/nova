@@ -6,8 +6,10 @@
 <DEFMACRO NAME="FOOTER_MAIN">
 	<footer id="main-footer" class="main-footer container">
 		<MACRO NAME="FOOTER_ISSN" />
-		<FUNC NAME="FOOTER_INFORMATIONS" PUBLI_IDENTIFIER="[%IDENTIFIER_INFORMATIONS]" />
-		<MACRO NAME="FOOTER_LODEL" />
+		<nav class="main-footer__nav">
+			<FUNC NAME="FOOTER_INFORMATIONS" PUBLI_IDENTIFIER="[%IDENTIFIER_INFORMATIONS]" />
+			<MACRO NAME="FOOTER_LODEL" />
+		</nav>
 	</footer>
 </DEFMACRO>
 
@@ -30,7 +32,7 @@
 		<LET VAR="publi_identifier">[%IDENTIFIER_INFORMATIONS]</LET>
 	</IF>
 
-	<p class="main-footer__line main-footer__line--map">
+	<div class="main-footer__line main-footer__line--map">
 		<a class="main-footer__link" href="[#SITEINFOS.URL]/?page=map">[@PLAN_DU_SITE]</a>
 		<LOOP NAME="footer_informations" SELECT="id" TABLE="publications" WHERE="type='collection' AND identifier='[#PUBLI_IDENTIFIER]'">
 			<LOOP NAME="footer_informations_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]'" ORDER="rank">
@@ -40,17 +42,17 @@
 				</LOOP>
 			</LOOP>
 		</LOOP>
-	</p>
+	</div>
 </DEFFUNC>
 
 /**
  * Liens Lodel et maquette dans le footer.
  */
 <DEFMACRO NAME="FOOTER_LODEL">
-	<p class="main-footer__line">
+	<div class="main-footer__line">
 		<!--[ Crédit de la maquette. Ne pas supprimer. Voir le fichier LICENSE ou nous écrire à contact@edinum.org. ]-->
 		<a class="main-footer__link" href="http://www.edinum.org/">Conception&nbsp;: Edinum.org</a>
 		<a class="main-footer__link" href="http://www.lodel.org/">[@EDITE_AVEC_LODEL]</a>
 		<a class="main-footer__link" href="[#SITEINFOS.URL]/lodel/">[@LODEL_ADMIN]</a>
-	</p>
+	</div>
 </DEFMACRO>

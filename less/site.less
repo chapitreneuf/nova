@@ -836,11 +836,17 @@ img {
   text-align: center;
 }
 
-.main-footer__line {
+.main-footer__list {
   margin-bottom: 1rem;
+  list-style: none;
+  padding: 0;
 }
 
-.main-footer__link + .main-footer__link::before {
+.main-footer__item {
+  display: inline-block;
+}
+
+.main-footer__item + .main-footer__item::before {
   content: "\2022";
   display: inline-block;
   margin: 0 1rem;

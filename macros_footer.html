@@ -18,7 +18,7 @@
  */
 <DEFMACRO NAME="FOOTER_ISSN">
 	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
-		<p class="main-footer__line main-footer__line--issn">[@ISSN_ELECTRONIQUE] [#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]
+		<p class="main-footer__list main-footer__list--issn">[@ISSN_ELECTRONIQUE] [#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]
 		</p>
 	</IF>
 </DEFMACRO>
@@ -32,27 +32,37 @@
 		<LET VAR="publi_identifier">[%IDENTIFIER_INFORMATIONS]</LET>
 	</IF>
 
-	<div class="main-footer__line main-footer__line--map">
-		<a class="main-footer__link" href="[#SITEINFOS.URL]/?page=map">[@PLAN_DU_SITE]</a>
+	<ul class="main-footer__list main-footer__list--map">
+		<li class="main-footer__item">
+			<a class="main-footer__link" href="[#SITEINFOS.URL]/?page=map">[@PLAN_DU_SITE]</a>
+		</li>
 		<LOOP NAME="footer_informations" SELECT="id" TABLE="publications" WHERE="type='collection' AND identifier='[#PUBLI_IDENTIFIER]'">
 			<LOOP NAME="footer_informations_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]'" ORDER="rank">
 				<LET VAR="id_trad"><FUNC NAME="BASE_GET_TRANSLATION_ID" TEXTE_ID="[#ID]" DEFAULT="[#ID]" /></LET>
 				<LOOP NAME="footer_informations_item" TABLE="textes" WHERE="id = '[#ID_TRAD]'" SELECT="id, titre, altertitre" >
-					<a class="main-footer__link" href="[#ID|makeurlwithid]"><FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="1" /></a>
+					<li class="main-footer__item">
+						<a class="main-footer__link" href="[#ID|makeurlwithid]"><FUNC NAME="BASE_TITRE_ENTITE" TITREALTER="1" /></a>
+					</li>
 				</LOOP>
 			</LOOP>
 		</LOOP>
-	</div>
+	</ul>
 </DEFFUNC>
 
 /**
  * Liens Lodel et maquette dans le footer.
  */
 <DEFMACRO NAME="FOOTER_LODEL">
-	<div class="main-footer__line">
+	<ul class="main-footer__list">
 		<!--[ Crédit de la maquette. Ne pas supprimer. Voir le fichier LICENSE ou nous écrire à contact@edinum.org. ]-->
-		<a class="main-footer__link" href="http://www.edinum.org/">Conception&nbsp;: Edinum.org</a>
-		<a class="main-footer__link" href="http://www.lodel.org/">[@EDITE_AVEC_LODEL]</a>
-		<a class="main-footer__link" href="[#SITEINFOS.URL]/lodel/">[@LODEL_ADMIN]</a>
-	</div>
+		<li class="main-footer__item">
+			<a class="main-footer__link" href="http://www.edinum.org/">Conception&nbsp;: Edinum.org</a>
+		</li>
+		<li class="main-footer__item">
+			<a class="main-footer__link" href="http://www.lodel.org/">[@EDITE_AVEC_LODEL]</a>
+		</li>
+		<li class="main-footer__item">
+			<a class="main-footer__link" href="[#SITEINFOS.URL]/lodel/">[@LODEL_ADMIN]</a>
+		</li>
+	</ul>
 </DEFMACRO>

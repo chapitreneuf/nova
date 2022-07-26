@@ -60,7 +60,7 @@
 				</IF>
 
 				<!--[ Altertitles ]-->
-				<FUNC NAME="PUBLICATION_ALTERTITRE" WRAP_CLASS="main-altertitle publi__altertitle altertitle" />
+				<FUNC NAME="BASE_ALTERTITLES" PARENT_CLASS="publi__altertitles" />
 
 				<!--[ Directeur publication ]-->
 				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
@@ -103,30 +103,6 @@
 			</section>
 		</IF>
 	</header>
-</DEFFUNC>
-
-/**
- * Affiche les titres traduits d'une publication.
- * @param string [wrap_class] - Valeur de l'attribut class du second élément DIV conteneur.
- */
-<DEFFUNC NAME="PUBLICATION_ALTERTITRE" OPTIONAL="wrap_class">
-	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
-		<LOOP NAME="publication_altertitre_parent_altertitle" SELECT="altertitre AS parentaltertitle" TABLE="publications" WHERE="id = '[#IDPARENT]'">
-			<IF COND="[#WRAP_CLASS]"><div class="[#WRAP_CLASS]"></IF>
-				<IF COND="[#PARENTALTERTITLE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
-					<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-						<p lang="[#VALUE]" xml:lang="[#VALUE]">
-							[#PARENTALTERTITLE:#VALUE]<IF COND="[#ALTERTITRE:#VALUE]">&#160;| [#ALTERTITRE:#VALUE]<ELSEIF COND="[#TITRE]"/>&#160;| [#TITRE]</IF>
-						</p>
-					</LOOP>
-				</IF>
-			<IF COND="[#WRAP_CLASS]"></div></IF>
-		</LOOP>
-	<ELSEIF COND="[#ALTERTITRE]"/>
-		<IF COND="[#WRAP_CLASS]"><div class="[#WRAP_CLASS]"></IF>
-			[#ALTERTITRE|replace('r2r:ml', 'p')]
-		<IF COND="[#WRAP_CLASS]"></div></IF>
-	</IF>
 </DEFFUNC>
 
 /**
@@ -255,9 +231,7 @@
 			</IF>
 			<!--[ Titres alternatifs ]-->
 			<IF COND="[%TOC_DOC_ALTERTITRE] AND [#ALTERTITRE]">
-				<div class="toc__publi-altertitle altertitle">
-					[#ALTERTITRE|replace('r2r:ml', 'p')]
-				</div>
+				<FUNC NAME="BASE_ALTERTITLES" PARENT_CLASS="toc__publi-altertitles" />
 			</IF>
 			<!--[ Directeur de la publication ]-->
 			<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="toc__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
@@ -303,16 +277,8 @@
 			<LET ARRAY="langues_traductions_article[]" GLOBAL="1">[#LANGUE]</LET>
 
 			<IF COND="[%TOC_DOC_ALTERTITRE]">
-				<!--[  Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
-				<IF COND="[%ALTERTITRE_SOURCE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
-					<div class="toc__altertitle toc__altertitle--sauf-traductions altertitle">
-						<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-						<IF COND="![#VALUE|in_array([%LANGUES_TRADUCTIONS_ARTICLE])]">
-							<p xml:lang="[#VALUE]" lang="[#VALUE]">[%ALTERTITRE_SOURCE:#VALUE|removenotes]</p>
-						</IF>
-						</LOOP>
-					</div>
-			</IF>
+				<!--[ Afficher les altertitres des langues qui ne sont pas dans langues_traductions_article ]-->
+				<FUNC NAME="BASE_ALTERTITLES" PARENT_CLASS="toc__altertitles toc__altertitles--sauf-traductions" USE_ALTERTITRE="[%ALTERTITRE_SOURCE]" EXCLUDE_LANGS="[%LANGUES_TRADUCTIONS_ARTICLE|join(',')]" />
 			</IF>
 		</DOLAST>
 
@@ -346,12 +312,8 @@
 		</IF>
 
 		<!--[ Titres traduits]-->
-		<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE] LIKE /<r2r:ml lang=\" ([a-z]+)\"/">
-			<div class="toc__altertitle altertitle">
-				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-					<p xml:lang="[#VALUE]" lang="[#VALUE]">[#ALTERTITRE:#VALUE|removenotes]</p>
-				</LOOP>
-			</div>
+		<IF COND="[#AFFICHER_TITRES_TRADUITS] AND [#ALTERTITRE]">
+			<FUNC NAME="BASE_ALTERTITLES" PARENT_CLASS="toc__altertitles" />
 		</IF>
 
 		<!--[ Date de publication si publié dans une rubrique électronique ]-->

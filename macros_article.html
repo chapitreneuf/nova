@@ -126,14 +126,7 @@
 		</IF>
 
 		<!--[ Titres alternatifs ]-->
-		<IF COND="[#ALTERTITRE]">
-			<div class="main-altertitle article__altertitle altertitle">
-				<LET VAR="value">[#ALTERTITRE]</LET>
-				<LOOP NAME="mltext">
-					<p lang="[#LANG]">[#VALUE|removenotes]</p>
-				</LOOP>
-			</div>
-		</IF>
+		<FUNC NAME="BASE_ALTERTITLES" PARENT_CLASS="article__altertitles" />
 
 		<!--[ Auteurs ]-->
 		<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_ID="article-author" WRAP_CLASS="article__author" HREF="#authors-infos"/>

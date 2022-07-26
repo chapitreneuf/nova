@@ -939,7 +939,7 @@ img {
   display: block;
 }
 
-.publi__altertitle {
+.publi__altertitles {
   margin-bottom: 2rem;
 }
 
@@ -995,8 +995,10 @@ img {
   color: @color-link-light;
 }
 
-.toc__altertitle {
+.toc__altertitles, .toc__publi-altertitles {
+  margin-top: .5rem;
   color: @color-grey-d5;
+  font-size: 90%;
 }
 
 .toc__vignette {
@@ -1020,7 +1022,7 @@ img {
   font-size: 2rem;
 }
 
-.toc__publi-subtitle, .toc__publi-altertitle p {
+.toc__publi-subtitle {
   margin-bottom: .5rem;
 }
 
@@ -1052,20 +1054,22 @@ img {
   color: inherit;
 }
 
-.altertitle {
+.altertitles {
   line-height: 125%;
   font-style: italic;
   color: @color-grey-d4;
   font-family: @font-doc-title;
-  line-height: 125%;
+  list-style: none;
+  padding: 0;
+}
+
+.altertitle {
+  .lang();
+  margin-bottom: .5rem;
 }
 
 .altertitle em, .altertitle i {
   font-style: normal;
-}
-
-.altertitle p {
-  .lang();
 }
 
 .accroche {

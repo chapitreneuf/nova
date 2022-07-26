@@ -120,6 +120,53 @@
 </DEFFUNC>
 
 /**
+ * Affiche les titres traduits de l'entité courante.
+ * @param {string} [parent_class] - Classe supplémentaire de l'élément parent.
+ * @param {string} [use_altertitre] - Champ altertitre. Par défaut : [#ALTERTITRE].
+ * @param {string} [exclude_langs] - Liste de langues à ne pas afficher, séparées par des virgules.
+ */
+<DEFFUNC NAME="BASE_ALTERTITLES" OPTIONAL="parent_class, use_altertitre, exclude_langs">
+	<IF COND="[#USE_ALTERTITRE]">
+		<LET VAR="altertitre">[#USE_ALTERTITRE]</LET>
+	</IF>
+
+	<IF COND="[#EXCLUDE_LANGS]">
+		<LET VAR="separator">,</LET>
+		<LET ARRAY="exclude_langs_array">[#SEPARATOR|explode([#EXCLUDE_LANGS])]</LET>
+	<ELSE/>
+		<LET ARRAY="exclude_langs_array"></LET>
+	</IF>
+
+	<!--[ Affichage spécifique pour les rubriques annuelles ]-->
+	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
+		<LOOP NAME="base_altertitles_parent_altertitle" SELECT="altertitre AS parent_altertitre" TABLE="publications" WHERE="id = '[#IDPARENT]'">
+			<IF COND="[#PARENT_ALTERTITRE]">
+				<ul class="altertitles [#PARENT_CLASS]">
+					<LET VAR="value">[#PARENT_ALTERTITRE]</LET>
+					<LOOP NAME="mltext">
+						<IF COND="![#LANG|in_array([#EXCLUDE_LANGS_ARRAY])]">
+							<li class="altertitle" lang="[#LANG]" xml:lang="[#LANG]">
+								[#VALUE|removenotes]<IF COND="[#ALTERTITRE:#LANG]">&#160;| [#ALTERTITRE:#LANG]<ELSEIF COND="[#TITRE]"/>&#160;| [#TITRE]</IF>
+							</li>
+						</IF>
+					</LOOP>
+				</ul>
+			</IF>
+		</LOOP>
+
+	<ELSEIF COND="[#ALTERTITRE]">
+		<ul class="altertitles [#PARENT_CLASS]">
+			<LET VAR="value">[#ALTERTITRE]</LET>
+			<LOOP NAME="mltext">
+				<IF COND="![#LANG|in_array([#EXCLUDE_LANGS_ARRAY])]">
+					<li class="altertitle" lang="[#LANG]" xml:lang="[#LANG]">[#VALUE|removenotes]</li>
+				</IF>
+			</LOOP>
+		</ul>
+	</IF>
+</DEFFUNC>
+
+/**
  * Obtenir la direction d'une langue. Retourne ltr ou rtl.
  * @param {string} lang - Langue à tester
  */

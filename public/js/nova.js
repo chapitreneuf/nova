@@ -19,8 +19,13 @@ window.fnLoader = {
     // Hamburger menu
     hamburger: function () {
       $(function () {
-        $("#main-menu-toggler").on("click", function () {
-          $("body").toggleClass("menu-visible");
+        var $body = $("body");
+        var $btn = $("#main-menu-toggler");
+        $btn.on("click", function () {
+          var classname = "menu-visible";
+          $body.toggleClass(classname);
+          var btnLabel = $body.hasClass(classname) ? window.translations.menuPrincipalMasquer : window.translations.menuPrincipalAfficher;
+          $btn.attr("aria-label", btnLabel);
         });
       });
     },

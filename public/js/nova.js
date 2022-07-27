@@ -151,7 +151,7 @@ window.fnLoader = {
 
       function addDot(y, id, title, label, classname) {
         const $container = $(".dot-shortcuts-container");
-        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-label ='" + label + "' aria-hidden='true'></a>").appendTo($container);
+        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-label ='" + label + "'></a>").appendTo($container);
       }
 
       function waitAndRun() {
@@ -184,7 +184,7 @@ window.fnLoader = {
       $(function() {
         var $lodelContainer = $("#lodel-container");
         var $root = $lodelContainer.length === 0 ? $("body") : $lodelContainer;
-        $("<div class='dot-shortcuts-placeholder'><div class='dot-shortcuts-container'></div></div>").appendTo($root);
+        $("<div class='dot-shortcuts-placeholder'><div class='dot-shortcuts-container' aria-label='" + window.translations.naviguerDansLaPage + "'></div></div>").appendTo($root);
         var $container = $(".dot-shortcuts-container");
 
         if (devMode) {

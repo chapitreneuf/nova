@@ -77,7 +77,7 @@
 </DEFMACRO>
 
 /**
- * Sélecteur de langue (pour les visiteurs non identifiés ou les visiteurs access membre seulement).
+ * Sélecteur de langue (pour les visiteurs non identifiés ou les visiteurs accès membre seulement).
  */
 <DEFMACRO NAME="TOPBAR_SITELANG">
 	<IF COND="[#LODELUSER.RIGHTS] LE 5">
@@ -96,20 +96,22 @@
 							</LOOP>
 						</LET>
 						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="[@CHOISIR_SITELANG]. [@LANGUE_CHOISIE]: [#SELECTED_LANG]">[#SELECTED_LANG]</a>
-						<div class="dropdown-menu">
+						<ul class="dropdown-menu" role="menu">
 				</IF>
 			</BEFORE>
 			<DO>
 				<IF COND="[#NBRESULTS] GT 1">
-					<IF COND="[#SITELANG] EQ [#LANG]">
-						<a class="dropdown-item disabled" aria-label="[@LANGUE_CHOISIE]: [#TITLE]">
-							[#TITLE]
-						</a>
-					<ELSE />
-						<a class="dropdown-item" href="[#CURRENTURL_FIXED|query_string('lang', [#LANG])]" aria-label="[@CHOISIR_LANGUE]: [#TITLE]">
-							[#TITLE]
-						</a>
-					</IF>
+					<li>
+						<IF COND="[#SITELANG] EQ [#LANG]">
+							<a class="dropdown-item disabled" aria-label="[@LANGUE_CHOISIE]: [#TITLE]">
+								[#TITLE]
+							</a>
+						<ELSE />
+							<a class="dropdown-item" href="[#CURRENTURL_FIXED|query_string('lang', [#LANG])]" aria-label="[@CHOISIR_LANGUE]: [#TITLE]">
+								[#TITLE]
+							</a>
+						</IF>
+					</li>
 				</IF>
 			</DO>
 			<AFTER>

@@ -568,14 +568,11 @@ img {
     display: none;
   }
 
-  body.menu-visible .main-menu__section.main-menu__section--partenaires {
-    margin-top: 2rem;
-  }
-
   body.menu-visible .main-menu__logos {
     display: flex;
     gap: 3rem;
     justify-content: center;
+    flex-wrap: wrap;
   }
 }
 
@@ -700,7 +697,7 @@ img {
 // =================
 
 .main-menu__section.main-menu__section--partenaires {
-  margin-top: 6rem;
+  margin-top: 4rem;
 }
 
 .main-menu__logos {
@@ -709,19 +706,31 @@ img {
 }
 
 .main-menu__logo {
-  margin: 3rem 0;
+  margin: 0;
 }
 
 .main-menu__logo-image {
-  max-width: 100px;
-  max-height: 100px;
-  margin: 0 auto;
-  display: block;
-  transition: filter .3s;
+  max-width: 60px;
+  max-height: 60px;
 }
 
 .main-menu__logo-image:hover {
   filter: brightness(0.9);
+}
+
+@media (min-width: @screen-md) {
+  .main-menu__section.main-menu__section--partenaires {
+    margin-top: 6rem;
+  }
+
+  .main-menu__logo {
+    margin: 3rem 0;
+  }
+
+  .main-menu__logo-image {
+    max-width: 100px;
+    max-height: 100px;
+  }
 }
 
 // MAIN ASIDE

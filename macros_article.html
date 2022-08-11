@@ -550,7 +550,7 @@
 			</IF>
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
 		</div>
-		<div id="sidenotes" class="article__sidenotes col-3 d-none d-lg-block">
+		<div id="sidenotes" class="article__sidenotes col-3 d-none d-lg-block" aria-hidden="true">
 			[#NOTESBASPAGE|cutnotes(150)]
 		</div>
 	</div>

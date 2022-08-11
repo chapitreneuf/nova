@@ -543,9 +543,9 @@
 			<!--[ Texte intégral ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
 			<IF COND="[#TEXTE_ACCESSIBLE]"/>
-				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|media|tableaux]
+				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|media|tableaux|arianotecalls]
 			<ELSE />
-				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|cuttext(1000, true)|media|tableaux]
+				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|cuttext(1000, true)|media|tableaux|arianotecalls]
 				<MACRO NAME="ARTICLE_INFO_BM" />
 			</IF>
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
@@ -587,7 +587,7 @@
  */
 <DEFMACRO NAME="ARTICLE_CHAPO">
 	<IF COND="[#CHAPO]">
-		<div class="article__chapo">[#CHAPO|cleanCallNotes]</div>
+		<div class="article__chapo">[#CHAPO|cleanCallNotes|arianotecalls]</div>
 	</IF>
 </DEFMACRO>
 
@@ -599,7 +599,7 @@
 		<section class="article__biblio">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" SECTION_ID="biblio" />
 			<div class="article__biblio-contents">
-				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'bibliographie')|media|tableaux)]
+				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'bibliographie')|media|tableaux|arianotecalls)]
 			</div>
 		</section>
 	</IF>
@@ -614,7 +614,7 @@
 		<section class="article__appendix">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" SECTION_ID="appendix" />
 			<div class="article__appendix-contents">
-				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'annexe')|media|tableaux]
+				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'annexe')|media|tableaux|arianotecalls]
 			</div>
 		</section>
 	</IF>
@@ -637,7 +637,7 @@
 		<section class="article__footnotes">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTES]" SECTION_ID="footnotes" />
 			<div class="article__footnotes-contents">
-				[#NOTESBASPAGE]
+				[#NOTESBASPAGE|arianotes]
 			</div>
 		</section>
 	</IF>
@@ -651,7 +651,7 @@
 		<section class="article__endnotes">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@NOTEFIN]" SECTION_ID="endnotes" />
 			<div class="article__endnotes-contents">
-				[#NOTEFIN]
+				[#NOTEFIN|arianotes]
 			</div>
 		</section>
 	</IF>

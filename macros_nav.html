@@ -168,13 +168,18 @@
 
 /**
  * Formulaire recherche.
+ * @param {string} [form_id] - Attribut id du formulaire.
  * @param {boolean} [autofocus] - Autofocus.
  */
-<DEFFUNC NAME="NAV_SEARCH_FORM" OPTIONAL="autofocus">
+<DEFFUNC NAME="NAV_SEARCH_FORM" OPTIONAL="form_id, autofocus">
 	<IF COND="[#AUTOFOCUS]">
 		<LET VAR="autofocus">autofocus</LET>
 	</IF>
-	<form class="search-form" action="./" method="get">
+	<IF COND="[#FORM_ID]">
+		<LET VAR="form_id">id="[#FORM_ID]"</LET>
+	</IF>
+
+	<form [#FORM_ID] class="search-form" action="./" method="get">
 		<input name="page" type="hidden" value="search" />
 		<div class="input-group input-group-lg">
 			<input name="query" type="text" class="form-control" aria-label="[@RECHERCHE]" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />

@@ -178,7 +178,7 @@
  * Affiche une icône du dossier public/icons
  * @param {string} icon - Nom du fichier icône (sans l'extension).
  * @param {string} [classname] - Class optionnelle à appliquer au span.
- * @param {string} [title] - Attribut title optionnel. Pour un SVG, si ce paramètre est nul alors l'image sera considérée comme décorative et sera masquée pour les screen readers.
+ * @param {string} [title] - Attribut title optionnel. Pour un SVG, si ce paramètre est nul alors l'image sera considérée comme décorative et sera masquée pour les screen readers. Pour une image, définit également le texte alternatif.
  * @param {string} [extension] - Extension de fichier de l'icône. Par défaut : svg.
  * @param {boolean} [inline] - Uniquement avec les fichiers SVG. Si vrai, le code de l'icône est directement inséré dans le HTML.
  * Accessibilité : lire https://www.sarasoueidan.com/blog/accessible-icon-buttons/
@@ -196,7 +196,7 @@
 
 	<ELSE />
 		<IF COND="[#TITLE]">
-			<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
+			<LET VAR="TITLE_ATTR"> title="[#TITLE]" alt="[#TITLE]"</LET>
 		</IF>
 		<img class="icon icon--src [#CLASSNAME]" [#TITLE_ATTR] src="[#ICON_PATH]" />
 	</IF>

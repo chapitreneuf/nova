@@ -189,7 +189,7 @@ window.fnLoader = {
       $(function() {
         var $lodelContainer = $("#lodel-container");
         var $root = $lodelContainer.length === 0 ? $("body") : $lodelContainer;
-        $("<div class='dot-shortcuts-placeholder'><div class='dot-shortcuts-container' aria-label='" + window.translations.naviguerDansLaPage + "'></div></div>").appendTo($root);
+        $("<div class='dot-shortcuts-placeholder' aria-hidden='true'><div class='dot-shortcuts-container' aria-label='" + window.translations.naviguerDansLArticle + "'></div></div>").appendTo($root);
         var $container = $(".dot-shortcuts-container");
 
         if (devMode) {
@@ -230,7 +230,8 @@ window.fnLoader = {
         $targets.each(function () {
           var id = $(this).attr("id");
           var title = $(this).text();
-          html += "<li class='page-shortcuts__item'><a href='#" + id + "' class='page-shortcuts__link'>" + title + "</a></li>\n";
+          var label = window.translations.atteindreSection + " " + title;
+          html += "<li class='page-shortcuts__item'><a href='#" + id + "' class='page-shortcuts__link' aria-label='" + label + "'>" + title + "</a></li>\n";
         });
         $list.html(html);
       });

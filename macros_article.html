@@ -78,7 +78,7 @@
 			<MACRO NAME="ARTICLE_HEADER" />
 		</div>
 	</div>
-	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<MACRO NAME="ARTICLE_RACCOURCIS" />
 	</IF>
 	<MACRO NAME="ARTICLE_INFO_BM" />
@@ -207,9 +207,12 @@
  * Les liens sont calculés en JS. Voir https://github.com/edinum/nova/issues/70
  */
 <DEFMACRO NAME="ARTICLE_RACCOURCIS">
-	<nav class="page-shortcuts">
-		<ul class="page-shortcuts__list nav"></ul>
-	</nav>
+	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [%ARTICLE_LEGACY_SHORTCUTS] NE 'none'">
+		<LET VAR="sr_only"><IF COND="[%ARTICLE_LEGACY_SHORTCUTS] EQ 'sr-only'">sr-only</IF></LET>
+		<nav class="page-shortcuts [#SR_ONLY]" aria-label="[@NAVIGUER_DANS_LARTICLE]">
+			<ul class="page-shortcuts__list nav"></ul>
+		</nav>
+	</IF>
 </DEFMACRO>
 
 /**

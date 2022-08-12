@@ -14,10 +14,10 @@
 <LET VAR="abstract_legacy_tabs" GLOBAL="1"></LET>
 
 <!--[
-	Afficher les anciens raccourcis (Nova 1) dans les articles.
-	@type {boolean}
+	Afficher les anciens raccourcis (Nova 1) dans les articles. Valeurs possibles : all, sr-only, none. Par défaut : sr-only (visible pour les lecteurs d'écrans uniquement) en complément des dot_shortcuts qui ne sont pas accessibles.
+	@type {string}
 ]-->
-<LET VAR="article_legacy_shortcuts" GLOBAL="1"></LET>
+<LET VAR="article_legacy_shortcuts" GLOBAL="1">sr-only</LET>
 
 <!--[
 	Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION !

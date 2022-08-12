@@ -24,8 +24,11 @@ window.fnLoader = {
         $btn.on("click", function () {
           var classname = "menu-visible";
           $body.toggleClass(classname);
-          var btnLabel = $body.hasClass(classname) ? window.translations.menuPrincipalMasquer : window.translations.menuPrincipalAfficher;
+          var isExpanding = $body.hasClass(classname);
+          var btnLabel = isExpanding ? window.translations.menuPrincipalMasquer : window.translations.menuPrincipalAfficher;
           $btn.attr("aria-label", btnLabel);
+          var expandedAttr = isExpanding ? "true" : "false";
+          $("#main-menu, #topbar").attr("aria-expanded", expandedAttr);
         });
       });
     },

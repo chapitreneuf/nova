@@ -337,6 +337,28 @@ window.fnLoader = {
       $(function() {
         reframe("iframe");
       });
+    },
+
+    // Accessible dropdowns. Read: https://medium.com/@mariusc23/making-bootstrap-dropdowns-more-accessible-27b2566abdda
+    accessibleDropdowns: function() {
+      $(document).on("shown.bs.dropdown", function(e) {
+        var $dropdown = $(e.target);
+        // Set aria-expanded to true
+        $dropdown.find(".dropdown-menu").attr("aria-expanded", "true");
+        // Set focus on the first link in the dropdown
+        setTimeout(function() {
+          $dropdown.find(".dropdown-menu li:first-child a").focus();
+        }, 10);
+      });
+
+      // On dropdown close
+      $(document).on("hidden.bs.dropdown", function(e) {
+        var $dropdown = $(e.target);
+        // Set aria-expanded to false
+        $dropdown.find(".dropdown-menu").attr("aria-expanded", "false");
+        // Set focus back to dropdown toggle
+        $dropdown.find(".dropdown-toggle").focus();
+      });
     }
   }
 };

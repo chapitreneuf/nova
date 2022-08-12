@@ -17,18 +17,31 @@ window.fnLoader = {
   // Déclaration des fonctions à charger par défaut
   fns: {
     // Hamburger menu
-    hamburger: function () {
-      $(function () {
+    hamburger: function() {
+      $(function() {
         var $body = $("body");
         var $btn = $("#main-menu-toggler");
-        $btn.on("click", function () {
-          var classname = "menu-visible";
+        var $menus = $("#main-menu, #topbar");
+        var classname = "menu-visible";
+
+        function toggleMenu() {
           $body.toggleClass(classname);
           var isExpanding = $body.hasClass(classname);
           var btnLabel = isExpanding ? window.translations.menuPrincipalMasquer : window.translations.menuPrincipalAfficher;
           $btn.attr("aria-label", btnLabel);
           var expandedAttr = isExpanding ? "true" : "false";
-          $("#main-menu, #topbar").attr("aria-expanded", expandedAttr);
+          $menus.attr("aria-expanded", expandedAttr);
+        }
+
+        $btn.on("click", toggleMenu);
+        $menus.on("keydown", function(e) {
+          if (!$body.hasClass(classname)) {
+            return;
+          }
+          if (e.key === "Escape" || e.key === "Esc") {
+            $btn.focus();
+            toggleMenu();
+          }
         });
       });
     },

@@ -188,10 +188,10 @@
 	<LET VAR="icon_path">tpl/public/icons/[#ICON].[#EXTENSION]</LET>
 
 	<IF COND="[#INLINE] AND [#EXTENSION] EQ 'svg'">
+		<LET VAR="aria_label"><IF COND="[#TITLE]">aria-label="[#TITLE]"</IF></LET>
 		<LET VAR="svg_data">[#ICON_PATH|file_get_contents]</LET>
-		<span class="icon icon--inline [#CLASSNAME]">
+		<span class="icon icon--inline [#CLASSNAME]" [#ARIA_LABEL]>
 			[#SVG_DATA|reg_replace('/<svg([^>]*)>/', '<svg\\1 aria-hidden="true" focusable="false">')]
-			<IF COND="[#TITLE]"><span class="sr-only">[#TITLE]</span></IF>
 		</span>
 
 	<ELSE />

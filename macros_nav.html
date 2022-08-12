@@ -195,8 +195,7 @@
  */
 <DEFMACRO NAME="NAV_ALPHABET">
 	<nav id="alphabet" class="alphabet">
-		<p class="sr-only">[@NAVIGUER_PAR_LETTRE]</p>
-		<ul class="btn-group">
+		<ul class="btn-group" aria-label="[@NAVIGUER_PAR_LETTRE]">
 			<LOOP NAME="alphabetSpec">
 				<IF COND="[#NBRESULTS]">
 					<li class="alphabet__btn btn btn-default">
@@ -240,11 +239,11 @@
 
 			<IF COND="[#URLPAGE] EQ ''">
 				<li class="page-item active">
-					<a class="page-link" href="#">[#PAGENUMBER] <span class="sr-only">(current)</span></a>
+					<a class="page-link" href="#" aria-label="[@PAGINATION_PAGE_COURANTE] : [#PAGENUMBER]">[#PAGENUMBER]</a>
 				</li>
 			<ELSE />
 				<li class="page-item">
-					<a class="page-link" href="[#URLPAGE]">[#PAGENUMBER]</a>
+					<a class="page-link" href="[#URLPAGE]" aria-label="[@PAGINATION_ALLER_PAGE] [#PAGENUMBER]">[#PAGENUMBER]</a>
 				</li>
 			</IF>
 		</DO>

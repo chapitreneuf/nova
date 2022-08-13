@@ -112,7 +112,7 @@
 	<IF COND="[#URLPUBLICATIONEDITEUR]">
 		<p class="publi__urlpublicationediteur">
 			<LET VAR="aria_label">[@COMMANDER_NUMERO] : <FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /></LET>
-			<a rel="external" class="publi__order-button button external" href="[#URLPUBLICATIONEDITEUR|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" title="[@SITE_EDITEUR]" aria-label="[#ARIA_LABEL]">
+			<a rel="external" class="publi__order-button button external arrow-external" href="[#URLPUBLICATIONEDITEUR|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" title="[@SITE_EDITEUR]" aria-label="[#ARIA_LABEL]">
 				[@COMMANDER_NUMERO]
 			</a>
 		</p>

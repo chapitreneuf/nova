@@ -94,10 +94,6 @@ img {
   color: @color-grey-d4;
 }
 
-.button-back::before {
-  content: "< "
-}
-
 // Sections headers
 .section-header-container {
   font-family: @font-section-headers;
@@ -375,6 +371,28 @@ img {
 
   .dot-shortcuts-container:hover .dot-shortcut, .dot-shortcuts-container.visible .dot-shortcut {
     opacity: 1;
+  }
+}
+
+// Flèches des boutons
+// Ex: "« Retour à l'index"
+.arrow-before {
+  &::before {
+    content: "«\00a0"
+  }
+}
+
+// Ex: "Sommaire du numéro »"
+.arrow-after {
+  &::after {
+    content: "\00a0»"
+  }
+}
+
+// Ex: "Commander ce numéro 🡕"
+.arrow-external {
+  &::after {
+    content: "\00a0\1F855"
   }
 }
 
@@ -712,10 +730,6 @@ img {
   padding-top: 1rem;
 }
 
-.link-to-issues::after {
-  content: " »";
-}
-
 // LOGOS PARTENAIRES
 // =================
 
@@ -936,10 +950,6 @@ img {
   margin: 4rem 0;
 }
 
-.home-rubrique__more::after {
-  content: " »";
-}
-
 // PUBLICATION
 // ===========
 
@@ -1125,14 +1135,6 @@ img {
 
 .accroche:hover {
   filter: brightness(0.9);
-}
-
-.more {
-  white-space: nowrap;
-}
-
-.more::after {
-  content: " \00BB";
 }
 
 // Soulignement des liens dans les textes longs

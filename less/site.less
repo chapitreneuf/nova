@@ -1403,7 +1403,7 @@ body:not(.type-informations):not(.type-actualite) .article__text-contents {
 
 // Default margin-top
 .annexe, .bibliographie, p.citation, p.citationbis, p.citationter, .code, .crditsillustration, .creditillustration, .encadre, .epigraphe, .latex, .legendeillustration, .mathlatex, .mathml, .media-description, .media-credits, .media-legende, .media-titre, .media-urlaccesmedia, .notefin, .notesbaspage, .paragraphesansretrait, .question, .remerciements, .reponse, .separateur, .texte, .titreillustration {
-  margin-top: 1.6rem;
+  margin-top: @p-margin-top;
 }
 
 // Justification
@@ -1422,7 +1422,7 @@ each(range(6), {
 
   @next-level: (@value + 1);
   h@{value}.texte + h@{next-level} {
-    margin-top: 1.6rem;
+    margin-top: @p-margin-top;
   }
 
   h@{value}.texte:first-child {
@@ -1543,8 +1543,7 @@ p.citationter {
 
 .question, h1, h2, h3, h4, h5, h6 {
   & + .question {
-    // TODO: option less pour le margin-top des para = 1.6rem.
-    margin-top: 1.6rem;
+    margin-top: @p-margin-top;
   }
 }
 

@@ -54,7 +54,7 @@ window.fnLoader = {
           $(".article__text table").largetable({ enableMaximize: true });
         }
 
-        if (devMode) {
+        if (window.devMode === true) {
           // In dev mode, wait for less to be ready
           window.setTimeout(waitAndRun, 1000);
         } else {
@@ -217,7 +217,7 @@ window.fnLoader = {
         $("<div class='dot-shortcuts-placeholder' aria-hidden='true'><div class='dot-shortcuts-container' aria-label='" + window.translations.naviguerDansLArticle + "'></div></div>").appendTo($root);
         var $container = $(".dot-shortcuts-container");
 
-        if (devMode) {
+        if (window.devMode === true) {
           // In dev mode, wait for less to be ready
           window.setTimeout(waitAndRun, 1000);
         } else {

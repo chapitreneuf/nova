@@ -64,11 +64,6 @@ img {
 // UTILS & COMPONENTS
 // ==================
 
-// Accessible bootstrap dropdown
-.dropdown-item.disabled, .dropdown-item:disabled {
-  color: @color-grey-d5;
-}
-
 // Styles de bouton
 .button {
   color: @color-link;
@@ -447,14 +442,29 @@ img {
   padding: 1rem 0;
 }
 
-.topbar a {
+.topbar a:not(.dropdown-item) {
   color: @color-topbar-link;
+
+  a:hover, a:focus {
+    color: @color-topbar-link-hover;
+  }
 }
 
-.topbar a:hover {
-  color: @color-topbar-link-hover;
+.topbar a:hover, .topbar a:focus {
   text-decoration: underline;
   background-color: transparent;
+}
+
+.topbar .dropdown-item {
+  color: @color-link;
+
+  a:hover, a:focus {
+    color: @color-link-hover;
+  }
+}
+
+.dropdown-item.disabled, .dropdown-item:disabled {
+  color: @color-grey-d5;
 }
 
 .topbar .navbar-nav {

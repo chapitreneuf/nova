@@ -1,7 +1,12 @@
+// ===========================
+// MIXINS LESS
+// /!\ Ce fichier ne devrait jamais être modifié directement. Les styles et variables personnalisés doivent être déclarés dans le fichier less/custom.less.
+// ===========================
+
 // Fonction de définition des font-size.
 // Exemples d'utilisation :
-//  .font-size(xs);
-//  .font-size(1.4);
+// .font-size(xs);
+// .font-size(1.4);
 .font-size(@size-arg) {
   @size-value: if(isnumber(@size-arg), @size-arg, @sizes[@@size-arg]);
   @factorized-value: @size-value * @size-factor;
@@ -16,18 +21,18 @@
 .numbered() {
   @media (min-width : 576px) {
     & {
-      counter-reset: p; /* Set the p counter to 0 */
+      counter-reset: p; // Set the p counter to 0
       position: relative;
       padding-left: @numbered-left-padding;
     }
 
     & > p.texte {
       position: relative;
-      counter-increment: p; /* Increment the p counter */
+      counter-increment: p; // Increment the p counter
     }
 
     & > p.texte:before {
-      content: counter(p); /* Display the counter */
+      content: counter(p); // Display the counter
       position: absolute;
       left: -(@numbered-left-padding - 5);
       font-size: .8em;

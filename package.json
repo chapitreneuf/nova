@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm run css",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
-    "postinstall": "npm run css",
+    "copy-dist": "node scripts/copy-dist.js",
+    "postinstall": "npm run css && npm run copy-dist",
     "gulp": "npm run css"
   },
   "repository": {

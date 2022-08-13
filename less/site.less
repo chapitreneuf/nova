@@ -936,12 +936,6 @@ img {
   text-align: center;
 }
 
-@media (min-width: @screen-sm) {
-  .publi__accroche {
-    text-align: left;
-  }
-}
-
 .publi__accroche a {
   color: @color-grey-d4;
 }
@@ -957,6 +951,16 @@ img {
   .font-size(s);
   margin-top: 1rem;
   color: @color-grey-d4;
+}
+
+@media (min-width: @screen-sm) {
+  .publi__accroche {
+    text-align: left;
+  }
+
+  .accroche__img {
+    margin: 0;
+  }
 }
 
 .main-title .publi-number {

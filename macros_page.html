@@ -17,6 +17,7 @@
 	<USE MACROFILE="macros_head.html" />
 	<USE MACROFILE="macros_nav.html" />
 	<USE MACROFILE="macros_menu.html" />
+	<USE MACROFILE="macros_side.html" />
 	<USE MACROFILE="macros_topbar.html" />
 	<USE MACROFILE="macros_header.html" />
 	<USE MACROFILE="macros_footer.html" />
@@ -58,7 +59,7 @@
 							</main><!--[ .main-content ]-->
 							<IF COND="[%SIDE_CONTENTS]">
 								<aside id="main-aside" class="main-aside col-lg-3">
-									<MACRO NAME="BASE_SIDE_CONTENTS" />
+									<MACRO NAME="SIDE_MAIN" />
 								</aside>
 							</IF>
 						</div><!--[ .row ]-->

@@ -171,8 +171,8 @@ window.fnLoader = {
       }
 
       function addDot(y, id, title, label, classname) {
-        const $container = $(".dot-shortcuts-container");
-        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-label ='" + label + "'></a>").appendTo($container);
+        var $container = $(".dot-shortcuts-container");
+        $("<a class='dot-shortcut " + classname + "' href='#" + id + "' style='top: " + y + "px' title='" + title + "' aria-label ='" + label + "' data-toggle='tooltip'></a>").appendTo($container);
       }
 
       function waitAndRun() {
@@ -199,6 +199,15 @@ window.fnLoader = {
             addDot(y, id, title, label, "dot-shortcut--section");
           });
         }
+
+        // Init tooltips
+        var $dots = $(".dot-shortcut");
+        $dots.tooltip({
+          animation: false,
+          container: ".dot-shortcuts-container",
+          customClass: "dot-shortcut-tooltip",
+          placement: "left"
+        });
       }
 
       // Run when page is ready + when all images are loaded + on viewport resize

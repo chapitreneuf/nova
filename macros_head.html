@@ -236,7 +236,7 @@
 		<meta property="og:type" content="website" />
 	</IF>
 
-	<LOOP NAME="head_meta_og_image" TABLE="fichiers" WHERE="type IN ('couverture1','imageaccroche') AND idparent = '[#ID]' AND (vignette OR document)" ORDER="rank" LIMIT="1">
+	<LOOP NAME="head_meta_og_image" TABLE="fichiers" WHERE="type IN ('couverture1','imageaccroche') AND idparent = '[#ID]' AND (vignette !='' OR document !='')" ORDER="rank" LIMIT="1">
 		<IF COND="[#VIGNETTE]">
 			<meta property="og:image" content="[#SITEINFOS.URL]/[#VIGNETTE]" />
 		<ELSEIF COND="[#DOCUMENT]">

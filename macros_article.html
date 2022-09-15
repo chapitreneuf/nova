@@ -260,7 +260,7 @@
 	<IF COND="![#ICON]">
 		<LET VAR="icon">[#TITLE|strtolower]</LET>
 	</IF>
-	<a href="[#HREF]" title="[#TITLE]" aria-label="[@SHARE_WITH] [#TITLE] ([@NEW_TAB])" target="_blank">
+	<a href="[#HREF]" title="[#TITLE]" aria-label="[@SHARE_ON] [#TITLE] ([@NEW_TAB])" target="_blank">
 		<FUNC NAME="BASE_ICON" ICON="[#ICON]" TITLE="[#TITLE]" INLINE="1" />
 	</a>
 </DEFFUNC>

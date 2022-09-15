@@ -8,6 +8,7 @@
 <creationdate>0000-00-00</creationdate>
 <texts>
 <contents name="accueil" textgroup="site" status="2">Accueil</contents>
+<contents name="actualites" textgroup="site" status="2">Actualités</contents>
 <contents name="afficher_accroche" textgroup="site" status="2">Afficher l’image</contents>
 <contents name="and" textgroup="site" status="2">et</contents>
 <contents name="annexe" textgroup="site" status="2">Annexe</contents>
@@ -15,8 +16,8 @@
 <contents name="article_precedent" textgroup="site" status="2">Article précédent</contents>
 <contents name="article_suivant" textgroup="site" status="2">Article suivant</contents>
 <contents name="article_traduction_de" textgroup="site" status="2">Traduit de :</contents>
-<contents name="article_traductions" textgroup="site" status="2">Traduction(s) :</contents>
 <contents name="article_traductions_autres" textgroup="site" status="2">Autre(s) traduction(s) de cet article :</contents>
+<contents name="article_traductions" textgroup="site" status="2">Traduction(s) :</contents>
 <contents name="aucun_resultat" textgroup="site" status="2">Aucun résultat.</contents>
 <contents name="auteur" textgroup="site" status="2">Auteur</contents>
 <contents name="auteurs" textgroup="site" status="2">Auteurs</contents>
@@ -38,6 +39,7 @@
 <contents name="docannexes" textgroup="site" status="2">Documents</contents>
 <contents name="document_precedent" textgroup="site" status="2">Document précédent</contents>
 <contents name="document_suivant" textgroup="site" status="2">Document suivant</contents>
+<contents name="document" textgroup="site" status="2">Document</contents>
 <contents name="du_meme_auteur" textgroup="site" status="2">Articles du même auteur</contents>
 <contents name="edite_avec_lodel" textgroup="site" status="2">Édité avec Lodel</contents>
 <contents name="edite_par" textgroup="site" status="2">Édité par</contents>
@@ -53,9 +55,9 @@
 <contents name="illustration_credits" textgroup="site" status="2">Crédits</contents>
 <contents name="illustration_legende" textgroup="site" status="2">Légende</contents>
 <contents name="illustration_titre" textgroup="site" status="2">Titre</contents>
-<contents name="index" textgroup="site" status="2">Index</contents>
 <contents name="index_par_annees" textgroup="site" status="2">Par années</contents>
 <contents name="index_par_langues" textgroup="site" status="2">Par langues</contents>
+<contents name="index" textgroup="site" status="2">Index</contents>
 <contents name="issn_electronique" textgroup="site" status="2">ISSN électronique</contents>
 <contents name="licence" textgroup="site" status="2">Droits d'auteur</contents>
 <contents name="lien_accroche" textgroup="site" status="2">Informations sur cette image</contents>
@@ -72,6 +74,7 @@
 <contents name="ndla" textgroup="site" status="2">Notes de l’auteur</contents>
 <contents name="ndlr" textgroup="site" status="2">Notes de la rédaction</contents>
 <contents name="notefin" textgroup="site" status="2">Note de fin</contents>
+<contents name="notes_suivantes" textgroup="site" status="2">Notes suivantes</contents>
 <contents name="notes" textgroup="site" status="2">Notes</contents>
 <contents name="notice_revisee_le" textgroup="site" status="2">Notice révisée le</contents>
 <contents name="numero_precedent" textgroup="site" status="2">Numéro précédent</contents>
@@ -81,6 +84,7 @@
 <contents name="par" textgroup="site" status="2">par</contents>
 <contents name="partager" textgroup="site" status="2">Partager</contents>
 <contents name="paru_dans" textgroup="site" status="2">Paru dans</contents>
+<contents name="permalien" textgroup="site" status="2">Permalien</contents>
 <contents name="plan_du_site" textgroup="site" status="2">Plan du site</contents>
 <contents name="pour_citer" textgroup="site" status="2">Citer cet article</contents>
 <contents name="precedent" textgroup="site" status="2">Précédent</contents>
@@ -90,26 +94,28 @@
 <contents name="reference_electronique" textgroup="site" status="2">Référence électronique</contents>
 <contents name="reference_oeuvre" textgroup="site" status="2">Référence(s) :</contents>
 <contents name="reference_papier" textgroup="site" status="2">Référence papier</contents>
+<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Autres ressources du même auteur </contents>
 <contents name="resume" textgroup="site" status="2">Résumé</contents>
 <contents name="resumes" textgroup="site" status="2">Résumés</contents>
 <contents name="retour_home" textgroup="site" status="2">Retour à l'accueil du site</contents>
 <contents name="retour_index" textgroup="site" status="2">Retour à l’index</contents>
+<contents name="rss" textgroup="site" status="2">Fils d'infos</contents>
 <contents name="rubrique_precedente" textgroup="site" status="2">Rubrique précédente</contents>
 <contents name="rubrique_suivante" textgroup="site" status="2">Rubrique suivante</contents>
 <contents name="rubriques" textgroup="site" status="2">Rubriques</contents>
 <contents name="site_editeur" textgroup="site" status="2">Site de l’éditeur</contents>
 <contents name="skip_to_content" textgroup="site" status="2">Aller directement au contenu</contents>
-<contents name="sommaire" textgroup="site" status="2">Sommaire</contents>
 <contents name="sommaire_complet_du_numero" textgroup="site" status="2">Sommaire complet du numéro</contents>
 <contents name="sommaire_de_ce_numero" textgroup="site" status="2">Sommaire de ce numéro</contents>
 <contents name="sommaire_de_cette_rubrique" textgroup="site" status="2">Sommaire de cette rubrique</contents>
+<contents name="sommaire" textgroup="site" status="2">Sommaire</contents>
 <contents name="suivant" textgroup="site" status="2">Suivant</contents>
 <contents name="table_des_illustrations" textgroup="site" status="2">Illustrations</contents>
 <contents name="telecharger_facsimile" textgroup="site" status="2">Fac-similé</contents>
 <contents name="telecharger_pdf" textgroup="site" status="2">PDF</contents>
-<contents name="texte" textgroup="site" status="2">Texte</contents>
 <contents name="texte_extrait" textgroup="site" status="2">Extrait</contents>
 <contents name="texte_integral" textgroup="site" status="2">Texte</contents>
+<contents name="texte" textgroup="site" status="2">Texte</contents>
 <contents name="toc" textgroup="site" status="2">Plan</contents>
 <contents name="tous_les_numeros" textgroup="site" status="2">Tous les numéros</contents>
 <contents name="tous_les_textes" textgroup="site" status="2">Tous les textes...</contents>
@@ -117,24 +123,18 @@
 <contents name="traducteur" textgroup="site" status="2">Traducteur</contents>
 <contents name="traducteurs" textgroup="site" status="2">Traducteurs</contents>
 <contents name="traduction_de" textgroup="site" status="2">Traduction de</contents>
+<contents name="tweets" textgroup="site" status="2">Derniers tweets</contents>
+<contents name="twitter_alt" textgroup="site" status="2">L'affichage des tweets a été bloqué par votre navigateur ou votre bloqueur de publicités.</contents>
+<contents name="twitter_link" textgroup="site" status="2">Consulter le fil sur Twitter</contents>
+<contents name="twitter_loading" textgroup="site" status="2">Chargement des tweets en cours</contents>
+<contents name="visiter_site" textgroup="site" status="2">Visiter le site</contents>
+<contents name="warning_empty_query" textgroup="site" status="2">Vous avez une erreur</contents>
 <contents name="widgets_print" textgroup="site" status="2">Imprimer</contents>
 <contents name="zoomimage_agrandir" textgroup="site" status="2">Agrandir</contents>
 <contents name="zoomimage_fermer" textgroup="site" status="2">Fermer</contents>
 <contents name="zoomimage_original" textgroup="site" status="2">Original</contents>
 <contents name="zoomimage_precedent" textgroup="site" status="2">Précédent</contents>
 <contents name="zoomimage_suivant" textgroup="site" status="2">Suivant</contents>
-<contents name="document" textgroup="site" status="2">Document</contents>
-<contents name="permalien" textgroup="site" status="2">Permalien</contents>
-<contents name="actualites" textgroup="site" status="2">Actualités</contents>
-<contents name="notes_suivantes" textgroup="site" status="2">Notes suivantes</contents>
-<contents name="visiter_site" textgroup="site" status="2">Visiter le site</contents>
-<contents name="rss" textgroup="site" status="2">Fils d'infos</contents>
-<contents name="warning_empty_query" textgroup="site" status="2">Vous avez une erreur</contents>
-<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Autres ressources du même auteur </contents>
-<contents name="tweets" textgroup="site" status="2">Derniers tweets</contents>
-<contents name="twitter_loading" textgroup="site" status="2">Chargement des tweets en cours</contents>
-<contents name="twitter_alt" textgroup="site" status="2">L'affichage des tweets a été bloqué par votre navigateur ou votre bloqueur de publicités.</contents>
-<contents name="twitter_link" textgroup="site" status="2">Consulter le fil sur Twitter</contents>
 </texts>
 </row>
 </translations>

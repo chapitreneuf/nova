@@ -538,7 +538,7 @@
 	<div class="row">
 		<div class="article__text-contents col-lg-9">
 			<!--[ Image d'accroche ]-->
-			<MACRO NAME="ARTICLE_IMAGEACCROCHE" />
+			<FUNC NAME="BASE_ACCROCHE" SIZE="[%SIZE_ACCROCHE_ARTICLE]" CLASSNAME="article__accroche" HREF="[#ID|makeurlwithid]" NOTEXT="1" />
 
 			<!--[ Chapo ]-->
 			<MACRO NAME="ARTICLE_CHAPO" />
@@ -557,32 +557,6 @@
 			[#NOTESBASPAGE|cutnotes(150)]
 		</div>
 	</div>
-</DEFMACRO>
-
-/**
- * Image d'accroche du document.
- */
-<DEFMACRO NAME="ARTICLE_IMAGEACCROCHE">
-	<LOOP NAME="article_imageaccroche"
-		TABLE="fichiers"
-		WHERE="type = 'imageaccroche' AND idparent = [#ID]"
-		ORDER="rank"
-		LIMIT="0,1">
-
-		<IF COND="[#VIGNETTE]">
-			<LET VAR="accroche">[#VIGNETTE|vignette([%SIZE_ACCROCHE_ARTICLE])]</LET>
-		<ELSE/>
-			<LET VAR="accroche">[#DOCUMENT|vignette([%SIZE_ACCROCHE_ARTICLE])]</LET>
-		</IF>
-		<div class="article__accroche">
-			<a href="[#ID|makeurlwithid]">
-				<img alt="[#TITRE|textebrut]" src="[#ACCROCHE|trim]" />
-			</a>
-			<IF COND="[#CREDITS]">
-				<p class="article__accroche-credits accroche-credits">[#CREDITS]</p>
-			</IF>
-		</div>
-	</LOOP>
 </DEFMACRO>
 
 /**

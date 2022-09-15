@@ -383,8 +383,8 @@
  * @param {boolean} [notext] - Afficher lien + crédits.
  * @param {string} [href] - Lien sur l'image. Si égal à "self" alors l'URL sera celle de l'imageaccroche.
  */
-<DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href">
-	<LOOP NAME="base_accroche_publication"
+<DEFFUNC NAME="BASE_ACCROCHE" REQUIRED="size" OPTIONAL="classname, notext, href">
+	<LOOP NAME="base_accroche"
 		TABLE="fichiers"
 		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'"
 		ORDER="rank"
@@ -400,7 +400,7 @@
 						<a href="[#HREF]">
 					</IF>
 				</IF>
-				<img class="accroche__img accroche__img--exists" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
+				<img class="accroche__img" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
 				<IF COND="![#NOTEXT]">
 					<IF COND="[#CREDITS]">
 						<p class="accroche__credits">[@CREDITS]&#160;: [#CREDITS]</p>

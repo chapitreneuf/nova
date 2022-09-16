@@ -80,7 +80,7 @@
 <contents name="new_tab" textgroup="site" status="2">nouvel onglet</contents>
 <contents name="notefin" textgroup="site" status="2">Note de fin</contents>
 <contents name="note_numero" textgroup="site" status="2">note numéro</contents>
-<contents name="note_retour" textgroup="site" status="2">Revenir au texte</contents>
+<contents name="note_retour" textgroup="site" status="2">Retour au texte</contents>
 <contents name="notes" textgroup="site" status="2">Notes</contents>
 <contents name="notice_revisee_le" textgroup="site" status="2">Notice révisée le</contents>
 <contents name="numero_precedent" textgroup="site" status="2">Numéro précédent</contents>

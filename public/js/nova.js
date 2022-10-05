@@ -74,6 +74,17 @@ window.fnLoader = {
       });
     },
 
+    mailtoAriaLabel: function() {
+      $(function() {
+        $("a[href^='mailto:']").each(function() {
+          $this = $(this);
+          if ($this.attr("aria-label")) return;
+          var text = $this.text();
+          $this.attr("aria-label", window.translations.ecrireA + " " + text);
+        });
+      });
+    },
+
     loadTweets: function () {
       $(function () {
         var $twitterContainers = $("[data-twitter-src]");

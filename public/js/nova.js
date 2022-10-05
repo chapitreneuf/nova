@@ -5,7 +5,7 @@ function onImagesLoaded(fn) {
 
 window.fnLoader = {
   // Système de chargement des fonctions
-  load: function () {
+  load: function() {
     var fns = this.fns;
     for (var fnName in fns) {
       if (fns.hasOwnProperty(fnName) && typeof fns[fnName] === "function") {
@@ -46,8 +46,8 @@ window.fnLoader = {
       });
     },
 
-    initLargetable: function () {
-      $(function () {
+    initLargetable: function() {
+      $(function() {
         if (!$("body").hasClass("class-textes")) return;
 
         function waitAndRun() {
@@ -65,7 +65,7 @@ window.fnLoader = {
 
     linkIsUrl: function() {
       $(function() {
-        $("a[href^='http://'], a[href^='https://']").each(function () {
+        $("a[href^='http://'], a[href^='https://']").each(function() {
           var text = $(this).text();
           if (text.match(/^(https?:\/\/|www\.)/)) {
             $(this).addClass("link-is-url");
@@ -85,8 +85,8 @@ window.fnLoader = {
       });
     },
 
-    loadTweets: function () {
-      $(function () {
+    loadTweets: function() {
+      $(function() {
         var $twitterContainers = $("[data-twitter-src]");
         if ($twitterContainers.length === 0) return;
 
@@ -103,13 +103,13 @@ window.fnLoader = {
           var selector = ".side-twitter__message";
           var $msg = $el ? $el.find(selector) : $(selector);
 
-          $msg.each(function () {
+          $msg.each(function() {
             $(this).addClass("error");
           });
         }
 
         // Load Twitter script
-        window.twttr = (function (d, s, id) {
+        window.twttr = (function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0],
             t = window.twttr || {};
           if (d.getElementById(id)) return t;
@@ -120,7 +120,7 @@ window.fnLoader = {
           fjs.parentNode.insertBefore(js, fjs);
 
           t._e = [];
-          t.ready = function (f) {
+          t.ready = function(f) {
             t._e.push(f);
           };
 
@@ -128,8 +128,8 @@ window.fnLoader = {
         }(document, "script", "twitter-wjs"));
 
         // When Twitter script is ready, create timelines
-        window.twttr.ready(function (twttr) {
-          $twitterContainers.each(function () {
+        window.twttr.ready(function(twttr) {
+          $twitterContainers.each(function() {
             var $container = $(this),
               src = $container.attr("data-twitter-src"),
               maxItems = Number($container.attr("data-twitter-max-items"));
@@ -147,11 +147,11 @@ window.fnLoader = {
               $container.get(0),
               options
             )
-            .then(function () {
+            .then(function() {
               $container.next(".side-twitter__message").remove();
               twttr.widgets.load($container.get(0));
             })
-            .catch(function (err) {
+            .catch(function(err) {
               twttrError(err, $container);
             });
           });
@@ -164,10 +164,10 @@ window.fnLoader = {
     },
 
     // Ajouter des ancres aux paragraphes
-    pAnchors: function () {
+    pAnchors: function() {
       // Ready
-      $(function () {
-        $(".article__text-contents > p.texte").each(function (index) {
+      $(function() {
+        $(".article__text-contents > p.texte").each(function(index) {
           var num = index + 1;
           $(this).attr("id", "p" + num);
         });
@@ -201,7 +201,7 @@ window.fnLoader = {
         // Page sections
         if (activate === "all" || activate === "sections") {
           var $targets = $("h2.section-header[id]");
-          $targets.each(function () {
+          $targets.each(function() {
             var id = $(this).attr("id");
             var title = $(this).text().trim();
             var label = window.translations.atteindreSection + " " + title;
@@ -258,12 +258,12 @@ window.fnLoader = {
     },
 
     // Generation des page-shortcuts
-    pageShortcuts: function () {
-      $(function () {
+    pageShortcuts: function() {
+      $(function() {
         var $list = $(".page-shortcuts__list");
         var $targets = $("h2.section-header[id]");
         var html = "";
-        $targets.each(function () {
+        $targets.each(function() {
           var id = $(this).attr("id");
           var title = $(this).text();
           var label = window.translations.atteindreSection + " " + title;
@@ -274,8 +274,8 @@ window.fnLoader = {
     },
 
     // Sidenotes
-    sidenotes: function () {
-      var setSidenotesPosition = function () {
+    sidenotes: function() {
+      var setSidenotesPosition = function() {
         if ($("#sidenotes").length === 0) return;
 
         var margin = 10;

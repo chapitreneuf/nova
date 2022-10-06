@@ -8,6 +8,7 @@
 <creationdate>0000-00-00</creationdate>
 <texts>
 <contents name="acceder_page" textgroup="site" status="2">Go to page</contents>
+<contents name="accueil" textgroup="site" status="2">Home</contents>
 <contents name="actualites" textgroup="site" status="2">News</contents>
 <contents name="and" textgroup="site" status="2">and</contents>
 <contents name="annexe" textgroup="site" status="2">Appendix</contents>

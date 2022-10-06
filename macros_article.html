@@ -648,10 +648,7 @@
 			<DO>
 				<li class="illustration row">
 					<div class="illustration__thumb col-4 col-md-2">
-						<IF COND="[#VALUE.TITRE]">
-							<LET VAR="DATA_FANCYBOX_TITLE">data-fancybox-title="[#VALUE.TITRE|textebrut]"</LET>
-						</IF>
-						<a href="[#VALUE.SRC]" class="fancybox" rel="tableillustrations" [#DATA_FANCYBOX_TITLE]><img alt="[#VALUE.TITRE|textebrut]" src="[#VALUE.THUMB_SRC]" /></a>
+						<a href="[#VALUE.SRC]" rel="tableillustrations"><img alt="[#VALUE.TITRE|textebrut]" src="[#VALUE.THUMB_SRC]" /></a>
 					</div>
 					<div class="illustration__info col-8 col-md-10">
 						<IF COND="[#VALUE.TITRE]">

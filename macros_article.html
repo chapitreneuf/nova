@@ -546,9 +546,9 @@
 			<!--[ Texte intégral ]-->
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] NE 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
 			<IF COND="[#TEXTE_ACCESSIBLE]"/>
-				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|media|tableaux|arianotecalls]
+				[#TEXTE|cleanCallNotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|tableaux|arianotecalls|media]
 			<ELSE />
-				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|cuttext(1000, true)|media|tableaux|arianotecalls]
+				[#TEXTE|removenotes|tocable|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS])|cuttext(1000, true)|tableaux|arianotecalls|media]
 				<MACRO NAME="ARTICLE_INFO_BM" />
 			</IF>
 			<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEREMERCIEMENTS] EQ 'bottom' AND [#REMERCIEMENTS]">[#REMERCIEMENTS]</IF>
@@ -576,7 +576,7 @@
 		<section class="article__biblio">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@BIBLIOGRAPHIE]" SECTION_ID="biblio" />
 			<div class="article__biblio-contents">
-				[(#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'bibliographie')|media|tableaux|arianotecalls)]
+				[#BIBLIOGRAPHIE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'bibliographie')|tableaux|arianotecalls|media]
 			</div>
 		</section>
 	</IF>
@@ -591,7 +591,7 @@
 		<section class="article__appendix">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ANNEXE]" SECTION_ID="appendix" />
 			<div class="article__appendix-contents">
-				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'annexe')|media|tableaux|arianotecalls]
+				[#ANNEXE|cleanCallNotes|tocss('heading')|illustrations([%SIZE_ILLUSTRATIONS], 'annexe')|tableaux|arianotecalls|media]
 			</div>
 		</section>
 	</IF>

@@ -23,6 +23,7 @@
 <contents name="auteurs" textgroup="site" status="2">Auteurs</contents>
 <contents name="avertissement_texte_integral" textgroup="site" status="2">Ce document sera publié en ligne en texte intégral en</contents>
 <contents name="bibliographie" textgroup="site" status="2">Bibliographie</contents>
+<contents name="capturedecran_du_site" textgroup="site" status="2">Capture d'écran du site</contents>
 <contents name="choisir_langue" textgroup="site" status="2">Choisir la langue</contents>
 <contents name="choisir_sitelang" textgroup="site" status="2">Choisir la langue du site</contents>
 <contents name="commander_numero" textgroup="site" status="2">Commander le numéro</contents>
@@ -63,6 +64,7 @@
 <contents name="licence" textgroup="site" status="2">Droits d'auteur</contents>
 <contents name="lien_rss" textgroup="site" status="2">S’abonner à ce flux</contents>
 <contents name="lodel_admin" textgroup="site" status="2">Accès réservé</contents>
+<contents name="logo_du_site" textgroup="site" status="2">Logo du site</contents>
 <contents name="logos" textgroup="site" status="2">Affiliations/partenaires</contents>
 <contents name="media_expected" textgroup="site" status="2">Le media demandé n'existe pas.</contents>
 <contents name="menu_principal_afficher" textgroup="site" status="2">Afficher le menu principal</contents>
@@ -137,6 +139,7 @@
 <contents name="twitter_alt" textgroup="site" status="2">L'affichage des tweets a été bloqué par votre navigateur ou votre bloqueur de publicités.</contents>
 <contents name="twitter_link" textgroup="site" status="2">Consulter le fil sur Twitter</contents>
 <contents name="twitter_loading" textgroup="site" status="2">Chargement des tweets en cours</contents>
+<contents name="vignette_document" textgroup="site" status="2">Vignette du document</contents>
 <contents name="visiter_site" textgroup="site" status="2">Visiter le site</contents>
 </texts>
 </row>

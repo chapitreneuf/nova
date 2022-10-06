@@ -23,6 +23,7 @@
 <contents name="auteurs" textgroup="site" status="2">Authors</contents>
 <contents name="avertissement_texte_integral" textgroup="site" status="2">Full text document will be published online on</contents>
 <contents name="bibliographie" textgroup="site" status="2">Bibliography</contents>
+<contents name="capturedecran_du_site" textgroup="site" status="2">Screenshot of the website</contents>
 <contents name="choisir_langue" textgroup="site" status="2">Select language</contents>
 <contents name="choisir_sitelang" textgroup="site" status="2">Select site language</contents>
 <contents name="commander_numero" textgroup="site" status="2">Order issue</contents>
@@ -63,6 +64,7 @@
 <contents name="licence" textgroup="site" status="2">Copyright</contents>
 <contents name="lien_rss" textgroup="site" status="2">RSS</contents>
 <contents name="lodel_admin" textgroup="site" status="2">Administration only</contents>
+<contents name="logo_du_site" textgroup="site" status="2">Logo of</contents>
 <contents name="logos" textgroup="site" status="2">In collaboration with</contents>
 <contents name="media_expected" textgroup="site" status="2">Media not found.</contents>
 <contents name="menu_principal_afficher" textgroup="site" status="2">Show main menu</contents>
@@ -137,6 +139,7 @@
 <contents name="twitter_alt" textgroup="site" status="2">This Twitter timeline has been blocked by your browser or Ad Blocker.</contents>
 <contents name="twitter_link" textgroup="site" status="2">View this timeline on Twitter</contents>
 <contents name="twitter_loading" textgroup="site" status="2">Loading tweets</contents>
+<contents name="vignette_document" textgroup="site" status="2">Document thumbnail</contents>
 <contents name="visiter_site" textgroup="site" status="2">Go to the website</contents>
 </texts>
 </row>

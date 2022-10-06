@@ -56,7 +56,7 @@
 	<IF COND="[#CAPTUREDECRAN]">
 		<section class="lien__capture">
 			<a href="[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">
-				<img class="publi-cover" src="[#CAPTUREDECRAN|vignette([%SIZE_CAPTURE])]" alt="[#IDENTIFIER|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" />
+				<img class="publi-cover" src="[#CAPTUREDECRAN|vignette([%SIZE_CAPTURE])]" alt="[@CAPTUREDECRAN_DU_SITE] [#TITRE|cleanCallNotes|textebrut]" />
 			</a>
 		</section>
 	</IF>

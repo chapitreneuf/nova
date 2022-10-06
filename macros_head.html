@@ -300,21 +300,6 @@
 	<!--[ Largetable ]-->
 	<link href="[%DIR_VENDOR]/largetable/largetable.css" rel="stylesheet">
 
-	<!--[ Dot-shortcuts ]-->
-	<IF COND="[%DOT_SHORTCUTS]">
-		<script>
-			window.activateDotShortcuts = "[%DOT_SHORTCUTS]";
-			window.translations = {
-				atteindreSection: "[@ATTEINDRE_SECTION]",
-				ecrireA: "[@ECRIRE_A]",
-				naviguerDansLArticle: "[@NAVIGUER_DANS_LARTICLE]",
-				menuPrincipalAfficher: "[@MENU_PRINCIPAL_AFFICHER]",
-				menuPrincipalMasquer: "[@MENU_PRINCIPAL_MASQUER]",
-				retourEnHaut: "[@RETOUR_EN_HAUT]"
-			};
-		</script>
-	</IF>
-
 	<!--[ Hook pour l'insertion de CSS ]-->
 	<MACRO NAME="HEAD_CUSTOM_CSS" />
 
@@ -349,6 +334,25 @@
 
 	<!--[ Reframe ]-->
 	<script src="[%DIR_VENDOR]/reframe/reframe.min.js"></script>
+
+	<!--[ Dot-shortcuts ]-->
+	<IF COND="[%DOT_SHORTCUTS]">
+		<script>
+			window.activateDotShortcuts = "[%DOT_SHORTCUTS]";
+		</script>
+	</IF>
+
+	<!--[ Variables de traduction ]-->
+	<script>
+		window.translations = {
+			atteindreSection: "[@ATTEINDRE_SECTION]",
+			ecrireA: "[@ECRIRE_A]",
+			naviguerDansLArticle: "[@NAVIGUER_DANS_LARTICLE]",
+			menuPrincipalAfficher: "[@MENU_PRINCIPAL_AFFICHER]",
+			menuPrincipalMasquer: "[@MENU_PRINCIPAL_MASQUER]",
+			retourEnHaut: "[@RETOUR_EN_HAUT]"
+		};
+	</script>
 
 	<!--[ JS site ]-->
 	<script src="tpl/public/js/nova.js"></script>

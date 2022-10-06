@@ -80,7 +80,7 @@
 	</IF>
 	<LOOP NAME="nav_ariane" TABLE="relations, entities, publications" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id AND entities.id=publications.identity" ORDER="degree DESC">
 		<BEFORE>
-			<nav class="ariane" aria-label="breadcrumb">
+			<nav class="ariane" aria-label="[@ARIANE]">
 				<ul class="ariane__list breadcrumb">
 		</BEFORE>
 		<DO>

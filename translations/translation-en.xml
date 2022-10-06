@@ -12,6 +12,7 @@
 <contents name="and" textgroup="site" status="2">and</contents>
 <contents name="annexe" textgroup="site" status="2">Appendix</contents>
 <contents name="annonce_alias" textgroup="site" status="2">Alias</contents>
+<contents name="ariane" textgroup="site" status="2">Breadcrumb</contents>
 <contents name="article_precedent" textgroup="site" status="2">Previous article</contents>
 <contents name="article_suivant" textgroup="site" status="2">Next article</contents>
 <contents name="article_traduction_de" textgroup="site" status="2">Translated from:</contents>

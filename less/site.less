@@ -383,21 +383,33 @@ img {
 // Ex: "« Retour à l'index"
 .arrow-before {
   &::before {
-    content: "«\00a0"
+    content: "«\00a0";
+
+    @supports (content: "x" / "y") {
+      content: "«\00a0" / "";
+    }
   }
 }
 
 // Ex: "Sommaire du numéro »"
 .arrow-after {
   &::after {
-    content: "\00a0»"
+    content: "\00a0»";
+
+    @supports (content: "x" / "y") {
+      content: "\00a0»" / "";
+    }
   }
 }
 
 // Ex: "Commander ce numéro 🡕"
 .arrow-external {
   &::after {
-    content: "\00a0\1F855"
+    content: "\00a0\1F855";
+
+    @supports (content: "x" / "y") {
+      content: "\00a0\1F855" / "";
+    }
   }
 }
 
@@ -910,7 +922,12 @@ img {
   display: inline-block;
   margin: 0 1rem;
   color: @color-footer;
+
+  @supports (content: "x" / "y") {
+    content: "\2022" / "";
+  }
 }
+
 
 // HOME
 // ====

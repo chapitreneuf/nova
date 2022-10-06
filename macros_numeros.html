@@ -23,13 +23,13 @@
 			<IF COND="[%ISSUES_PAGE_SCALE_TOP] AND [#NBRESULTS] GT [%ISSUES_PER_PAGE]">
 				<MACRO NAME="NAV_PAGE_SCALE" />
 			</IF>
-			<div id="issues" class="issues">
+			<ul id="issues" class="issues">
 		</BEFORE>
 		<DO>
 			<MACRO NAME="NUMEROS_ISSUE" />
 		</DO>
 		<AFTER>
-			</div>
+			</ul>
 			<IF COND="[#NBRESULTS] GT [%ISSUES_PER_PAGE]">
 				<MACRO NAME="NAV_PAGE_SCALE" />
 			</IF>
@@ -50,7 +50,7 @@
 
 	<LET VAR="numero_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 
-	<div class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
+	<li class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
 			<IF COND="[#IMG_ACCROCHE]">
 				<div class="issue__accroche-col col-sm-4">
@@ -86,5 +86,5 @@
 				<a class="issue__button button arrow-after" href="[#ID|makeurlwithid]" aria-label="[#ARIA_LABEL]">[@SOMMAIRE_DU_NUMERO]</a>
 			</div>
 		</div>
-	</div>
+	</li>
 </DEFMACRO>

@@ -1271,21 +1271,15 @@ img {
 // ===============
 
 .article-buttons {
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 2rem;
+  display: block;
+  margin: 0 0 1.5rem 0;
+  padding: 0 1.5rem 3rem 0;
+  border-top: none;
+  border-bottom: 1px solid @color-border;
 }
 
-.article-buttons-group {
-  padding-right: 2rem;
-  margin-right: 2rem;
-  border-right: 1px solid @color-border;
-}
-
-.article-buttons-group:last-child {
-  padding: 0;
-  margin: 0;
-  border: none;
+.article-buttons-group + .article-buttons-group, .article-button--text + .article-button--text {
+  margin-top: 1rem;
 }
 
 .article-buttons a {
@@ -1304,7 +1298,7 @@ img {
 
 .article-buttons__partage {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-start;
 }
 
 .article-buttons__partage .icon {
@@ -1332,23 +1326,33 @@ img {
   display: block;
 }
 
-@media (min-width: @screen-lg) {
+@media (min-width: @screen-sm) and (max-width: @screen-lg) {
   .article-buttons {
-    display: block;
-    margin: 0;
-    padding: 0 1.5rem 3rem 1.5rem;
-    border-top: none;
-    border-bottom: 1px solid @color-border;
-  }
-
-  .article-buttons-group {
-    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
     padding: 0;
     border: none;
   }
 
+  .article-buttons-group {
+    padding-right: 2rem;
+    margin-right: 2rem;
+    border-right: 1px solid @color-border;
+  }
+
   .article-buttons-group + .article-buttons-group, .article-button--text + .article-button--text {
-    margin-top: 1rem;
+    margin-top: 0;
+  }
+
+  .article-buttons-group:last-child {
+    border-right: none;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  .article-buttons {
+    padding-left: 1.5rem;
   }
 }
 

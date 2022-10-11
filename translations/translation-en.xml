@@ -42,6 +42,7 @@
 <contents name="document_suivant" textgroup="site" status="2">Next document</contents>
 <contents name="document" textgroup="site" status="2">Document</contents>
 <contents name="du_meme_auteur" textgroup="site" status="2">By this author</contents>
+<contents name="ecrire_a" textgroup="site" status="2">Send an email to</contents>
 <contents name="edite_avec_lodel" textgroup="site" status="2">Published with Lodel</contents>
 <contents name="edite_par" textgroup="site" status="2">Edited by</contents>
 <contents name="editeur_scientifique" textgroup="site" status="2">Editors</contents>

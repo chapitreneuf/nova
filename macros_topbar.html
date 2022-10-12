@@ -4,15 +4,21 @@
  * Macro principale d'affichage du menu appelée par les templates.
  */
 <DEFMACRO NAME="TOPBAR_MAIN">
-	<nav id="topbar" class="topbar container navbar navbar-expand-lg">
-		<MACRO NAME="TOPBAR_HAMBURGER" />
-		<ul class="navbar-nav">
-			<MACRO NAME="TOPBAR_BRAND"/>
-			<MACRO NAME="TOPBAR_LINKS"/>
-			<MACRO NAME="TOPBAR_RSS"/>
-			<MACRO NAME="TOPBAR_SITELANG"/>
-		</ul>
-	</nav>
+	<LET VAR="topbar_contents">
+		<MACRO NAME="TOPBAR_BRAND"/>
+		<MACRO NAME="TOPBAR_LINKS"/>
+		<MACRO NAME="TOPBAR_RSS"/>
+		<MACRO NAME="TOPBAR_SITELANG"/>
+	</LET>
+
+	<IF COND="[#TOPBAR_CONTENTS]">
+		<nav id="topbar" class="topbar container navbar navbar-expand-lg">
+			<MACRO NAME="TOPBAR_HAMBURGER" />
+			<ul class="navbar-nav">
+				[#TOPBAR_CONTENTS]
+			</ul>
+		</nav>
+	</IF>
 </DEFMACRO>
 
 /**
@@ -29,7 +35,7 @@
  * Nom du diffuseur du site.
  */
 <DEFMACRO NAME="TOPBAR_BRAND">
-	<IF COND="[%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
+	<IF COND="[%TOPBAR_DISPLAY_BRAND] AND [%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
 		<li class="nav-item">
 			<a class="nav-link brand-link" href="[%URLDIFFUSEURSITE]">[%DIFFUSEURSITE]</a>
 		</li>
@@ -69,11 +75,13 @@
  * Icone vers le flux RSS.
  */
 <DEFMACRO NAME="TOPBAR_RSS">
-	<li class="nav-item">
-		<a class="nav-link" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss">
-			<FUNC NAME="BASE_ICON" ICON="rss" TITLE="[@RSS]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-rss" INLINE="1" />
-		</a>
-	</li>
+	<IF COND="[%TOPBAR_DISPLAY_RSS]">
+		<li class="nav-item">
+			<a class="nav-link" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss">
+				<FUNC NAME="BASE_ICON" ICON="rss" TITLE="[@RSS]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-rss" INLINE="1" />
+			</a>
+		</li>
+	</IF>
 </DEFMACRO>
 
 /**

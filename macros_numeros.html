@@ -52,39 +52,44 @@
 
 	<li class="issue lang-[#LANGUE] dir-[#NUMERO_DIR]">
 		<div class="row">
-			<IF COND="[#IMG_ACCROCHE]">
-				<div class="issue__accroche-col col-sm-4">
-					[#IMG_ACCROCHE]
-				</div>
-			</IF>
+			<MACRO NAME="NUMEROS_ISSUE_ACCROCHE"/>
 
 			<div class="col-sm-<IF COND="[#IMG_ACCROCHE]">8<ELSE/>12</IF> order-sm-first">
-
-				<!--[ Titre ]-->
-				<h1 class="main-title publi__title"><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" /></h1>
-
-				<!--[ Sous-titre ]-->
-				<IF COND="[#SOUSTITRE]">
-						<div class="main-subtitle publi__subtitle">[#SOUSTITRE]</div>
-				</IF>
-
-				<!--[ Altertitles ]-->
-				<FUNC NAME="BASE_ALTERTITLES" PARENT_CLASS="publi__altertitles" />
-
-				<!--[ Directeur publication ]-->
-				<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="directeurdelapublication" WRAP_CLASS="publi__director" PREPEND="[@DIRECTEUR_PUBLICATION] " />
-
-				<!--[ Introduction du numéro ]-->
-				<IF COND="[%ISSUES_SHOW_INTRODUCTION] AND [#INTRODUCTION]">
-					<div class="publi__introduction">
-						<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
-					</div>
-				</IF>
-
-				<!--[ Bouton sommaire ]-->
-				<LET VAR="aria_label">[@SOMMAIRE_DU_NUMERO] : <FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /></LET>
-				<a class="issue__button button arrow-after" href="[#ID|makeurlwithid]" aria-label="[#ARIA_LABEL]">[@SOMMAIRE_DU_NUMERO]</a>
+				<MACRO NAME="PUBLICATION_TITRES"/>
+				<MACRO NAME="PUBLICATION_PERSONNES"/>
+				<MACRO NAME="NUMEROS_ISSUE_INTRODUCTION"/>
+				<MACRO NAME="NUMEROS_ISSUE_BUTTON"/>
 			</div>
 		</div>
 	</li>
+</DEFMACRO>
+
+/**
+ * Image d'accroche du numéro.
+ */
+<DEFMACRO NAME="NUMEROS_ISSUE_ACCROCHE">
+	<IF COND="[#IMG_ACCROCHE]">
+		<div class="issue__accroche-col col-sm-4">
+			[#IMG_ACCROCHE]
+		</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Introduction du numéro.
+ */
+<DEFMACRO NAME="NUMEROS_ISSUE_INTRODUCTION">
+	<IF COND="[%ISSUES_SHOW_INTRODUCTION] AND [#INTRODUCTION]">
+		<div class="publi__introduction">
+			<FUNC NAME="BASE_ML_ONGLETS" TAB_TEXTE="[#INTRODUCTION]" TAB_ID="introduction-[#ID]" />
+		</div>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Bouton sommaire.
+ */
+<DEFMACRO NAME="NUMEROS_ISSUE_BUTTON">
+	<LET VAR="aria_label">[@SOMMAIRE_DU_NUMERO] : <FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /></LET>
+	<a class="issue__button button arrow-after" href="[#ID|makeurlwithid]" aria-label="[#ARIA_LABEL]">[@SOMMAIRE_DU_NUMERO]</a>
 </DEFMACRO>

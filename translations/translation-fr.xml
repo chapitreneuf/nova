@@ -62,6 +62,7 @@
 <contents name="index_par_langues" textgroup="site" status="2">Par langues</contents>
 <contents name="index" textgroup="site" status="2">Index</contents>
 <contents name="internal_error" textgroup="site" status="2">Cette page est temporairement indisponible. Veuillez réessayer plus tard.</contents>
+<contents name="isbn" textgroup="site" status="2">ISBN</contents>
 <contents name="issn_electronique" textgroup="site" status="2">ISSN électronique</contents>
 <contents name="langue_choisie" textgroup="site" status="2">Langue sélectionnée</contents>
 <contents name="licence" textgroup="site" status="2">Droits d'auteur</contents>

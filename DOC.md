@@ -141,7 +141,7 @@ Le mode de développement permet d'utiliser l'API LESS dans la console du naviga
 ### Nommage des élément généraux
 
 | Élément | Type de document | Parent |
-| ======= | =========== | =========== |
+| ----- | ----- | ----- |
 | Billet de présentation | "billet" | Racine du site |
 | Icônes réseaux sociaux (barre supérieure) | "noticedesite" | Collection "reseaux-sociaux" |
 | Logos des partenaires (menu principal) | "noticedesite" | Collection "partenaires" |

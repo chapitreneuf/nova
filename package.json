@@ -3,6 +3,11 @@
   "version": "2.0.0-dev",
   "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
   "main": "index.html",
+  "contributors": [
+    { "name": "Thomas Brouard", "email": "contact@brrd.fr", "url": "https://brrd.fr" },
+    { "name": "Arnaud Cordier" },
+    { "name": "Yolaine de Villeneuve" }
+  ],
   "scripts": {
     "build": "npm run css",
     "css": "lessc less/site.less public/css/site.css --autoprefix",

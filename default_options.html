@@ -20,6 +20,12 @@
 <LET VAR="article_legacy_shortcuts" GLOBAL="1">sr-only</LET>
 
 <!--[
+	Activer la vérification du contraste. Par défaut : uniquement pour les utilisateurs du niveau EDITOR ou supérieur.
+	@type {boolean}
+]-->
+<LET VAR="check_contrast" GLOBAL="1">[#LODELUSER.EDITOR]</LET>
+
+<!--[
 	Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION !
 	@type {boolean}
 ]-->

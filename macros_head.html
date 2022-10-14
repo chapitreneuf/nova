@@ -342,6 +342,12 @@
 		</script>
 	</IF>
 
+	<!--[ Color contrast checker ]-->
+	<IF COND="[%CHECK_CONTRAST]">
+		<script src="[%DIR_VENDOR]/color-contrast-checker/jquery.color-contrast.js"></script>
+		<script src="tpl/public/js/check-contrast.js"></script>
+	</IF>
+
 	<!--[ Variables de traduction ]-->
 	<script>
 		window.translations = {

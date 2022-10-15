@@ -1,6 +1,17 @@
 $(function () {
+  function getContrastErrors() {
+    var $lodelContainer = $("#lodel-container");
+    var alerts = contrast.check();
+    if ($lodelContainer.length === 0) return alerts.errors;
+    var errors = alerts.errors.filter(function(item) {
+      var $el = item.name;
+      return $lodelContainer.has($el).length > 0;
+    });
+    return errors;
+  }
+
   function waitAndRun() {
-    var errors = contrast.check();
+    var errors = getContrastErrors();
     console.log(errors);
   }
 

@@ -38,8 +38,8 @@
 		<MACRO NAME="HEAD_MAIN" />
 	</head>
 	<body class="[%BODY_CLASS]" data-sitelang="[#SITELANG]">
-		<MACRO NAME="PAGE_ACCES"/>
 		<MACRO NAME="PAGE_DEV_MODE_WARNING"/>
+		<MACRO NAME="PAGE_ACCES"/>
 		<MACRO NAME="TOPBAR_MAIN" />
 		<MACRO NAME="HEADER_MAIN" />
 		<div id="main-container" class="main-container container">
@@ -75,7 +75,7 @@
  * Lien "Aller au contenu".
  */
 <DEFMACRO NAME="PAGE_ACCES">
-	<div class="skip-links">
+	<div id="skip-links" class="skip-links">
 		<a href="#main-content">[@SKIP_TO_CONTENT]</a>
 		<a href="#main-menu">[@SKIP_TO_MENU]</a>
 		<a href="#main-search">[@SKIP_TO_SEARCH]</a>
@@ -98,6 +98,6 @@
  */
 <DEFMACRO NAME="PAGE_DEV_MODE_WARNING">
 	<IF COND="[%DEV_MODE_ACTIVE] AND [#LODELUSER.RIGHTS] GT 5">
-		<div id="devmode-warning" class="devmode-warning" style="padding: 5px 10px; font-size: 12px; background-color: #a9e1fc; border-bottom: 1px solid #8cc9e5;"><b>Ce site est actuellement en mode de développement et présente des performances réduites.</b><br>Le mode de développement ne devrait jamais être utilisé sur un site accessible au public. <a href="https://github.com/edinum/nova/blob/master/DOC.md#mode-de-d%C3%A9veloppement" target="_blank">En savoir plus…</a></div>
+		<div id="devmode-warning" class="lodeluser-info devmode-warning"><p>&#8505; <b>Ce site est actuellement en mode de développement et présente des performances réduites.</b></p><p>Le mode de développement ne devrait jamais être utilisé sur un site accessible au public. <a href="https://github.com/edinum/nova/blob/master/DOC.md#mode-de-d%C3%A9veloppement" target="_blank">En savoir plus…</a></p></div>
 	</IF>
 </DEFMACRO>

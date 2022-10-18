@@ -10,8 +10,24 @@ $(function () {
     return errors;
   }
 
+  function mergeErrors(errors) {
+    return errors.reduce(function (res, e) {
+      $el = $(e.name[0]);
+      var color = $el.css("color");
+      var bg = contrast.getBackground($el);
+      if (!res[color]) {
+        res[color] = [];
+      }
+      if (!res[color].includes(bg)) {
+        res[color].push(bg);
+      }
+      return res;
+    }, {});
+  }
+
   function waitAndRun() {
     var errors = getContrastErrors();
+    errors = mergeErrors(errors);
     console.log(errors);
   }
 

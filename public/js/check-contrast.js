@@ -40,9 +40,9 @@ $(function () {
 
   function displayNotifications(notifications) {
     if (!notifications || notifications.length === 0) return;
-    $(".contrast-warning").remove();
-    var content = "<p>&#9888;&#65039; <b>Les couleurs utilisées sur cette page ne respectent pas <a href='https://www.numerique.gouv.fr/publications/rgaa-accessibilite/methode-rgaa/criteres/#topic3' target='_blank'>les normes d'accessibilité du référentiel RGAA 4.1</a>.</b></p><p>Des contrastes trop faibles entre les couleurs peuvent gêner la navigation de certains visiteurs. Il est conseillé de remplacer les couleurs suivantes :</p><ul></ul>";
-    $container = $("<div class='contrast-warning lodeluser-info'>" + content + "</div>");
+    $("#contrast-warning").remove();
+    var content = "<p>&#9888;&#65039; <b>Les couleurs utilisées sur cette page ne respectent pas <a href='https://www.numerique.gouv.fr/publications/rgaa-accessibilite/methode-rgaa/criteres/#topic3' target='_blank'>les normes d'accessibilité du référentiel RGAA 4.1</a>.</b></p><p>Des contrastes trop faibles entre les couleurs peuvent gêner la navigation de certains visiteurs. Il est conseillé de remplacer les couleurs suivantes :</p><ul></ul><p>Seuls les utilisateurs identifiés peuvent lire ce message.</p>";
+    $container = $("<div id='contrast-warning' class='contrast-warning lodeluser-info'>" + content + "</div>");
     $ul = $container.find("ul");
 
     Object.keys(notifications).forEach(function(color) {
@@ -54,12 +54,26 @@ $(function () {
     $container.insertBefore("#skip-links");
   }
 
+  function addHighlightButton(errors) {
+    var elements = errors.map(function(e) {
+      return e.name[0];
+    });
+    var $elements = $(elements);
+
+    var $button = $("<button class='btn btn-outline-dark'>Surligner les problèmes détectés</button>").on("click", function() {
+      $elements.css("border", "2px dashed red");
+
+    });
+    $button.appendTo("#contrast-warning");
+  }
+
   function waitAndRun() {
     var errors = getContrastErrors();
     if (!errors || errors.length === 0) return;
     console.info("Les problèmes de contraste suivants ont été détectés :", errors);
     var notifications = mergeErrors(errors);
     displayNotifications(notifications);
+    addHighlightButton(errors);
   }
 
   if (window.devMode === true) {

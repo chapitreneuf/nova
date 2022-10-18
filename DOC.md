@@ -205,7 +205,7 @@ Pour afficher le DOI des articles, il faut définir le préfixe du DOI, c'est-à
 
 ## Mise à niveau
 
-## Mise à jour de la Nova 2
+### Mise à jour de la Nova 2
 
 :warning: **Cette méthode ne fonctionne que si la Nova a été personnalisée en suivant la méthode recommandé (voir plus haut). Dans le cas contraire les modifications réalisées pourraient être définitivement perdues !**
 
@@ -215,7 +215,7 @@ Pour mettre à jour la maquette Nova sur un site :
 2. Écraser les fichiers de l'ancienne Nova avec ceux de la dernière version stable.
 3. Lancer la commande de transpilation des CSS.
 
-## Migration depuis la Nova 1
+### Migration depuis la Nova 1
 
 La Nova 2.0 rompt la compatibilité avec les versions précédentes. Par conséquent la mise à niveau nécessitera dans la plupart des cas une réécriture des fichiers de personnalisation `custom.less` et `macros_custom.html` pour prendre en compte les spécificités de cette nouvelle version.
 

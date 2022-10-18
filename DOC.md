@@ -136,6 +136,12 @@ Le mode de développement permet d'utiliser l'API LESS dans la console du naviga
 
 :warning: **Cette fonctionnalité est réservée au développement et ne doit jamais être utilisée en production pour des questions de performance. Pensez à la désactiver avant de publier le site.**
 
+### Détection des problèmes de contraste
+
+La maquette Nova détecte les problèmes de contraste entre le texte et son arrière-plan et affiche un message d'erreur si le contraste n'est pas conforme [aux critères du RGAA 4.1](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/methode-rgaa/criteres/#topic3). Par défaut le message n'apparaît que pour les visiteurs identifiés.
+
+Les contrastes des couleurs des images, icônes et médias embarqués ne sont pas vérifiés par la Nova.
+
 ## Paramétrage du site
 
 ### Nommage des élément généraux

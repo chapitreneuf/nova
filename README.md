@@ -15,7 +15,7 @@ En plus des comportements habituellement supportés par le le modèle éditorial
 * L'ajout d'une barre de navigation comprenant des liens vers les réseaux sociaux ;
 * L'affichage de fils Twitter.
 
-La version 2 de la maquette Nova améliore considérablement l'accessibilité des revues en travaillant selon les critères du référentiel RGAA 4.1.
+La version 2 de la maquette Nova améliore considérablement l'accessibilité des revues en travaillant selon les critères du référentiel RGAA 4.1. Une fonction de détection des problèmes de contraste dans la maquette est également intégrée pour inciter les développeurs à produire une interface plus accessible.
 
 ## Documentation
 

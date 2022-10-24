@@ -1,6 +1,10 @@
 # Maquette Nova pour Lodel
 
+![Nova latest version](https://img.shields.io/github/v/tag/edinum/nova?color=blue&style=flat-square) [![License](https://img.shields.io/github/license/edinum/nova?color=blue&style=flat-square)](https://github.com/edinum/nova/blob/master/LICENSE)
+
 > Maquette générique pour les sites de revues avec Lodel 1.0.
+
+:warning: **Cette version de la Nova fonctionne avec des filtres qui ne sont pas encore publiés. Merci de continuer à utiliser [la version 1](https://github.com/edinum/nova/tree/v1) en attendant une mise à jour prochaine des filtres.**
 
 La maquette Nova est compatible avec [le modèle éditorial d'OpenEdition Journals](https://github.com/OpenEdition/oej.em) et utilise [les filtres Lodel développés par Edinum](https://github.com/edinum/lodel-textfunc).
 

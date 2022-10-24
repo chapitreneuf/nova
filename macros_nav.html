@@ -4,74 +4,69 @@
  * Récupérer la vraie TOC du parent pour créer des liens précédent/suivant corrects.
  */
 <DEFMACRO NAME="NAV_ENTITIES_FIX">
-	<LET VAR="current_parent_id">
-		<IF COND="[%IDRUBRIQUEANNUELLE]">
-			[%IDRUBRIQUEANNUELLE]
-		<ELSE />
-			[%IDREALPARENT]
-		</IF>
-	</LET>
-	<LOOP NAME="nav_entities_fix_numero_children"
-		  TABLE="entities, types"
-		  SELECT="id, class, type"
-		  WHERE="idparent = '[#CURRENT_PARENT_ID]' AND type NOT IN ('fluxdesyndication','imageaccroche','rubriqueannuelle', 'imageaccrochelibrairie') AND type NOT LIKE '%annexe%' AND entities.idtype = types.id"
-		  ORDER="entities.rank">
-		<IF COND="[#CLASS] EQ 'publications' AND [#TYPE] EQ 'souspartie'">
-			<LET VAR="current_parent_id">[#ID]</LET>
-			<LOOP NAME="nav_entities_fix_numero_children"></LOOP>
-		<ELSE />
-			<LET ARRAY="parent_real_toc[]" GLOBAL="1">[#ID]</LET>
-		</IF>
-	</LOOP>
+	<IF COND="[#IDREALPARENT]">
+		<LET VAR="current_parent_id">[#IDREALPARENT]</LET>
+		<LOOP NAME="nav_entities_fix_numero_children"
+				TABLE="entities, types"
+				SELECT="id, class, type"
+				WHERE="idparent = '[#CURRENT_PARENT_ID]' AND type NOT IN ('fluxdesyndication','imageaccroche','rubriqueannuelle', 'imageaccrochelibrairie') AND type NOT LIKE '%annexe%' AND entities.idtype = types.id"
+				ORDER="entities.rank">
+			<IF COND="[#CLASS] EQ 'publications' AND [#TYPE] EQ 'souspartie'">
+				<LET VAR="current_parent_id">[#ID]</LET>
+				<LOOP NAME="nav_entities_fix_numero_children"></LOOP>
+			<ELSE />
+				<LET ARRAY="parent_real_toc[]" GLOBAL="1">[#ID]</LET>
+			</IF>
+		</LOOP>
 
-	<!--[ %ID_ARTICLE_PRECEDENT ]-->
-	<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
-		<IF COND="[#VALUE] EQ [#ID]">
-			<LET VAR="id_article_precedent" GLOBAL="1">[%PREV_ID]</LET>
-		</IF>
-		<LET VAR="prev_id" GLOBAL="1">[#VALUE]</LET>
-	</LOOP>
+		<!--[ %ID_ARTICLE_PRECEDENT ]-->
+		<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
+			<IF COND="[#VALUE] EQ [#ID]">
+				<LET VAR="id_article_precedent" GLOBAL="1">[%PREV_ID]</LET>
+			</IF>
+			<LET VAR="prev_id" GLOBAL="1">[#VALUE]</LET>
+		</LOOP>
 
-	<!--[ %ID_ARTICLE_SUIVANT ]-->
-	<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
-		<IF COND="[%ID_IS_NEXT] EQ 1">
-			<LET VAR="id_article_suivant" GLOBAL="1">[#VALUE]</LET>
-			<LET VAR="ID_IS_NEXT" GLOBAL="1">0</LET>
-		</IF>
-		<IF COND="[#VALUE] EQ [#ID]">
-			<LET VAR="ID_IS_NEXT" GLOBAL="1">1</LET>
-		</IF>
-	</LOOP>
+		<!--[ %ID_ARTICLE_SUIVANT ]-->
+		<LOOP NAME="foreach" ARRAY="[#PARENT_REAL_TOC]">
+			<IF COND="[%ID_IS_NEXT] EQ 1">
+				<LET VAR="id_article_suivant" GLOBAL="1">[#VALUE]</LET>
+				<LET VAR="ID_IS_NEXT" GLOBAL="1">0</LET>
+			</IF>
+			<IF COND="[#VALUE] EQ [#ID]">
+				<LET VAR="ID_IS_NEXT" GLOBAL="1">1</LET>
+			</IF>
+		</LOOP>
+	</IF>
 </DEFMACRO>
 
 /**
  * Nav entities : entité parente/précédente/suivante.
  * @param {boolean} [show_buttons] - Afficher les boutons précédent/suivant.
+ * @param {string} [classname] - Classname additionnelle.
  */
-<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons">
+<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons, classname">
 	<!--[ Pour les rubriques annuelles on loope sur la rubrique parente ]-->
 	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
 		<LET VAR="nav_id">[#IDPARENT]</LET>
 	<ELSE />
 		<LET VAR="nav_id">[#ID]</LET>
 	</IF>
-	<nav class="nav-entities">
-		<div class="row">
-			<div class="col-xs-12 col-sm-<IF COND="[#SHOW_BUTTONS]">9<ELSE/>12</IF> nav-entities-col-parent">
-				<!--[ Publications parentes ]-->
-				<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
-			</div>
-			<IF COND="[#SHOW_BUTTONS]">
-				<div class="hidden-xs col-sm-3 nav-entities-col-siblings">
-					<IF COND="[#TYPE] NE 'imageaccroche'">
-						<!--[ Précédent ]-->
-						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
-						<!--[ Suivant ]-->
-						<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
-					</IF>
-				</div>
-			</IF>
+	<nav class="nav-entities [#CLASSNAME]">
+		<div class="nav-entities-col nav-entities-col-parent">
+			<!--[ Publications parentes ]-->
+			<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
 		</div>
+		<IF COND="[#SHOW_BUTTONS]">
+			<div class="nav-entities-col nav-entities-col-siblings">
+				<IF COND="[#TYPE] NE 'imageaccroche'">
+					<!--[ Précédent ]-->
+					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="previous" />
+					<!--[ Suivant ]-->
+					<FUNC NAME="NAV_ENTITIES_SIBLING" USE_ID="[#NAV_ID]" DIRECTION="next" />
+				</IF>
+			</div>
+		</IF>
 	</nav>
 </DEFFUNC>
 
@@ -85,8 +80,8 @@
 	</IF>
 	<LOOP NAME="nav_ariane" TABLE="relations, entities, publications" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id AND entities.id=publications.identity" ORDER="degree DESC">
 		<BEFORE>
-			<nav class="ariane" aria-label="breadcrumb">
-				<ol class="ariane__list breadcrumb">
+			<nav class="ariane" aria-label="[@ARIANE]">
+				<ul class="ariane__list breadcrumb">
 		</BEFORE>
 		<DO>
 			<li class="ariane__item breadcrumb-item">
@@ -103,7 +98,7 @@
 			</li>
 		</DO>
 		<AFTER>
-				</ol>
+				</ul>
 			</nav>
 		</AFTER>
 	</LOOP>
@@ -147,7 +142,7 @@
 
 		<!--[ Traduction ]-->
 		<IF COND="[#DIRECTION] EQ 'previous'">
-			<LET VAR="btn_icon">step-backward</LET>
+			<LET VAR="btn_icon">chevron-left</LET>
 			<SWITCH TEST="[#ENTITY_TYPE]">
 				<DO CASE="numero"><LET VAR="btn_trad">[@NUMERO_PRECEDENT]</LET></DO>
 				<DO CASES="rubrique, rubriqueannuelle"><LET VAR="btn_trad">[@RUBRIQUE_PRECEDENTE]</LET></DO>
@@ -155,7 +150,7 @@
 				<DO CASE="default"><LET VAR="btn_trad">[@DOCUMENT_PRECEDENT]</LET></DO>
 			</SWITCH>
 		<ELSE />
-			<LET VAR="btn_icon">step-forward</LET>
+			<LET VAR="btn_icon">chevron-right</LET>
 			<SWITCH TEST="[#ENTITY_TYPE]">
 				<DO CASE="numero"><LET VAR="btn_trad">[@NUMERO_SUIVANT]</LET></DO>
 				<DO CASES="rubrique, rubriqueannuelle"><LET VAR="btn_trad">[@RUBRIQUE_SUIVANTE]</LET></DO>
@@ -165,27 +160,32 @@
 		</IF>
 
 		<!--[ Affichage ]-->
-		<a href="[#ID|makeurlwithid]" title="[#BTN_TRAD]" class="btn" aria-label="[#BTN_TRAD]">
-			<FUNC NAME="BASE_ICON" ICON="[#BTN_ICON]" />
+		<a href="[#ID|makeurlwithid]" title="[#BTN_TRAD]" class="btn btn--[#DIRECTION]" aria-label="[#BTN_TRAD]">
+			<FUNC NAME="BASE_ICON" ICON="[#BTN_ICON]" INLINE="1" />
 		</a>
 	</LOOP>
 </DEFFUNC>
 
 /**
  * Formulaire recherche.
+ * @param {string} [form_id] - Attribut id du formulaire.
  * @param {boolean} [autofocus] - Autofocus.
  */
-<DEFFUNC NAME="NAV_SEARCH_FORM" OPTIONAL="autofocus">
+<DEFFUNC NAME="NAV_SEARCH_FORM" OPTIONAL="form_id, autofocus">
 	<IF COND="[#AUTOFOCUS]">
 		<LET VAR="autofocus">autofocus</LET>
 	</IF>
-	<form class="search-form" action="./" method="get">
+	<IF COND="[#FORM_ID]">
+		<LET VAR="form_id">id="[#FORM_ID]"</LET>
+	</IF>
+
+	<form [#FORM_ID] class="search-form" action="./" method="get" role="search">
+		<input name="page" type="hidden" value="search" />
 		<div class="input-group input-group-lg">
-			<input name="page" type="hidden" value="search" />
-			<input name="query" type="text" class="form-control" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit"><FUNC NAME="BASE_ICON" ICON="search" /></button>
-			</span>
+			<input name="query" type="text" class="form-control" aria-label="[@RECHERCHE]" placeholder="[@RECHERCHE]..." value="[#QUERY|htmlspecialchars|stripslashes]" [#AUTOFOCUS] />
+			<div class="input-group-append">
+				<button class="btn" type="submit" aria-label="[@RECHERCHER]"><FUNC NAME="BASE_ICON" ICON="search" INLINE="1" /></button>
+			</div>
 		</div>
 	</form>
 </DEFFUNC>
@@ -195,15 +195,19 @@
  */
 <DEFMACRO NAME="NAV_ALPHABET">
 	<nav id="alphabet" class="alphabet">
-		<div class="btn-group">
+		<ul class="btn-group" aria-label="[@NAVIGUER_PAR_LETTRE]">
 			<LOOP NAME="alphabetSpec">
 				<IF COND="[#NBRESULTS]">
-					<a class="alphabet_btn btn btn-default" href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
-					<ELSE/>
-					<span class="alphabet_btn alphabet_btn--disabled btn btn-default disabled">[#LETTRE]</span>
+					<li class="alphabet__btn btn btn-default">
+						<a href="#alpha[#LETTRE|ord]">[#LETTRE]</a>
+					</li>
+				<ELSE/>
+					<li class="alphabet__btn alphabet__btn--disabled btn btn-default disabled">
+						[#LETTRE]
+					</li>
 				</IF>
 			</LOOP>
-		</div>
+		</ul>
 	</nav>
 </DEFMACRO>
 
@@ -235,11 +239,11 @@
 
 			<IF COND="[#URLPAGE] EQ ''">
 				<li class="page-item active">
-					<a class="page-link" href="#">[#PAGENUMBER] <span class="sr-only">(current)</span></a>
+					<a class="page-link" href="#" aria-label="[@PAGINATION_PAGE_COURANTE] : [#PAGENUMBER]">[#PAGENUMBER]</a>
 				</li>
 			<ELSE />
 				<li class="page-item">
-					<a class="page-link" href="[#URLPAGE]">[#PAGENUMBER]</a>
+					<a class="page-link" href="[#URLPAGE]" aria-label="[@PAGINATION_ALLER_PAGE] [#PAGENUMBER]">[#PAGENUMBER]</a>
 				</li>
 			</IF>
 		</DO>
@@ -264,7 +268,7 @@
 <DEFMACRO NAME="NAV_ERREUR_404">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERREUR_404]" />
 	<p class="error error-404">[@PAGE_NOT_FOUND]</p>
-	<a rev="index" class="btn btn-block" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
+	<MACRO NAME="NAV_BUTTON_BACK" />
 </DEFMACRO>
 
 /**
@@ -273,5 +277,14 @@
 <DEFMACRO NAME="NAV_ERREUR_500">
 	<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@ERREUR_500]" />
 	<p class="error error-500">[@INTERNAL_ERROR]</p>
-	<a rev="index" class="btn btn-block" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
+	<MACRO NAME="NAV_BUTTON_BACK" />
+</DEFMACRO>
+
+/**
+ * Bouton "Retour à l'acceuil".
+ */
+<DEFMACRO NAME="NAV_BUTTON_BACK">
+	<div class="button-back-container">
+		<a rev="index" class="button-back" href="[#TYPE.ID|makeurlwithid]">[@RETOUR_HOME]</a>
+	</div>
 </DEFMACRO>

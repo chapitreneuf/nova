@@ -3,7 +3,7 @@
 /**
  * Macro principale appelée par les templates pour consituer le head.
  */
-<DEFMACRO NAME="HEAD_MAIN">	
+<DEFMACRO NAME="HEAD_MAIN">
 	<MACRO NAME="HEAD_METADONNEES" />
 	<MACRO NAME="HEAD_INSERT_CSS" />
 	<MACRO NAME="HEAD_INSERT_RSS" />
@@ -31,12 +31,12 @@
 		<!--[ Variables utiles ]-->
 		<LET VAR="titre_complet"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#TITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#SOUSTITRE|removenotes|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
 		<LET VAR="titresite_complet"><FUNC NAME="BASE_CONCAT_TITLES" TITRE="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" SOUSTITRE="[#OPTIONS.METADONNEESSITE.SOUSTITRESITE|textebrut|cleanBadChars|replacequotationmark|trim]" /></LET>
-	
+
 		<!--[ Dates ]-->
 		<LET VAR="publication_date"></LET>
 		<LET VAR="online_date"></LET>
 		<LET VAR="modification_date"></LET>
-	
+
 		<IF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" >
 			<LET VAR="publication_date">[#DATEMISENLIGNE]</LET>
 			<LET VAR="online_date">[#DATEMISENLIGNE]</LET>
@@ -81,8 +81,9 @@
  * Metadonnées Dublin Core.
  */
 <DEFMACRO NAME="HEAD_META_DC">
-	<!--[ schema.DC ]-->
+	<!--[ Schemas ]-->
 	<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+	<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
 
 	<!--[ DC.description ]-->
 	<IF COND="[#RESUME]">
@@ -117,14 +118,14 @@
 	</IF>
 
 	<meta name="DC.format" content="text/html" />
-	<meta name="DC.language" scheme="RFC3066" content="[%PAGELANG]" />
+	<meta name="DC.language" content="[%PAGELANG]" />
 
-	<meta name="DC.identifier" scheme="DCTERMS.URI" content="[#CURRENTURL_FIXED]" />
+	<meta name="DC.identifier" content="[#CURRENTURL_FIXED]" />
 	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
-		<meta name="DC.identifier" scheme="DCTERMS.URI" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
+		<meta name="DC.identifier" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
 	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<meta name="DC.identifier" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
+		<meta name="DC.identifier" content="doi:[%PREFIXEDOI][#ID]" />
 	</IF>
 
 	<IF COND="[#TITRE_COMPLET]">
@@ -136,9 +137,9 @@
 	<FUNC NAME="HEAD_META_KEYWORDS" NAME_VALUE="DC.subject" />
 
 	<IF COND="[#DATEPUBLI|isadate] AND [#DATEPUBLI] NE '0000-00-00' AND [#DATEPUBLI] NE NULL">
-		<meta name="DC.date" scheme="W3CDTF" content="[#DATEPUBLI]" />
+		<meta name="DC.date" content="[#DATEPUBLI]" />
 	<ELSEIF COND="[#DATEMISENLIGNE|isadate] AND [#DATEMISENLIGNE] NE '0000-00-00' AND [#DATEMISENLIGNE] NE NULL" />
-		<meta name="DC.date" scheme="W3CDTF" content="[#DATEMISENLIGNE]" />
+		<meta name="DC.date" content="[#DATEMISENLIGNE]" />
 	</IF>
 </DEFMACRO>
 
@@ -153,7 +154,7 @@
 	<IF COND="[#PUBLICATION_DATE]">
 		<meta name="citation_publication_date" content="[#PUBLICATION_DATE|formateddate('%Y/%m/%d')]" />
 	</IF>
-	
+
 	<IF COND="[#ONLINE_DATE]">
 		<meta name="citation_online_date" content="[#ONLINE_DATE|formateddate('%Y/%m/%d')]" />
 	</IF>
@@ -181,7 +182,8 @@
 	</IF>
 
 	<!--[ Metadonnées du numéro ]-->
-	<LOOP NAME="head_meta_hwp_issue" TABLE="publications" WHERE="id IN ('[#ID]', '[%IDNUMERO]')" SELECT="numero, isbn">
+	<LET VAR="idnumero">[#ID|getParentByType('numero')]</LET>
+	<LOOP NAME="head_meta_hwp_issue" TABLE="publications" WHERE="id = '[#ID]' OR id = '[#IDNUMERO]'" SELECT="numero, isbn">
 		<IF COND="[#NUMERO]">
 			<meta name="citation_issue" content="[#NUMERO]" />
 		</IF>
@@ -194,9 +196,9 @@
 		https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
 		https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar
 	]-->
-	
+
 	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<meta name="citation_doi" scheme="DOI" content="[%PREFIXEDOI][#ID]" />
+		<meta name="citation_doi" content="[%PREFIXEDOI][#ID]" />
 	</IF>
 
 	<meta name="citation_fulltext_html_url" content="[#CURRENTURL_FIXED]" />
@@ -293,18 +295,24 @@
  */
 <DEFMACRO NAME="HEAD_INSERT_CSS">
 	<!--[ Bootstrap ]-->
-	<link href="[%DIR_VENDOR]/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="[%DIR_VENDOR]/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 	<!--[ Largetable ]-->
 	<link href="[%DIR_VENDOR]/largetable/largetable.css" rel="stylesheet">
 
+	<!--[ Hook pour l'insertion de CSS ]-->
+	<MACRO NAME="HEAD_CUSTOM_CSS" />
+
 	<!--[ Site ]-->
-	<IF COND="[%DEV_MODE]">
-		<!--[ Execution de LESS dans le navigateur pour le développement. 
+	<IF COND="[%DEV_MODE_ACTIVE]">
+		<!--[ Execution de LESS dans le navigateur pour le développement.
 		NE PAS UTILISER EN PRODUCTION ! ]-->
 		<link rel="stylesheet/less" type="text/css" href="tpl/less/site.less" />
-		<script>less = { env: "development", modifyVars: { webfontsDir: "../public/webfonts", publicDir: "../public" } };</script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.12.2/less.min.js" type="text/javascript"></script>
+		<script>
+			window.devMode = true;
+			less = { env: "development", modifyVars: { webfontsDir: "../public/fonts", publicDir: "../public" } };
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.2/less.min.js"></script>
 	<ELSE />
 		<!--[ Mode normal : on sert les CSS précompilées. ]-->
 		<link rel="stylesheet" type="text/css" href="[%DIR_PUBLIC]/css/site.css" />
@@ -317,20 +325,46 @@
 <DEFMACRO NAME="HEAD_INSERT_JS">
 	<!--[ jQuery ]-->
 	<script src="[%DIR_VENDOR]/jquery/jquery.slim.min.js"></script>
-		
-	<!-- Bootstrap -->
-	<script src="[%DIR_VENDOR]/bootstrap/bootstrap.bundle.min.js"></script>
 
-	<!-- Largetable -->
+	<!--[ Bootstrap ]-->
+	<script src="[%DIR_VENDOR]/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!--[ Largetable ]-->
 	<script src="[%DIR_VENDOR]/largetable/largetable.js"></script>
 
-	<!--[ JS site ]-->
-	<script type="text/javascript" src="tpl/public/js/nova.js"></script>
+	<!--[ Reframe ]-->
+	<script src="[%DIR_VENDOR]/reframe/reframe.min.js"></script>
 
-	<!--[ Insertion de scripts optionnels : utiliser la globale [%CUSTOM_SCRIPT_PATH] pour le chemin du script ]-->
-	<IF COND="[%CUSTOM_SCRIPT_PATH]">
-		<script type="text/javascript" src="[%CUSTOM_SCRIPT_PATH]"></script>
+	<!--[ Dot-shortcuts ]-->
+	<IF COND="[%DOT_SHORTCUTS]">
+		<script>
+			window.activateDotShortcuts = "[%DOT_SHORTCUTS]";
+		</script>
 	</IF>
+
+	<!--[ Color contrast checker ]-->
+	<IF COND="[%CHECK_CONTRAST]">
+		<script src="[%DIR_VENDOR]/color-contrast-checker/jquery.color-contrast.js"></script>
+		<script src="tpl/public/js/check-contrast.js"></script>
+	</IF>
+
+	<!--[ Variables de traduction ]-->
+	<script>
+		window.translations = {
+			atteindreSection: "[@ATTEINDRE_SECTION]",
+			ecrireA: "[@ECRIRE_A]",
+			naviguerDansLArticle: "[@NAVIGUER_DANS_LARTICLE]",
+			menuPrincipalAfficher: "[@MENU_PRINCIPAL_AFFICHER]",
+			menuPrincipalMasquer: "[@MENU_PRINCIPAL_MASQUER]",
+			retourEnHaut: "[@RETOUR_EN_HAUT]"
+		};
+	</script>
+
+	<!--[ JS site ]-->
+	<script src="tpl/public/js/nova.js"></script>
+
+	<!--[ Hook pour l'insertion de JS ]-->
+	<MACRO NAME="HEAD_CUSTOM_JS" />
 
 	<!--[ Loader : lancer les fonctions ]-->
 	<MACRO NAME="HEAD_JS_LOADER" />
@@ -355,4 +389,16 @@
 <DEFMACRO NAME="HEAD_INSERT_RSS">
 	<link rel="alternate" type="application/rss+xml" title="[#OPTIONS.METADONNEESSITE.TITRESITE|textebrut|cleanBadChars|replacequotationmark]" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss" />
 	<link rel="alternate" type="application/rss+xml" title="[%TITRE_PAGE|trim()]" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss&amp;identity=[#ID]" />
+</DEFMACRO>
+
+/**
+ * Hook pour l'insertion de CSS dans le head, à redéclarer dans macros_custom.html.
+ */
+<DEFMACRO NAME="HEAD_CUSTOM_CSS">
+</DEFMACRO>
+
+/**
+ * Hook pour l'insertion de JS dans le head, à redéclarer dans macros_custom.html.
+ */
+<DEFMACRO NAME="HEAD_CUSTOM_JS">
 </DEFMACRO>

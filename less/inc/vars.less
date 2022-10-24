@@ -1,27 +1,171 @@
-// Fonts
+// ===========================
+// VARIABLES LESS
+// /!\ Ce fichier ne devrait jamais être modifié directement. Les styles et variables personnalisés doivent être déclarés dans le fichier less/custom.less.
+// ===========================
 
-@font-1: Verdana, "DejaVu Sans", "Bitstream Vera Sans", Geneva, sans-serif;
-@font-2: Ubuntu, "DejaVu Sans", "Bitstream Vera Sans", Geneva, sans-serif;
+// POLICES
+// =======
+
+@font-1: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+@font-2: Georgia, "DejaVu Serif", Norasi, serif;
+
+// Police de l'élément HTML utilisée par défaut
+@font-default: @font-1;
+
+// Police des éléments d'interface
+@font-header: @font-1;
+@font-footer: @font-1;
+@font-menu: @font-1;
+
+// Police du texte
+@font-text: @font-2;
+@text-line-height: 1.7;
+
+// Police des titres des documents
+@font-doc-title: @font-2;
+
+// Police des intertitres du document
+@font-doc-headings: @font-1;
+
+// Police des résumés
+@font-abstract: @font-1;
+
+// Police des mots-clés
+@font-keyword: @font-1;
+
+// Police des légendes
+@font-captions: @font-1;
+
+// Police des intertitres des sections
+@font-section-headers: @font-1;
+
+// Police des appels de notes
+@font-notecall: inherit;
+
+// Police du plan de l'article
+@font-outline: @font-1;
+
+// Police des billets de l'accueil
+@font-billet: @font-1;
+
+// Police monospace (code)
 @font-mono: "Courier New", Courier, "Liberation Mono", monospace;
 
-// Colors
-@color-1: #000;
-@color-2: #00365f;//bleu foncé
-@color-3: #e0a126;//orange
-@color-4: #dee2e6; //gris
-@color-5: #bbb; //gris foncé
-@color-6: #777; //gris tres foncé
-@color-7: #00457B;//bleu moyen
-@color-8: #005799;//bleu clair
-@color-9: #397BAE;//bleu tres clair
+// FONT-SIZE
+// =========
 
-@color-bg: #ccc;
-@color-bg-1: #fff;
-@color-bg-2: #f2f2f2;
-@color-bg-3: #dfdfdf;
+// Facteur de taille de toutes les polices
+@size-factor: 1;
 
-// Breakpoints
-@screen-xs: 480px;
-@screen-sm: 768px;
-@screen-md: 992px;
-@screen-lg: 1200px;
+// Tailles de polices
+// Exemple d'utilisation : .font-size(xs);
+@sizes: {
+  @xxs: 1.0;
+  @xs: 1.2;
+  @s: 1.4;
+  @m: 1.6;
+  @l: 1.8;
+  @xl: 2;
+  @xxl: 3;
+  @xxxl: 4;
+  @text: 1.8;
+  @biblio: 1.6;
+  @appendix: 1.8;
+  @footnotes: 1.6;
+  @h1: 3.4;
+  @h2: 3;
+  @h3: 2.6;
+  @h4: 2.2;
+  @h5: 2;
+  @h6: 1.8;
+}
+
+// COULEURS
+// ========
+
+@color-accent: #1664bc;
+@color-accent-dark: darken(@color-accent, 10%);
+
+// Gris accessibles
+// Les @color-grey-dx (dark) contrastent avec le blanc.
+// Les @color-grey-lx (light) contrastent avec le noir.
+@color-black: #000;
+@color-grey-d1: #2e3440;
+@color-grey-d2: #3b4252;
+@color-grey-d3: #434c5e;
+@color-grey-d4: #4c566a;
+@color-grey-d5: #5f6e86;
+@color-grey-l5: #bdc3ce;
+@color-grey-l4: #d8dee9;
+@color-grey-l3: #e5e9f0;
+@color-grey-l2: #eceff4;
+@color-grey-l1: #f6f8fa;
+@color-white: #fff;
+
+// Couleurs de l'interface
+@color-global: @color-grey-d1;
+@color-global-bg: @color-grey-l1;
+@color-link: @color-accent;
+@color-link-hover: @color-accent-dark;
+@color-link-contrast: @color-white;
+@color-link-dark: @color-accent-dark;
+
+@color-topbar-link: @color-grey-d5;
+@color-topbar-link-hover: @color-grey-d1;
+
+@color-header: @color-global;
+@color-header-bg: @color-grey-l2;
+
+@color-main: @color-global;
+@color-main-bg: @color-white;
+
+@color-menu: @color-header;
+@color-menu-bg: @color-header-bg;
+@color-menu-link: @color-link;
+@color-menu-link-hover: @color-link-hover;
+
+@color-side: @color-main;
+@color-side-bg: @color-main-bg;
+
+@color-footer: @color-grey-d4;
+@color-footer-bg: @color-header-bg;
+@color-footer-link: @color-link;
+@color-footer-link-hover: @color-link-hover;
+
+@color-ariane: @color-grey-d4;
+@color-border: @color-grey-l4;
+
+@color-dot-shortcut: @color-grey-l5;
+@color-dot-shortcut-hover: @color-grey-d5;
+
+// DIVERS
+// ======
+
+// Largeur de colonne
+// Bootstrap utilise par défaut 1140px. On monte à 1200px.
+@layout-max-width: @screen-xl;
+
+// Alignement des textes
+@default-align: left;
+
+// Affichage des notes dans des crochets
+@notecall-brackets: true;
+
+// Soulignement des liens dans les textes
+@text-underline-links: true;
+
+// Marge supérieure des paragraphes du texte
+@p-margin-top: 1.6rem;
+
+// Border radius
+@radius-search-form: 2px;
+@radius-button: 2px;
+
+// BREAKPOINTS BOOTSTRAP
+// Ne pas modifier.
+// =====================
+
+@screen-sm: 576px;
+@screen-md: 768px;
+@screen-lg: 992px;
+@screen-xl: 1200px;

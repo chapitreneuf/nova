@@ -6,6 +6,11 @@
 <DEFMACRO NAME="HOME_INIT">
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
+
+	<!--[ Titre de la page ]-->
+	<LET VAR="titre_page" GLOBAL="1">
+		[@ACCUEIL] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+	</LET>
 </DEFMACRO>
 
 /**
@@ -30,15 +35,17 @@
 				<LET VAR="ml_titre">
 					<FUNC NAME="BASE_ML_TITRE" />
 				</LET>
-				<IF COND="[#ML_TITRE] AND [#IDENTIFIER] NE 'presentation'">
-					<h2 class="home-billet__titre">[#ML_TITRE]</h2>
+				<IF COND="[#ML_TITRE]">
+					<IF COND="[#IDENTIFIER] EQ [%IDENTIFIER_BILLET_PRESENTATION]">
+						<LET VAR="sr_only">sr-only</LET>
+					</IF>
+					<h1 class="home-billet__titre [#SR_ONLY]">[#ML_TITRE]</h1>
 				</IF>
 				<FUNC NAME="BASE_ML_TEXTE" ML_VAR="[#TEXTE]" />
 			</div>
 		</DO>
 		<AFTER>
 			</section>
-			<hr/>
 		</AFTER>
 	</LOOP>
 </DEFMACRO>
@@ -62,30 +69,27 @@
  * Affichage des rubriques.
  */
 <DEFMACRO NAME="HOME_RUBRIQUES">
-	<LET VAR="id_collection_rubriques">
-		<LOOP NAME="home_rubriques_get_id_collection_rubriques" TABLE="publications" SELECT="id" WHERE="type='collection' AND identifier='rubriques'">[#ID]</LOOP>
-	</LET>
-	<LOOP NAME="home_rubriques" 
-		TABLE="publications"
-		SELECT="id, titre, altertitre"
-		WHERE="idparent = '[#ID_COLLECTION_RUBRIQUES]' AND type = 'rubrique'"
-		ORDER="rank">
+	<LOOP NAME="home_rubriques_get_parent" TABLE="publications" SELECT="id AS id_collection, titre, altertitre" WHERE="type='collection' AND identifier='rubriques'">
+		<LET VAR="titre_collection"><FUNC NAME="BASE_ML_TITRE" /></LET>
 
-		<BEFORE>
-			<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
-			<section id="home-rubriques" class="home-rubriques">
-				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@RUBRIQUES]" ICON="folder-open" SECTION_ID="home-rubriques" />
-				<div class="home-rubriques__contents">
-		</BEFORE>
+		<LOOP NAME="home_rubriques" TABLE="publications" SELECT="id, titre, altertitre"
+			WHERE="idparent = '[#ID_COLLECTION]' AND type = 'rubrique'" ORDER="rank">
+			<BEFORE>
+				<LET VAR="home_nb_rubriques" GLOBAL="1">[#NBRESULTS]</LET>
+				<section id="home-rubriques" class="home-rubriques">
+					<h1 class="home-rubriques__title">[#TITRE_COLLECTION]</h1>
+					<div class="home-rubriques__contents">
+			</BEFORE>
 
-		<DO>
-			<MACRO NAME="HOME_CONTENU_RUBRIQUE" />
-		</DO>
+			<DO>
+				<MACRO NAME="HOME_CONTENU_RUBRIQUE" />
+			</DO>
 
-		<AFTER>
-				</div>
-			</section>
-		</AFTER>
+			<AFTER>
+					</div>
+				</section>
+			</AFTER>
+		</LOOP>
 	</LOOP>
 </DEFMACRO>
 
@@ -104,8 +108,9 @@
 
 		<BEFORE>
 			<div class="home-rubrique">
-				<h3 class="home-rubrique__titre"><a href="[#ID_RUBRIQUE]">[#TITRE]</a></h3>
-				<ul class="toc-contents toc-contents--home-rubrique">
+				<LET VAR="title"><FUNC NAME="BASE_ML_TITRE" /></LET>
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITLE]" />
+				<ul class="toc__contents toc__contents--home-rubrique">
 		</BEFORE>
 
 		<DO>
@@ -116,7 +121,8 @@
 
 		<AFTER>
 				</ul>
-				<a class="home-rubrique__more" href="[#ID_RUBRIQUE]">[@SOMMAIRE_DE_CETTE_RUBRIQUE]</a>
+				<LET VAR="title"><FUNC NAME="BASE_ML_TITRE" /></LET>
+				<a class="home-rubrique__more button arrow-after" href="[#ID_RUBRIQUE]" aria-label="[@SOMMAIRE_DE_LA_RUBRIQUE] : [#TITLE|textebrut]">[@SOMMAIRE_DE_LA_RUBRIQUE]</a>
 			</div>
 		</AFTER>
 	</LOOP>

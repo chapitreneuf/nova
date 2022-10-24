@@ -1,0 +1,194 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+<!--[
+	===============
+	Options par défaut de la maquette Nova.
+	/!\ Ces options ne devraient jamais être modifiées directement ici. Il faut plutôt les redéclarer dans la macro CUSTOM_INIT de macros_custom.html.
+	===============
+]-->
+
+<!--[
+	Utiliser les anciens onglets dans les résumés.
+	@type {boolean}
+]-->
+<LET VAR="abstract_legacy_tabs" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les anciens raccourcis (Nova 1) dans les articles. Valeurs possibles : all, sr-only, none. Par défaut : sr-only (visible pour les lecteurs d'écrans uniquement) en complément des dot_shortcuts qui ne sont pas accessibles.
+	@type {string}
+]-->
+<LET VAR="article_legacy_shortcuts" GLOBAL="1">sr-only</LET>
+
+<!--[
+	Activer la vérification du contraste. Par défaut : uniquement pour les utilisateurs du niveau EDITOR ou supérieur.
+	@type {boolean}
+]-->
+<LET VAR="check_contrast" GLOBAL="1">[#LODELUSER.EDITOR]</LET>
+
+<!--[
+	Mode développement : passer à 1 pour forcer le mode de développement. NE PAS UTILISER EN PRODUCTION !
+	@type {boolean}
+]-->
+<LET VAR="dev_mode" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les iframes dans les annexes.
+	@type {boolean}
+]-->
+<LET VAR="display_iframes_in_annexes" GLOBAL="1"></LET>
+
+<!--[
+	Définition des pages sur lesquelles afficher les raccourcis "points". Valeurs possibles : all, top, none.
+	@type {string}
+]-->
+<LET VAR="dot_shortcuts" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'article'">all<ELSE/>top</IF></LET>
+
+<!--[
+	Identifiers utilisés dans la maquette.
+	Remarque : l'identifier 'numeros' est hardcodé pour des raisons techniques.
+	@type {string}
+]-->
+<LET VAR="identifier_billet_presentation" GLOBAL="1">presentation</LET>
+<LET VAR="identifier_informations" GLOBAL="1">informations</LET>
+<LET VAR="identifier_partenaires" GLOBAL="1">partenaires</LET>
+<LET VAR="identifier_rss" GLOBAL="1">flux</LET>
+<LET VAR="identifier_tei" GLOBAL="1">tei</LET>
+<LET VAR="identifier_topbar" GLOBAL="1">reseaux-sociaux</LET>
+
+<!--[
+	Afficher une pagination en haut de la page "Tous les numéros".
+	@type {boolean}
+]-->
+<LET VAR="issues_page_scale_top" GLOBAL="1"></LET>
+
+<!--[
+	Nombre de numéros par page sur "Tous les numéros".
+	@type {number}
+]-->
+<LET VAR="issues_per_page" GLOBAL="1">10</LET>
+
+<!--[
+	Afficher l'introduction du numéro sur la page "Tous les numéros".
+	@type {boolean}
+]-->
+<LET VAR="issues_show_introduction" GLOBAL="1"></LET>
+
+<!--[
+	Nombre de documents "du même auteur" affichés dans les articles.
+	@type {number}
+]-->
+<LET VAR="meme_auteur_max_documents" GLOBAL="1">3</LET>
+
+<!--[
+	Identifiants des collections masquées dans le menu, entre guillemets simples et séparés par des virgules.
+	@type {string}
+]-->
+<LET VAR="menu_hidden_collections" GLOBAL="1">'[%IDENTIFIER_PARTENAIRES]', '[%IDENTIFIER_TOPBAR]', '[%IDENTIFIER_RSS]'</LET>
+
+<!--[
+	Nombre de numeros max affichés dans le menu.
+	@type {number}
+]-->
+<LET VAR="menu_max_issues" GLOBAL="1">10</LET>
+
+<!--[
+	Afficher un lien de retour vers le texte à la fin de chaque note (recommandé pour l'accessibilité).
+	@type {boolean}
+]-->
+<LET VAR="notes_return_link" GLOBAL="1">1</LET>
+
+<!--[
+	Définition des pages sur lesquelles afficher la barre latérale à droite.
+	@type {boolean}
+]-->
+<LET VAR="side_contents" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'index'">1</IF></LET>
+
+<!--[
+	Nombre maximum d'actualités présentées dans la colonne de droite.
+	@type {number}
+]-->
+<LET VAR="side_max_actualites" GLOBAL="1">5</LET>
+
+<!--[
+	Chemin vers le logo image du site. Si vide alors le titre du site s'affiche à la place du logo.
+	@type {string}
+]-->
+<LET VAR="site_logo_path" GLOBAL="1"></LET>
+
+<!--[
+	Taille d'image d'accroche d'article.
+	@type {number}
+]-->
+<LET VAR="size_accroche_article" GLOBAL="1">400</LET>
+
+<!--[
+	Taille d'image d'accroche sur la page "Tous les numéros".
+	@type {number}
+]-->
+<LET VAR="size_accroche_issues" GLOBAL="1">400</LET>
+
+<!--[
+	Taille d'image d'accroche de publication.
+	@type {number}
+]-->
+<LET VAR="size_accroche_publication" GLOBAL="1">600</LET>
+
+<!--[
+	Taille de la capture d'écran (template lien).
+	@type {number}
+]-->
+<LET VAR="size_capture" GLOBAL="1">300</LET>
+
+<!--[
+	Taille des vignettes dans les docannexes.
+	@type {number}
+]-->
+<LET VAR="size_docannexe" GLOBAL="1">300</LET>
+
+<!--[
+	Taille des illustrations dans le texte.
+	@type {number}
+]-->
+<LET VAR="size_illustrations" GLOBAL="1">800</LET>
+
+<!--[
+	Taille d'image dans le template image.
+	@type {number}
+]-->
+<LET VAR="size_image" GLOBAL="1">800</LET>
+
+<!--[
+	Taille des logos partenaires.
+	@type {number}
+]-->
+<LET VAR="size_partenaire" GLOBAL="1">200</LET>
+
+<!--[
+	Taille des icones de la topbar.
+	@type {number}
+]-->
+<LET VAR="size_topbar_icon" GLOBAL="1">100</LET>
+
+<!--[
+	Afficher les titres alternatifs des articles dans le sommaire des publications.
+	@type {boolean}
+]-->
+<LET VAR="toc_doc_altertitre" GLOBAL="1"></LET>
+
+<!--[
+	Afficher les titres alternatifs des publications (sous-parties, rubriques) dans le sommaire des publications. Sinon le titre sera traduit dans la langue de navigation.
+	@type {boolean}
+]-->
+<LET VAR="toc_publi_altertitre" GLOBAL="1"></LET>
+
+<!--[
+	Afficher le nom du portail/diffuseur dans la topbar.
+	@type {boolean}
+]-->
+<LET VAR="topbar_display_brand" GLOBAL="1">1</LET>
+
+<!--[
+	Afficher l'icone RSS dans la topbar.
+	@type {boolean}
+]-->
+<LET VAR="topbar_display_rss" GLOBAL="1">1</LET>

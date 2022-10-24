@@ -1,14 +1,26 @@
 {
   "name": "nova",
-  "version": "1.6.3",
+  "version": "2.0.0",
   "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
   "main": "index.html",
+  "contributors": [
+    {
+      "name": "Thomas Brouard",
+      "email": "contact@brrd.fr",
+      "url": "https://brrd.fr"
+    },
+    {
+      "name": "Arnaud Cordier"
+    },
+    {
+      "name": "Yolaine de Villeneuve"
+    }
+  ],
   "scripts": {
-    "build": "npm run copy:vendor && npm run css",
-    "copy:vendor": "frontend-dependencies",
+    "build": "npm run css",
     "css": "lessc less/site.less public/css/site.css --autoprefix",
-    "postinstall": "npm run css",
-    "watch:css": "onchange -i \"less/**/*.less\" -- npm run css",
+    "copy-dist": "node scripts/copy-dist.js",
+    "postinstall": "npm run css && npm run copy-dist",
     "gulp": "npm run css"
   },
   "repository": {
@@ -17,35 +29,11 @@
   },
   "license": "GPL-3.0",
   "private": true,
-  "devDependencies": {
-    "less": "^2.7.3",
-    "less-plugin-autoprefix": "^1.5.1"
-  },
-  "optionalDependencies": {
-    "frontend-dependencies": "^1.1.7",
-    "onchange": "^6.0.0"
-  },
-  "frontendDependencies": {
-    "target": "public/vendor/",
-    "packages": {
-      "bootstrap": {
-        "version": "4.3.1",
-        "src": "{dist/css/bootstrap.min.css,dist/css/bootstrap.min.css.map,dist/js/bootstrap.bundle.min.js}",
-        "namespaced": true
-      },
-      "jquery": {
-        "version": "3.4.1",
-        "src": "dist/jquery.slim.min.js",
-        "namespaced": true
-      },
-      "largetable": {
-        "version": "1.0.0",
-        "src": "{largetable.css,largetable.js}",
-        "namespaced": true
-      }
-    }
-  },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "devDependencies": {
+    "less": "^4.1.2",
+    "less-plugin-autoprefix": "^2.0.0"
+  }
 }

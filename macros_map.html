@@ -30,19 +30,23 @@
  * Plan du site.
  */
 <DEFMACRO NAME="MAP_TREE">
-	<LET VAR="idrec">0</LET>
-	<LET VAR="classes">'publications'</LET>
+	<FUNC NAME="MAP_TREE_LEVEL" PARENT="0" CLASSES="'publications'"/>
+</DEFMACRO>
 
-	<LOOP NAME="map_tree" 
-		TABLE="entities, types" 
-		SELECT="entities.id, type, class" 
-		WHERE="idparent = '[#IDREC]' AND types.id = entities.idtype AND class IN ([#CLASSES]) AND identifier != 'partenaires' AND identifier != 'reseaux-sociaux' AND type !='souspartie'" ORDER="entities.rank">
+/**
+ * Affiche un niveau de l'arborescence du plan du site.
+ * @param {number} parent - Id du parent.
+ * @param {string} classes - Classes à afficher, entre single quotes et séparées par des virgules. Exemple : 'publications','textes'.
+ */
+<DEFFUNC NAME="MAP_TREE_LEVEL" REQUIRED="PARENT, CLASSES">
+	<LOOP NAME="map_tree_level" TABLE="entities, types" SELECT="entities.id, type, class"
+		WHERE="idparent = '[#PARENT]' AND types.id = entities.idtype AND class IN ([#CLASSES]) AND identifier != '[%IDENTIFIER_PARTENAIRES]' AND identifier != '[%IDENTIFIER_TOPBAR]' AND type !='souspartie'" ORDER="entities.rank">
 		<BEFORE>
-			<IF COND="[#IDREC] EQ 1"><ul class="map"><ELSEIF COND="[#IDREC] GT 1"/><ul></IF>
+			<IF COND="[#PARENT] GT 0"/><ul></IF>
 		</BEFORE>
 
 		<DO>
-			<IF COND="[#CLASS] NE 'publications' OR [#IDREC] NE 0">
+			<IF COND="[#CLASS] NE 'publications' OR [#PARENT] NE 0">
 				<li class="[#CLASS]">
 			</IF>
 
@@ -51,9 +55,7 @@
 				<DO CASE="textes">
 					<LOOP NAME="map_tree_textes_titre" SELECT="id,titre,documentcliquable,langue" TABLE="textes" WHERE="id = '[#ID]'">
 						<!--[ Titre ]-->
-						<p class="toc__title">
-								<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>	
-						</p>
+						<a href="[#ID|makeurlwithid]">[#TITRE|removenotes]</a>
 					</LOOP>
 				</DO>
 
@@ -68,9 +70,11 @@
 
 				<!--[ Publications ]-->
 				<DO CASE="publications">
-					<LOOP NAME="map_tree_publications_titre" SELECT="id, titre, numero, datepubli, datepublipapier, type" TABLE="publications" WHERE="id = '[#ID]'">
-						<IF COND="[#IDREC] EQ 0">
-							<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+					<LOOP NAME="map_tree_publications_titre" TABLE="publications" SELECT="id, titre, numero, datepubli, datepublipapier, type" WHERE="id = '[#ID]'">
+						<IF COND="[#PARENT] EQ 0">
+							<LOOP NAME="map_tree_publications_has_children" TABLE="entities" WHERE="idparent = [#ID] AND class IN ('textes', 'fichiers', 'publications')" SELECT="id AS idchild" LIMIT="0,1">
+								<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#TITRE]" />
+							</LOOP>
 						<ELSE />
 							<FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" />
 						</IF>
@@ -78,17 +82,16 @@
 				</DO>
 			</SWITCH>
 
-			<LET VAR="idrec">[#ID]</LET>
 			<LET VAR="classes"><IF COND="[#TYPE] EQ 'collection'">'publications','textes'<ELSE/>'publications'</IF></LET>
-			<LOOP NAME="map_tree"></LOOP>
+			<FUNC NAME="MAP_TREE_LEVEL" PARENT="[#ID]" CLASSES="[#CLASSES]"/>
 
-			<IF COND="[#CLASS] NE 'publications' OR [#IDREC] NE 0">
+			<IF COND="[#CLASS] NE 'publications' OR [#PARENT] NE 0">
 				</li>
 			</IF>
 		</DO>
 
 		<AFTER>
-			<IF COND="[#IDREC] GT 0"></ul></IF>
+			<IF COND="[#PARENT] GT 0"></ul></IF>
 		</AFTER>
 	</LOOP>
-</DEFMACRO>
+</DEFFUNC>

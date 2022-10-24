@@ -21,21 +21,10 @@
  */
 <DEFMACRO NAME="LIEN_MAIN">
 	<MACRO NAME="LIEN_HEADER" />
-	<IF COND="[#CAPTUREDECRAN] AND [#TEXTE]">
-		<div class="row lien">
-			<div class="col-sm-4">
-				<MACRO NAME="LIEN_CAPTURE" />
-			</div>
-			<div class="col-sm-8">
-				<MACRO NAME="LIEN_TEXTE" />
-			</div>
-		</div>
-	<ELSE />
-		<div class="row lien">
-			<MACRO NAME="LIEN_CAPTURE" />
-			<MACRO NAME="LIEN_TEXTE" />
-		</div>
-	</IF>
+	<div class="lien clearfix">
+		<MACRO NAME="LIEN_CAPTURE" />
+		<MACRO NAME="LIEN_TEXTE" />
+	</div>
 	<IF COND="[%IS_TWITTER]">
 		<MACRO NAME="LIEN_TWEETS" />
 	<ELSE />
@@ -48,7 +37,7 @@
  */
 <DEFMACRO NAME="LIEN_HEADER">
 	<header class="lien__header">
-		<FUNC NAME="NAV_ENTITIES" />
+		<FUNC NAME="NAV_ENTITIES" CLASSNAME="nav-entities--top" />
 
 		<h1 class="lien__title main-title">[#TITRE|cleanCallNotes]</h1>
 
@@ -67,7 +56,7 @@
 	<IF COND="[#CAPTUREDECRAN]">
 		<section class="lien__capture">
 			<a href="[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">
-				<img class="publi-cover" src="[#CAPTUREDECRAN|vignette(320)]" alt="[#IDENTIFIER|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" />
+				<img class="publi-cover" src="[#CAPTUREDECRAN|vignette([%SIZE_CAPTURE])]" alt="[@CAPTUREDECRAN_DU_SITE] [#TITRE|cleanCallNotes|textebrut]" />
 			</a>
 		</section>
 	</IF>
@@ -107,7 +96,7 @@
 
 									<IF COND="[#DESCRIPTION] NE [#TITLE]">
 										<p class="link-rss__description">
-											[#DESCRIPTION|cleanBadChars|cuttext(500, true)|replace('[...]', '')]
+											[#DESCRIPTION|cleanBadChars|strip_tags('<p><span><br><em><strong><sup><i><b>')|cuttext(300, true)|replace('[...]', '')]
 										</p>
 									</IF>
 								</li>
@@ -117,7 +106,7 @@
 				</ul>
 			</BLOCK>
 
-			<a rel="external" class="btn btn-block" href="[#URLFIL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@LIEN_RSS]</a>
+			<a rel="external" class="lien-rss__button button arrow-external" href="[#URLFIL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" aria-label="[@LIEN_RSS] : [#TITRE|textebrut]">[@LIEN_RSS]</a>
 		</section>
 	</IF>
 </DEFMACRO>
@@ -129,7 +118,7 @@
 	<IF COND="[#URLFIL]">
 		<section class="lien-tweets">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TWEETS]" />
-			<MACRO NAME="BASE_TWITTER_CONTAINER" />
+			<FUNC NAME="BASE_TWITTER_CONTAINER" TITLE="[#TITRE]" />
 		</section>
 	</IF>
 </DEFMACRO>

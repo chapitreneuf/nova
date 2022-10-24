@@ -7,134 +7,144 @@
 <modificationdate>0000-00-00</modificationdate>
 <creationdate>0000-00-00</creationdate>
 <texts>
+<contents name="acceder_page" textgroup="site" status="2">Go to page</contents>
 <contents name="accueil" textgroup="site" status="2">Home</contents>
-<contents name="afficher_accroche" textgroup="site" status="2">Full size image</contents>
+<contents name="actualites" textgroup="site" status="2">News</contents>
 <contents name="and" textgroup="site" status="2">and</contents>
 <contents name="annexe" textgroup="site" status="2">Appendix</contents>
 <contents name="annonce_alias" textgroup="site" status="2">Alias</contents>
+<contents name="ariane" textgroup="site" status="2">Breadcrumb</contents>
 <contents name="article_precedent" textgroup="site" status="2">Previous article</contents>
 <contents name="article_suivant" textgroup="site" status="2">Next article</contents>
-<contents name="article_traductions" textgroup="site" status="2">Translation(s):</contents>
-<contents name="article_traductions_autres" textgroup="site" status="2">Other translation(s):</contents>
 <contents name="article_traduction_de" textgroup="site" status="2">Translated from:</contents>
+<contents name="article_traductions_autres" textgroup="site" status="2">Other translation(s):</contents>
+<contents name="article_traductions" textgroup="site" status="2">Translation(s):</contents>
+<contents name="atteindre_section" textgroup="site" status="2">Go to section</contents>
 <contents name="aucun_resultat" textgroup="site" status="2">No result found.</contents>
 <contents name="auteur" textgroup="site" status="2">Author</contents>
 <contents name="auteurs" textgroup="site" status="2">Authors</contents>
-<contents name="autres_numeros_recents" textgroup="site" status="2">Other issues</contents>
 <contents name="avertissement_texte_integral" textgroup="site" status="2">Full text document will be published online on</contents>
 <contents name="bibliographie" textgroup="site" status="2">Bibliography</contents>
-<contents name="chercher" textgroup="site" status="2">Search</contents>
-<contents name="citation" textgroup="site" status="2">References</contents>
-<contents name="commander_numero" textgroup="site" status="2">Order this issue</contents>
+<contents name="capturedecran_du_site" textgroup="site" status="2">Screenshot of the website</contents>
+<contents name="choisir_langue" textgroup="site" status="2">Select language</contents>
+<contents name="choisir_sitelang" textgroup="site" status="2">Select site language</contents>
+<contents name="commander_numero" textgroup="site" status="2">Order issue</contents>
 <contents name="consulte_le" textgroup="site" status="2">connection on</contents>
 <contents name="credits" textgroup="site" status="2">Credits</contents>
 <contents name="dedicace" textgroup="site" status="2">Dedication</contents>
 <contents name="dernieres_entrees_index" textgroup="site" status="2">Latest entries</contents>
 <contents name="derniers_articles" textgroup="site" status="2">Latest articles</contents>
-<contents name="dernier_numero" textgroup="site" status="2">Latest issue</contents>
 <contents name="description" textgroup="site" status="2">Description</contents>
 <contents name="directeur_publication" textgroup="site" status="2">Edited by</contents>
 <contents name="docannexe" textgroup="site" status="2">Attachment</contents>
 <contents name="docannexes" textgroup="site" status="2">Attachments</contents>
 <contents name="document_precedent" textgroup="site" status="2">Previous document</contents>
 <contents name="document_suivant" textgroup="site" status="2">Next document</contents>
+<contents name="document" textgroup="site" status="2">Document</contents>
 <contents name="du_meme_auteur" textgroup="site" status="2">By this author</contents>
+<contents name="ecrire_a" textgroup="site" status="2">Send an email to</contents>
 <contents name="edite_avec_lodel" textgroup="site" status="2">Published with Lodel</contents>
 <contents name="edite_par" textgroup="site" status="2">Edited by</contents>
 <contents name="editeur_scientifique" textgroup="site" status="2">Editors</contents>
 <contents name="editeurs_scientifiques" textgroup="site" status="2">Editor</contents>
-<contents name="entrees_index" textgroup="site" status="2">Index terms</contents>
 <contents name="en_ligne" textgroup="site" status="2">Online</contents>
+<contents name="entrees_index" textgroup="site" status="2">Index terms</contents>
 <contents name="errata" textgroup="site" status="2">Errata</contents>
 <contents name="erreur_404" textgroup="site" status="2">404 error</contents>
+<contents name="erreur_500" textgroup="site" status="2">Error 500</contents>
+<contents name="facsimile" textgroup="site" status="2">Facsimile</contents>
 <contents name="fichier_original" textgroup="site" status="2">Original file</contents>
-<contents name="heberge_par_edinum" textgroup="site" status="2">Created and hosted by Edinum.org</contents>
 <contents name="historique" textgroup="site" status="2">Publication history</contents>
 <contents name="illustration_credits" textgroup="site" status="2">Credits</contents>
 <contents name="illustration_legende" textgroup="site" status="2">Caption</contents>
 <contents name="illustration_titre" textgroup="site" status="2">Title</contents>
-<contents name="index" textgroup="site" status="2">Index</contents>
 <contents name="index_par_annees" textgroup="site" status="2">Per years</contents>
 <contents name="index_par_langues" textgroup="site" status="2">Per languages</contents>
+<contents name="index" textgroup="site" status="2">Index</contents>
+<contents name="internal_error" textgroup="site" status="2">This page is temporarily unavailable. Please try again later.</contents>
+<contents name="isbn" textgroup="site" status="2">ISBN</contents>
 <contents name="issn_electronique" textgroup="site" status="2">Electronic ISSN</contents>
+<contents name="langue_choisie" textgroup="site" status="2">Selected language</contents>
 <contents name="licence" textgroup="site" status="2">Copyright</contents>
-<contents name="lien_accroche" textgroup="site" status="2">More about this picture</contents>
 <contents name="lien_rss" textgroup="site" status="2">RSS</contents>
-<contents name="lire_la_suite" textgroup="site" status="2">Read more</contents>
-<contents name="lire_notice_site" textgroup="site" status="2">Read site description</contents>
 <contents name="lodel_admin" textgroup="site" status="2">Administration only</contents>
+<contents name="logo_du_site" textgroup="site" status="2">Logo of</contents>
 <contents name="logos" textgroup="site" status="2">In collaboration with</contents>
+<contents name="media_expected" textgroup="site" status="2">Media not found.</contents>
+<contents name="menu_principal_afficher" textgroup="site" status="2">Show main menu</contents>
+<contents name="menu_principal_masquer" textgroup="site" status="2">Hide main menu</contents>
+<contents name="menu_principal" textgroup="site" status="2">Main menu</contents>
+<contents name="menu" textgroup="site" status="2">Menu</contents>
 <contents name="mis_en_ligne_le" textgroup="site" status="2">Online since</contents>
-<contents name="navigation" textgroup="site" status="2">Browse</contents>
 <contents name="nav_a_paraitre" textgroup="site" status="2">Forthcoming issues</contents>
 <contents name="nav_resumes" textgroup="site" status="2">Latest issues</contents>
 <contents name="nav_texte_integral" textgroup="site" status="2">Full text issues</contents>
+<contents name="naviguer_dans_larticle" textgroup="site" status="2">Navigate the article</contents>
+<contents name="naviguer_par_lettre" textgroup="site" status="2">Navigate alphabetically</contents>
 <contents name="ndla" textgroup="site" status="2">Author's notes</contents>
 <contents name="ndlr" textgroup="site" status="2">Editor's notes</contents>
+<contents name="new_tab" textgroup="site" status="2">new tab</contents>
 <contents name="notefin" textgroup="site" status="2">Endnote</contents>
+<contents name="note_numero" textgroup="site" status="2">note number</contents>
+<contents name="note_retour" textgroup="site" status="2">Return to text</contents>
 <contents name="notes" textgroup="site" status="2">Notes</contents>
 <contents name="notice_revisee_le" textgroup="site" status="2">Updated on</contents>
-<contents name="numeros" textgroup="site" status="2">Issues</contents>
 <contents name="numero_precedent" textgroup="site" status="2">Previous issue</contents>
 <contents name="numero_suivant" textgroup="site" status="2">Next issue</contents>
+<contents name="numero" textgroup="site" status="2">number</contents>
 <contents name="page_not_found" textgroup="site" status="2">Page not found.</contents>
+<contents name="pagination_aller_page" textgroup="site" status="2">Go to page</contents>
+<contents name="pagination_page_courante" textgroup="site" status="2">Current page</contents>
 <contents name="par" textgroup="site" status="2">by</contents>
-<contents name="partager" textgroup="site" status="2">Share</contents>
 <contents name="paru_dans" textgroup="site" status="2">Published in</contents>
+<contents name="pdf" textgroup="site" status="2">PDF</contents>
+<contents name="permalien" textgroup="site" status="2">Permalink</contents>
 <contents name="plan_du_site" textgroup="site" status="2">Site map</contents>
 <contents name="pour_citer" textgroup="site" status="2">References</contents>
 <contents name="precedent" textgroup="site" status="2">Previous</contents>
-<contents name="presentation" textgroup="site" status="2">Presentation</contents>
 <contents name="publications_de" textgroup="site" status="2">Publications of</contents>
 <contents name="recherche" textgroup="site" status="2">Search</contents>
+<contents name="rechercher" textgroup="site" status="2">Search</contents>
 <contents name="reference_electronique" textgroup="site" status="2">Electronic reference</contents>
 <contents name="reference_oeuvre" textgroup="site" status="2">Bibliographical reference</contents>
 <contents name="reference_papier" textgroup="site" status="2">Bibliographical reference</contents>
+<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Author resources in other databases</contents>
 <contents name="resume" textgroup="site" status="2">Abstract</contents>
 <contents name="resumes" textgroup="site" status="2">Abstracts</contents>
+<contents name="retour_en_haut" textgroup="site" status="2">Return to top</contents>
 <contents name="retour_home" textgroup="site" status="2">Go back to website home</contents>
 <contents name="retour_index" textgroup="site" status="2">Back to index</contents>
-<contents name="rubriques" textgroup="site" status="2">Sections</contents>
+<contents name="rss" textgroup="site" status="2">Infos Threads</contents>
 <contents name="rubrique_precedente" textgroup="site" status="2">Previous section</contents>
 <contents name="rubrique_suivante" textgroup="site" status="2">Next section</contents>
+<contents name="share_on" textgroup="site" status="2">Share on</contents>
 <contents name="site_editeur" textgroup="site" status="2">Publisher's website</contents>
 <contents name="skip_to_content" textgroup="site" status="2">Skip to content</contents>
+<contents name="skip_to_menu" textgroup="site" status="2">Skip to main menu</contents>
+<contents name="skip_to_search" textgroup="site" status="2">Skip to search</contents>
+<contents name="sommaire_de_la_rubrique" textgroup="site" status="2">Section contents</contents>
+<contents name="sommaire_du_numero" textgroup="site" status="2">Issue contents</contents>
 <contents name="sommaire" textgroup="site" status="2">Contents</contents>
-<contents name="sommaire_complet_du_numero" textgroup="site" status="2">Full table of contents</contents>
-<contents name="sommaire_de_cette_rubrique" textgroup="site" status="2">Section contents</contents>
-<contents name="sommaire_de_ce_numero" textgroup="site" status="2">Contents</contents>
 <contents name="suivant" textgroup="site" status="2">Next</contents>
 <contents name="table_des_illustrations" textgroup="site" status="2">Illustrations</contents>
-<contents name="telecharger_facsimile" textgroup="site" status="2">Facsimile</contents>
-<contents name="telecharger_pdf" textgroup="site" status="2">PDF</contents>
-<contents name="texte" textgroup="site" status="2">Text</contents>
+<contents name="tei" textgroup="site" status="2">TEI</contents>
+<contents name="telecharger_pdf_embed" textgroup="site" status="2">Download PDF</contents>
+<contents name="telecharger_version" textgroup="site" status="2">Download</contents>
 <contents name="texte_extrait" textgroup="site" status="2">Excerpt</contents>
 <contents name="texte_integral" textgroup="site" status="2">Text</contents>
+<contents name="texte" textgroup="site" status="2">Text</contents>
 <contents name="toc" textgroup="site" status="2">Outline</contents>
 <contents name="tous_les_numeros" textgroup="site" status="2">All issues</contents>
 <contents name="tous_les_textes" textgroup="site" status="2">All documents</contents>
-<contents name="tout_le_contenu" textgroup="site" status="2">Show more contents</contents>
 <contents name="traducteur" textgroup="site" status="2">Translator</contents>
 <contents name="traducteurs" textgroup="site" status="2">Translators</contents>
 <contents name="traduction_de" textgroup="site" status="2">Translated by</contents>
-<contents name="widgets_print" textgroup="site" status="2">Print</contents>
-<contents name="zoomimage_agrandir" textgroup="site" status="2">Zoom</contents>
-<contents name="zoomimage_fermer" textgroup="site" status="2">Close</contents>
-<contents name="zoomimage_original" textgroup="site" status="2">Original</contents>
-<contents name="zoomimage_precedent" textgroup="site" status="2">Previous</contents>
-<contents name="zoomimage_suivant" textgroup="site" status="2">Next</contents>
-<contents name="document" textgroup="site" status="2">Document</contents>
-<contents name="permalien" textgroup="site" status="2">Permalink</contents>
-<contents name="actualites" textgroup="site" status="2">News</contents>
-<contents name="notes_suivantes" textgroup="site" status="2">Next notes</contents>
-<contents name="visiter_site" textgroup="site" status="2">Go to the website</contents>
-<contents name="rss" textgroup="site" status="2">Infos Threads</contents>
-<contents name="warning_empty_query" textgroup="site" status="2">You have a mistake</contents>
-<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Author resources in other databases</contents>
 <contents name="tweets" textgroup="site" status="2">Latest tweets</contents>
-<contents name="twitter_loading" textgroup="site" status="2">Loading tweets</contents>
 <contents name="twitter_alt" textgroup="site" status="2">This Twitter timeline has been blocked by your browser or Ad Blocker.</contents>
 <contents name="twitter_link" textgroup="site" status="2">View this timeline on Twitter</contents>
+<contents name="twitter_loading" textgroup="site" status="2">Loading tweets</contents>
+<contents name="vignette_document" textgroup="site" status="2">Document thumbnail</contents>
+<contents name="visiter_site" textgroup="site" status="2">Go to the website</contents>
 </texts>
 </row>
 </translations>

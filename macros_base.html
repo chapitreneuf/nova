@@ -4,9 +4,6 @@
  * Initialisation des variables de base (communes à toutes les pages).
  */
 <DEFMACRO NAME="BASE_INIT">
-	<!--[ Option : nombre maximum d'actualités présentées dans la colonne de droite ]-->
-	<LET VAR="side_max_actualites" GLOBAL="1">5</LET>
-
 	<!--[ Langue principale du site ]-->
 	<LET VAR="mainlang" GLOBAL="1">[#OPTIONS.METADONNEESSITE.LANGUEPRINCIPALE]</LET>
 
@@ -44,30 +41,19 @@
 	<!--[ Fix de #CURRENTURL (protocole) ]-->
 	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')]</LET>
 
-	<!--[ ID des parents de l'entité courante ]-->
-	<LOOP NAME="base_init_liste_parents" 
-		TABLE="publications, relations" 
-		SELECT="id" 
-		WHERE="id2 = '[#ID]' AND id1 = publications.identity" 
-		ORDER="degree">
-
-		<IF COND="[#NBRESULTS] EQ 1">
-			<LET VAR="idrealparent" GLOBAL="1">[#ID]</LET>
-		<ELSE/>
-			<IF COND="[#COUNT] EQ [#NBRESULTS|lmath('-',1)]"><LET VAR="idrealparent" GLOBAL="1">[#ID]</LET></IF>
-			<SWITCH TEST="[#TYPE]">
-				<DO CASE="numero"><LET VAR="idnumero" GLOBAL="1">[#ID]</LET></DO>
-				<DO CASE="rubrique"><LET VAR="idrubrique" GLOBAL="1">[#ID]</LET></DO>
-				<DO CASE="souspartie"><LET VAR="idsouspartie" GLOBAL="1">[#ID]</LET></DO>
-				<DO CASE="rubriqueannuelle"><LET VAR="idrubriqueannuelle" GLOBAL="1">[#ID]</LET></DO>
-			</SWITCH>
-		</IF>
-	</LOOP>
+	 <!--[ ID du numero, rubrique ou rubrique annuelle ]-->
+	 <LET VAR="idrealparent">[#ID|getParentByType('numero')]</LET>
+	 <IF COND="![#IDREALPARENT]">
+		 <LET VAR="idrealparent">[#ID|getParentByType('rubriqueannuelle')]</LET>
+	 </IF>
+	 <IF COND="![#IDREALPARENT]">
+		<LET VAR="idrealparent">[#ID|getParentByType('rubrique')]</LET>
+	</IF>
 
 	<!--[ Liste des ID des traductions de textes. Permet également de conditionner les boucles relatives aux traductions. ]-->
-	<LOOP NAME="base_init_relations_traduction" 
-		SELECT="id1" 
-		TABLE="relations" 
+	<LOOP NAME="base_init_relations_traduction"
+		SELECT="id1"
+		TABLE="relations"
 		WHERE="nature = 'traduction'">
 		<LET ARRAY="relations_traduction[]" GLOBAL="1">[#ID1]</LET>
 	</LOOP>
@@ -76,14 +62,14 @@
 	<LET VAR="not_in_traductions"><IF COND="![%RELATIONS_TRADUCTION]">IS NOT NULL<ELSE/>NOT IN ([%RELATIONS_TRADUCTION|implode(',')])</IF></LET>
 
 	<!--[ Liste des ID des traductions de textes qui se trouvent dans la même rubrique que l'origial. Permet également de conditionner les boucles relatives aux traductions. ]-->
-	<LOOP NAME="base_init_get_original_with_translation" 
-		SELECT="relations.id1, entities.idparent" 
-		TABLE="relations, entities" 
+	<LOOP NAME="base_init_get_original_with_translation"
+		SELECT="relations.id1, entities.idparent"
+		TABLE="relations, entities"
 		WHERE="relations.nature = 'traduction' AND entities.id = relations.id2">
 
-		<LOOP NAME="base_init_get_id_translation_same_parent" 
-			SELECT="entities.id" 
-			TABLE="entities" 
+		<LOOP NAME="base_init_get_id_translation_same_parent"
+			SELECT="entities.id"
+			TABLE="entities"
 			WHERE="idparent = '[#IDPARENT]' AND id = '[#ID1]'">
 			<LET ARRAY="relations_traduction_parent_unique[]" GLOBAL="1">[#ID]</LET>
 		</LOOP>
@@ -94,9 +80,9 @@
 
 	<!--[ ID des collections contenant des numéros ]-->
 	<LET VAR="issues_collections_id">
-		<LOOP NAME="base_init_get_issues_collections_id" 
-			TABLE="publications" 
-			SELECT="distinct idparent as idcollection" 
+		<LOOP NAME="base_init_get_issues_collections_id"
+			TABLE="publications"
+			SELECT="distinct idparent as idcollection"
 			WHERE="TYPE EQ 'numero'">
 		<DO>[#IDCOLLECTION],</DO>
 		<DOLAST>[#IDCOLLECTION]</DOLAST>
@@ -109,9 +95,6 @@
 		<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] lang-[#LANGUE] dir-[#DIR]</LET>
 	</IF>
-
-	<!--[ Colonne de droite ]-->
-	<LET VAR="side_contents" GLOBAL="1">1</LET>
 </DEFMACRO>
 
 /**
@@ -123,7 +106,7 @@
 		<IF COND="[#ALTERTITLE:#SITELANG]">[#ALTERTITLE:#SITELANG]<ELSE/>[#TITLE]</IF>
 	<ELSE />
 		<IF COND="[#ALTERTITRE:#SITELANG]">[#ALTERTITRE:#SITELANG]<ELSE/>[#TITRE]</IF>
-	</IF>	
+	</IF>
 </DEFFUNC>
 
 /**
@@ -137,6 +120,53 @@
 </DEFFUNC>
 
 /**
+ * Affiche les titres traduits de l'entité courante.
+ * @param {string} [parent_class] - Classe supplémentaire de l'élément parent.
+ * @param {string} [use_altertitre] - Champ altertitre. Par défaut : [#ALTERTITRE].
+ * @param {string} [exclude_langs] - Liste de langues à ne pas afficher, séparées par des virgules.
+ */
+<DEFFUNC NAME="BASE_ALTERTITLES" OPTIONAL="parent_class, use_altertitre, exclude_langs">
+	<IF COND="[#USE_ALTERTITRE]">
+		<LET VAR="altertitre">[#USE_ALTERTITRE]</LET>
+	</IF>
+
+	<IF COND="[#EXCLUDE_LANGS]">
+		<LET VAR="separator">,</LET>
+		<LET ARRAY="exclude_langs_array">[#SEPARATOR|explode([#EXCLUDE_LANGS])]</LET>
+	<ELSE/>
+		<LET ARRAY="exclude_langs_array"></LET>
+	</IF>
+
+	<!--[ Affichage spécifique pour les rubriques annuelles ]-->
+	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
+		<LOOP NAME="base_altertitles_parent_altertitle" SELECT="altertitre AS parent_altertitre" TABLE="publications" WHERE="id = '[#IDPARENT]'">
+			<IF COND="[#PARENT_ALTERTITRE]">
+				<ul class="altertitles [#PARENT_CLASS]">
+					<LET VAR="value">[#PARENT_ALTERTITRE]</LET>
+					<LOOP NAME="mltext">
+						<IF COND="![#LANG|in_array([#EXCLUDE_LANGS_ARRAY])]">
+							<li class="altertitle" lang="[#LANG]" xml:lang="[#LANG]">
+								[#VALUE|removenotes]<IF COND="[#ALTERTITRE:#LANG]">&#160;| [#ALTERTITRE:#LANG]<ELSEIF COND="[#TITRE]"/>&#160;| [#TITRE]</IF>
+							</li>
+						</IF>
+					</LOOP>
+				</ul>
+			</IF>
+		</LOOP>
+
+	<ELSEIF COND="[#ALTERTITRE]">
+		<ul class="altertitles [#PARENT_CLASS]">
+			<LET VAR="value">[#ALTERTITRE]</LET>
+			<LOOP NAME="mltext">
+				<IF COND="![#LANG|in_array([#EXCLUDE_LANGS_ARRAY])]">
+					<li class="altertitle" lang="[#LANG]" xml:lang="[#LANG]">[#VALUE|removenotes]</li>
+				</IF>
+			</LOOP>
+		</ul>
+	</IF>
+</DEFFUNC>
+
+/**
  * Obtenir la direction d'une langue. Retourne ltr ou rtl.
  * @param {string} lang - Langue à tester
  */
@@ -145,35 +175,48 @@
 </DEFFUNC>
 
 /**
- * Affiche une icone du dossier public/icons
- * @param {string} icon - Nom du fichier icone (sans l'extension).
+ * Affiche une icône du dossier public/icons
+ * @param {string} icon - Nom du fichier icône (sans l'extension).
  * @param {string} [classname] - Class optionnelle à appliquer au span.
- * @param {string} [title] - Attribut title optionnel.
- * @param {string} [extension] - Extension de fichier de l'icone. Par défaut : svg.
+ * @param {string} [title] - Attribut title optionnel. Pour un SVG, si ce paramètre est nul alors l'image sera considérée comme décorative et sera masquée pour les screen readers. Pour une image, définit également le texte alternatif.
+ * @param {string} [extension] - Extension de fichier de l'icône. Par défaut : svg.
+ * @param {boolean} [inline] - Uniquement avec les fichiers SVG. Si vrai, le code de l'icône est directement inséré dans le HTML.
+ * Accessibilité : lire https://www.sarasoueidan.com/blog/accessible-icon-buttons/
 */
-<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title, extension">
-	<IF COND="[#TITLE]">
-		<LET VAR="TITLE_ATTR"> title="[#TITLE]"</LET>
-	</IF>
+<DEFFUNC NAME="BASE_ICON" REQUIRED="icon" OPTIONAL="classname, title, extension, inline">
 	<IF COND="![#EXTENSION]"><LET VAR="extension">svg</LET></IF>
-	<img class="icon [#CLASSNAME]" [#TITLE_ATTR] src="tpl/public/icons/[#ICON].[#EXTENSION]" />
+	<LET VAR="icon_path">tpl/public/icons/[#ICON].[#EXTENSION]</LET>
+
+	<IF COND="[#INLINE] AND [#EXTENSION] EQ 'svg'">
+		<LET VAR="aria_label"><IF COND="[#TITLE]">aria-label="[#TITLE]"</IF></LET>
+		<LET VAR="svg_data">[#ICON_PATH|file_get_contents]</LET>
+		<span class="icon icon--inline [#CLASSNAME]" [#ARIA_LABEL]>
+			[#SVG_DATA|reg_replace('/<svg([^>]*)>/', '<svg\\1 aria-hidden="true" focusable="false">')]
+		</span>
+
+	<ELSE />
+		<IF COND="[#TITLE]">
+			<LET VAR="TITLE_ATTR"> title="[#TITLE]" alt="[#TITLE]"</LET>
+		</IF>
+		<img class="icon icon--src [#CLASSNAME]" [#TITLE_ATTR] src="[#ICON_PATH]" />
+	</IF>
 </DEFFUNC>
 
 /**
  * Affiche un header de section.
  * @param {string} title - Titre.
  * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
-	* @param {boolean} [no_arrow] - Ne pas afficher la fleche de retour en haut.
+ * @param {number} [level] - Niveau de l'élément <hx>. Défaut : 2.
 */
-<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id, no_arrow">
+<DEFFUNC NAME="BASE_SECTION_HEADER" REQUIRED="title" OPTIONAL="section_id, level">
 	<IF COND="[#SECTION_ID]">
 		<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
 	</IF>
+	<IF COND="![#LEVEL]">
+		<LET VAR="level">2</LET>
+	</IF>
 	<div class="section-header-container">
-		<IF COND="![#NO_ARROW]">
-			<a class="section-header-arrow" href="#main-content"><img class="icon icon_arrow_top" title="arrow top" src="tpl/public/icons/arrow-top.svg" /></a>
-		</IF>
-		<h2 [#ID_ATTR] class="section-header">[#TITLE]</h2>
+		<h[#LEVEL] [#ID_ATTR] class="section-header">[#TITLE]</h[#LEVEL]>
 	</div>
 </DEFFUNC>
 
@@ -209,7 +252,8 @@
 				<LET VAR="dir_titre">[#TITRE]</LET>
 			</IF>
 
-			<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span><br/>
+			<LET VAR="aria_label">[@NUMERO] [#NUMERO|textebrut]<FUNC NAME="BASE_PERIODE_PUBLI" TEXTEBRUT="1" PREPEND=", " /></LET>
+			<span class="publi-number" aria-label="[#ARIA_LABEL]">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span>
 			<IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]">
 				<IF COND="[#SEPARATOR]"> [#SEPARATOR] </IF><span class="publi-title-text">[#DIR_TITRE]</span>
 			</IF>
@@ -261,20 +305,39 @@
  * Affiche un texte multilingue par onglets
  * @param {string} tab_texte - Texte multilingue
  * @param {string} tab_id - Préfixe pour l'attribut ID des DIV
+ * @param {string} [header_title] - Titre du section_header pour inclusion des tabs (tabs classiques si vide)
+ * @param {string} [section_id] - Id de la section (pour référence dans la nav article).
  */
-<DEFFUNC NAME="BASE_ML_ONGLETS" REQUIRED="tab_texte, tab_id">
+<DEFFUNC NAME="BASE_ML_ONGLETS" REQUIRED="tab_texte, tab_id" OPTIONAL="header_title, section_id">
 	<IF COND="[#TAB_TEXTE] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 		<LET VAR="lang_exists">[#SITELANG|in_array([#MATCHES.1])]</LET>
+
+		<!--[ Open section header]-->
+		<IF COND="[#HEADER_TITLE]">
+			<IF COND="[#SECTION_ID]">
+				<LET VAR="id_attr">id="[#SECTION_ID]"</LET>
+			</IF>
+			<div class="section-header-container">
+				<h2 [#ID_ATTR] class="section-header">[#HEADER_TITLE]</h2>
+		</IF>
+
+		<!--[ Tabs ]-->
 		<IF COND="[#MATCHES.0|count] GT 1">
 			<ul class="nav nav-tabs" role="tablist">
 				<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
-					<li class="nav-item">
-						<a class="nav-link<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> active</IF>" href="#[#TAB_ID]-[#VALUE]" aria-controls="#[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
+					<li class="nav-item" role="presentation">
+						<a class="nav-link<IF COND="(![#LANG_EXISTS] AND [#KEY] EQ 0) OR ([#LANG_EXISTS] AND [#VALUE] EQ [#SITELANG])"> active</IF>" href="#[#TAB_ID]-[#VALUE]" aria-controls="[#TAB_ID]-[#VALUE]" hreflang="[#VALUE]" role="tab" data-toggle="tab">[#VALUE|humanlang]</a>
 					</li>
 				</LOOP>
 			</ul>
 		</IF>
-		<div class="tab-content">
+
+		<!--[ Close section header]-->
+		<IF COND="[#HEADER_TITLE]">
+			</div>
+		</IF>
+
+		<div class="tab-content tab-content--count-[#MATCHES.0|count]">
 			<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">
 				<LET VAR="tab_dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#VALUE]"/></LET>
 				<div role="tabpanel" id="[#TAB_ID]-[#VALUE]" class="tab-pane lang-[#VALUE] dir-[#TAB_DIR]<IF COND="!((![#LANG_EXISTS] AND [#KEY] GT 0) OR ([#LANG_EXISTS] AND [#VALUE] NE [#SITELANG]))"> active</IF>" lang="[#VALUE]" xml:lang="[#VALUE]">
@@ -287,22 +350,48 @@
 	</IF>
 </DEFFUNC>
 
+/**
+ * Récupérer l'ID de la traduction du texte si elle existe.
+ * @param {int} texte_id - Identifiant du texte.
+ * @param {string} [lang] - Langue de la traduction recherchée. Défaut : #SITELANG.
+ * @param {string} [default] - Valeur optionnelle à retourner si pas de résultat.
+ */
+<DEFFUNC NAME="BASE_GET_TRANSLATION_ID" REQUIRED="texte_id" OPTIONAL="lang, default">
+	<IF COND="![#LANG]">
+		<LET VAR="lang">[#SITELANG]</LET>
+	</IF>
+
+	<LOOP NAME="base_get_translation_id" SELECT="id" TABLE="textes, relations"
+		WHERE="((id2 = [#ID] AND id1 = textes.identity)
+			OR (id1 = [#ID] AND id2 = textes.identity)
+			OR (id2 = (SELECT id2 FROM relations WHERE id1 = [#ID] AND nature = 'traduction' LIMIT 1)) AND id1 != [#ID] AND id1 = textes.identity)
+			AND (langue = '[#LANG]')"
+		LIMIT="0,1">
+		<DO>
+			[#ID]
+		</DO>
+		<ALTERNATIVE>
+			[#DEFAULT]
+		</ALTERNATIVE>
+	</LOOP>
+</DEFFUNC>
+
 **
  * Affiche l'image d'accroche d'une entité.
  * @param {int} size - Taille maximale du plus grand côté de la vignette.
- * @param {string} [classname] - Classe de l'image.
+ * @param {string} [classname] - Classe du conteneur de l'image.
  * @param {boolean} [notext] - Afficher lien + crédits.
  * @param {string} [href] - Lien sur l'image. Si égal à "self" alors l'URL sera celle de l'imageaccroche.
  */
-<DEFFUNC NAME="BASE_ACCROCHE_PUBLICATION" REQUIRED="size" OPTIONAL="classname, notext, href">
-	<LOOP NAME="base_accroche_publication" 
-		TABLE="fichiers" 
-		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'" 
-		ORDER="rank" 
+<DEFFUNC NAME="BASE_ACCROCHE" REQUIRED="size" OPTIONAL="classname, notext, href">
+	<LOOP NAME="base_accroche"
+		TABLE="fichiers"
+		WHERE="type = 'imageaccroche' AND idparent = '[#ID]'"
+		ORDER="rank"
 		LIMIT="1">
 
 		<DO>
-			<div class="accroche">
+			<div class="accroche [#CLASSNAME]">
 				<LET VAR="accroche"><IF COND="[#VIGNETTE]">[#VIGNETTE|vignette([#SIZE])]<ELSE/>[#DOCUMENT|vignette([#SIZE])]</IF></LET>
 				<IF COND="[#HREF]">
 					<IF COND="[#HREF] EQ 'self'">
@@ -311,15 +400,14 @@
 						<a href="[#HREF]">
 					</IF>
 				</IF>
-				<img class="accroche__img accroche__img--exists [#CLASSNAME]" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
-				<IF COND="[#HREF]">
-					</a>
-				</IF>
+				<img class="accroche__img" alt="[#TITRE|textebrut]" src="[#ACCROCHE]" />
 				<IF COND="![#NOTEXT]">
-					<p class="accroche__lien"><a href="[#ID|makeurlwithid]">[@LIEN_ACCROCHE]</a></p>
 					<IF COND="[#CREDITS]">
 						<p class="accroche__credits">[@CREDITS]&#160;: [#CREDITS]</p>
 					</IF>
+				</IF>
+				<IF COND="[#HREF]">
+					</a>
 				</IF>
 			</div>
 		</DO>
@@ -432,105 +520,10 @@
 </DEFFUNC>
 
 /**
- * Contenu par défaut de la sidebar.
- * Personnalisable dans chacun des templates en surchargeant la globale [%SIDE_CONTENTS].
- */
-<DEFMACRO NAME="BASE_SIDE_CONTENTS">
-	<MACRO NAME="BASE_SIDE_ACTUALITES" />
-	<MACRO NAME="BASE_SIDE_RSS" />
-	<MACRO NAME="BASE_SIDE_TWITTER" />
-</DEFMACRO>
-
-/**
-* Actualités dans la sidebar.
-*/
-<DEFMACRO NAME="BASE_SIDE_ACTUALITES">
-	<LOOP NAME="base_side_actualites" TABLE="textes" WHERE="type='actualite'"
-		SELECT="id, titre, soustitre, altertitre, datepubli" ORDER="datepubli DESC, datemisenligne DESC, rank DESC" LIMIT="[%SIDE_MAX_ACTUALITES]">
-		<BEFORE>
-			<section id="side-actualites__section" class="side-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@ACTUALITES]" />
-				<ul class="side-actualites_section__list">
-		</BEFORE>
-		<DO>
-			<li class="side-actualites-section__item">
-				<a href="[#ID|makeurlwithid]">
-					<FUNC NAME="BASE_ML_TITRE" /></a>
-			</li>
-		</DO>
-		<AFTER>
-			</ul>
-			</section>
-		</AFTER>
-	</LOOP>
-</DEFMACRO>
-
-/**
- * Affichage des flux RSS dans la sidebar.
- */
-<DEFMACRO NAME="BASE_SIDE_RSS">
-	<LOOP NAME="base_side_rss" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil NOT LIKE 'http%://twitter.com/%'" ORDER="rank">
-		<BEFORE>
-			<section id="side-rss__section" class="side-actualites__section">
-				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@RSS]" />
-				<ul class="side-rss_section__list">
-		</BEFORE>
-		<DO>
-			<!--[<BLOCK ID="2" REFRESH="1800"> ]-->
-				<LOOP NAME="rss" URL="[#URLFIL]">
-					<li class="side-rss-item">
-						<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
-						<ul class="side-rss-item__entries">
-							<IF COND="![#NOMBREMAXITEMS]">
-								<LET VAR="nombremaxitems">10</LET>
-							</IF>
-							<LOOP NAME="rssitem" LIMIT="0, [#NOMBREMAXITEMS]">
-								<IF COND="[#TITLE]">
-									<li class="side-rss-item__entry">
-										<a href="[#LINK|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">
-											[#TITLE|cleanBadChars]
-										</a>
-									</li>
-								</IF>
-							</LOOP>
-							<IF COND="[#URL]">
-								<a class="side-rss-item__link external" rel="external" href="[#URL|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@VISITER_SITE]</a>
-							</IF>
-						</ul>
-					</li>
-				</LOOP>
-			<!--[</BLOCK>]-->
-		</DO>
-		<AFTER>
-				</ul>
-			</section>
-		</AFTER>
-	</LOOP>
-</DEFMACRO>
-
-/**
- * Affichage des fils Twitter dans la sidebar.
- */
-<DEFMACRO NAME="BASE_SIDE_TWITTER">
-	<LOOP NAME="base_side_twitter" SELECT="url, urlfil, titre, altertitre,nombremaxitems" TABLE="liens" WHERE="type = 'fluxdesyndication' AND urlfil LIKE 'http%://twitter.com/%'" ORDER="rank">
-		<BEFORE>
-			<section id="side-twitter__section" class="side-actualites__section side-twitter__section">
-				<FUNC NAME="BASE_SECTION_HEADER" NO_ARROW="TRUE" TITLE="[@TWEETS]" />
-		</BEFORE>
-		<DO>
-			<h2 class="side-rss-item__title"><FUNC NAME="BASE_ML_TITRE" /></h2>
-			<MACRO NAME="BASE_TWITTER_CONTAINER" />
-		</DO>
-		<AFTER>
-			</section>
-		</AFTER>
-	</LOOP>
-</DEFMACRO>
-
-/**
  * Twitter container.
+ * @param {string} title - Titre du fil Twitter.
  */
-<DEFMACRO NAME="BASE_TWITTER_CONTAINER">
+<DEFFUNC NAME="BASE_TWITTER_CONTAINER" REQUIRED="title">
 	<IF COND="![#URL]">
 		<LET VAR="url">[#URLFIL]</LET>
 	</IF>
@@ -539,8 +532,8 @@
 		<span class="twitter-loading">[@TWITTER_LOADING]</span>
 		<span class="twitter-error">[@TWITTER_ALT]</span>
 	</p>
-	<a class="side-rss-item__link external" href="[#URL]">[@TWITTER_LINK]</a>
-</DEFMACRO>
+	<a class="side-rss-item__link external arrow-external" href="[#URL]" aria-label="[@TWITTER_LINK] : [#TITLE|textebrut]">[@TWITTER_LINK]</a>
+</DEFFUNC>
 
 /**
  * Concaténation d'un titre et d'un sous-titre.
@@ -631,7 +624,7 @@
 	<IF COND="[#OPTIONS.METADONNEESSITE.EDITEUR]">
 		<LET ARRAY="coins.pub">[#OPTIONS.METADONNEESSITE.EDITEUR|textebrut|cleanBadChars|replacequotationmark|trim]</LET>
 	</IF>
-	
+
 	<IF COND="[#LANGUE]">
 		<LET ARRAY="coins.language">[#LANGUE]</LET>
 	<ELSE/>

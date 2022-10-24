@@ -4,7 +4,7 @@
  * Initialisation de la page.
  */
 <DEFMACRO NAME="IMAGE_INIT">
-	<LET VAR="titre_page">
+	<LET VAR="titre_page" GLOBAL="1">
 		[#TITRE|removenotes|textebrut] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
 	</LET>
 
@@ -25,7 +25,7 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="IMAGE_MAIN">
-	<FUNC NAME="NAV_ENTITIES" />
+	<FUNC NAME="NAV_ENTITIES" CLASSNAME="nav-entities--top" />
 	<MACRO NAME="IMAGE_TITLE" />
 	<MACRO NAME="IMAGE_THUMBNAIL" />
 	<MACRO NAME="IMAGE_CAPTION" />
@@ -40,7 +40,7 @@
  */
 <DEFMACRO NAME="IMAGE_THUMBNAIL">
 	<IF COND="[#IMAGE]">
-		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette(480)]" /></a>
+		<a href="[#IMAGE_URL]"><img class="image__thumbnail" alt="[#TITRE|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]" src="[#IMAGE|trim|vignette([%SIZE_IMAGE])]" /></a>
 	</IF>
 </DEFMACRO>
 
@@ -65,7 +65,7 @@
  */
 <DEFMACRO NAME="IMAGE_DESCRIPTION">
 	<IF COND="[#DESCRIPTION]">
-		<h2>[@DESCRIPTION]</h2>
+		<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@DESCRIPTION]" />
 		<div class="image__description">[#DESCRIPTION]</div>
 	</IF>
 </DEFMACRO>
@@ -76,7 +76,8 @@
 <DEFMACRO NAME="IMAGE_AUTHORS">
 	<LOOP NAME="image_authors" SELECT="prenom, nomfamille" TABLE="auteurs" WHERE="type = 'auteur' AND iddocument = '[#ID]'" ORDER="rank">
 		<BEFORE>
-			<h2><IF COND="[#NBRESULTS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></h2>
+			<LET VAR="section_title"><IF COND="[#NBRESULTS] GT 1">[@AUTEURS]<ELSE/>[@AUTEUR]</IF></LET>
+			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[#SECTION_TITLE]" />
 			<p class="image__author">
 		</BEFORE>
 		<DO>
@@ -93,7 +94,7 @@
  */
 <DEFMACRO NAME="IMAGE_CREDITS">
 	<IF COND="[#CREDITS]">
-		<h2>[@CREDITS]</h2>
+		<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@CREDITS]" />
 		<p class="image__credits">[#CREDITS]</p>
 	</IF>
 </DEFMACRO>
@@ -103,7 +104,7 @@
  */
 <DEFMACRO NAME="IMAGE_FILE">
 	<IF COND="[#IMAGE]">
-		<h2>[@FICHIER_ORIGINAL]</h2>
+		<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@FICHIER_ORIGINAL]" />
 		<p class="image__file">
 			<a href="[#IMAGE_URL]">[#IMAGE|basename]</a> ([#IMAGE|getFileMime] &#8211; [#IMAGE|nicefilesize])
 		</p>

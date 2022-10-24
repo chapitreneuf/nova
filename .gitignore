@@ -9,7 +9,6 @@ jspm_packages/
 
 # Public
 public/css
-public/vendor/
 
 # VSCode
 .vscode/

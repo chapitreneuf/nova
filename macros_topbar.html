@@ -1,0 +1,133 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+ * Macro principale d'affichage du menu appelée par les templates.
+ */
+<DEFMACRO NAME="TOPBAR_MAIN">
+	<LET VAR="topbar_contents">
+		<MACRO NAME="TOPBAR_BRAND"/>
+		<MACRO NAME="TOPBAR_LINKS"/>
+		<MACRO NAME="TOPBAR_RSS"/>
+		<MACRO NAME="TOPBAR_SITELANG"/>
+	</LET>
+
+	<IF COND="[#TOPBAR_CONTENTS]">
+		<nav id="topbar" class="topbar container navbar navbar-expand-lg">
+			<MACRO NAME="TOPBAR_HAMBURGER" />
+			<ul class="navbar-nav">
+				[#TOPBAR_CONTENTS]
+			</ul>
+		</nav>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Bouton du hamburger menu.
+ */
+<DEFMACRO NAME="TOPBAR_HAMBURGER">
+	<button id="main-menu-toggler" class="main-menu-toggler btn d-md-none" type="button" aria-label="[@MENU_PRINCIPAL_AFFICHER]" aria-controls="main-menu topbar">
+		<FUNC NAME="BASE_ICON" ICON="menu" TITLE="[@MENU]" INLINE="1" />
+		<div class="main-menu-toggler__title">[@MENU]</div>
+	</button>
+</DEFMACRO>
+
+/**
+ * Nom du diffuseur du site.
+ */
+<DEFMACRO NAME="TOPBAR_BRAND">
+	<IF COND="[%TOPBAR_DISPLAY_BRAND] AND [%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
+		<li class="nav-item">
+			<a class="nav-link brand-link" href="[%URLDIFFUSEURSITE]">[%DIFFUSEURSITE]</a>
+		</li>
+	</IF>
+</DEFMACRO>
+
+
+/**
+ * Liens vers les réseaux sociaux.
+ */
+<DEFMACRO NAME="TOPBAR_LINKS">
+	<!--[ Find SVG icons in public/icons/ ]-->
+	<LET VAR="glob_expression">./tpl/public/icons/*.svg</LET>
+	<LET ARRAY="svg_icons" GLOBAL="1"></LET>
+	<LOOP NAME="foreach" ARRAY="[#GLOB_EXPRESSION|glob]">
+		<LET ARRAY="svg_icons[]" GLOBAL="1">[#VALUE|replace('./tpl/public/icons/', '')|replace('.svg', '')]</LET>
+	</LOOP>
+
+	<LOOP NAME="topbar_links" TABLE="publications" WHERE="identifier = '[%IDENTIFIER_TOPBAR]'" SELECT="id" LIMIT="0,1">
+		<LOOP NAME="topbar_links_items" TABLE="liens" WHERE="idparent = '[#ID]'" SELECT="identifier, titre, altertitre, url, vignette" ORDER="rank">
+			<li class="nav-item">
+				<a class="nav-link" href="[#URL]" aria-label="[@ACCEDER_PAGE] [#TITRE|textebrut]">
+					<IF COND="[#VIGNETTE]">
+						<img src="[#VIGNETTE|vignette([%SIZE_TOPBAR_ICON])]" class="topbar-icon topbar-icon--src topbar-icon--identifier-[#IDENTIFIER|strtolower]" alt="[#TITRE]" title="[#TITRE]" />
+					<ELSEIF COND="[#IDENTIFIER|in_array([%SVG_ICONS])]">
+						<FUNC NAME="BASE_ICON" ICON="[#IDENTIFIER]" TITLE="[#TITRE]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-[#IDENTIFIER|strtolower]" INLINE="1" />
+					<ELSE/>
+						<FUNC NAME="BASE_ML_TITRE" />
+					</IF>
+				</a>
+			</li>
+		</LOOP>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Icone vers le flux RSS.
+ */
+<DEFMACRO NAME="TOPBAR_RSS">
+	<IF COND="[%TOPBAR_DISPLAY_RSS]">
+		<li class="nav-item">
+			<a class="nav-link" href="index.[#EXTENSIONSCRIPTS]?page=backend_rss">
+				<FUNC NAME="BASE_ICON" ICON="rss" TITLE="[@RSS]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-rss" INLINE="1" />
+			</a>
+		</li>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Sélecteur de langue (pour les visiteurs non identifiés ou les visiteurs accès membre seulement).
+ */
+<DEFMACRO NAME="TOPBAR_SITELANG">
+	<IF COND="[#LODELUSER.RIGHTS] LE 5">
+		<LOOP NAME="menu_lang" TABLE="translations" SELECT="lang, title" ORDER="rank">
+			<BEFORE>
+				<IF COND="[#NBRESULTS] GT 1">
+					<li class="nav-item dropdown">
+						<LET VAR="selected_lang">
+							<LOOP NAME="menu_lang_current" TABLE="translations" SELECT="title" WHERE="lang EQ '[#SITELANG]'">
+								<DO>
+									[#TITLE]
+								</DO>
+								<ALTERNATIVE>
+									[#SITELANG|humanlang|defaultvalue([#SITELANG])]
+								</ALTERNATIVE>
+							</LOOP>
+						</LET>
+						<a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="[@CHOISIR_SITELANG]. [@LANGUE_CHOISIE]: [#SELECTED_LANG]">[#SELECTED_LANG]</a>
+						<ul class="dropdown-menu" role="menu" aria-expanded="false">
+				</IF>
+			</BEFORE>
+			<DO>
+				<IF COND="[#NBRESULTS] GT 1">
+					<li>
+						<IF COND="[#SITELANG] EQ [#LANG]">
+							<a class="dropdown-item disabled" aria-label="[@LANGUE_CHOISIE]: [#TITLE]">
+								[#TITLE]
+							</a>
+						<ELSE />
+							<a class="dropdown-item" href="[#CURRENTURL_FIXED|query_string('lang', [#LANG])]" aria-label="[@CHOISIR_LANGUE]: [#TITLE]">
+								[#TITLE]
+							</a>
+						</IF>
+					</li>
+				</IF>
+			</DO>
+			<AFTER>
+				<IF COND="[#NBRESULTS] GT 1">
+						</div>
+					</li>
+				</IF>
+			</AFTER>
+		</LOOP>
+	</IF>
+</DEFMACRO>

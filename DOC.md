@@ -221,6 +221,7 @@ La Nova 2.0 rompt la compatibilité avec les versions précédentes. Par conséq
 
 Voici une liste non-exhaustive de changements à prendre en compte :
 
+* Les filtres [lodel-textfunc](https://github.com/edinum/lodel-textfunc) doivent être mis à jour vers leur version la plus récente.
 * Toute la feuille de styles `site.less` a été réécrite, il est donc probable que les surcharges de styles doivent être revues au cas par cas et réécrites si nécessaire.
 * Plusieurs macros ont été renommées et le markup a ponctuellement été modifié. Il est donc conseillé de vérifier la compatibilité de toutes les macros dans `macros_custom.html`.
 * Les variables de traductions doivent impérativement être mises à jour avec les nouveaux fichiers distribués.

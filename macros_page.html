@@ -57,10 +57,13 @@
  */
 <DEFMACRO NAME="PAGE_END">
 							</main><!--[ .main-content ]-->
-							<IF COND="[%SIDE_CONTENTS]">
-								<aside id="main-aside" class="main-aside col-lg-3" role="complementary">
-									<MACRO NAME="SIDE_MAIN" />
-								</aside>
+							<IF COND="[%SIDE_VISIBLE]">
+								<LET VAR="side_contents"><MACRO NAME="SIDE_MAIN" /></LET>
+								<IF COND="[#SIDE_CONTENTS]">
+									<aside id="main-aside" class="main-aside col-lg-3" role="complementary">
+										[#SIDE_CONTENTS]
+									</aside>
+								</IF>
 							</IF>
 						</div><!--[ .row ]-->
 					</div><!--[ .col ]-->

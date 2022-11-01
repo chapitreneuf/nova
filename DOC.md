@@ -93,17 +93,9 @@ Il est ainsi possible de modifier les variables LESS définies dans [`less/inc/v
 
 ### Ajout d'une police de texte
 
-La méthode suivante est recommandée pour utiliser des webfonts avec la Nova :
+Par défaut la maquette Nova 2 n'intègre aucune webfont dans sa feuille de style, mais il est possible d'en ajouter lors de la personnalisation.
 
-* Choisir une police libre de droit sur le projet [Google Webfonts Helper](https://google-webfonts-helper.herokuapp.com/fonts).
-* Télécharger les fichiers de la police et les décompresser dans le répertoire `public/fonts/`.
-* Appeler la fonction `.include-font()` dans `custom.less`. Exemple :
-
-```less
-.include-font('Noto Sans', noto-sans-v27-latin-700italic, italic, 700);
-```
-
-Cela générera automatiquement le code CSS d'inclusion de la webfont.
+La variable LESS `webfontsDir` contient le chemin vers le répertoire des polices (par défaut : `public/fonts/`) pour une utilisation avec la propriété `src` de `@font-face`. Il est recommandé d'utiliser cette variable dans la feuille de style pour permettre le fonctionnement de LESS en [mode de développement](#mode-de-développement).
 
 ### Personnalisation du JavaScript
 

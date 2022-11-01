@@ -3,26 +3,6 @@
 // /!\ Ce fichier ne devrait jamais être modifié directement. Les styles et variables personnalisés doivent être déclarés dans le fichier less/custom.less.
 // ===========================
 
-// Inclusion de webfont depuis le répertoire public/fonts.
-// Compatible avec les polices de https://google-webfonts-helper.herokuapp.com
-// Exemple d'utilisation :
-// .include-font('Noto Sans', noto-sans-v27-latin-700italic, italic, 700);
-.include-font(@font-family, @filename, @style: normal, @weight: 400) {
-  @font-family-e: e(@font-family);
-  /* @font-family-e @style @weight */
-  @font-face {
-    font-family: '@{font-family-e}';
-    font-style: @style;
-    font-weight: @weight;
-    src: url('@{webfontsDir}/@{filename}.eot'); /* IE9 Compat Modes */
-    src: local(''),
-      url('@{webfontsDir}/@{filename}.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-      url('@{webfontsDir}/@{filename}.woff2') format('woff2'), /* Super Modern Browsers */
-      url('@{webfontsDir}/@{filename}.woff') format('woff'), /* Modern Browsers */
-      url('@{webfontsDir}/@{filename}.ttf') format('truetype') /* Safari, Android, iOS */
-  }
-}
-
 // Fonction de définition des font-size.
 // Exemples d'utilisation :
 // .font-size(xs);

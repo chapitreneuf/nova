@@ -2,6 +2,15 @@
 
 ## Version 2.x
 
+### 2.0.1 (01/11/2022)
+
+* Corrections diverses de la feuille de style et des templates.
+* Correction de la hauteur de la barre latérale.
+* Éviter l'affichage de la barre latérale quand elle est vide.
+* Correction d'un problème avec les variables @color-footer-link et @color-footer-link-hover.
+* Suppression du mixin .include-font().
+* Amélioration des styles de focus et de survol.
+
 ### 2.0.0 (20/10/2022)
 
 Cette mise à jour majeure entraîne une incompatibilité des fichiers de personnalisation avec la version 1. Lire la documentation pour plus d'informations concernant la procédure de migration.

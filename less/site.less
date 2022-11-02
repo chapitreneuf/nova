@@ -1468,10 +1468,22 @@ each(range(6), {
       margin-top: 4rem;
 
       a {
+        position: relative;
         color: @color-doc-headings-links;
 
         &:hover, &:focus {
           color: @color-doc-headings-links-hover;
+
+          &::before {
+            content: "\1F861";
+            position: absolute;
+            left: -(@numbered-left-padding - 5);
+            bottom: 0;
+            .font-size(m);
+            line-height: 2;
+            color: @color-doc-headings-links-hover;
+            font-family: @font-default;
+          }
         }
       }
 

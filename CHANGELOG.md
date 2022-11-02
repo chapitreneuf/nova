@@ -2,6 +2,12 @@
 
 ## Version 2.x
 
+### 2.0.2 (02/11/2022)
+
+* Correction des intertitres des section annexe et bibliographie des articles.
+* Ajout de variables pour la personnalisation des couleurs des intertitres du texte des articles.
+* Affichage d'une flèche au survol des intertitres du texte des articles.
+
 ### 2.0.1 (01/11/2022)
 
 * Corrections diverses de la feuille de style et des templates.

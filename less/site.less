@@ -1458,20 +1458,22 @@ p.remerciements, p.texte, p.paragraphesansretrait, p.epigraphe, p.question, p.re
 
 // Intertitres
 each(range(6), {
-  h@{value}.texte {
-    @arg: ~"h@{value}";
-    .font-size(@arg);
-    font-family: @font-doc-headings;
-    margin-top: 4rem;
-  }
-
   @next-level: (@value + 1);
-  h@{value}.texte + h@{next-level} {
-    margin-top: @p-margin-top;
-  }
+  h@{value} {
+    &.texte, &.bibliographie, &.annexe {
+      @arg: ~"h@{value}";
+      .font-size(@arg);
+      font-family: @font-doc-headings;
+      margin-top: 4rem;
 
-  h@{value}.texte:first-child {
-    margin-top: 0;
+      & + h@{next-level} {
+        margin-top: @p-margin-top;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
   }
 });
 

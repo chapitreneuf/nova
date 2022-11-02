@@ -1431,6 +1431,57 @@ img {
   list-style: none;
 }
 
+// ARTICLE INTERTITRES
+// ===================
+
+.article__text-contents, .article__appendix-contents, .article__biblio-contents, .article__footnotes-contents, .article__endnotes-contents {
+  each(range(6), {
+    @next-level: (@value + 1);
+    h@{value} {
+      @arg: ~"h@{value}";
+      .font-size(@arg);
+      font-family: @font-doc-headings;
+      color: @color-doc-headings;
+      margin-top: 4rem;
+
+      & + h@{next-level} {
+        margin-top: @p-margin-top;
+      }
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  });
+}
+
+.article__text-contents {
+  each(range(6), {
+    h@{value} {
+      a {
+        position: relative;
+        color: @color-doc-headings-links;
+
+        &:hover, &:focus {
+          color: @color-doc-headings-links-hover;
+
+          // Top arrow on :hover
+          &::before {
+            content: "\1F861";
+            position: absolute;
+            left: -(@numbered-left-padding - 5);
+            bottom: 0;
+            .font-size(m);
+            line-height: 2;
+            color: @color-doc-headings-links-hover;
+            font-family: @font-default;
+          }
+        }
+      }
+    }
+  });
+}
+
 // ARTICLE MAIN CONTENTS
 // =====================
 
@@ -1455,48 +1506,6 @@ body:not(.type-informations):not(.type-actualite) .article__text-contents {
 p.remerciements, p.texte, p.paragraphesansretrait, p.epigraphe, p.question, p.reponse, p.encadre, p.annexe, p.legendeillustration, p.creditillustration, p.crditsillustration, p.notesbaspage, p.notefin, p.media-description, p.media-credits, p.media-legende {
   text-align: @default-align;
 }
-
-// Intertitres
-each(range(6), {
-  @next-level: (@value + 1);
-  h@{value} {
-    &.texte, &.bibliographie, &.annexe {
-      @arg: ~"h@{value}";
-      .font-size(@arg);
-      font-family: @font-doc-headings;
-      color: @color-doc-headings;
-      margin-top: 4rem;
-
-      a {
-        position: relative;
-        color: @color-doc-headings-links;
-
-        &:hover, &:focus {
-          color: @color-doc-headings-links-hover;
-
-          &::before {
-            content: "\1F861";
-            position: absolute;
-            left: -(@numbered-left-padding - 5);
-            bottom: 0;
-            .font-size(m);
-            line-height: 2;
-            color: @color-doc-headings-links-hover;
-            font-family: @font-default;
-          }
-        }
-      }
-
-      & + h@{next-level} {
-        margin-top: @p-margin-top;
-      }
-
-      &:first-child {
-        margin-top: 0;
-      }
-    }
-  }
-});
 
 .chapo {
   font-weight: bold;

@@ -1462,19 +1462,26 @@ img {
         position: relative;
         color: @color-doc-headings-links;
 
+        // Top arrow on :hover
+        &::before {
+          content: "\1F861";
+          position: absolute;
+          left: -(@numbered-left-padding - 5);
+          top: 25%; // legacy browsers
+          top: calc(50% - 1ch);
+          .font-size(m);
+          line-height: 1;
+          color: @color-doc-headings-links-hover;
+          font-family: @font-default;
+          opacity: 0;
+          transition: .2s opacity linear;
+        }
+
         &:hover, &:focus {
           color: @color-doc-headings-links-hover;
 
-          // Top arrow on :hover
           &::before {
-            content: "\1F861";
-            position: absolute;
-            left: -(@numbered-left-padding - 5);
-            bottom: 0;
-            .font-size(m);
-            line-height: 2;
-            color: @color-doc-headings-links-hover;
-            font-family: @font-default;
+            opacity: 1;
           }
         }
       }

@@ -268,9 +268,9 @@
  * Boutons de partage.
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS_PARTAGE">
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="Facebook" HREF="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut|urlencode]" />
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="Twitter" HREF="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut|urlencode]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" />
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="LinkedIn" HREF="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut|urlencode]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
+	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="[@SHARE_ON] Facebook" ICON="facebook" HREF="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut|urlencode]" />
+	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="[@SHARE_ON] Twitter" ICON="twitter" HREF="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut|urlencode]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" />
+	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="[@SHARE_ON] LinkedIn" ICON="linkedin" HREF="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut|urlencode]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
 	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="Email" ICON="mail" HREF="mailto:?subject=[#TITRE|textebrut|urlencode]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
 </DEFMACRO>
 
@@ -284,7 +284,7 @@
 	<IF COND="![#ICON]">
 		<LET VAR="icon">[#TITLE|strtolower]</LET>
 	</IF>
-	<a href="[#HREF]" title="[#TITLE]" aria-label="[@SHARE_ON] [#TITLE] ([@NEW_TAB])" target="_blank">
+	<a href="[#HREF]" title="[#TITLE]" aria-label="[#TITLE] ([@NEW_TAB])" target="_blank">
 		<FUNC NAME="BASE_ICON" ICON="[#ICON]" TITLE="[#TITLE]" INLINE="1" />
 	</a>
 </DEFFUNC>

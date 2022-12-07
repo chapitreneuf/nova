@@ -128,8 +128,7 @@
 			<li class="main-menu__item main-menu__item--issue">
 				<a href="[#ID|makeurlwithid]">
 					<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;| " /></span>
-					<LET VAR="ml_titre"><FUNC NAME="BASE_ML_TITRE" /></LET>
-					<IF COND="[#ML_TITRE] NE [#NUMERO]"><div class="publi-title">[#ML_TITRE]</div></IF>
+					<MACRO NAME="MENU_ISSUE_TITLE"/>
 				</a>
 			</li>
 		</DO>
@@ -139,6 +138,14 @@
 		</AFTER>
 	</LOOP>
 </DEFFUNC>
+
+/**
+ * Affichage du titre du numéro dans le menu.
+ */
+<DEFMACRO NAME="MENU_ISSUE_TITLE">
+	<LET VAR="ml_titre"><FUNC NAME="BASE_ML_TITRE" /></LET>
+	<IF COND="([#ML_TITRE] NE [#NUMERO]) AND !([#ML_TITRE] LIKE /varia/)"><div class="publi-title">[#ML_TITRE]</div></IF>
+</DEFMACRO>
 
 /**
  * Affichage du lien vers tous les numéros.

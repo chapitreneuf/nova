@@ -46,7 +46,7 @@
 						TABLE="#_TP_[#CLASS]"
 						WHERE="identity = '[#ID]'">
 					<li class="toc__li toc__li--class-[#CLASS]" lang="[#LANGUE]">
-						<FUNC NAME="PUBLICATION_LI_TEXTE" AFFICHER_DATEPUBLI="[#PARENT_IS_RUBRIQUE]" />
+						<FUNC NAME="PUBLICATION_LI_TEXTE" />
 						<IF COND="[#TEXTE]">
 							<p class="toc__description">[#TEXTE|textebrut|cuttext(300, true)]<p>
 						</IF>

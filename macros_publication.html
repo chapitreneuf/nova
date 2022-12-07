@@ -223,7 +223,8 @@
 						</DO>
 						<!--[ Textes ]-->
 						<DO CASE="textes">
-							<FUNC NAME="PUBLICATION_LI_TEXTE" AFFICHER_DATEPUBLI="[#PARENT_IS_RUBRIQUE]" />
+							<LET VAR="afficher_datepubli"><IF COND="[#PARENT_IS_RUBRIQUE] AND [#TYPE] NE 'informations'">1</IF></LET>
+							<FUNC NAME="PUBLICATION_LI_TEXTE" AFFICHER_DATEPUBLI="[#AFFICHER_DATEPUBLI]" />
 						</DO>
 					</SWITCH>
 				</li>

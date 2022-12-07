@@ -17,7 +17,7 @@
  */
 <DEFMACRO NAME="ENTREE_MAIN">
 	<MACRO NAME="ENTREE_TITLE" />
-	<MACRO NAME="ENTREE_LISTE_TEXTES" />
+	<MACRO NAME="ENTREE_LISTE" />
 	<MACRO NAME="ENTREE_RETOUR" />
 </DEFMACRO>
 
@@ -37,26 +37,45 @@
 </DEFMACRO>
 
 /**
+ * Affichage des entités associées à l'entrée.
+ */
+<DEFMACRO NAME="ENTREE_LISTE">
+	<LET VAR="entree_liste_li">
+		<MACRO NAME="ENTREE_LISTE_TEXTES"/>
+		<MACRO NAME="ENTREE_LISTE_NUMEROS"/>
+	</LET>
+	<IF COND="[#ENTREE_LISTE_LI]">
+		<section class="toc toc--entry">
+			<ul class="toc__contents toc__contents--entry toc__contents--entry-class-[#TYPE.CLASS] toc__contents--entry-type-[#TYPE.TYPE]">
+				[#ENTREE_LISTE_LI]
+			</ul>
+		</section>
+	</IF>
+</DEFMACRO>
+
+/**
  * Affichage des textes associés à l'entrée.
  */
 <DEFMACRO NAME="ENTREE_LISTE_TEXTES">
-	<LOOP NAME="entree_liste_textes"
-		TABLE="textes"
-		WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]"
-		ORDER="datepubli DESC">
-		<BEFORE>
-			<section id="entry-type" class="toc toc--entry">
-				<ul class="toc__contents toc__contents--entry toc__contents--entry-class-[#TYPE.CLASS] toc__contents--entry-type-[#TYPE.TYPE]">
-		</BEFORE>
-		<DO>
-			<li class="toc__li toc__li toc__li--class-textes">
-				<FUNC NAME="PUBLICATION_LI_TEXTE"/>
-			</li>
-		</DO>
-		<AFTER>
-				</ul>
-			</section>
-		</AFTER>
+	<LOOP NAME="entree_liste_textes" TABLE="textes" WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]" ORDER="datepubli DESC">
+		<li class="toc__li toc__li toc__li--class-textes">
+			<FUNC NAME="PUBLICATION_LI_TEXTE"/>
+		</li>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affichage des numéros associés à l'entrée.
+ */
+ <DEFMACRO NAME="ENTREE_LISTE_NUMEROS">
+	<LOOP NAME="entree_liste_numeros" TABLE="publications" WHERE="identry='[#ID]' AND type='numero'" ORDER="datepubli DESC">
+		<li class="toc__li toc__li toc__li--class-textes">
+			<a href="[#ID|makeurlwithid]">
+				<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;| " /></span>
+				<LET VAR="ml_titre"><FUNC NAME="BASE_ML_TITRE" /></LET>
+				<div class="publi-title">[#ML_TITRE]</div>
+			</a>
+		</li>
 	</LOOP>
 </DEFMACRO>
 

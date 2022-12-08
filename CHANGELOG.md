@@ -2,6 +2,14 @@
 
 ## Version 2.x
 
+### 2.0.3 (08/12/2022)
+
+* Masquage des titres des numéros "Varia" dans le menu principal.
+* Affichage des numéros dans la liste des entités liées à une entrée d'index (dont directeurs de publication).
+* Suppression de l'affichage de la date de publication sur les textes de type "informations" dans le sommaire.
+* Amélioration de l'attribut title des boutons de partage de l'article.
+* Correction de l'affichage de l'icône "lien externe" sur certains systèmes OSX.
+
 ### 2.0.2 (02/11/2022)
 
 * Correction des intertitres des section annexe et bibliographie des articles.

@@ -383,10 +383,10 @@ img {
 // Ex: "« Retour à l'index"
 .arrow-before {
   &::before {
-    content: "«\00a0";
+    content: "«\00a0"; // «
 
     @supports (content: "x" / "y") {
-      content: "«\00a0" / "";
+      content: "«\00a0" / ""; // «
     }
   }
 }
@@ -394,10 +394,10 @@ img {
 // Ex: "Sommaire du numéro »"
 .arrow-after {
   &::after {
-    content: "\00a0»";
+    content: "\00a0»"; // »
 
     @supports (content: "x" / "y") {
-      content: "\00a0»" / "";
+      content: "\00a0»" / ""; // »
     }
   }
 }
@@ -405,10 +405,11 @@ img {
 // Ex: "Commander ce numéro 🡕"
 .arrow-external {
   &::after {
-    content: "\00a0\1F855";
+    font-family: Arial, Helvetica, sans-serif !important; // workaround for OSX
+    content: "\00a0\1F855"; // 🡕
 
     @supports (content: "x" / "y") {
-      content: "\00a0\1F855" / "";
+      content: "\00a0\1F855" / ""; // 🡕
     }
   }
 }
@@ -887,7 +888,7 @@ img {
   vertical-align: bottom;
   -webkit-animation: ellipsis steps(10, end) 900ms infinite;
   animation: ellipsis steps(10, end) 900ms infinite;
-  content: "\2026"; // ascii code for the ellipsis character
+  content: "\2026"; // …
   width: 0px;
 }
 
@@ -935,13 +936,13 @@ img {
 }
 
 .main-footer__item + .main-footer__item::before {
-  content: "\2022";
+  content: "\2022"; // •
   display: inline-block;
   margin: 0 1rem;
   color: @color-footer;
 
   @supports (content: "x" / "y") {
-    content: "\2022" / "";
+    content: "\2022" / ""; // •
   }
 }
 
@@ -1464,7 +1465,7 @@ img {
 
         // Top arrow on :hover
         &::before {
-          content: "\1F861";
+          content: "\1F861"; // 🡡
           position: absolute;
           left: -(@numbered-left-padding - 5);
           top: 25%; // legacy browsers

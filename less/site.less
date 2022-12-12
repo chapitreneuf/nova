@@ -521,13 +521,15 @@ img {
 }
 
 .topbar when (@topbar-brand-position = left) {
-  .navbar-nav {
-    width: 100%;
-  }
+  @media (min-width: @screen-md) {
+    .navbar-nav {
+      width: 100%;
+    }
 
-  .brand-item {
-    border: none;
-    margin-right: auto;
+    .brand-item {
+      border: none;
+      margin-right: auto;
+    }
   }
 }
 
@@ -555,19 +557,21 @@ img {
 }
 
 .brand-link when (@topbar-brand-reveal = true) {
-  display: flex;
-  align-items: stretch;
+  @media (min-width: @screen-md) {
+    display: flex;
+    align-items: stretch;
 
-  .brand-name {
-    max-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    transition: max-width .2s linear;
-  }
-
-  &:hover, &:focus {
     .brand-name {
-      max-width: 100%;
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: max-width .2s linear;
+    }
+
+    &:hover, &:focus {
+      .brand-name {
+        max-width: 100%;
+      }
     }
   }
 }

@@ -36,8 +36,9 @@
  */
 <DEFMACRO NAME="TOPBAR_BRAND">
 	<IF COND="[%BRAND_DISPLAY] AND [%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
+		<IF COND="[%BRAND_LOGO_PATH]"><LET VAR="brand_link_class">brand-link--has-image</LET></IF>
 		<li class="nav-item brand-item">
-			<a class="nav-link brand-link" href="[%URLDIFFUSEURSITE]">
+			<a class="nav-link brand-link [#BRAND_LINK_CLASS]" href="[%URLDIFFUSEURSITE]">
 				<IF COND="[%BRAND_LOGO_PATH]">
 					<img class="brand-logo" src="[%BRAND_LOGO_PATH]" alt="[%DIFFUSEURSITE]">
 				</IF>
@@ -46,7 +47,6 @@
 		</li>
 	</IF>
 </DEFMACRO>
-
 
 /**
  * Liens vers les réseaux sociaux.

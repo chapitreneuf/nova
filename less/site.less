@@ -537,11 +537,11 @@ img {
   max-height: 24px;
   opacity: .8;
   transition: opacity linear .2s;
+  margin-right: 1rem;
 }
 
 .brand-name {
   display: inline-block;
-  margin-left: 1rem;
   transition: color linear .2s;
 }
 
@@ -556,7 +556,7 @@ img {
   }
 }
 
-.brand-link when (@topbar-brand-reveal = true) {
+.brand-link--has-image when (@topbar-brand-reveal = true) {
   @media (min-width: @screen-md) {
     display: flex;
     align-items: stretch;

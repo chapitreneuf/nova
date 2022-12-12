@@ -35,9 +35,14 @@
  * Nom du diffuseur du site.
  */
 <DEFMACRO NAME="TOPBAR_BRAND">
-	<IF COND="[%TOPBAR_DISPLAY_BRAND] AND [%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
+	<IF COND="[%BRAND_DISPLAY] AND [%DIFFUSEURSITE] AND [%URLDIFFUSEURSITE]">
 		<li class="nav-item brand-item">
-			<a class="nav-link brand-link" href="[%URLDIFFUSEURSITE]">[%DIFFUSEURSITE]</a>
+			<a class="nav-link brand-link" href="[%URLDIFFUSEURSITE]">
+				<IF COND="[%BRAND_LOGO_PATH]">
+					<img class="brand-logo" src="[%BRAND_LOGO_PATH]" alt="[%DIFFUSEURSITE]">
+				</IF>
+				<span class="brand-name">[%DIFFUSEURSITE]</span>
+			</a>
 		</li>
 	</IF>
 </DEFMACRO>

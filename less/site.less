@@ -531,6 +531,29 @@ img {
   }
 }
 
+.brand-logo {
+  max-height: 24px;
+  opacity: .8;
+  transition: opacity linear .2s;
+}
+
+.brand-name {
+  display: inline-block;
+  margin-left: 1rem;
+  transition: color linear .2s;
+}
+
+.brand-link:hover, .brand-link:focus {
+  .brand-logo {
+    opacity: 1;
+  }
+
+  .brand-name {
+    text-decoration: underline;
+    color: @color-topbar-link-hover;
+  }
+}
+
 .topbar .nav-link {
   line-height: 1.2;
   padding: .2rem 1rem;

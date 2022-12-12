@@ -2,6 +2,15 @@
 
 ## Version 2.x
 
+### 2.0.4 (12/12/2022)
+
+* Ajout d'options pour l'affichage de la plateforme dans la topbar : logo, position, affichage optionnel du texte au survol.
+* Amélioration des tableaux pour un meilleur affichage des exemples linguistiques.
+* Amélioration de l'affichage des logos partenaires.
+* Correction de l'accessibilité des éléments `<nav>`.
+* Correction des liens du footer qui apparaissaient en double en cas d'alias de traduction.
+* Correction de la couleur de survol des liens du menu et de la topbar.
+
 ### 2.0.3 (08/12/2022)
 
 * Masquage des titres des numéros "Varia" dans le menu principal.

@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
   "main": "index.html",
   "contributors": [

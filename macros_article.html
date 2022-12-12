@@ -69,7 +69,7 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="ARTICLE_MAIN">
-	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" />
+	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" ARIANE_TAG="nav" />
 	<div class="row">
 		<div class="col-lg-3">
 			<MACRO NAME="ARTICLE_BOUTONS" />
@@ -233,9 +233,9 @@
 <DEFMACRO NAME="ARTICLE_RACCOURCIS">
 	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [%ARTICLE_LEGACY_SHORTCUTS] NE 'none'">
 		<LET VAR="sr_only"><IF COND="[%ARTICLE_LEGACY_SHORTCUTS] EQ 'sr-only'">sr-only</IF></LET>
-		<nav class="page-shortcuts [#SR_ONLY]" aria-label="[@NAVIGUER_DANS_LARTICLE]">
+		<div class="page-shortcuts [#SR_ONLY]" aria-label="[@NAVIGUER_DANS_LARTICLE]">
 			<ul class="page-shortcuts__list nav"></ul>
-		</nav>
+		</div>
 	</IF>
 </DEFMACRO>
 
@@ -243,7 +243,7 @@
  * Boutons du header (facsimilé, print, partage).
  */
 <DEFMACRO NAME="ARTICLE_BOUTONS">
-	<nav class="article-buttons">
+	<div class="article-buttons">
 		<!--[ Boutons de partage ]-->
 		<div class="article-buttons-group article-buttons__partage">
 			<MACRO NAME="ARTICLE_BOUTONS_PARTAGE" />
@@ -261,7 +261,7 @@
 				<MACRO NAME="ARTICLE_BOUTONS_TEI" />
 			</div>
 		</IF>
-	</nav>
+	</div>
 </DEFMACRO>
 
 /**
@@ -444,7 +444,7 @@
 			<BEFORE>
 				<section class="article__toc">
 					<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOC]" SECTION_ID="toc" />
-					<div class="article__toc-contents">
+					<nav class="article__toc-contents" aria-label="[@TOC_TEXTE] [#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">
 						<ul>
 			</BEFORE>
 			<DO>
@@ -475,7 +475,7 @@
 								[#FERMER_UL|str_repeat([%TOC_PREV_NIVEAU|lmath('-', 1)])]
 							</IF>
 						</ul>
-					</div>
+					</nav>
 				</section>
 			</AFTER>
 		</LOOP>

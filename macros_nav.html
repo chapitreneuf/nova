@@ -44,18 +44,19 @@
  * Nav entities : entité parente/précédente/suivante.
  * @param {boolean} [show_buttons] - Afficher les boutons précédent/suivant.
  * @param {string} [classname] - Classname additionnelle.
+ * @param {string} [ariane_tag] - Balise à utiliser pour le fil d'ariane.
  */
-<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons, classname">
+<DEFFUNC NAME="NAV_ENTITIES" OPTIONAL="show_buttons, classname, ariane_tag">
 	<!--[ Pour les rubriques annuelles on loope sur la rubrique parente ]-->
 	<IF COND="[#TYPE] EQ 'rubriqueannuelle'">
 		<LET VAR="nav_id">[#IDPARENT]</LET>
 	<ELSE />
 		<LET VAR="nav_id">[#ID]</LET>
 	</IF>
-	<nav class="nav-entities [#CLASSNAME]">
+	<div class="nav-entities [#CLASSNAME]">
 		<div class="nav-entities-col nav-entities-col-parent">
 			<!--[ Publications parentes ]-->
-			<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" />
+			<FUNC NAME="NAV_ARIANE" USE_ID="[#NAV_ID]" ARIANE_TAG="[#ARIANE_TAG]" />
 		</div>
 		<IF COND="[#SHOW_BUTTONS]">
 			<div class="nav-entities-col nav-entities-col-siblings">
@@ -67,20 +68,24 @@
 				</IF>
 			</div>
 		</IF>
-	</nav>
+	</div>
 </DEFFUNC>
 
 /**
  * Affiche le fil d'ariane.
  * @param {integer} [use_id] - Identifiant à utiliser.
+ * @param {string} [ariane_tag] - Balise à utiliser pour le fil d'ariane. Plusieurs nav.ariane dans la page compliquent la navigation avec les technologies d'assistance. Par défaut : div.
  */
-<DEFFUNC NAME="NAV_ARIANE" OPTIONAL="use_id">
+<DEFFUNC NAME="NAV_ARIANE" OPTIONAL="use_id, ariane_tag">
 	<IF COND="![#USE_ID]">
 		<LET VAR="use_id">[#ID]</LET>
 	</IF>
+	<IF COND="![#ARIANE_TAG]">
+		<LET VAR="ariane_tag">div</LET>
+	</IF>
 	<LOOP NAME="nav_ariane" TABLE="relations, entities, publications" WHERE="id2 = '[#USE_ID]' AND nature = 'P' AND id1 = entities.id AND entities.id=publications.identity" ORDER="degree DESC">
 		<BEFORE>
-			<nav class="ariane" aria-label="[@ARIANE]">
+			<[#ARIANE_TAG] class="ariane" aria-label="[@ARIANE]">
 				<ul class="ariane__list breadcrumb">
 		</BEFORE>
 		<DO>
@@ -99,7 +104,7 @@
 		</DO>
 		<AFTER>
 				</ul>
-			</nav>
+			</[#ARIANE_TAG]>
 		</AFTER>
 	</LOOP>
 </DEFFUNC>
@@ -194,8 +199,8 @@
  * Raccourcis alphabet (utilisés dans les listes d'index plats).
  */
 <DEFMACRO NAME="NAV_ALPHABET">
-	<nav id="alphabet" class="alphabet">
-		<ul class="btn-group" aria-label="[@NAVIGUER_PAR_LETTRE]">
+	<nav id="alphabet" class="alphabet" aria-label="[@NAVIGUER_PAR_LETTRE]">
+		<ul class="btn-group">
 			<LOOP NAME="alphabetSpec">
 				<IF COND="[#NBRESULTS]">
 					<li class="alphabet__btn btn btn-default">
@@ -219,7 +224,7 @@
 <DEFMACRO NAME="NAV_PAGE_SCALE">
 	<LOOP NAME="page_scale">
 		<BEFORE>
-			<nav class="pagination-container" aria-label="pagination">
+			<nav class="pagination-container" aria-label="[@PAGINATION]">
 				<ul class="pagination">
 					<IF COND="[#PREVIOUSURL]">
 						<li class="page-item">

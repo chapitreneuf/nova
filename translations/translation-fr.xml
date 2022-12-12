@@ -67,6 +67,7 @@
 <contents name="langue_choisie" textgroup="site" status="2">Langue sélectionnée</contents>
 <contents name="licence" textgroup="site" status="2">Droits d'auteur</contents>
 <contents name="lien_rss" textgroup="site" status="2">S’abonner à ce flux</contents>
+<contents name="lien_utiles" textgroup="site" status="2">Liens utiles</contents>
 <contents name="lodel_admin" textgroup="site" status="2">Accès réservé</contents>
 <contents name="logo_du_site" textgroup="site" status="2">Logo du site</contents>
 <contents name="logos" textgroup="site" status="2">Affiliations/partenaires</contents>
@@ -134,6 +135,7 @@
 <contents name="texte_integral" textgroup="site" status="2">Texte</contents>
 <contents name="texte" textgroup="site" status="2">Texte</contents>
 <contents name="toc" textgroup="site" status="2">Plan</contents>
+<contents name="toc_texte" textgroup="site" status="2">Plan du texte</contents>
 <contents name="tous_les_numeros" textgroup="site" status="2">Tous les numéros</contents>
 <contents name="tous_les_textes" textgroup="site" status="2">Tous les textes...</contents>
 <contents name="traducteur" textgroup="site" status="2">Traducteur</contents>

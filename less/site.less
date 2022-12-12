@@ -513,14 +513,22 @@ img {
 .topbar .nav-item {
   margin: .5rem 0;
   padding: 0 1rem;
-}
-
-.topbar .nav-item {
   border-right: 1px solid @color-border;
 }
 
 .topbar .nav-item:last-child {
   border: none;
+}
+
+.topbar when (@topbar-brand-position = left) {
+  .navbar-nav {
+    width: 100%;
+  }
+
+  .brand-item {
+    border: none;
+    margin-right: auto;
+  }
 }
 
 .topbar .nav-link {

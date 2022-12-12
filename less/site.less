@@ -554,6 +554,24 @@ img {
   }
 }
 
+.brand-link when (@topbar-brand-reveal = true) {
+  display: flex;
+  align-items: stretch;
+
+  .brand-name {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width .2s linear;
+  }
+
+  &:hover, &:focus {
+    .brand-name {
+      max-width: 100%;
+    }
+  }
+}
+
 .topbar .nav-link {
   line-height: 1.2;
   padding: .2rem 1rem;

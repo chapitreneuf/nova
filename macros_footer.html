@@ -37,7 +37,7 @@
 			<a class="main-footer__link" href="[#SITEINFOS.URL]/?page=map">[@PLAN_DU_SITE]</a>
 		</li>
 		<LOOP NAME="footer_informations" SELECT="id" TABLE="publications" WHERE="type='collection' AND identifier='[#PUBLI_IDENTIFIER]'">
-			<LOOP NAME="footer_informations_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]'" ORDER="rank">
+			<LOOP NAME="footer_informations_entities" SELECT="id, titre" TABLE="textes" WHERE="idparent = '[#ID]' AND id [#NOT_IN_TRADUCTIONS]" ORDER="rank">
 				<LET VAR="id_trad"><FUNC NAME="BASE_GET_TRANSLATION_ID" TEXTE_ID="[#ID]" DEFAULT="[#ID]" /></LET>
 				<LOOP NAME="footer_informations_item" TABLE="textes" WHERE="id = '[#ID_TRAD]'" SELECT="id, titre, altertitre" >
 					<li class="main-footer__item">

@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.0.5 (05/01/2023)
+
+* Amélioration de l'affichage des logos partenaires.
+* Affichage par défaut de 5 numéros maximum dans le menu latéral.
+
 ### 2.0.4 (12/12/2022)
 
 * Ajout d'options pour l'affichage de la plateforme dans la topbar : logo, position, affichage optionnel du texte au survol.

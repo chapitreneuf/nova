@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.0.6 (13/01/2023)
+
+* Correction des couleurs de certains liens du menu sur les terminaux mobiles.
+
 ### 2.0.5 (05/01/2023)
 
 * Amélioration de l'affichage des logos partenaires.

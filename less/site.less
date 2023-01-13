@@ -656,7 +656,16 @@ img {
     border-color: @color-menu-bg;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+
+    svg {
+      stroke: @color-menu;
+    }
+
+    .main-menu-toggler__title {
+      color: @color-menu;
+    }
   }
+
 
   body.menu-visible .topbar {
     padding-bottom: 0;
@@ -669,6 +678,26 @@ img {
     width: 100%;
     padding: 3rem 1rem;
     justify-content: flex-start;
+  }
+
+  body.menu-visible .brand-name, body.menu-visible .topbar a:not(.dropdown-item) {
+    color: @color-menu-link;
+
+    &:hover, &:focus {
+      color: @color-menu-link-hover;
+    }
+  }
+
+  body.menu-visible .topbar-icon--inline svg {
+    stroke: @color-menu-link;
+
+    &:hover, &:focus {
+      stroke: @color-menu-link-hover;
+    }
+  }
+
+  body.menu-visible a:hover .topbar-icon {
+    border-bottom-color: @color-menu-link-hover;
   }
 
   body.menu-visible .main-menu-container {

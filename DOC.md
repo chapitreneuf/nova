@@ -42,7 +42,7 @@ Seuls les sous-dossiers `tpl` et `tpl/public` nécessitent d'être accessibles s
 
 ## Personnalisation de la maquette
 
-Les instructions ci-dessous vous encourage de personnaliser votre site tout en conservant la possibilité de mettre à niveau la maquette Nova facilement à posteriori. La maquette est conçue pour permettre d'isoler les personnalisation du code de la maquette de base. C'est la méthode recommandée.
+Les instructions ci-dessous expliquent comment personnaliser un site tout en conservant la possibilité de mettre à niveau la maquette Nova facilement à posteriori. La maquette est conçue pour permettre d'isoler les modifications du code source de la maquette de base. C'est la méthode recommandée.
 
 :warning: **Lors de la personnalisation d'un site, il est recommandé de n'éditer que les fichiers `macros_custom.html` et `less/custom.less` et de ne jamais modifier les autres fichiers de la maquette.**
 
@@ -53,6 +53,8 @@ La personnalisation est réalisée en modifiant les fichiers suivants :
 * `macros_custom.html` contient toutes les modifications du code LodelScript des templates. Ce fichier est créé automatiquement lors de l'installation des dépendances avec `npm install`.
 * `less/custom.less` contient les modifications des styles CSS.
 * Il est possible d'ajouter de nouveaux scripts, images et polices dans le répertoire `public/`.
+
+Le dépôt [nova-starter](https://github.com/edinum/nova-starter) propose un modèle de site vierge à personnaliser.
 
 ### Nommage et personnalisation des macros Lodelscript
 

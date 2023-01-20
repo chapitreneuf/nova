@@ -42,7 +42,7 @@
 <DEFMACRO NAME="ENTREE_LISTE">
 	<LET VAR="entree_liste_li">
 		<MACRO NAME="ENTREE_LISTE_TEXTES"/>
-		<MACRO NAME="ENTREE_LISTE_NUMEROS"/>
+		<MACRO NAME="ENTREE_LISTE_PUBLICATIONS"/>
 	</LET>
 	<IF COND="[#ENTREE_LISTE_LI]">
 		<section class="toc toc--entry">
@@ -65,18 +65,44 @@
 </DEFMACRO>
 
 /**
- * Affichage des numéros associés à l'entrée.
+ * Affichage des publications associées à l'entrée.
  */
- <DEFMACRO NAME="ENTREE_LISTE_NUMEROS">
-	<LOOP NAME="entree_liste_numeros" TABLE="publications" WHERE="identry='[#ID]' AND type='numero'" ORDER="datepubli DESC">
-		<li class="toc__li toc__li toc__li--class-textes">
+ <DEFMACRO NAME="ENTREE_LISTE_PUBLICATIONS">
+	<LOOP NAME="entree_liste_publications" TABLE="publications" WHERE="identry='[#ID]'" ORDER="datepubli DESC">
+		<MACRO NAME="ENTREE_PUBLICATION" />
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Affichage d'une publication associée à l'entrée.
+ */
+<DEFMACRO NAME="ENTREE_PUBLICATION">
+	<!--[ On n'affiche que les types numero, rubrique et collection. Pour les autres on cherche le parent. ]-->
+	<IF COND="[#TYPE] NE 'numero' AND [#TYPE] NE 'rubrique' AND [#TYPE] NE 'collection'">
+		<LET VAR="parent_id">[#ID|getParentByType('numero')]</LET>
+		<IF COND="![#PARENT_ID]">
+			<LET VAR="parent_id">[#ID|getParentByType('rubrique')]</LET>
+		</IF>
+		<IF COND="![#PARENT_ID]">
+			<LET VAR="parent_id">[#ID|getParentByType('collection')]</LET>
+		</IF>
+		<IF COND="[#PARENT_ID]">
+			<LOOP NAME="entree_publication_parent" TABLE="publications" WHERE="id = '[#PARENT_ID]'">
+				<!--[ Récursion ]-->
+				<MACRO NAME="ENTREE_PUBLICATION" />
+			</LOOP>
+		</IF>
+	<ELSE/>
+		<li class="toc__li toc__li toc__li--class-publications">
 			<a href="[#ID|makeurlwithid]">
-				<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;| " /></span>
+				<IF COND="[#TYPE] EQ 'numero'">
+					<span class="publi-number">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;| " /></span>
+				</IF>
 				<LET VAR="ml_titre"><FUNC NAME="BASE_ML_TITRE" /></LET>
 				<div class="publi-title">[#ML_TITRE]</div>
 			</a>
 		</li>
-	</LOOP>
+	</IF>
 </DEFMACRO>
 
 /**

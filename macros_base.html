@@ -41,12 +41,12 @@
 	<!--[ Fix de #CURRENTURL (protocole) ]-->
 	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')]</LET>
 
-	 <!--[ ID du numero, rubrique ou rubrique annuelle ]-->
-	 <LET VAR="idrealparent">[#ID|getParentByType('numero')]</LET>
-	 <IF COND="![#IDREALPARENT]">
-		 <LET VAR="idrealparent">[#ID|getParentByType('rubriqueannuelle')]</LET>
-	 </IF>
-	 <IF COND="![#IDREALPARENT]">
+	<!--[ ID du numero, rubrique ou rubrique annuelle ]-->
+	<LET VAR="idrealparent">[#ID|getParentByType('numero')]</LET>
+	<IF COND="![#IDREALPARENT]">
+		<LET VAR="idrealparent">[#ID|getParentByType('rubriqueannuelle')]</LET>
+	</IF>
+	<IF COND="![#IDREALPARENT]">
 		<LET VAR="idrealparent">[#ID|getParentByType('rubrique')]</LET>
 	</IF>
 

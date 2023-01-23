@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.0.7 (23/01/2023)
+
+* Suppression des variables %REFERENCE_PAPIER et %REFERENCE_ELECTRONIQUE dans la macro ARTICLE_INIT. La surcharge se fait désormais directement par les macros ARTICLE_REFERENCE_PAPIER et ARTICLE_REFERENCE_ELECTRONIQUE.
+* Affichage de tous les types de publications dans le template entree.
+
 ### 2.0.6 (13/01/2023)
 
 * Correction des couleurs de certains liens du menu sur les terminaux mobiles.

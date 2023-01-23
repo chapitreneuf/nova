@@ -40,10 +40,6 @@
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] article-fulltext</LET>
 	</IF>
 
-	<!--[ Références ]-->
-	<LET VAR="reference_papier" GLOBAL="1" ><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
-	<LET VAR="reference_electronique" GLOBAL="1" ><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" /></LET>
-
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
 </DEFMACRO>
@@ -326,16 +322,20 @@
 	<section class="article__quotation">
 		<div class="article__quotation-contents">
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@POUR_CITER]" SECTION_ID="quotation" />
-			<IF COND="[%REFERENCE_PAPIER]">
+
+			<LET VAR="reference_papier" ><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
+			<IF COND="[#REFERENCE_PAPIER]">
 				<h3>[@REFERENCE_PAPIER]</h3>
 				<p class="article__quotation-print">
-					[%REFERENCE_PAPIER]
+					[#REFERENCE_PAPIER]
 				</p>
 			</IF>
-			<IF COND="[%REFERENCE_ELECTRONIQUE]">
+
+			<LET VAR="reference_electronique" ><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" /></LET>
+			<IF COND="[#REFERENCE_ELECTRONIQUE]">
 				<h3>[@REFERENCE_ELECTRONIQUE]</h3>
 				<p class="article__quotation-digital">
-					[%REFERENCE_ELECTRONIQUE]
+					[#REFERENCE_ELECTRONIQUE]
 				</p>
 			</IF>
 		</div>

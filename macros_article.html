@@ -57,14 +57,10 @@
 			<MACRO NAME="ARTICLE_HEADER" />
 		</div>
 	</div>
-	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
-		<MACRO NAME="ARTICLE_RACCOURCIS" />
-	</IF>
+	<MACRO NAME="ARTICLE_RACCOURCIS" />
 	<MACRO NAME="ARTICLE_INFO_BM" />
 	<MACRO NAME="ARTICLE_RESUMES_MOTSCLES"/>
-	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
-		<MACRO NAME="ARTICLE_TOC" />
-	</IF>
+	<MACRO NAME="ARTICLE_TOC" />
 	<MACRO NAME="ARTICLE_ADDENDUM" />
 	<MACRO NAME="ARTICLE_TEXTE" />
 	<MACRO NAME="ARTICLE_BIBLIOGRAPHIE" />
@@ -72,10 +68,8 @@
 	<MACRO NAME="ARTICLE_NOTESBASPAGE" />
 	<MACRO NAME="ARTICLE_NOTEFIN" />
 	<MACRO NAME="ARTICLE_DOCANNEXES" />
-	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
-		<MACRO NAME="ARTICLE_ILLUSTRATIONS" />
-		<MACRO NAME="ARTICLE_POURCITER" />
-	</IF>
+	<MACRO NAME="ARTICLE_ILLUSTRATIONS" />
+	<MACRO NAME="ARTICLE_POURCITER" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="auteur" SECTION_ID="authors-infos" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="editeurscientifique" SECTION_ID="editors-infos" />
 	<FUNC NAME="ARTICLE_DESCRIPTION_PERSONNES" TYPE="traducteur" SECTION_ID="translators-infos" />
@@ -210,7 +204,7 @@
  * Les liens sont calculés en JS. Voir https://github.com/edinum/nova/issues/70
  */
 <DEFMACRO NAME="ARTICLE_RACCOURCIS">
-	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [%ARTICLE_LEGACY_SHORTCUTS] NE 'none'">
+	<IF COND="[%ARTICLE_LEGACY_SHORTCUTS] AND [%ARTICLE_LEGACY_SHORTCUTS] NE 'none' AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<LET VAR="sr_only"><IF COND="[%ARTICLE_LEGACY_SHORTCUTS] EQ 'sr-only'">sr-only</IF></LET>
 		<div class="page-shortcuts [#SR_ONLY]" aria-label="[@NAVIGUER_DANS_LARTICLE]">
 			<ul class="page-shortcuts__list nav"></ul>
@@ -389,7 +383,7 @@
  * Section table des matières du document.
  */
 <DEFMACRO NAME="ARTICLE_TOC">
-	<IF COND="[#TEXTE]">
+	<IF COND="[#TEXTE] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<LET VAR="TOC_PREV_NIVEAU" GLOBAL="1">1</LET>
 		<LET VAR="OUVRIR_UL"><ul></LET>
 		<LET VAR="FERMER_UL"></ul></li></LET>
@@ -625,7 +619,7 @@
  * Section table des illustrations.
  */
 <DEFMACRO NAME="ARTICLE_ILLUSTRATIONS">
-	<IF COND="[#TEXTE_ACCESSIBLE]">
+	<IF COND="[#TEXTE_ACCESSIBLE] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<LOOP NAME="foreach" ARRAY="[#IMAGES]">
 			<BEFORE>
 				<section class="article__illustrations illustrations">
@@ -665,28 +659,29 @@
  * Section "Pour citer"
  */
 <DEFMACRO NAME="ARTICLE_POURCITER">
-	<!--[ Pour citer ]-->
-	<section class="article__quotation">
-		<div class="article__quotation-contents">
-			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@POUR_CITER]" SECTION_ID="quotation" />
+	<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+		<section class="article__quotation">
+			<div class="article__quotation-contents">
+				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@POUR_CITER]" SECTION_ID="quotation" />
 
-			<LET VAR="reference_papier" ><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
-			<IF COND="[#REFERENCE_PAPIER]">
-				<h3>[@REFERENCE_PAPIER]</h3>
-				<p class="article__quotation-print">
-					[#REFERENCE_PAPIER]
-				</p>
-			</IF>
+				<LET VAR="reference_papier" ><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
+				<IF COND="[#REFERENCE_PAPIER]">
+					<h3>[@REFERENCE_PAPIER]</h3>
+					<p class="article__quotation-print">
+						[#REFERENCE_PAPIER]
+					</p>
+				</IF>
 
-			<LET VAR="reference_electronique" ><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" /></LET>
-			<IF COND="[#REFERENCE_ELECTRONIQUE]">
-				<h3>[@REFERENCE_ELECTRONIQUE]</h3>
-				<p class="article__quotation-digital">
-					[#REFERENCE_ELECTRONIQUE]
-				</p>
-			</IF>
-		</div>
-	</section>
+				<LET VAR="reference_electronique" ><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" /></LET>
+				<IF COND="[#REFERENCE_ELECTRONIQUE]">
+					<h3>[@REFERENCE_ELECTRONIQUE]</h3>
+					<p class="article__quotation-digital">
+						[#REFERENCE_ELECTRONIQUE]
+					</p>
+				</IF>
+			</div>
+		</section>
+	</IF>
 </DEFMACRO>
 
 /**

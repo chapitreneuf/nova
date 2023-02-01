@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.0.8 (01/02/2023)
+
+* Déplacement des structures conditionnelles de ARTICLE_MAIN dans les sous-macros afin de faciliter les surcharges.
+
 ### 2.0.7 (23/01/2023)
 
 * Suppression des variables %REFERENCE_PAPIER et %REFERENCE_ELECTRONIQUE dans la macro ARTICLE_INIT. La surcharge se fait désormais directement par les macros ARTICLE_REFERENCE_PAPIER et ARTICLE_REFERENCE_ELECTRONIQUE.

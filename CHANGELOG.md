@@ -2,6 +2,13 @@
 
 ## Version 2.x
 
+### 2.0.9 (14/02/2023)
+
+* Ajout de l'option MENU_THEMES_LIST pour afficher la liste des entrées de l'index thématique dans le menu.
+* Ajout de l'option MENU_HIDE_VARIA pour activer le masquage des titres "Varia" dans le menu.
+* Correction du masquage des "Varia" dans le menu.
+* Ajout d'icônes de réseaux : instagram, twitch, youtube.
+
 ### 2.0.8 (01/02/2023)
 
 * Déplacement des structures conditionnelles de ARTICLE_MAIN dans les sous-macros afin de faciliter les surcharges.

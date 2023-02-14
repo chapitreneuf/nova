@@ -134,6 +134,7 @@
 <contents name="texte_extrait" textgroup="site" status="2">Excerpt</contents>
 <contents name="texte_integral" textgroup="site" status="2">Text</contents>
 <contents name="texte" textgroup="site" status="2">Text</contents>
+<contents name="themes" textgroup="site" status="2">Subjects</contents>
 <contents name="toc" textgroup="site" status="2">Outline</contents>
 <contents name="toc_texte" textgroup="site" status="2">Text Outline</contents>
 <contents name="tous_les_numeros" textgroup="site" status="2">All issues</contents>

@@ -134,6 +134,7 @@
 <contents name="texte_extrait" textgroup="site" status="2">Extrait</contents>
 <contents name="texte_integral" textgroup="site" status="2">Texte</contents>
 <contents name="texte" textgroup="site" status="2">Texte</contents>
+<contents name="themes" textgroup="site" status="2">Thèmes</contents>
 <contents name="toc" textgroup="site" status="2">Plan</contents>
 <contents name="toc_texte" textgroup="site" status="2">Plan du texte</contents>
 <contents name="tous_les_numeros" textgroup="site" status="2">Tous les numéros</contents>

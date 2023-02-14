@@ -189,7 +189,7 @@
  */
 <DEFMACRO NAME="MENU_ISSUE_TITLE">
 	<LET VAR="ml_titre"><FUNC NAME="BASE_ML_TITRE" /></LET>
-	<IF COND="([#ML_TITRE] NE [#NUMERO]) AND !([#ML_TITRE] LIKE /varia/)"><div class="publi-title">[#ML_TITRE]</div></IF>
+	<IF COND="([#ML_TITRE] NE [#NUMERO]) AND !([%MENU_HIDE_VARIA] AND [#ML_TITRE|trim|strtolower] EQ 'varia')"><div class="publi-title">[#ML_TITRE]</div></IF>
 </DEFMACRO>
 
 /**

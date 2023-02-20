@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.1.0 (20/02/2023)
+
+Passage à la version 2.1.0 pour contourner un bug de site_update.sh.
+
 ### 2.0.10 (20/02/2023)
 
 * Ajout des variables de traduction en portugais.

@@ -2,6 +2,12 @@
 
 ## Version 2.x
 
+### 2.0.10 (20/02/2023)
+
+* Ajout des variables de traduction en portugais.
+* Correction de l'affichage des alias de traduction en cas d'absence de langue dans les métadonnées du document.
+* Alignement des notes marginales à gauche indépendamment de la variable `@default-align`.
+
 ### 2.0.9 (14/02/2023)
 
 * Ajout de l'option MENU_THEMES_LIST pour afficher la liste des entrées de l'index thématique dans le menu.

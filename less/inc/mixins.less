@@ -49,7 +49,7 @@
 
 // Affichage de la langue (badge).
 .lang() {
-  &[lang]::after {
+  &[lang]:not([lang=""])::after {
     content: ' [' attr(lang) '] ';
     font-size: 80%;
     color: @color-grey-d4;

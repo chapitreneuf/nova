@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.1.1 (01/03/2023)
+
+* Correction de l'affichage des appels de notes dans les intertitres des articles.
+* Amélioration du zoom sur les grands tableaux : centrage horizontal et vertical du tableau sur la page.
+
 ### 2.1.0 (20/02/2023)
 
 Passage à la version 2.1.0 pour contourner un bug de site_update.sh.

@@ -88,4 +88,8 @@ body.largetable-noscroll {
 
 .largetable-maximized .largetable-scroller {
 	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }

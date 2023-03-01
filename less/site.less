@@ -1546,7 +1546,7 @@ img {
         color: @color-doc-headings-links;
 
         // Top arrow on :hover
-        &::before {
+        &:not(.footnotecall)::before {
           content: "\1F861"; // 🡡
           position: absolute;
           left: -(@numbered-left-padding - 5);

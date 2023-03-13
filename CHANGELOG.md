@@ -2,6 +2,12 @@
 
 ## Version 2.x
 
+### 2.1.2 (13/03/2023)
+
+* Ajout de variables LESS pour modifier les couleurs du formulaire de recherche.
+* Correction de variables LESS inutilisées (`@color-side` et `@color-side-bg`).
+* Correction de la couleur du bouton `.main-menu-toggler`.
+
 ### 2.1.1 (01/03/2023)
 
 * Correction de l'affichage des appels de notes dans les intertitres des articles.

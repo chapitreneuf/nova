@@ -196,12 +196,7 @@
  * Affichage du lien vers tous les numéros.
  */
 <DEFMACRO NAME="MENU_ISSUES_LINK">
-	<LOOP NAME="menu_issues_link"
-		TABLE="publications"
-		WHERE="idparent = 0 AND type = 'collection' AND id IN ([#ISSUES_COLLECTIONS_ID]) AND identifier = 'numeros'"
-		SELECT="id" LIMIT="0,1" ORDER="rank" />
-		<a href="[#ID|makeurlwithid]" class="link-to-issues arrow-after">[@TOUS_LES_NUMEROS]</a>
-	</LOOP>
+	<a href="[#SITEINFOS.URL]/?page=numeros" class="link-to-issues arrow-after">[@TOUS_LES_NUMEROS]</a>
 </DEFMACRO>
 
 /**

@@ -1274,7 +1274,7 @@ img {
 // Soulignement des liens dans les textes longs
 .tab-content, .home-billet, .article__abstract, .article__errata, .article__dedication, .article__ndlr, .article__ndla, .article__chapo, .article__text, .article__biblio, .article__appendix, .article__footnotes, .article__endnotes, .illustrations, .article__quotation, .article__license, .publi__introduction, .publi__ndlr, .publi__descriptionouvrage, .image__caption, .image__description, .image__credits, .lien__text {
   & when (@text-underline-links = true) {
-    p a:not(.footnotecall, .FootnoteSymbol) {
+    p a:not(.footnotecall, .endnotecall, .FootnoteSymbol, .EndnoteSymbol) {
       text-decoration: underline;
 
       &:hover {
@@ -1551,7 +1551,7 @@ img {
         color: @color-doc-headings-links;
 
         // Top arrow on :hover
-        &:not(.footnotecall)::before {
+        &:not(.footnotecall, .endnotecall)::before {
           content: "\1F861"; // 🡡
           position: absolute;
           left: -(@numbered-left-padding - 5);
@@ -1808,25 +1808,26 @@ table.texte td {
   display: inline;
 }
 
-.footnotecall {
+.footnotecall, .endnotecall {
   font-family: @font-notecall;
   margin-left: .2em;
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  & when not (@notecall-brackets = true) {
+    font-size: .8em;
+    vertical-align: super;
+    line-height: 0;
+  }
+
+  & when (@notecall-brackets = true) {
+    .note-brackets();
+  }
 }
 
-.footnotecall:hover {
-  text-decoration: underline;
-}
-
-.footnotecall when not (@notecall-brackets = true) {
-  font-size: .8em;
-  vertical-align: super;
-  line-height: 0;
-}
-
-.footnotecall when (@notecall-brackets = true) {
-  .note-brackets();
-}
 
 // APPENDIX
 // ========
@@ -1875,27 +1876,28 @@ table.texte td {
   .font-size(footnotes);
 }
 
-.FootnoteSymbol {
+.FootnoteSymbol, .EndnoteSymbol {
   font-family: @font-notecall;
   margin-right: .5ch;
   text-decoration: none;
-}
 
-.FootnoteSymbol:hover {
-  text-decoration: underline;
-}
+  &:hover {
+    text-decoration: underline;
+  }
 
-.FootnoteSymbol when not (@notecall-brackets = true) {
-  &::after {
-    content: ". ";
-    display: inline-block;
-    color: @color-grey-d4;
+  & when not (@notecall-brackets = true) {
+    &::after {
+      content: ". ";
+      display: inline-block;
+      color: @color-grey-d4;
+    }
+  }
+
+  & when (@notecall-brackets = true) {
+    .note-brackets();
   }
 }
 
-.FootnoteSymbol when (@notecall-brackets = true) {
-  .note-brackets();
-}
 
 // TABLE DES ILLUSTRATIONS
 // =======================

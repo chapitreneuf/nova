@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.1.4 (03/04/2023)
+
+* Amélioration du support des notes de fin dans les articles.
+
 ### 2.1.3 (03/04/2023)
 
 * Le template numeros affiche désormais tous les numéros du site quand aucun paramètre `id` n'est présent dans le contexte (`?page=numeros`).

@@ -9,7 +9,8 @@
 
 	<!--[ Variables]-->
 	<LET VAR="titre_page" GLOBAL="1">
-		<FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /> &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
+		<LET VAR="titre_publi"><FUNC NAME="BASE_TITRE_PUBLICATION" TEXTEBRUT="1" /></LET>
+		[#TITRE_PUBLI|defaultvalue([@TOUS_LES_NUMEROS])] &ndash; [#OPTIONS.METADONNEESSITE.TITRESITE]
 	</LET>
 </DEFMACRO>
 
@@ -17,7 +18,10 @@
  * Macro principale appelée par le template.
  */
 <DEFMACRO NAME="NUMEROS_MAIN">
-	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1 AND idparent = '[#ID]'" ORDER="rank DESC" SPLIT="[%ISSUES_PER_PAGE]">
+	<IF COND="[#ID]">
+		<LET VAR="where_idparent">AND idparent = '[#ID]'</LET>
+	</IF>
+	<LOOP NAME="numeros_main" TABLE="publications" WHERE="type = 'numero' AND paraitre != 1 [#WHERE_IDPARENT]" ORDER="datepubli DESC" SPLIT="[%ISSUES_PER_PAGE]">
 		<BEFORE>
 			<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@TOUS_LES_NUMEROS]" />
 			<IF COND="[%ISSUES_PAGE_SCALE_TOP] AND [#NBRESULTS] GT [%ISSUES_PER_PAGE]">

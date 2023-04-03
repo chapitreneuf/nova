@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.1.3 (03/04/2023)
+
+* Le template numeros affiche désormais tous les numéros du site quand aucun paramètre `id` n'est présent dans le contexte (`?page=numeros`).
+* Correction du lien "Tous les numéros" du menu principal, qui renvoie désormais vers la liste de tous les numéros toutes collections confondues.
+
 ### 2.1.2 (13/03/2023)
 
 * Ajout de variables LESS pour modifier les couleurs du formulaire de recherche.

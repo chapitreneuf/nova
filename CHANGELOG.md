@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.1.5 (17/04/2023)
+
+* Sur le template numeros, rétablissement de l'ordre d'affichage des numéros par rank quand une seule collection de numéros est affichée.
+* Ajout d'une option ISSUES_ORDER pour déterminer l'ordre d'affichage des numéros.
+
 ### 2.1.4 (03/04/2023)
 
 * Amélioration du support des notes de fin dans les articles.

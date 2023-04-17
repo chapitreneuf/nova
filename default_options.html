@@ -68,6 +68,13 @@
 <LET VAR="identifier_topbar" GLOBAL="1">reseaux-sociaux</LET>
 
 <!--[
+	Critère de tri des numéros sur la page "Tous les numéros".
+	Si vide (valeur par défaut), le critère dépend du nombre de collections parentes : "rank DESC" si le parent est unique, ou "datepubli DESC" s'il existe plusieurs collections contenant des numéros.
+	@type {string}
+]-->
+<LET VAR="issues_order" GLOBAL="1"></LET>
+
+<!--[
 	Afficher une pagination en haut de la page "Tous les numéros".
 	@type {boolean}
 ]-->

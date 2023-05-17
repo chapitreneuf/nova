@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.2.0 (17/05/2023)
+
+* Correction de variables LESS inutilisées (`@font-menu` et `@font-footer`).
+
 ### 2.1.5 (17/04/2023)
 
 * Sur le template numeros, rétablissement de l'ordre d'affichage des numéros par rank quand une seule collection de numéros est affichée.

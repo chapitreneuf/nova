@@ -170,7 +170,7 @@
  * Header article : traductions du document.
  */
 <DEFMACRO NAME="ARTICLE_TRADUCTIONS">
-	<IF COND="[%RELATIONS_TRADUCTION]">
+	<IF COND="[%RELATIONS_TRADUCTION] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
 		<LOOP NAME="article_traductions"
 			SELECT="id, titre, langue, IF(id IN (SELECT id2 FROM relations WHERE nature = 'traduction'), 1, 0) AS original"
 			TABLE="textes, relations"

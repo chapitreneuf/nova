@@ -228,17 +228,19 @@
  * @param {boolean} [ml] - Afficher le titre traduit s'il est disponible.
  */
 <DEFFUNC NAME="BASE_TITRE_PUBLICATION" OPTIONAL="separator, textebrut, cliquable, ml">
+	<LET VAR="titre_affiche">[#TITRE]</LET>
+	<IF COND="[#ML]">
+		<LET VAR="titre_affiche"><FUNC NAME="BASE_ML_TITRE" /></LET>
+	</IF>
+	<LET VAR="titre_parent"><LOOP NAME="base_titre_publication_parent_title" SELECT="titre" TABLE="publications" WHERE="id = '[#IDPARENT]'"><IF COND="[#ML]"><FUNC NAME="BASE_ML_TITRE" /><ELSE/>[#TITRE|textebrut]</IF> | </LOOP></LET>
+
 	<IF COND="[#TEXTEBRUT]">
 		<IF COND="[#NUMERO]">
-			[#NUMERO|textebrut]<FUNC NAME="BASE_PERIODE_PUBLI" TEXTEBRUT="1" PREPEND=" | " /><IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]"> - [#TITRE|textebrut]</IF>
+			[#NUMERO|textebrut]<FUNC NAME="BASE_PERIODE_PUBLI" TEXTEBRUT="1" PREPEND=" | " /><IF COND="[#TITRE_AFFICHE] AND [#TITRE_AFFICHE] NE [#NUMERO]"> - [#TITRE_AFFICHE|textebrut]</IF>
 		<ELSEIF COND="[#TYPE] EQ 'rubriqueannuelle'"/>
-			<LOOP NAME="base_titre_publication_parent_title_brut" SELECT="titre" TABLE="publications" WHERE="id = '[#IDPARENT]'">[#TITRE|textebrut] | </LOOP>
-			[#TITRE|textebrut]
-		<ELSEIF COND="[#ML]"/>
-			<LET VAR="mlt"><FUNC NAME="BASE_ML_TITRE" /></LET>
-			[#MLT|textebrut]
+			[#TITRE_PARENT|textebrut][#TITRE_AFFICHE|textebrut]
 		<ELSE/>
-			[#TITRE|textebrut]
+			[#TITRE_AFFICHE|textebrut]
 		</IF>
 	<ELSE/>
 		<IF COND="[#CLIQUABLE]">
@@ -246,23 +248,21 @@
 		</IF>
 		<IF COND="[#NUMERO]">
 			<!--[ Support de la direction du texte ]-->
-			<IF COND="[#TITRE|text_is_rtl]">
-				<LET VAR="dir_titre"><span dir="rtl">[#TITRE]</span></LET>
+			<IF COND="[#TITRE_AFFICHE|text_is_rtl]">
+				<LET VAR="dir_titre"><span dir="rtl">[#TITRE_AFFICHE]</span></LET>
 			<ELSE />
-				<LET VAR="dir_titre">[#TITRE]</LET>
+				<LET VAR="dir_titre">[#TITRE_AFFICHE]</LET>
 			</IF>
 
 			<LET VAR="aria_label">[@NUMERO] [#NUMERO|textebrut]<FUNC NAME="BASE_PERIODE_PUBLI" TEXTEBRUT="1" PREPEND=", " /></LET>
 			<span class="publi-number" aria-label="[#ARIA_LABEL]">[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" WRAP_CLASS="publi-date" PREPEND="&nbsp;|&nbsp;" /></span>
-			<IF COND="[#TITRE] AND [#TITRE] NE [#NUMERO]">
+			<IF COND="[#TITRE_AFFICHE] AND [#TITRE_AFFICHE] NE [#NUMERO]">
 				<IF COND="[#SEPARATOR]"> [#SEPARATOR] </IF><span class="publi-title-text">[#DIR_TITRE]</span>
 			</IF>
 		<ELSEIF COND="[#TYPE] EQ 'rubriqueannuelle'"/>
-			<span class="publi-title-text"><LOOP NAME="base_titre_publication_parent_title" SELECT="titre" TABLE="publications" WHERE="id = '[#IDPARENT]'">[#TITRE] | </LOOP>[#TITRE]</span>
-		<ELSEIF COND="[#ML]"/>
-			<span class="publi-title-text"><FUNC NAME="BASE_ML_TITRE" /></span>
+			<span class="publi-title-text">[#TITRE_PARENT][#TITRE_AFFICHE]</span>
 		<ELSE/>
-			<span class="publi-title-text">[#TITRE]</span>
+			<span class="publi-title-text">[#TITRE_AFFICHE]</span>
 		</IF>
 		<IF COND="[#CLIQUABLE]">
 			</a>

@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.2.1 (17/05/2023)
+
+* Masquage des liens vers les traductions sur les actualités et les informations.
+* Correction du paramètre ML de la fonction BASE_TITRE_PUBLICATION.
+
 ### 2.2.0 (17/05/2023)
 
 * Correction de variables LESS inutilisées (`@font-menu` et `@font-footer`).

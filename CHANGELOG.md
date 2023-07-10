@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.2.2 (10/07/2023)
+
+* Le projet est désormais maintenu par le collectif Chapitre neuf (https://chapitreneuf.org).
+
 ### 2.2.1 (17/05/2023)
 
 * Masquage des liens vers les traductions sur les actualités et les informations.

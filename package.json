@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Maquette Nova pour Lodel, par le collectif Chapitre neuf",
   "main": "index.html",
   "contributors": [

@@ -245,18 +245,18 @@ Mise à niveau depuis la version 1.2.x : voir "Version 1.3.0" ci-dessous.
 
 ### 1.3.1 (06/10/2020)
 
-* Support du générateur de PDF https://github.com/edinum/pdfgen : intégration du bouton de téléchargement sur la page article.
+* Support du générateur de PDF https://github.com/chapitreneuf/pdfgen : intégration du bouton de téléchargement sur la page article.
 
 Mise à niveau depuis la version 1.2.x : voir "Version 1.3.0" ci-dessous.
 
 ### 1.3.0 (01/10/2020)
 
-* Utilisation des options "extra" (voir [lodel-options-extra](https://github.com/edinum/lodel-options-extra)) comme méthode conseillée pour renseigner le préfixe du DOI, le nom et l'URL du portail. Les méthodes d'insertion précédentes sont toujours supportées, bien que dépréciées.
+* Utilisation des options "extra" (voir [lodel-options-extra](https://github.com/chapitreneuf/lodel-options-extra)) comme méthode conseillée pour renseigner le préfixe du DOI, le nom et l'URL du portail. Les méthodes d'insertion précédentes sont toujours supportées, bien que dépréciées.
 * Le lien vers le portail ne s'affiche que si les informations le concernant existent.
 
 Mise à niveau depuis la version 1.2.x :
 
-* Exécuter le script d'upgrade sur le site [lodel-options-extra](https://github.com/edinum/lodel-options-extra)
+* Exécuter le script d'upgrade sur le site [lodel-options-extra](https://github.com/chapitreneuf/lodel-options-extra)
 * Renseigner les options "Préfixe des DOI", "Nom du portail" et "URL du portail" dans les Options du site > Extra.
 * Supprimer la définition de ces informations du template de personnalisation `tpl/macros_custom.html`.
 

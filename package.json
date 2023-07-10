@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "version": "2.2.1",
-  "description": "Maquette Nova pour Lodel, par le collectif Edinum.org",
+  "description": "Maquette Nova pour Lodel, par le collectif Chapitre neuf",
   "main": "index.html",
   "contributors": [
     {
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/edinum/nova"
+    "url": "https://github.com/chapitreneuf/nova"
   },
   "license": "GPL-3.0",
   "private": true,

@@ -1,10 +1,10 @@
 # Maquette Nova pour Lodel
 
-![Nova latest version](https://img.shields.io/github/v/tag/edinum/nova?color=blue&style=flat-square) [![License](https://img.shields.io/github/license/edinum/nova?color=blue&style=flat-square)](https://github.com/edinum/nova/blob/master/LICENSE)
+![Nova latest version](https://img.shields.io/github/v/tag/chapitreneuf/nova?color=blue&style=flat-square) [![License](https://img.shields.io/github/license/chapitreneuf/nova?color=blue&style=flat-square)](https://github.com/chapitreneuf/nova/blob/master/LICENSE)
 
 > Maquette générique pour les sites de revues avec Lodel 1.0.
 
-La maquette Nova est compatible avec [le modèle éditorial d'OpenEdition Journals](https://github.com/OpenEdition/oej.em) et utilise [les filtres Lodel développés par Edinum](https://github.com/edinum/lodel-textfunc).
+La maquette Nova est compatible avec [le modèle éditorial d'OpenEdition Journals](https://github.com/OpenEdition/oej.em) et utilise [les filtres Lodel développés par chapitreneuf](https://github.com/chapitreneuf/lodel-textfunc).
 
 ## Fonctionnalités
 
@@ -25,11 +25,11 @@ Les instructions pour installer, utiliser et maintenir la maquette Nova se trouv
 
 ## Contribuer
 
-Pour demander de l'aide, signaler un bug ou proposer une amélioration n'hésitez pas à [consulter ou déposer un ticket](https://github.com/edinum/nova/issues).
+Pour demander de l'aide, signaler un bug ou proposer une amélioration n'hésitez pas à [consulter ou déposer un ticket](https://github.com/chapitreneuf/nova/issues).
 
 ## Crédits et financement
 
-Ce projet est développé et maintenu par le [collectif Edinum](https://edinum.org) qui en publie le code source sous licence libre GPL3 sans contrepartie, affirmant ainsi son engagement en faveur du logiciel libre.
+Ce projet est développé et maintenu par le [collectif Chapitre neuf](https://chapitreneuf.org) qui en publie le code source sous licence libre GPL3 sans contrepartie, affirmant ainsi son engagement en faveur du logiciel libre.
 
 Il a reçu le soutien financier ponctuel des institutions suivantes :
 
@@ -38,7 +38,7 @@ Il a reçu le soutien financier ponctuel des institutions suivantes :
 
 ## Licence
 
-**2022, Edinum.org**
+**2022, Chapitre neuf**
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

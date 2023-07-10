@@ -1,6 +1,6 @@
 # Documentation de la maquette Nova
 
-:bulb: Cette documentation concerne la version 2 de la maquette Nova pour Lodel. Pour la documentation concernant la version 1, lire [le fichier README.md de la branche `v1`](https://github.com/edinum/nova/blob/v1/README.md).
+:bulb: Cette documentation concerne la version 2 de la maquette Nova pour Lodel. Pour la documentation concernant la version 1, lire [le fichier README.md de la branche `v1`](https://github.com/chapitreneuf/nova/blob/v1/README.md).
 
 ## Mise en route
 
@@ -9,7 +9,7 @@
 Prérequis sur le serveur :
 
 * Une instance de Lodel 1.0 opérationnelle.
-* La dernière version des filtres [lodel-textfunc](https://github.com/edinum/lodel-textfunc) installés avec Lodel.
+* La dernière version des filtres [lodel-textfunc](https://github.com/chapitreneuf/lodel-textfunc) installés avec Lodel.
 * Un site Lodel avec le modèle éditorial [OEJ.EM](https://github.com/OpenEdition/oej.em).
 
 Prérequis sur le poste du développeur :
@@ -23,11 +23,11 @@ Prérequis sur le poste du développeur :
 
 * Importer les fichiers `translations/translation-xx.xml` depuis l'interface du site Lodel : onglet "Administration" > "Administrer les traductions du site" > "Importer une traduction". Les langues ajoutées apparaîtront dans le sélecteur de langues de navigation du site.
 * **Optionnel :** ajouter le champ `chapo` et les identifiants auteurs ME. Placer le script `nova_me_upgrade.php` (fourni dans le répertoire `scripts/`) à la racine de l'installation Lodel et lancer la commande `php nova_me_upgrade.php nom_du_site`.
-* **Optionnel :** installer les options extra, utilisées pour configurer l'affichage des DOI et du lien vers le portail. Voir le dépôt dédié : [lodel-options-extra](https://github.com/edinum/lodel-options-extra).
+* **Optionnel :** installer les options extra, utilisées pour configurer l'affichage des DOI et du lien vers le portail. Voir le dépôt dédié : [lodel-options-extra](https://github.com/chapitreneuf/lodel-options-extra).
 
 ### Préparation de la maquette
 
-* Cloner la branche `master` de ce dépôt : `git clone git@github.com:edinum/nova.git`
+* Cloner la branche `master` de ce dépôt : `git clone git@github.com:chapitreneuf/nova.git`
 * Dans le dossier cloné, installer les dépendances avec la commande `npm install`
 * Suivre la méthode ci-après pour effectuer les personnalisations de maquette.
 
@@ -54,7 +54,7 @@ La personnalisation est réalisée en modifiant les fichiers suivants :
 * `less/custom.less` contient les modifications des styles CSS.
 * Il est possible d'ajouter de nouveaux scripts, images et polices dans le répertoire `public/`.
 
-Le dépôt [nova-starter](https://github.com/edinum/nova-starter) propose un modèle de site vierge à personnaliser.
+Le dépôt [nova-starter](https://github.com/chapitreneuf/nova-starter) propose un modèle de site vierge à personnaliser.
 
 ### Nommage et personnalisation des macros Lodelscript
 
@@ -154,7 +154,7 @@ Les contrastes des couleurs des images, icônes et médias embarqués ne sont pa
 
 #### Nom de la plateforme
 
-Définir les champs `portail_nom` et `portail_url` dans les [options-extra](https://github.com/edinum/lodel-options-extra).
+Définir les champs `portail_nom` et `portail_url` dans les [options-extra](https://github.com/chapitreneuf/lodel-options-extra).
 
 #### Liens vers les réseaux sociaux
 
@@ -183,7 +183,7 @@ Pour utiliser une icône personnalisée, deux méthodes sont possibles :
 
 Pour afficher le DOI des articles, il faut définir le préfixe du DOI, c'est-à-dire la chaîne de caractères qui doit préfixer l'identifiant numérique de l'article pour former le DOI.
 
-1. Installer le groupe d'options "extra" avec le script distribué ici : [lodel-options-extra](https://github.com/edinum/lodel-options-extra)
+1. Installer le groupe d'options "extra" avec le script distribué ici : [lodel-options-extra](https://github.com/chapitreneuf/lodel-options-extra)
 2. Dans l'espace privé, naviguer jusqu'à l'onglet "Administration" > Section "Configuration" > Options du site > Sélectionner "Extra" dans le menu déroulant
 3. Compléter l'option "Préfixe des DOI"
 
@@ -215,7 +215,7 @@ La Nova 2.0 rompt la compatibilité avec les versions précédentes. Par conséq
 
 Voici une liste non-exhaustive de changements à prendre en compte :
 
-* Les filtres [lodel-textfunc](https://github.com/edinum/lodel-textfunc) doivent être mis à jour vers leur version la plus récente.
+* Les filtres [lodel-textfunc](https://github.com/chapitreneuf/lodel-textfunc) doivent être mis à jour vers leur version la plus récente.
 * Toute la feuille de styles `site.less` a été réécrite, il est donc probable que les surcharges de styles doivent être revues au cas par cas et réécrites si nécessaire.
 * Plusieurs macros ont été renommées et le markup a ponctuellement été modifié. Il est donc conseillé de vérifier la compatibilité de toutes les macros dans `macros_custom.html`.
 * Les variables de traductions doivent impérativement être mises à jour avec les nouveaux fichiers distribués.

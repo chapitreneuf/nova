@@ -29,7 +29,7 @@ Pour demander de l'aide, signaler un bug ou proposer une amélioration n'hésite
 
 ## Crédits et financement
 
-Ce projet est développé et maintenu par le [collectif Chapitre neuf](https://chapitre9.org) qui en publie le code source sous licence libre GPL3 sans contrepartie, affirmant ainsi son engagement en faveur du logiciel libre.
+Ce projet est développé et maintenu par le [collectif Chapitre neuf](https://chapitreneuf.org) qui en publie le code source sous licence libre GPL3 sans contrepartie, affirmant ainsi son engagement en faveur du logiciel libre.
 
 Il a reçu le soutien financier ponctuel des institutions suivantes :
 

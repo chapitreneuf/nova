@@ -94,6 +94,7 @@
 <contents name="numero_suivant" textgroup="site" status="2">Next issue</contents>
 <contents name="numero" textgroup="site" status="2">number</contents>
 <contents name="page_not_found" textgroup="site" status="2">Page not found.</contents>
+<contents name="pagination" textgroup="site" status="2">Pagination</contents>
 <contents name="pagination_aller_page" textgroup="site" status="2">Go to page</contents>
 <contents name="pagination_page_courante" textgroup="site" status="2">Current page</contents>
 <contents name="par" textgroup="site" status="2">by</contents>

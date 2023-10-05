@@ -6,6 +6,7 @@
 <DEFMACRO NAME="HEAD_MAIN">
 	<MACRO NAME="HEAD_METADONNEES" />
 	<MACRO NAME="HEAD_INSERT_CSS" />
+	<MACRO NAME="HEAD_INSERT_FAVICON" />
 	<MACRO NAME="HEAD_INSERT_RSS" />
 	<MACRO NAME="HEAD_INSERT_JS" />
 </DEFMACRO>
@@ -316,6 +317,21 @@
 	<ELSE />
 		<!--[ Mode normal : on sert les CSS précompilées. ]-->
 		<link rel="stylesheet" type="text/css" href="[%DIR_PUBLIC]/css/site.css" />
+	</IF>
+</DEFMACRO>
+
+/**
+ * Favicon.
+ */
+<DEFMACRO NAME="HEAD_INSERT_FAVICON">
+	<IF COND="[%FAVICON_DIR]">
+		<IF COND="[%FAVICON_DIR|substr(-1)] NE '/'">
+			<LET VAR="favicon_dir" GLOBAL="1">[%FAVICON_DIR]/</LET>
+		</IF>
+		<link rel="icon" href="[%FAVICON_DIR]favicon.ico" sizes="32x32">
+		<link rel="icon" href="[%FAVICON_DIR]icon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" href="[%FAVICON_DIR]apple-touch-icon.png">
+		<link rel="manifest" href="[%FAVICON_DIR]manifest.webmanifest">
 	</IF>
 </DEFMACRO>
 

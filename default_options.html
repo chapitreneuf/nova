@@ -56,6 +56,14 @@
 <LET VAR="dot_shortcuts" GLOBAL="1"><IF COND="[#VIEW.TPL] EQ 'article'">all<ELSE/>top</IF></LET>
 
 <!--[
+	Dossier des favicon.
+	Idéalement on placera les icones dans /. Si ça n'est pas possible on peux utiliser la valeur : "[%DIR_PUBLIC]/favicon/".
+	Si vide (valeur par défaut) aucun favicon n'est utilisé.
+	@type {string}
+]-->
+<LET VAR="favicon_dir" GLOBAL="1"></LET>
+
+<!--[
 	Identifiers utilisés dans la maquette.
 	Remarque : l'identifier 'numeros' est hardcodé pour des raisons techniques.
 	@type {string}

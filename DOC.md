@@ -197,6 +197,22 @@ Pour afficher le DOI des articles, il faut définir le préfixe du DOI, c'est-à
 6. Enregistrer le formulaire avec le bouton "Terminer",
 7. Ne pas oublier que le document doit être "publié" pour qu'il soit visible en ligne.
 
+### Favicon
+
+À partir de la Nova 2.3 il est possible d'ajouter un favicon personnalisé en indiquant dans l'option `favicon_dir` le dossier contenant les icônes. Il est conseillé de placer les icônes directement à la racine du domaine (`/`).
+
+Les fichiers appelés sont les suivants :
+
+* favicon.ico (32x32)
+* icon.svg
+* apple-touch-icon.png (180x180)
+* icon-192.png (192x192)
+* icon-512.png (512x512)
+
+On peut trouver un exemple de favicons dans [`public/icons/`](./public/favicon/).
+
+La méthode d'inclusion utilisée est tirée de [ce billet](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs).
+
 ## Mise à niveau
 
 ### Mise à jour de la Nova 2

@@ -2,6 +2,14 @@
 
 ## Version 2.x
 
+### 2.3.0 (05/10/2023)
+
+* Ajout de l'option `favicon_dir` pour l'affichage de favicon.
+* Ajout de l'icône X (ex-Twitter).
+* Remplacement de Twitter par X dans les liens de partage.
+* Correction de la couleur des liens du header sur fond sombre.
+* Ajout d'une traduction manquante.
+
 ### 2.2.3 (13/07/2023)
 
 * Correction d'URL.

@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.3.1 (09/10/2023)
+
+* Affichage des images d'accroche des billets sur la home.
+
 ### 2.3.0 (05/10/2023)
 
 * Ajout de l'option `favicon_dir` pour l'affichage de favicon.

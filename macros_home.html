@@ -26,7 +26,7 @@
  * Billets de présentation.
  */
 <DEFMACRO NAME="HOME_BILLETS">
-	<LOOP NAME="home_billets" SELECT="titre, altertitre, texte, identifier" TABLE="textessimples" WHERE="type = 'billet' AND idparent = 0" ORDER="rank">
+	<LOOP NAME="home_billets" SELECT="titre, altertitre, texte, identifier, id" TABLE="textessimples" WHERE="type = 'billet' AND idparent = 0" ORDER="rank">
 		<BEFORE>
 			<section id="home-billets" class="home-billets">
 		</BEFORE>
@@ -41,6 +41,7 @@
 					</IF>
 					<h1 class="home-billet__titre [#SR_ONLY]">[#ML_TITRE]</h1>
 				</IF>
+				<FUNC NAME="BASE_ACCROCHE" SIZE="[%SIZE_ACCROCHE_ARTICLE]" CLASSNAME="home-billet__accroche" NOTEXT="1" />
 				<FUNC NAME="BASE_ML_TEXTE" ML_VAR="[#TEXTE]" />
 			</div>
 		</DO>

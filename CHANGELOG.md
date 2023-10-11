@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.3.2 (11/10/2023)
+
+* Correction d'une erreur d'affichage de certains symboles sur OSX (#114). On utilise maintenant des icônes SVG.
+* Décalage vers la gauche des dotShortcuts sur OSX pour éviter la superposition avec la barre de défilement verticale (#109).
+
 ### 2.3.1 (09/10/2023)
 
 * Affichage des images d'accroche des billets sur la home.

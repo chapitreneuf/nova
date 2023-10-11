@@ -405,12 +405,9 @@ img {
 // Ex: "Commander ce numéro 🡕"
 .arrow-external {
   &::after {
-    font-family: Arial, Helvetica, sans-serif !important; // workaround for OSX
-    content: "\00a0\1F855"; // 🡕
-
-    @supports (content: "x" / "y") {
-      content: "\00a0\1F855" / ""; // 🡕
-    }
+    content: url("@{publicDir}/icons/external-link.svg");
+    display: inline-block;
+    margin-left: .5ch;
   }
 }
 
@@ -1567,7 +1564,7 @@ img {
 
         // Top arrow on :hover
         &:not(.footnotecall, .endnotecall)::before {
-          content: "\1F861"; // 🡡
+          content: url("@{publicDir}/icons/arrow-up.svg");
           position: absolute;
           left: -(@numbered-left-padding - 5);
           top: 25%; // legacy browsers

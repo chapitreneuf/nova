@@ -225,7 +225,13 @@ window.fnLoader = {
       $(function() {
         var $lodelContainer = $("#lodel-container");
         var $root = $lodelContainer.length === 0 ? $("body") : $lodelContainer;
-        $("<div class='dot-shortcuts-placeholder' aria-hidden='true'><div class='dot-shortcuts-container' aria-label='" + window.translations.naviguerDansLArticle + "'></div></div>").appendTo($root);
+
+        // Detect OS and add class if Mac
+        var platform = navigator["userAgentData "] && navigator["userAgentData "]["platform"] ? navigator["userAgentData "]["platform"] : (navigator["userAgent"] || navigator["platform"]);
+        var isMac = /mac/.test(platform);
+        var isMacClass = isMac ? "is-mac" : ""
+
+        $("<div class='dot-shortcuts-placeholder " + isMacClass + "' aria-hidden='true'><div class='dot-shortcuts-container' aria-label='" + window.translations.naviguerDansLArticle + "'></div></div>").appendTo($root);
         var $container = $(".dot-shortcuts-container");
 
         if (window.devMode === true) {

@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.3.3 (26/10/2023)
+
+* Correction de la détection d'OSX lors de l'affichage des dotShortcuts (#109).
+
 ### 2.3.2 (11/10/2023)
 
 * Correction d'une erreur d'affichage de certains symboles sur OSX (#114). On utilise maintenant des icônes SVG.

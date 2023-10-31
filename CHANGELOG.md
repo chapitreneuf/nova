@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.3.4 (31/10/2023)
+
+* Ajout de l'option DISPLAY_ARTICLE_TRANSLATIONS pour configurer l'affichage des liens vers les alias de traductions.
+
 ### 2.3.3 (26/10/2023)
 
 * Correction de la détection d'OSX lors de l'affichage des dotShortcuts (#109).

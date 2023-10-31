@@ -44,6 +44,13 @@
 <LET VAR="dev_mode" GLOBAL="1"></LET>
 
 <!--[
+	Afficher les liens vers les alias de traductions des textes. Par défaut on n'affiche pas sur les actualités et informations.
+	Définir à 1 pour afficher partout.
+	@type {boolean}
+]-->
+<LET VAR="display_article_translations" GLOBAL="1"><IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">1</IF></LET>
+
+<!--[
 	Afficher les iframes dans les annexes.
 	@type {boolean}
 ]-->

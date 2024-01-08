@@ -125,9 +125,8 @@
 	<IF COND="[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE]">
 		<meta name="DC.identifier" content="urn:ISSN:[#OPTIONS.METADONNEESSITE.ISSN_ELECTRONIQUE|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</IF>
-	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<meta name="DC.identifier" content="doi:[%PREFIXEDOI][#ID]" />
-	</IF>
+
+	<FUNC NAME="HEAD_META_DOI" NAME_VALUE="DC.identifier" />
 
 	<IF COND="[#TITRE_COMPLET]">
 		<meta name="DC.title" content="[#TITRE_COMPLET]" />
@@ -198,9 +197,7 @@
 		https://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar
 	]-->
 
-	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<meta name="citation_doi" content="[%PREFIXEDOI][#ID]" />
-	</IF>
+	<FUNC NAME="HEAD_META_DOI" NAME_VALUE="citation_doi" />
 
 	<meta name="citation_fulltext_html_url" content="[#CURRENTURL_FIXED]" />
 
@@ -289,6 +286,19 @@
 	<LOOP NAME="head_meta_keywords" TABLE="relations, entries" WHERE="id1 = '[#ID]' AND id2 = entries.id">
 		<meta [#NAME_KEY]="[#NAME_VALUE]" content="[#G_NAME|textebrut|cleanBadChars|replacequotationmark|trim]" />
 	</LOOP>
+</DEFFUNC>
+
+/**
+ * Affichage des metas doi en fonction des types d'entité mentionnés dans l'option show_doi_for_types.
+ * @param {string} name_value - Attribut name des balises meta.
+ */
+<DEFFUNC NAME="HEAD_META_DOI" REQUIRED="name_value" >
+	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
+		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
+	</IF>
+	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE]">
+		<meta name="[#NAME_VALUE]" content="doi:[%PREFIXEDOI][#ID]" />
+	</IF>
 </DEFFUNC>
 
 /**

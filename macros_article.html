@@ -140,7 +140,10 @@
  * Header article : DOI.
  */
 <DEFMACRO NAME="ARTICLE_DOI">
-	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
+	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
+		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
+	</IF>
+	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE]">
 		<p class="article__doi">DOI&nbsp;: <a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a></p>
 	</IF>
 </DEFMACRO>

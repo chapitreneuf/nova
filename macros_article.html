@@ -7,14 +7,6 @@
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
 
-	<!--[ Prefixe DOI ]-->
-	<!--[ Par défaut on utilise le champ des options [#OPTIONS.EXTRA.DOI_PREFIXE] ]-->
-	<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">
-		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.EXTRA.DOI_PREFIXE]</LET>
-	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
-		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.NOVA.PREFIXEDOI]</LET>
-	</IF>
-
 	<!--[ Détecter les entrées d'index et créer une globale %HASENTRIES ]-->
 	<LOOP NAME="hasentries" TABLE="relations, entries, entrytypes" SELECT="COUNT(entries.id)" WHERE="nature = 'E' AND id1 = [#ID] AND id2 = entries.id AND class != 'indexavances'">
 		<IF COND="[#NBRESULTATS] GT 0">
@@ -85,7 +77,7 @@
 		<MACRO NAME="ARTICLE_NUMERODOCUMENT" />
 		<MACRO NAME="ARTICLE_TITRES" />
 		<MACRO NAME="ARTICLE_PERSONNES" />
-		<MACRO NAME="ARTICLE_DOI" />
+		<MACRO NAME="BASE_DOI"/>
 		<MACRO NAME="ARTICLE_PAGINATION" />
 		<MACRO NAME="ARTICLE_NOTICEBIBLIO" />
 		<MACRO NAME="ARTICLE_TRADUCTIONS" />
@@ -134,18 +126,6 @@
 
 	<!--[ Traducteurs ]-->
 	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="traducteur" WRAP_ID="article-translator" WRAP_CLASS="article__author" PREPEND="[@TRADUCTION_DE] " HREF="#translators-infos" />
-</DEFMACRO>
-
-/**
- * Header article : DOI.
- */
-<DEFMACRO NAME="ARTICLE_DOI">
-	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
-		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
-	</IF>
-	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE]">
-		<p class="article__doi">DOI&nbsp;: <a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a></p>
-	</IF>
 </DEFMACRO>
 
 /**

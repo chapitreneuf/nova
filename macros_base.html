@@ -95,6 +95,14 @@
 		<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] lang-[#LANGUE] dir-[#DIR]</LET>
 	</IF>
+
+	<!--[ Prefixe DOI ]-->
+	<!--[ Par défaut on utilise le champ des options [#OPTIONS.EXTRA.DOI_PREFIXE] ]-->
+	<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">
+		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.EXTRA.DOI_PREFIXE]</LET>
+	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
+		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.NOVA.PREFIXEDOI]</LET>
+	</IF>
 </DEFMACRO>
 
 /**
@@ -654,4 +662,16 @@
 	</IF>
 
 	<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft_id=[#ENTITY_URL][#COINS_DOI][#COINS_METADATA|reg_replace('/\r|\n/', '')]"></span>
+</DEFMACRO>
+
+/**
+ * Affichage du DOI du document.
+ */
+<DEFMACRO NAME="BASE_DOI">
+	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
+		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
+	</IF>
+	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE]">
+		<p class="doi">DOI&nbsp;: <a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a></p>
+	</IF>
 </DEFMACRO>

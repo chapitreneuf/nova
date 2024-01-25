@@ -144,6 +144,12 @@
 <LET VAR="notes_return_link" GLOBAL="1">1</LET>
 
 <!--[
+	Liste des types d'entité pour lesquels afficher un doi (les séparer par une virgule).
+	@type {string}
+]-->
+<LET VAR="show_doi_for_types" GLOBAL="1"><IF COND="[#OPTIONS.EXTRA.DOI_TYPES]">[#OPTIONS.EXTRA.DOI_TYPES]<ELSE/>article</IF></LET>
+
+<!--[
 	Définition des pages sur lesquelles afficher la barre latérale à droite.
 	@type {boolean}
 ]-->
@@ -232,9 +238,3 @@
 	@type {boolean}
 ]-->
 <LET VAR="topbar_display_rss" GLOBAL="1">1</LET>
-
-<!--[
-	Liste des types d'entité pour lesquels afficher un doi (les séparer par une virgule).
-	@type {string}
-]-->
-<LET VAR="show_doi_for_types" GLOBAL="1"><IF COND="[#OPTIONS.EXTRA.DOI_TYPES]">[#OPTIONS.EXTRA.DOI_TYPES]<ELSE/>article</IF></LET>

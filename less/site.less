@@ -1399,7 +1399,7 @@ img {
 // ARTICLE BUTTONS
 // ===============
 
-.article-buttons {
+.document-buttons {
   display: block;
   margin: 0 0 1.5rem 0;
   padding: 0 1.5rem 3rem 0;
@@ -1407,30 +1407,30 @@ img {
   border-bottom: 1px solid @color-border;
 }
 
-.article-buttons-group + .article-buttons-group, .article-button--text + .article-button--text {
+.document-buttons-group + .document-buttons-group, .document-button--text + .document-button--text {
   margin-top: 1rem;
 }
 
-.article-buttons a {
+.document-buttons a {
   color: @color-grey-d4;
   transition: color .15s linear;
   margin-right: 1rem;
 }
 
-.article-buttons a:last-child {
+.document-buttons a:last-child {
   margin-right: 0;
 }
 
-.article-buttons a:hover {
+.document-buttons a:hover {
   color: @color-grey-d1;
 }
 
-.article-buttons__partage {
+.document-buttons__partage {
   display: flex;
   justify-content: space-start;
 }
 
-.article-buttons__partage .icon {
+.document-buttons__partage .icon {
   width: 20px;
   height: 20px;
   border-bottom: 1px solid transparent;
@@ -1451,12 +1451,12 @@ img {
   }
 }
 
-.article-button--text {
+.document-button--text {
   display: block;
 }
 
 @media (min-width: @screen-sm) and (max-width: @screen-lg) {
-  .article-buttons {
+  .document-buttons {
     display: flex;
     justify-content: flex-start;
     margin-bottom: 2rem;
@@ -1464,23 +1464,23 @@ img {
     border: none;
   }
 
-  .article-buttons-group {
+  .document-buttons-group {
     padding-right: 2rem;
     margin-right: 2rem;
     border-right: 1px solid @color-border;
   }
 
-  .article-buttons-group + .article-buttons-group, .article-button--text + .article-button--text {
+  .document-buttons-group + .document-buttons-group, .document-button--text + .document-button--text {
     margin-top: 0;
   }
 
-  .article-buttons-group:last-child {
+  .document-buttons-group:last-child {
     border-right: none;
   }
 }
 
 @media (min-width: @screen-lg) {
-  .article-buttons {
+  .document-buttons {
     padding-left: 1.5rem;
   }
 }

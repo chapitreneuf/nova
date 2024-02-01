@@ -41,8 +41,10 @@
 <DEFFUNC NAME="PUBLICATION_HEADER" OPTIONAL="cliquable">
 	<header class="publi__header">
 		<div class="row">
-			<MACRO NAME="PUBLICATION_ACCROCHE"/>
-
+			<div class="col-sm-4">
+				<MACRO NAME="PUBLICATION_ACCROCHE"/>
+				<MACRO NAME="BASE_DOCUMENT_BOUTONS" />
+			</div>
 			<div class="col order-sm-first">
 				<MACRO NAME="PUBLICATION_TITRES"/>
 				<MACRO NAME="PUBLICATION_PERSONNES"/>
@@ -63,7 +65,7 @@
  * Image d'accroche de la publication.
  */
 <DEFMACRO NAME="PUBLICATION_ACCROCHE">
-	<FUNC NAME="BASE_ACCROCHE" SIZE="[%SIZE_ACCROCHE_PUBLICATION]" CLASSNAME="publi__accroche col-sm-4" HREF="self" />
+	<FUNC NAME="BASE_ACCROCHE" SIZE="[%SIZE_ACCROCHE_PUBLICATION]" CLASSNAME="publi__accroche" HREF="self" />
 </DEFMACRO>
 
 /**

@@ -2,6 +2,16 @@
 
 ## Version 2.x
 
+### 2.4.0 (01/02/2024)
+
+* Support des DOI au niveau des numéros (nécessite lodel-options-extra 1.0.1).
+* Ajout de l'option `pdf_preview` pour permettre la génération des PDF des documents non publiés (nécessite PDFgen 1.3).
+* Ajout du lien vers les PDF générés au niveau des numéros (nécessite PDFgen 1.3).
+* Support des fac-similés liés aux numéros conformément au modèle OEJ.EM.
+* Ajout de l'option `pdf_types` pour définir les types de documents pour lesquels sont générés des PDF.
+* Affichage des liens de partage sur les numéros.
+* Correction des liens de partage sur les articles (référence manquante).
+
 ### 2.3.4 (31/10/2023)
 
 * Ajout de l'option DISPLAY_ARTICLE_TRANSLATIONS pour configurer l'affichage des liens vers les alias de traductions.

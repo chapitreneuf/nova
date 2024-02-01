@@ -7,14 +7,6 @@
 	<!--[ Dépendances additionnelles ]-->
 	<USE MACROFILE="macros_publication.html" />
 
-	<!--[ Prefixe DOI ]-->
-	<!--[ Par défaut on utilise le champ des options [#OPTIONS.EXTRA.DOI_PREFIXE] ]-->
-	<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">
-		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.EXTRA.DOI_PREFIXE]</LET>
-	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
-		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.NOVA.PREFIXEDOI]</LET>
-	</IF>
-
 	<!--[ Détecter les entrées d'index et créer une globale %HASENTRIES ]-->
 	<LOOP NAME="hasentries" TABLE="relations, entries, entrytypes" SELECT="COUNT(entries.id)" WHERE="nature = 'E' AND id1 = [#ID] AND id2 = entries.id AND class != 'indexavances'">
 		<IF COND="[#NBRESULTATS] GT 0">
@@ -40,6 +32,10 @@
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] article-fulltext</LET>
 	</IF>
 
+	<!--[ Références ]-->
+	<LET VAR="reference_electronique" GLOBAL="1"><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE"/></LET>
+	<LET VAR="reference_papier" GLOBAL="1"><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
+
 	<!--[ Fix de la boucle prev/next ]-->
 	<MACRO NAME="NAV_ENTITIES_FIX" />
 </DEFMACRO>
@@ -51,7 +47,7 @@
 	<FUNC NAME="NAV_ENTITIES" SHOW_BUTTONS="1" CLASSNAME="nav-entities--top" ARIANE_TAG="nav" />
 	<div class="row">
 		<div class="col-lg-3">
-			<MACRO NAME="ARTICLE_BOUTONS" />
+			<MACRO NAME="BASE_DOCUMENT_BOUTONS" />
 		</div>
 		<div class="col-lg-9 order-lg-first">
 			<MACRO NAME="ARTICLE_HEADER" />
@@ -85,7 +81,7 @@
 		<MACRO NAME="ARTICLE_NUMERODOCUMENT" />
 		<MACRO NAME="ARTICLE_TITRES" />
 		<MACRO NAME="ARTICLE_PERSONNES" />
-		<MACRO NAME="ARTICLE_DOI" />
+		<MACRO NAME="BASE_DOI"/>
 		<MACRO NAME="ARTICLE_PAGINATION" />
 		<MACRO NAME="ARTICLE_NOTICEBIBLIO" />
 		<MACRO NAME="ARTICLE_TRADUCTIONS" />
@@ -134,15 +130,6 @@
 
 	<!--[ Traducteurs ]-->
 	<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="traducteur" WRAP_ID="article-translator" WRAP_CLASS="article__author" PREPEND="[@TRADUCTION_DE] " HREF="#translators-infos" />
-</DEFMACRO>
-
-/**
- * Header article : DOI.
- */
-<DEFMACRO NAME="ARTICLE_DOI">
-	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
-		<p class="article__doi">DOI&nbsp;: <a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a></p>
-	</IF>
 </DEFMACRO>
 
 /**
@@ -213,85 +200,6 @@
 			<ul class="page-shortcuts__list nav"></ul>
 		</div>
 	</IF>
-</DEFMACRO>
-
-/**
- * Boutons du header (facsimilé, print, partage).
- */
-<DEFMACRO NAME="ARTICLE_BOUTONS">
-	<div class="article-buttons">
-		<!--[ Boutons de partage ]-->
-		<div class="article-buttons-group article-buttons__partage">
-			<MACRO NAME="ARTICLE_BOUTONS_PARTAGE" />
-		</div>
-
-		<!--[ Citer cet article ]-->
-		<IF COND="[#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
-			<MACRO NAME="ARTICLE_BOUTONS_REFERENCE"/>
-		</IF>
-
-		<!--[ Formats detachables ]-->
-		<IF COND="[#TEXTE_ACCESSIBLE] AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'" />
-			<div class="article-buttons-group article-buttons__download">
-				<MACRO NAME="ARTICLE_BOUTONS_PDF" />
-				<MACRO NAME="ARTICLE_BOUTONS_TEI" />
-			</div>
-		</IF>
-	</div>
-</DEFMACRO>
-
-/**
- * Boutons de partage.
- */
-<DEFMACRO NAME="ARTICLE_BOUTONS_PARTAGE">
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="[@SHARE_ON] Facebook" ICON="facebook" HREF="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut|urlencode]" />
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="[@SHARE_ON] X" ICON="x" HREF="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut|urlencode]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" />
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="[@SHARE_ON] LinkedIn" ICON="linkedin" HREF="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut|urlencode]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
-	<FUNC NAME="ARTICLE_BOUTON_PARTAGE" TITLE="Email" ICON="mail" HREF="mailto:?subject=[#TITRE|textebrut|urlencode]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
-</DEFMACRO>
-
-/**
- * Un bouton de partage.
- * @param {string} title - Titre du media.
- * @param {string} href - Lien de partage.
- * @param {string} [icon] - Nom de l'icone. Par défaut : title en lowercase.
- */
-<DEFFUNC NAME="ARTICLE_BOUTON_PARTAGE" REQUIRED="title, href" OPTIONAL="icon">
-	<IF COND="![#ICON]">
-		<LET VAR="icon">[#TITLE|strtolower]</LET>
-	</IF>
-	<a href="[#HREF]" title="[#TITLE]" aria-label="[#TITLE] ([@NEW_TAB])" target="_blank">
-		<FUNC NAME="BASE_ICON" ICON="[#ICON]" TITLE="[#TITLE]" INLINE="1" />
-	</a>
-</DEFFUNC>
-
-/**
- * Bouton lien "Pour citer".
- */
-<DEFMACRO NAME="ARTICLE_BOUTONS_REFERENCE">
-	<div class="article-buttons-group article-buttons__reference">
-		<a class="article-button--text" href="#quotation">[@POUR_CITER]</a>
-	</div>
-</DEFMACRO>
-
-/**
- * Bouton de téléchargement du PDF.
- */
-<DEFMACRO NAME="ARTICLE_BOUTONS_PDF">
-	<IF COND="[#ALTERFICHIER]"/>
-		<a class="article-button--text" role="button" href="[#ID|makeurlwithid|query_string('file', '1')]" aria-label="[@TELECHARGER_VERSION] [@FACSIMILE]">[@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
-	<ELSEIF COND="[#PDFGEN_URL] AND [#STATUS] GT 0"/>
-		<a class="article-button--text" role="button" href="[#PDFGEN_URL]" aria-label="[@TELECHARGER_VERSION] [@PDF]">[@PDF]</a>
-	</IF>
-</DEFMACRO>
-
-/**
- * Bouton de téléchargement de la TEI.
- */
-<DEFMACRO NAME="ARTICLE_BOUTONS_TEI">
-	<LOOP NAME="article_boutons_tei" TABLE="fichiers" WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = '[%IDENTIFIER_TEI]' AND document != ''" ORDER="rank" LIMIT="0,1">
-		<a class="article-button--text" role="button" href="[#ID|makeurlwithfile]" aria-label="[@TELECHARGER_VERSION] [@TEI]">[@TEI]</a>
-	</LOOP>
 </DEFMACRO>
 
 /**
@@ -667,19 +575,17 @@
 			<div class="article__quotation-contents">
 				<FUNC NAME="BASE_SECTION_HEADER" TITLE="[@POUR_CITER]" SECTION_ID="quotation" />
 
-				<LET VAR="reference_papier" ><MACRO NAME="ARTICLE_REFERENCE_PAPIER"/></LET>
-				<IF COND="[#REFERENCE_PAPIER]">
+				<IF COND="[%REFERENCE_PAPIER]">
 					<h3>[@REFERENCE_PAPIER]</h3>
 					<p class="article__quotation-print">
-						[#REFERENCE_PAPIER]
+						[%REFERENCE_PAPIER]
 					</p>
 				</IF>
 
-				<LET VAR="reference_electronique" ><MACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE" /></LET>
-				<IF COND="[#REFERENCE_ELECTRONIQUE]">
+				<IF COND="[%REFERENCE_ELECTRONIQUE]">
 					<h3>[@REFERENCE_ELECTRONIQUE]</h3>
 					<p class="article__quotation-digital">
-						[#REFERENCE_ELECTRONIQUE]
+						[%REFERENCE_ELECTRONIQUE]
 					</p>
 				</IF>
 			</div>

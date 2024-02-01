@@ -187,6 +187,10 @@ Pour afficher le DOI des articles, il faut définir le préfixe du DOI, c'est-à
 2. Dans l'espace privé, naviguer jusqu'à l'onglet "Administration" > Section "Configuration" > Options du site > Sélectionner "Extra" dans le menu déroulant
 3. Compléter l'option "Préfixe des DOI"
 
+À partir de la Nova 2.4, il est possible d'afficher les DOI des numéros en utilisant la dernière version de [lodel-options-extra](https://github.com/chapitreneuf/lodel-options-extra) et en renseignant "article,numero" dans l'option "Types présentant des DOI".
+
+La maquette Nova n'assure pas le dépôt automatique des DOI. Cela doit faire l'objet d'une intervention manuelle de la part des rédacteurs du site.
+
 #### Lien vers un fichier TEI
 
 1. Éditer l'article,
@@ -212,6 +216,14 @@ Les fichiers appelés sont les suivants :
 On peut trouver un exemple de favicons dans [`public/icons/`](./public/favicon/).
 
 La méthode d'inclusion utilisée est tirée de [ce billet](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs).
+
+## Plugins
+
+### PDFgen
+
+La maquette Nova est compatible avec [PDFgen](https://github.com/chapitreneuf/pdfgen), le générateur automatique de PDF développé par Chapitre neuf.
+
+À partir de la Nova 2.4 et de PDFgen 1.3, la génération est disponible pour les numéros de revues et pour les documents en attente de publication. Référez-vous à la [documentation de PDFgen](https://github.com/chapitreneuf/pdfgen) pour davantage d'informations.
 
 ## Mise à niveau
 

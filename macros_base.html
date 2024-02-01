@@ -95,6 +95,14 @@
 		<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
 		<LET VAR="body_class" GLOBAL="1">[%BODY_CLASS] lang-[#LANGUE] dir-[#DIR]</LET>
 	</IF>
+
+	<!--[ Prefixe DOI ]-->
+	<!--[ Par défaut on utilise le champ des options [#OPTIONS.EXTRA.DOI_PREFIXE] ]-->
+	<IF COND="[#OPTIONS.EXTRA.DOI_PREFIXE]">
+		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.EXTRA.DOI_PREFIXE]</LET>
+	<ELSE/> <!--[ Retrocompatibilité Nova 1.2 ]-->
+		<LET VAR="prefixedoi" GLOBAL="1">[#OPTIONS.NOVA.PREFIXEDOI]</LET>
+	</IF>
 </DEFMACRO>
 
 /**
@@ -654,4 +662,111 @@
 	</IF>
 
 	<span class="Z3988" title="url_ver=Z39.88-2004&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft_id=[#ENTITY_URL][#COINS_DOI][#COINS_METADATA|reg_replace('/\r|\n/', '')]"></span>
+</DEFMACRO>
+
+/**
+ * Affichage du DOI du document.
+ */
+<DEFMACRO NAME="BASE_DOI">
+	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
+		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
+	</IF>
+	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE]">
+		<p class="doi">DOI&nbsp;: <a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a></p>
+	</IF>
+</DEFMACRO>
+
+/**
+ * Boutons du header (facsimilé, print, partage).
+ */
+<DEFMACRO NAME="BASE_DOCUMENT_BOUTONS">
+	<div class="document-buttons">
+		<!--[ Boutons de partage ]-->
+		<div class="document-buttons-group document-buttons__partage">
+			<MACRO NAME="BASE_DOCUMENT_BOUTONS_PARTAGE" />
+		</div>
+
+		<!--[ Citer cet article ]-->
+		<IF COND="[#CLASS] EQ 'textes' AND [#TYPE] NE 'actualite' AND [#TYPE] NE 'informations'">
+			<MACRO NAME="BASE_DOCUMENT_BOUTONS_REFERENCE"/>
+		</IF>
+
+		<!--[ Formats detachables ]-->
+		<IF COND="[%PDF_TYPES] LIKE /([^,]+)/">
+			<LET VAR="show_pdf_link"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
+		</IF>
+		<IF COND="[#SHOW_PDF_LINK]">
+			<IF COND="[#CLASS] EQ 'textes' AND [#TEXTE_ACCESSIBLE]" />
+				<div class="document-buttons-group document-buttons__download">
+					<MACRO NAME="BASE_DOCUMENT_BOUTONS_PDF" />
+					<MACRO NAME="BASE_DOCUMENT_BOUTONS_TEI" />
+				</div>
+			<ELSEIF COND="[#CLASS] EQ 'publications'">
+				<div class="document-buttons-group document-buttons__download">
+					<MACRO NAME="BASE_DOCUMENT_BOUTONS_PDF" />
+				</div>
+			</IF>
+		</IF>
+	</div>
+</DEFMACRO>
+
+/**
+ * Boutons de partage.
+ */
+<DEFMACRO NAME="BASE_DOCUMENT_BOUTONS_PARTAGE">
+	<FUNC NAME="BASE_DOCUMENT_BOUTON_PARTAGE" TITLE="[@SHARE_ON] Facebook" ICON="facebook" HREF="https://www.facebook.com/sharer/sharer.php?u=[#SITEINFOS.URL]/[#ID|makeurlwithid]&t=[#TITRE|textebrut|urlencode]" />
+	<FUNC NAME="BASE_DOCUMENT_BOUTON_PARTAGE" TITLE="[@SHARE_ON] X" ICON="x" HREF="https://twitter.com/intent/tweet?source=[#SITEINFOS.URL]/[#ID|makeurlwithid]&text=[#TITRE|textebrut|urlencode]:%20[#SITEINFOS.URL]/[#ID|makeurlwithid]" />
+	<FUNC NAME="BASE_DOCUMENT_BOUTON_PARTAGE" TITLE="[@SHARE_ON] LinkedIn" ICON="linkedin" HREF="https://www.linkedin.com/shareArticle?mini=true&url=[#SITEINFOS.URL]/[#ID|makeurlwithid]&title=[#TITRE|textebrut|urlencode]&summary=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
+	<FUNC NAME="BASE_DOCUMENT_BOUTON_PARTAGE" TITLE="Email" ICON="mail" HREF="mailto:?subject=[#TITRE|textebrut|urlencode]&body=[%REFERENCE_ELECTRONIQUE|textebrut|trim|urlencode]" />
+</DEFMACRO>
+
+/**
+ * Un bouton de partage.
+ * @param {string} title - Titre du media.
+ * @param {string} href - Lien de partage.
+ * @param {string} [icon] - Nom de l'icone. Par défaut : title en lowercase.
+ */
+<DEFFUNC NAME="BASE_DOCUMENT_BOUTON_PARTAGE" REQUIRED="title, href" OPTIONAL="icon">
+	<IF COND="![#ICON]">
+		<LET VAR="icon">[#TITLE|strtolower]</LET>
+	</IF>
+	<a href="[#HREF]" title="[#TITLE]" aria-label="[#TITLE] ([@NEW_TAB])" target="_blank">
+		<FUNC NAME="BASE_ICON" ICON="[#ICON]" TITLE="[#TITLE]" INLINE="1" />
+	</a>
+</DEFFUNC>
+
+/**
+ * Bouton lien "Pour citer".
+ */
+<DEFMACRO NAME="BASE_DOCUMENT_BOUTONS_REFERENCE">
+	<div class="document-buttons-group document-buttons__reference">
+		<a class="document-button--text" href="#quotation">[@POUR_CITER]</a>
+	</div>
+</DEFMACRO>
+
+/**
+ * Bouton de téléchargement du PDF.
+ */
+<DEFMACRO NAME="BASE_DOCUMENT_BOUTONS_PDF">
+	<LOOP NAME="base_document_boutons_pdf" TABLE="fichiers" WHERE="type = 'facsimile' AND idparent = '[#ID]'" ORDER="rank" LIMIT="1">
+		<DO>
+			<a class="document-button--text" role="button" href="[#ID|makeurlwithid|query_string('file', '1')]" aria-label="[@TELECHARGER_VERSION] [@FACSIMILE]">[@FACSIMILE] <small>[PDF, [#DOCUMENT|nicefilesize]]</small></a>
+		</DO>
+		<ALTERNATIVE>
+			<IF COND="[#ALTERFICHIER]"/>
+				<a class="document-button--text" role="button" href="[#ID|makeurlwithid|query_string('file', '1')]" aria-label="[@TELECHARGER_VERSION] [@FACSIMILE]">[@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
+			<ELSEIF COND="[#PDFGEN_URL] AND ([#PDF_PREVIEW] OR [#STATUS] GT 0)"/>
+				<a class="document-button--text" role="button" href="[#PDFGEN_URL]" aria-label="[@TELECHARGER_VERSION] [@PDF]">[@PDF]</a>
+			</IF>
+		</ALTERNATIVE>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Bouton de téléchargement de la TEI.
+ */
+<DEFMACRO NAME="BASE_DOCUMENT_BOUTONS_TEI">
+	<LOOP NAME="BASE_DOCUMENT_BOUTONS_tei" TABLE="fichiers" WHERE="type = 'fichierannexe' AND idparent = [#ID] AND identifier = '[%IDENTIFIER_TEI]' AND document != ''" ORDER="rank" LIMIT="0,1">
+		<a class="document-button--text" role="button" href="[#ID|makeurlwithfile]" aria-label="[@TELECHARGER_VERSION] [@TEI]">[@TEI]</a>
+	</LOOP>
 </DEFMACRO>

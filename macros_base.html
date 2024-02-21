@@ -657,7 +657,10 @@
 		</LOOP>
 	</LET>
 
-	<IF COND="[%PREFIXEDOI] AND [#TYPE] EQ 'article'">
+	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
+		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
+	</IF>
+	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE] AND ![#PARAITRE]">
 		<LET VAR="coins_doi">&amp;rft_id=info:doi/[%PREFIXEDOI][#ID]</LET>
 	</IF>
 

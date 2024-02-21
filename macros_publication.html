@@ -199,6 +199,7 @@
  */
 <DEFMACRO NAME="PUBLICATION_SOMMAIRE">
 	<LET VAR="id_publi">[#ID]</LET>
+	ID_PUBLI [#ID_PUBLI]
 	<LET VAR="parent_is_rubrique"><IF COND="([#TYPE] EQ 'rubrique' OR [#TYPE] EQ 'rubriqueannuelle') AND [#DATEPUBLI|isadate]">1</IF></LET>
 	<LET VAR="profondeur">0</LET>
 

@@ -756,6 +756,11 @@
 			<IF COND="[#ALTERFICHIER]"/>
 				<a class="document-button--text" role="button" href="[#ID|makeurlwithid|query_string('file', '1')]" aria-label="[@TELECHARGER_VERSION] [@FACSIMILE]">[@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
 			<ELSEIF COND="[#PDFGEN_URL] AND ([#PDF_PREVIEW] OR [#STATUS] GT 0)"/>
+				<IF COND="[#PDFGEN_URL] LIKE /document=0/">
+					<LET VAR="pdfgen_url">[#SITEINFOS.URL]/?do=_pdfgen_get&amp;document=[#ID]&amp;lang=[#SITELANG]
+						<IF COND="[#PDFGEN_URL] LIKE /clearcache/">&amp;clearcache=1</IF>
+					</LET>
+				</IF>
 				<a class="document-button--text" role="button" href="[#PDFGEN_URL]" aria-label="[@TELECHARGER_VERSION] [@PDF]">[@PDF]</a>
 			</IF>
 		</ALTERNATIVE>

@@ -2,6 +2,14 @@
 
 ## Version 2.x
 
+### 2.4.1 (13/03/2024)
+
+* Suppression du DOI sur les numéros en prépublication.
+* Correction de l'affichage du DOI dans les métadonnées COinS des numéros.
+* Correction de l'URL du PDF automatique sur le numéro affiché en page d'accueil.
+
+Avec la contribution de @oliviercrouzet.
+
 ### 2.4.0 (01/02/2024)
 
 * Support des DOI au niveau des numéros (nécessite lodel-options-extra 1.0.1).

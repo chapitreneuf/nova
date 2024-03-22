@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.4.2 (22/03/2024)
+
+* Correction de l'affichage des images d'accroche des billets (clearfix).
+
 ### 2.4.1 (13/03/2024)
 
 * Suppression du DOI sur les numéros en prépublication.

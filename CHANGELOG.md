@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.4.3 (10/07/2024)
+
+* Correction de l'option TOC_DOC_ALTERTITRE.
+
 ### 2.4.2 (22/03/2024)
 
 * Correction de l'affichage des images d'accroche des billets (clearfix).

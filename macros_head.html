@@ -170,7 +170,11 @@
 	</IF>
 
 	<IF COND="[#ALTERFICHIER]"/>
-		<meta name="citation_pdf_url" content="[#ID|makeurlwithid|query_string('file', '1')]" />
+		<IF COND="[#PDFGEN_FACSIMILE_URL]">
+			<meta name="citation_pdf_url" content="[#PDFGEN_FACSIMILE_URL]" />
+		<ELSE/>
+			<meta name="citation_pdf_url" content="[#ID|makeurlwithid|query_string('file', '1')]" />
+		</IF>
 	<ELSEIF COND="[#PDFGEN_URL] AND [#STATUS] GT 0"/>
 		<meta name="citation_pdf_url" content="[#PDFGEN_URL]" />
 	</IF>

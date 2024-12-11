@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.4.4 (11/12/2024)
+
+* Support de la génération automatique d'une page de garde pour les PDF fac-similés des articles (nécessite PDFgen 1.4).
+
 ### 2.4.3 (10/07/2024)
 
 * Correction de l'option TOC_DOC_ALTERTITRE.

@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.4.5 (09/01/2025)
+
+* Dans la liste des entités liées à une entrée, afficher les traductions quand l'original n'est pas déjà affiché plus haut. Corrige les problèmes d'affichage des articles liés aux traducteurs (#131).
+* Dans la liste des index, quand le compteur du nombre d'entités liées à une entrée est nul alors chercher dans les traductions.
+
 ### 2.4.4 (11/12/2024)
 
 * Support de la génération automatique d'une page de garde pour les PDF fac-similés des articles (nécessite PDFgen 1.4).

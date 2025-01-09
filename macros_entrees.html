@@ -37,7 +37,7 @@
  */
 <DEFMACRO NAME="ENTREES_RACCOURCIS">
 	<IF COND="[%CURRENT_TYPE] LIKE /^mots?cle/">
-		<LOOP NAME="entrees_raccourcis" 
+		<LOOP NAME="entrees_raccourcis"
 			TABLE="entrytypes, entries"
 			SELECT="DISTINCT(idtype), type, title, altertitle, lang"
 			WHERE="type LIKE 'mot%cle%' AND entries.idtype = entrytypes.id"
@@ -81,7 +81,7 @@
 	<section id="index-list" class="index-list index-list--plat index-list--type-[%CURRENT_TYPE]">
 		<LOOP NAME="alphabetSpec">
 			<LET VAR="lettresql">[#LETTRE|replace("'", "\'")]</LET>
-			<LOOP NAME="entrees_index_plat_alpha" 
+			<LOOP NAME="entrees_index_plat_alpha"
 				TABLE="entries"
 				SELECT="id, g_name"
 				WHERE="type = '[#TYPE.TYPE]' AND UPPER(SUBSTRING([#FIELD],1,1)) = '[#LETTRESQL]'"
@@ -147,8 +147,16 @@
 		TABLE="relations, entities"
 		SELECT="count(id) AS n"
 		WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id [#NOT_IN_TRADUCTIONS]">
+
+		<!--[ Si pas de résultat alors chercher dans les traductions ]-->
 		<IF COND="[#N] EQ '0'">
-			[#G_NAME]
+			<LOOP NAME="entrees_entree_count_traductions" TABLE="relations, entities" SELECT="count(id) AS n" WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id">
+				<IF COND="[#N] EQ '0'">
+					[#G_NAME]
+				<ELSE/>
+					<a class="index-list__entree" href="[#ID|makeurlwithid]">[#G_NAME]</a> <span class="index-list__count">([#N])</span>
+				</IF>
+			</LOOP>
 		<ELSE/>
 			<a class="index-list__entree" href="[#ID|makeurlwithid]">[#G_NAME]</a> <span class="index-list__count">([#N])</span>
 		</IF>

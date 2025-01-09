@@ -69,7 +69,15 @@
 		TABLE="relations, entities"
 		SELECT="count(id) AS n"
 		WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id [#NOT_IN_TRADUCTIONS]">
-		<span class="index-list__count">([#N])</span>
+
+		<!--[ Si pas de résultat alors chercher dans les traductions ]-->
+		<IF COND="[#N] EQ '0'">
+			<LOOP NAME="personnes_nombre_entites_traductions" TABLE="relations, entities" SELECT="count(id) AS n" WHERE="id2 = '[#ID]' AND type NOT IN ('informations', 'actualite') AND id1 = entities.id AND entities.id">
+				<span class="index-list__count">([#N])</span>
+			</LOOP>
+		<ELSE/>
+			<span class="index-list__count">([#N])</span>
+		</IF>
 	</LOOP>
 </DEFMACRO>
 

@@ -57,11 +57,26 @@
  * Affichage des textes associés à l'entrée.
  */
 <DEFMACRO NAME="ENTREE_LISTE_TEXTES">
-	<LOOP NAME="entree_liste_textes" TABLE="textes" WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]" ORDER="datepubli DESC">
+	<LET ARRAY="entree_liste_textes_affiches[]" GLOBAL="1">-1</LET> <!--[ -1 est un workaround pour éviter un array vide ]-->
+	<LOOP NAME="entree_liste_textes_not_traductions" TABLE="textes" WHERE="identry='[#ID]' AND id [#NOT_IN_TRADUCTIONS]" ORDER="datepubli DESC">
+		<LET ARRAY="entree_liste_textes_affiches[]" GLOBAL="1">[#ID]</LET>
 		<li class="toc__li toc__li toc__li--class-textes">
 			<FUNC NAME="PUBLICATION_LI_TEXTE"/>
 		</li>
 	</LOOP>
+
+	<!--[ Affichage des entités traduite qui n'ont pas un original déjà affiché (utile pour les traducteurs) ]-->
+	<IF COND="[%RELATIONS_TRADUCTION]">
+		<LET VAR="in_traductions">IN ([%RELATIONS_TRADUCTION|implode(',')])</LET>
+		<LET VAR="not_in_textes_affiches">NOT IN ([%ENTREE_LISTE_TEXTES_AFFICHES|implode(',')])</LET>
+		<LOOP NAME="entree_liste_textes_traductions" TABLE="textes" WHERE="identry='[#ID]' AND id [#IN_TRADUCTIONS]" ORDER="datepubli DESC">
+			<LOOP NAME="entree_liste_textes_traductions_original_pas_deja_affiche" SELECT="id1 AS noselect" TABLE="relations" WHERE="nature = 'traduction' AND id1 = '[#ID]' AND id2 [#NOT_IN_TEXTES_AFFICHES]">
+				<li class="toc__li toc__li toc__li--class-textes">
+					<FUNC NAME="PUBLICATION_LI_TEXTE"/>
+				</li>
+			</LOOP>
+		</LOOP>
+	</IF>
 </DEFMACRO>
 
 /**

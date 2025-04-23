@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.4.6 (23/04/2025)
+
+* Correction mineure de couleurs.
+
 ### 2.4.5 (09/01/2025)
 
 * Dans la liste des entités liées à une entrée, afficher les traductions quand l'original n'est pas déjà affiché plus haut. Corrige les problèmes d'affichage des articles liés aux traducteurs (#131).

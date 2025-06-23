@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.4.8 (23/06/2025)
+
+* Amélioration de l'échappement des caractères dans currenturl_fixed.
+
 ### 2.4.7 (18/06/2025)
 
 * Échappement des caractères dans currenturl_fixed afin d'éviter les injections. Il est toutefois conseillé aux administrateurs d'avoir recours à des réécritures d'URL pour une sécurité accrue et une meilleure gestion des URL.

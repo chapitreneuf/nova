@@ -39,7 +39,7 @@
 	</LET>
 
 	<!--[ Fix de #CURRENTURL (protocole) ]-->
-	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')|strip_tags]</LET>
+	<LET VAR="currenturl_fixed">[#CURRENTURL|reg_replace('/:\d+/', '')|htmlspecialchars]</LET>
 
 	<!--[ ID du numero, rubrique ou rubrique annuelle ]-->
 	<LET VAR="idrealparent">[#ID|getParentByType('numero')]</LET>

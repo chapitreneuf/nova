@@ -208,9 +208,9 @@ Pour ajouter un texte alternatif aux illustrations dans les articles :
 1. Mettre à jour [lodel-textfunc](https://github.com/chapitreneuf/lodel-textfunc) vers la version 2.1.0 (septembre 2025).
 2. Ajouter le style interne `figdesc` dans le modèle éditorial.
 
-> **Style interne**
-> id: `figdesc`
-> Style précédent
+> * **Style interne** <br>
+> id: `figdesc` <br>
+> Style précédent <br>
 > xpath: `//*[@rend='figDesc']`
 
 Les articles doivent alors être importés en TEI. Chaque texte alternatif doit être renseigné dans un élément `<p rend="figDesc">` et placé à la suite de l'image, de la légende, et/ou du crédit. Avec Métopes, un export spécifique peut permettre d'automatiser cette étape.

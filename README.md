@@ -10,7 +10,9 @@ La maquette Nova est compatible avec [le modèle éditorial d'OpenEdition Journa
 
 En plus des comportements habituellement supportés par le le modèle éditorial d'OpenEdition Journals, la maquette Nova permet l'affichage (optionnel) des données suivantes :
 
+* Les DOI des documents (textes et numéros) ;
 * Le champ `chapo` dans les articles ;
+* Les textes alternatifs des illustrations ;
 * Les liens vers les fiches des auteurs dans les bases de données suivantes : IdRef, BNF, Orcid, HAL, Isni ;
 * Le courriel des auteurs (déjà supporté par le modèle éditorial d'OEJ mais non affiché) ;
 * La mise en valeur d'un fichier TEI attaché à l'article ;

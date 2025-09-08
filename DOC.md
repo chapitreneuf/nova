@@ -201,6 +201,24 @@ La maquette Nova n'assure pas le dépôt automatique des DOI. Cela doit faire l'
 6. Enregistrer le formulaire avec le bouton "Terminer",
 7. Ne pas oublier que le document doit être "publié" pour qu'il soit visible en ligne.
 
+#### Textes alternatifs des illustrations
+
+Pour ajouter un texte alternatif aux illustrations dans les articles :
+
+1. Mettre à jour [lodel-textfunc](https://github.com/chapitreneuf/lodel-textfunc) vers la version 2.1.0 (septembre 2025).
+2. Ajouter le style interne `figdesc` dans le modèle éditorial.
+
+> **Style interne**
+> id: `figdesc`
+> Style précédent
+> xpath: `//*[@rend='figDesc']`
+
+Les articles doivent alors être importés en TEI. Chaque texte alternatif doit être renseigné dans un élément `<p rend="figDesc">` et placé à la suite de l'image, de la légende, et/ou du crédit. Avec Métopes, un export spécifique peut permettre d'automatiser cette étape.
+
+En l'absence de texte alternatif renseigné c'est le titre (ou la légende) de l'illustration qui sera utilisé par défaut.
+
+Notez que ce format de données n'est pas standard et ne sera donc pas reconnu par OpenEdition Journals lors de la migration.
+
 ### Favicon
 
 À partir de la Nova 2.3 il est possible d'ajouter un favicon personnalisé en indiquant dans l'option `favicon_dir` le dossier contenant les icônes. Il est conseillé de placer les icônes directement à la racine du domaine (`/`).

@@ -208,7 +208,7 @@ Pour ajouter un texte alternatif aux illustrations dans les articles :
 1. Mettre à jour [lodel-textfunc](https://github.com/chapitreneuf/lodel-textfunc) vers la version 2.1.0 (septembre 2025).
 2. Ajouter le style interne `figdesc` dans le modèle éditorial.
 
-> * **Style interne** <br>
+> **Style interne** <br>
 > id: `figdesc` <br>
 > Style précédent <br>
 > xpath: `//*[@rend='figDesc']`

@@ -2,6 +2,12 @@
 
 ## Version 2.x
 
+### 2.5.0 (21/10/2025)
+
+* Ajout de l'option REFERENCE_LINK.
+* Affichage des DOI à la place de l'URL dans les références des textes. Par défaut l'URL est affichée quand aucun DOI n'est disponible.
+* La macro BASE_DOI devient une fonction.
+
 ### 2.4.8 (23/06/2025)
 
 * Amélioration de l'échappement des caractères dans currenturl_fixed.

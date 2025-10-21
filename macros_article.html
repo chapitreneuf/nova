@@ -422,7 +422,7 @@
 			<IF COND="[#PDFGEN_FACSIMILE_URL] AND ([#PDF_PREVIEW] OR [#STATUS] GT 0)">
 				<LET VAR="alterfichier_href">[#PDFGEN_FACSIMILE_URL]</LET>
 			</IF>
-			<a class="button" role="button" href="[#ALTERFICHIER_HREF]" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@TELECHARGER_VERSION] [@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
+			<a class="button matomo_download" role="button" href="[#ALTERFICHIER_HREF]" title="[#TITRE|removenotes|textebrut|htmlspecialchars(ENT_COMPAT, 'UTF-8')]">[@TELECHARGER_VERSION] [@FACSIMILE] <small>[PDF, [#ALTERFICHIER|nicefilesize]]</small></a>
 		</section>
 	</IF>
 </DEFMACRO>

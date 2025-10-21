@@ -669,15 +669,31 @@
 
 /**
  * Affichage du DOI du document.
+ * @param {string} [wrap_tag] - Tag de l'élément parent. Défaut : "p".
+ * @param {string} [classname] - Class de l'élément parent. Défaut : "doi".
+ * @param {boolean} [no_label] - Si vrai, ne pas précéder le DOI de la mention "DOI".
+ * @param {boolean} [raw] - Si vrai, retourne le DOI en texte brut.
  */
-<DEFMACRO NAME="BASE_DOI">
+<DEFFUNC NAME="BASE_DOI" OPTIONAL="NO_TAG, CLASSNAME, NO_LABEL, RAW">
 	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
 		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
 	</IF>
 	<IF COND="[%PREFIXEDOI] AND [#SHOWTHISTYPE] AND ![#PARAITRE]">
-		<p class="doi">DOI&nbsp;: <a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a></p>
+		<IF COND="[#RAW]">
+			[%PREFIXEDOI][#ID]
+		<ELSE>
+			<IF COND="![#WRAP_TAG]">
+				<LET VAR="wrap_tag">p</LET>
+			</IF>
+			<IF COND="![#CLASSNAME]">
+				<LET VAR="classname">doi</LET>
+			</IF>
+			<[#WRAP_TAG] class="[#CLASSNAME]">
+				<IF COND="![#NO_LABEL]">DOI&nbsp;: </IF><a href="https://dx.doi.org/[%PREFIXEDOI][#ID]">[%PREFIXEDOI][#ID]</a>
+			</[#WRAP_TAG]>
+		</IF>
 	</IF>
-</DEFMACRO>
+</DEFFUNC>
 
 /**
  * Boutons du header (facsimilé, print, partage).

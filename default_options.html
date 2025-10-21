@@ -156,6 +156,12 @@
 <LET VAR="pdf_types" GLOBAL="1">editorial,article,compterendu,notedelecture,chronique,numero</LET>
 
 <!--[
+	Type de lien affiché dans les références. Par défaut on affiche le DOI si disponible ou l'URL sinon. Valeurs possibles : doi, url, default.
+	@type {string}
+]-->
+<LET VAR="reference_link" GLOBAL="1">default</LET>
+
+<!--[
 	Liste des types d'entité pour lesquels afficher un doi (les séparer par une virgule).
 	@type {string}
 ]-->

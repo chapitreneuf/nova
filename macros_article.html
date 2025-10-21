@@ -81,7 +81,7 @@
 		<MACRO NAME="ARTICLE_NUMERODOCUMENT" />
 		<MACRO NAME="ARTICLE_TITRES" />
 		<MACRO NAME="ARTICLE_PERSONNES" />
-		<MACRO NAME="BASE_DOI"/>
+		<FUNC NAME="BASE_DOI"/>
 		<MACRO NAME="ARTICLE_PAGINATION" />
 		<MACRO NAME="ARTICLE_NOTICEBIBLIO" />
 		<MACRO NAME="ARTICLE_TRADUCTIONS" />
@@ -611,7 +611,18 @@
  * Référence électronique.
  */
 <DEFMACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE">
-	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. URL&nbsp;: [#SITEINFOS.URL]/[#ID|makeurlwithid]
+	<LET VAR="refdoi"><FUNC NAME="BASE_DOI" WRAP_TAG="span" /></LET>
+	<LET VAR="refurl">URL&nbsp;: <a href="[#SITEINFOS.URL]/[#ID|makeurlwithid]">[#SITEINFOS.URL]/[#ID|makeurlwithid]</a></LET>
+
+	<IF COND="[%REFERENCE_LINK] EQ 'url'">
+		<LET VAR="reflink">[#REFURL]</LET>
+	<ELSEIF COND="[%REFERENCE_LINK] EQ 'doi'"/>
+		<LET VAR="reflink">[#REFDOI]</LET>
+	<ELSE/>
+		<LET VAR="reflink">[#REFDOI|defaultvalue([#REFURL])]</LET>
+	</IF>
+
+	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. [#REFLINK]</a>
 </DEFMACRO>
 
 /**

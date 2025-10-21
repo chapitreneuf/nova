@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.5.1 (21/10/2025)
+
+* Tracking des fichiers téléchargés (PDF facsimilé, PDGgen, TEI) avec Matomo.
+
 ### 2.5.0 (21/10/2025)
 
 * Ajout de l'option REFERENCE_LINK.

@@ -7,6 +7,7 @@
 	<LET VAR="topbar_contents">
 		<MACRO NAME="TOPBAR_BRAND"/>
 		<MACRO NAME="TOPBAR_LINKS"/>
+		<MACRO NAME="TOPBAR_MAIL"/>
 		<MACRO NAME="TOPBAR_RSS"/>
 		<MACRO NAME="TOPBAR_SITELANG"/>
 	</LET>
@@ -74,6 +75,19 @@
 			</li>
 		</LOOP>
 	</LOOP>
+</DEFMACRO>
+
+/**
+ * Icone vers le mail.
+ */
+<DEFMACRO NAME="TOPBAR_MAIL">
+	<IF COND="[%TOPBAR_DISPLAY_MAIL]">
+		<li class="nav-item">
+			<a class="nav-link" href="mailto:[%TOPBAR_DISPLAY_MAIL]">
+				<FUNC NAME="BASE_ICON" ICON="mail" TITLE="[@MAIL]" CLASSNAME="topbar-icon topbar-icon--inline topbar-icon--identifier-mail" INLINE="1" />
+			</a>
+		</li>
+	</IF>
 </DEFMACRO>
 
 /**

@@ -71,6 +71,7 @@
 <contents name="lodel_admin" textgroup="site" status="2">Acesso reservado</contents>
 <contents name="logo_du_site" textgroup="site" status="2">Logotipo do site</contents>
 <contents name="logos" textgroup="site" status="2">Em colaboração com</contents>
+<contents name="mail" textgroup="site" status="2">Enviar um email</contents>
 <contents name="media_expected" textgroup="site" status="2">O mídia pesquisado não foi encontrado.</contents>
 <contents name="menu_principal_afficher" textgroup="site" status="2">Exibir o menu principal</contents>
 <contents name="menu_principal_masquer" textgroup="site" status="2">Esconder o menu principal</contents>

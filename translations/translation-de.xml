@@ -72,6 +72,7 @@
 <contents name="lodel_admin" textgroup="site" status="2">Eingeschränkter Zugang</contents>
 <contents name="logo_du_site" textgroup="site" status="2">Logo der Seite</contents>
 <contents name="logos" textgroup="site" status="2">Mitgliedschaften/Partner</contents>
+<contents name="mail" textgroup="site" status="2">Senden Sie eine E-Mail</contents>
 <contents name="media_expected" textgroup="site" status="2">Das angeforderte Medium existiert nicht.</contents>
 <contents name="menu_principal_afficher" textgroup="site" status="2">Hauptmenü einblenden</contents>
 <contents name="menu_principal_masquer" textgroup="site" status="2">Hauptmenü ausblenden</contents>

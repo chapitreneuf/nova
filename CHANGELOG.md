@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.5.2 (17/11/2025)
+
+* Ajout de l'option TOPBAR_DISPLAY_MAIL pour afficher un lien vers les mails dans la topbar (nécessaire car le protocole `mailto:` n'est pas accepté par Lodel dans les URL des notices de sites).
+
 ### 2.5.1 (21/10/2025)
 
 * Tracking des fichiers téléchargés (PDF facsimilé, PDGgen, TEI) avec Matomo.

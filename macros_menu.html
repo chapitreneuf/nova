@@ -281,22 +281,24 @@
 		<LET VAR="partenaires_section_class">sr-only</LET>
 	</IF>
 
-	<LOOP NAME="menu_partenaires" TABLE="liens" WHERE="type = 'noticedesite' AND parent = '[#PUBLI_IDENTIFIER]'" SELECT="titre, url, vignette" ORDER="rank">
-		<BEFORE>
-			<section class="main-menu__section main-menu__section--partenaires">
-				<h2 class="main-menu__section-title [#PARTENAIRES_SECTION_CLASS]">[@LOGOS]</h2>
-				<ul class="main-menu__logos">
-		</BEFORE>
-		<DO>
-			<li class="main-menu__logo">
-				<a href="[#URL]" title="[#TITRE]" aria-label="[@VISITER_SITE] [#TITRE|textebrut]">
-					<img class="main-menu__logo-image" alt="[@LOGO_DU_SITE] [#TITRE|textebrut]" src="[#VIGNETTE|vignette([%SIZE_PARTENAIRE])]" />
-				</a>
-			</li>
-		</DO>
-		<AFTER>
-				</ul>
-			</section>
-		</AFTER>
+	<LOOP NAME="menu_partenaires_parent" TABLE="publications" WHERE="identifier = '[#PUBLI_IDENTIFIER]'" SELECT="id, titre AS titrecollection">
+		<LOOP NAME="menu_partenaires" TABLE="liens" WHERE="type = 'noticedesite' AND idparent = '[#ID]'" SELECT="titre, url, vignette" ORDER="rank">
+			<BEFORE>
+				<section class="main-menu__section main-menu__section--partenaires">
+					<h2 class="main-menu__section-title [#PARTENAIRES_SECTION_CLASS]">[#TITRECOLLECTION|defaultvalue([@LOGOS])]</h2>
+					<ul class="main-menu__logos">
+			</BEFORE>
+			<DO>
+				<li class="main-menu__logo">
+					<a href="[#URL]" title="[#TITRE]" aria-label="[@VISITER_SITE] [#TITRE|textebrut]">
+						<img class="main-menu__logo-image" alt="[@LOGO_DU_SITE] [#TITRE|textebrut]" src="[#VIGNETTE|vignette([%SIZE_PARTENAIRE])]" />
+					</a>
+				</li>
+			</DO>
+			<AFTER>
+					</ul>
+				</section>
+			</AFTER>
+		</LOOP>
 	</LOOP>
 </DEFFUNC>

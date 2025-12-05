@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.5.3 (05/12/2025)
+
+* Ajout de l'option PARTENAIRES_SHOW_TITLE pour afficher le titre de la section des logos partenaires dans le menu principal.
+* Le titre de la section des logos partenaires est désormais celui de la collection parente (en non plus une variable de traduction).
+
 ### 2.5.2 (17/11/2025)
 
 * Ajout de l'option TOPBAR_DISPLAY_MAIL pour afficher un lien vers les mails dans la topbar (nécessaire car le protocole `mailto:` n'est pas accepté par Lodel dans les URL des notices de sites).

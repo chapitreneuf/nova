@@ -1,0 +1,156 @@
+<lodeltranslations>
+<translations>
+<row><lang>it</lang>
+<title>Italiano</title>
+<textgroups>site</textgroups>
+<translators>Miranda Palombi</translators>
+<modificationdate>0000-00-00</modificationdate>
+<creationdate>0000-00-00</creationdate>
+<texts>
+<contents name="acceder_page" textgroup="site" status="2">Accedere alla pagina</contents>
+<contents name="accueil" textgroup="site" status="2">Home</contents>
+<contents name="actualites" textgroup="site" status="2">Attualità</contents>
+<contents name="and" textgroup="site" status="2">e</contents>
+<contents name="annexe" textgroup="site" status="2">Allegato</contents>
+<contents name="annonce_alias" textgroup="site" status="2">Alias</contents>
+<contents name="ariane" textgroup="site" status="2">Breadcrumb</contents>
+<contents name="article_precedent" textgroup="site" status="2">Articolo precedente</contents>
+<contents name="article_suivant" textgroup="site" status="2">Articolo seguente</contents>
+<contents name="article_traduction_de" textgroup="site" status="2">Tradotto da:</contents>
+<contents name="article_traductions_autres" textgroup="site" status="2">Altra(e) traduzione(i) di quest'articolo:</contents>
+<contents name="article_traductions" textgroup="site" status="2">Traduzione(i):</contents>
+<contents name="atteindre_section" textgroup="site" status="2">Andare alla sezione</contents>
+<contents name="aucun_resultat" textgroup="site" status="2">Nessun risultato</contents>
+<contents name="auteur" textgroup="site" status="2">Autore</contents>
+<contents name="auteurs" textgroup="site" status="2">Autori</contents>
+<contents name="avertissement_texte_integral" textgroup="site" status="2">Questo documento sarà pubblicato online in versione integrale in</contents>
+<contents name="bibliographie" textgroup="site" status="2">Bibliografia</contents>
+<contents name="capturedecran_du_site" textgroup="site" status="2">Screenshot del sito</contents>
+<contents name="choisir_langue" textgroup="site" status="2">Scegliere la lingua</contents>
+<contents name="choisir_sitelang" textgroup="site" status="2">Scegliere la lingua del sito</contents>
+<contents name="commander_numero" textgroup="site" status="2">Ordinare il numero</contents>
+<contents name="consulte_le" textgroup="site" status="2">consultato il</contents>
+<contents name="credits" textgroup="site" status="2">Crediti</contents>
+<contents name="dedicace" textgroup="site" status="2">Dedica</contents>
+<contents name="dernieres_entrees_index" textgroup="site" status="2">Ultime inserzioni nell'indice</contents>
+<contents name="derniers_articles" textgroup="site" status="2">Ultimi articoli</contents>
+<contents name="description" textgroup="site" status="2">Descrizione</contents>
+<contents name="directeur_publication" textgroup="site" status="2">A cura di</contents>
+<contents name="docannexe" textgroup="site" status="2">Documento in allegato</contents>
+<contents name="docannexes" textgroup="site" status="2">Documenti</contents>
+<contents name="document_precedent" textgroup="site" status="2">Documento precedente</contents>
+<contents name="document_suivant" textgroup="site" status="2">Documento seguente</contents>
+<contents name="document" textgroup="site" status="2">Documento</contents>
+<contents name="du_meme_auteur" textgroup="site" status="2">Articoli dello stesso autore</contents>
+<contents name="ecrire_a" textgroup="site" status="2">Mandare una mail a</contents>
+<contents name="edite_avec_lodel" textgroup="site" status="2">Edito con Lodel</contents>
+<contents name="edite_par" textgroup="site" status="2">Edito da</contents>
+<contents name="editeur_scientifique" textgroup="site" status="2">Editore scientifico</contents>
+<contents name="editeurs_scientifiques" textgroup="site" status="2">Editori scientifici</contents>
+<contents name="en_ligne" textgroup="site" status="2">Online</contents>
+<contents name="entrees_index" textgroup="site" status="2">Inserzioni dell'indice</contents>
+<contents name="errata" textgroup="site" status="2">Errata-corrige</contents>
+<contents name="erreur_404" textgroup="site" status="2">Errore 404</contents>
+<contents name="erreur_500" textgroup="site" status="2">Errore 500</contents>
+<contents name="facsimile" textgroup="site" status="2">Facsimile</contents>
+<contents name="fichier_original" textgroup="site" status="2">File originale</contents>
+<contents name="historique" textgroup="site" status="2">Cronologia</contents>
+<contents name="illustration_credits" textgroup="site" status="2">Crediti</contents>
+<contents name="illustration_legende" textgroup="site" status="2">Leggenda</contents>
+<contents name="illustration_titre" textgroup="site" status="2">Titolo</contents>
+<contents name="index_par_annees" textgroup="site" status="2">Per annate</contents>
+<contents name="index_par_langues" textgroup="site" status="2">Per lingue</contents>
+<contents name="index" textgroup="site" status="2">Indice</contents>
+<contents name="internal_error" textgroup="site" status="2">Questa pagina è momentaneamente indisponibile. Riprova più tardi</contents>
+<contents name="isbn" textgroup="site" status="2">ISBN</contents>
+<contents name="issn_electronique" textgroup="site" status="2">ISSN elettronico</contents>
+<contents name="langue_choisie" textgroup="site" status="2">Lingua selezionata</contents>
+<contents name="licence" textgroup="site" status="2">Diritti d'autore</contents>
+<contents name="lien_rss" textgroup="site" status="2">Abbonarsi a questo feed</contents>
+<contents name="lien_utiles" textgroup="site" status="2">Link utili</contents>
+<contents name="lodel_admin" textgroup="site" status="2">Accesso riservato</contents>
+<contents name="logo_du_site" textgroup="site" status="2">Logo del sito</contents>
+<contents name="logos" textgroup="site" status="2">Affiliazioni/Partenariati</contents>
+<contents name="mail" textgroup="site" status="2">Mandare una mail</contents>
+<contents name="media_expected" textgroup="site" status="2">Il media richiesto non esiste</contents>
+<contents name="menu_principal_afficher" textgroup="site" status="2">Mostrare il menù principale</contents>
+<contents name="menu_principal_masquer" textgroup="site" status="2">Nascondere il menù principale</contents>
+<contents name="menu_principal" textgroup="site" status="2">Menù principale</contents>
+<contents name="menu" textgroup="site" status="2">Menù</contents>
+<contents name="mis_en_ligne_le" textgroup="site" status="2">pubblicato il</contents>
+<contents name="nav_a_paraitre" textgroup="site" status="2">Numeri in uscita</contents>
+<contents name="nav_resumes" textgroup="site" status="2">Ultimi numeri</contents>
+<contents name="nav_texte_integral" textgroup="site" status="2">Numeri integrali</contents>
+<contents name="naviguer_dans_larticle" textgroup="site" status="2">Navigare nell'articolo</contents>
+<contents name="naviguer_par_lettre" textgroup="site" status="2">Navigazione alfabetica</contents>
+<contents name="ndla" textgroup="site" status="2">Note dell'autore</contents>
+<contents name="ndlr" textgroup="site" status="2">Note della redazione</contents>
+<contents name="new_tab" textgroup="site" status="2">nuova pagina</contents>
+<contents name="notefin" textgroup="site" status="2">Nota di fine</contents>
+<contents name="note_numero" textgroup="site" status="2">nota numero</contents>
+<contents name="note_retour" textgroup="site" status="2">Ritorno al testo</contents>
+<contents name="notes" textgroup="site" status="2">Note</contents>
+<contents name="notice_revisee_le" textgroup="site" status="2">Notizia revisionata il</contents>
+<contents name="numero_precedent" textgroup="site" status="2">Numero precedente</contents>
+<contents name="numero_suivant" textgroup="site" status="2">Numero seguente</contents>
+<contents name="numero" textgroup="site" status="2">numero</contents>
+<contents name="page_not_found" textgroup="site" status="2">La pagina richiesta non esiste</contents>
+<contents name="pagination" textgroup="site" status="2">Paginazione</contents>
+<contents name="pagination_aller_page" textgroup="site" status="2">Andare alla pagina</contents>
+<contents name="pagination_page_courante" textgroup="site" status="2">Pagina attuale</contents>
+<contents name="par" textgroup="site" status="2">da (cela dépend du sens, si c'est un complément d'agent - fait PAR qqn - ce sera DA)</contents>
+<contents name="paru_dans" textgroup="site" status="2">Uscito in</contents>
+<contents name="pdf" textgroup="site" status="2">PDF</contents>
+<contents name="permalien" textgroup="site" status="2">Permalink</contents>
+<contents name="plan_du_site" textgroup="site" status="2">Mappa del sito</contents>
+<contents name="pour_citer" textgroup="site" status="2">Citare quest'articolo</contents>
+<contents name="precedent" textgroup="site" status="2">Precedente</contents>
+<contents name="publications_de" textgroup="site" status="2">Pubblicazioni di</contents>
+<contents name="recherche" textgroup="site" status="2">Ricerca</contents>
+<contents name="rechercher" textgroup="site" status="2">Ricercare</contents>
+<contents name="reference_electronique" textgroup="site" status="2">Fonte numerica</contents>
+<contents name="reference_oeuvre" textgroup="site" status="2">Fonte(i):</contents>
+<contents name="reference_papier" textgroup="site" status="2">Fonte cartacea</contents>
+<contents name="ressources_auteur_autres_bases" textgroup="site" status="2">Altre risorse dello stesso autore</contents>
+<contents name="resume" textgroup="site" status="2">Riassunto</contents>
+<contents name="resumes" textgroup="site" status="2">Riassunti</contents>
+<contents name="retour_en_haut" textgroup="site" status="2">Ritorno a inizio pagina</contents>
+<contents name="retour_home" textgroup="site" status="2">Ritorno alla homepage del sito</contents>
+<contents name="retour_index" textgroup="site" status="2">Ritorno all'indice</contents>
+<contents name="rss" textgroup="site" status="2">Flussi di informazioni</contents>
+<contents name="rubrique_precedente" textgroup="site" status="2">Rubrica precedente</contents>
+<contents name="rubrique_suivante" textgroup="site" status="2">Rubrica seguente</contents>
+<contents name="share_on" textgroup="site" status="2">Condividere su</contents>
+<contents name="site_editeur" textgroup="site" status="2">Sito dell'editore</contents>
+<contents name="skip_to_content" textgroup="site" status="2">Andare al contenuto</contents>
+<contents name="skip_to_menu" textgroup="site" status="2">Andare al menù</contents>
+<contents name="skip_to_search" textgroup="site" status="2">Andare alla ricerca</contents>
+<contents name="sommaire_de_la_rubrique" textgroup="site" status="2">Sommario della rubrica</contents>
+<contents name="sommaire_du_numero" textgroup="site" status="2">Sommario del numero</contents>
+<contents name="sommaire" textgroup="site" status="2">Sommario</contents>
+<contents name="suivant" textgroup="site" status="2">Seguente</contents>
+<contents name="table_des_illustrations" textgroup="site" status="2">Illustrazioni</contents>
+<contents name="tei" textgroup="site" status="2">TEI</contents>
+<contents name="telecharger_pdf_embed" textgroup="site" status="2">Scaricare il PDF</contents>
+<contents name="telecharger_version" textgroup="site" status="2">Versione</contents>
+<contents name="texte_extrait" textgroup="site" status="2">Estratto</contents>
+<contents name="texte_integral" textgroup="site" status="2">Testo</contents>
+<contents name="texte" textgroup="site" status="2">Testo</contents>
+<contents name="themes" textgroup="site" status="2">Temi</contents>
+<contents name="toc" textgroup="site" status="2">Mappa</contents>
+<contents name="toc_texte" textgroup="site" status="2">Mappa del testo</contents>
+<contents name="tous_les_numeros" textgroup="site" status="2">Tutti i numeri</contents>
+<contents name="tous_les_textes" textgroup="site" status="2">Tutti i testi…</contents>
+<contents name="traducteur" textgroup="site" status="2">Traduttore</contents>
+<contents name="traducteurs" textgroup="site" status="2">Traduttori</contents>
+<contents name="traduction_de" textgroup="site" status="2">Traduzione di</contents>
+<contents name="tweets" textgroup="site" status="2">Ultimi tweet</contents>
+<contents name="twitter_alt" textgroup="site" status="2">La visualizzazione dei tweet è stata bloccata dal vostro browser o dal vostro ad blocker</contents>
+<contents name="twitter_link" textgroup="site" status="2">Consultare il feed su Twitter</contents>
+<contents name="twitter_loading" textgroup="site" status="2">Caricamento dei tweet in corso</contents>
+<contents name="vignette_document" textgroup="site" status="2">Vignetta del documento</contents>
+<contents name="visiter_site" textgroup="site" status="2">Visitare il sito</contents>
+</texts>
+</row>
+</translations>
+</lodeltranslations>

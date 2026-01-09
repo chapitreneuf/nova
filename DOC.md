@@ -136,6 +136,21 @@ La maquette Nova détecte les problèmes de contraste entre le texte et son arri
 
 Les contrastes des couleurs des images, icônes et médias embarqués ne sont pas vérifiés par la Nova.
 
+### Appel de sources additionnelles
+
+On veillera à insérer l'appel de tous les fichiers macros additionnels au début de la macro CUSTOM_INIT, dans l'ordre des surcharges.
+
+```html
+<DEFMACRO NAME="CUSTOM_INIT">
+  <!--[ On appelle la macro de la dépendance foo : macros_foo.html ]-->
+  <USE MACROFILE="macros_foo.html" />
+
+  <!--[ Suite de CUSTOM_INIT… ]-->
+</DEFMACRO>
+```
+
+Ce fonctionnement peut notamment permettre de superposer les couches de dépendances, par exemple pour gérer une feuille de style commune à tous les sites d'une même plateforme dans un dépôt séparé.
+
 ## Paramétrage du site
 
 ### Nommage des élément généraux

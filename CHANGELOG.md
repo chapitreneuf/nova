@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.5.4 (11/05/2026)
+
+* Ajout du logo Bluesky.
+* Ajout de la langue italienne.
+
 ### 2.5.3 (05/12/2025)
 
 * Ajout de l'option PARTENAIRES_SHOW_TITLE pour afficher le titre de la section des logos partenaires dans le menu principal.

@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.5.5 (24/06/2026)
+
+* Amélioration de la résolution par défaut des logos partenaires (option SIZE_PARTENAIRE).
+
 ### 2.5.4 (11/05/2026)
 
 * Ajout du logo Bluesky.

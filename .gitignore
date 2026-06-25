@@ -10,5 +10,11 @@ jspm_packages/
 # Public
 public/css
 
+# Custom
+less/custom.less
+less/fonts.less
+less/pdf.less
+macros_custom.html
+
 # VSCode
 .vscode/

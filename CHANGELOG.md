@@ -2,6 +2,10 @@
 
 ## Version 2.x
 
+### 2.5.6 (25/06/2026)
+
+* Ajout de l'option LESS `@not-numbered-types` pour définir les types de textes dont les paragraphes ne doivent pas être numérotés.
+
 ### 2.5.5 (24/06/2026)
 
 * Amélioration de la résolution par défaut des logos partenaires (option SIZE_PARTENAIRE).

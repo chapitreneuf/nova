@@ -1606,7 +1606,7 @@ img {
   .font-size(text);
 }
 
-body:not(.type-informations):not(.type-actualite) .article__text-contents {
+body:not(@{not-numbered-types}) .article__text-contents {
   .numbered();
 }
 

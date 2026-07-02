@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Copy macros_custom.dist.html to macros_custom.html is it doesn't already exists
 
 const fs = require("fs").promises;

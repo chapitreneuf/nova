@@ -2,6 +2,13 @@
 
 ## Version 2.x
 
+### 2.5.7 (2/07/2026)
+
+* Import automatique optionnel de `fonts.less` dans `site.less`.
+* Ajout de la transpilation optionnelle de `pdf.less`vers `public/css/pdf.css` avec `npm run css`.
+* Déplacement de `DOC.md` dans `doc/index.md`.
+* Ajout d'une [documentation sur l'ajout de webfonts à un site Nova](./doc/webfonts.md).
+
 ### 2.5.6 (25/06/2026)
 
 * Ajout de l'option LESS `@not-numbered-types` pour définir les types de textes dont les paragraphes ne doivent pas être numérotés.

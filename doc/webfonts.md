@@ -35,7 +35,7 @@ On peut également utiliser ces variables dans des règles CSS habituelles :
 
 ## Intégration des polices dans PDFgen
 
-**Prérequis : PDFgen 1.50 ou supérieur.**
+**Prérequis : PDFgen 1.5.0 ou supérieur.**
 
 Pour que les PDF générés automatiquement pour la revue utilisent les polices déclarées dans les étapes précédentes :
 

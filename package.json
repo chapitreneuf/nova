@@ -18,9 +18,7 @@
   ],
   "scripts": {
     "build": "npm run css",
-    "css": "npm run css:site && npm run css:pdf",
-    "css:pdf": "test -f less/pdf.less && lessc less/pdf.less public/css/pdf.css --autoprefix",
-    "css:site": "lessc less/site.less public/css/site.css --autoprefix",
+    "css": "node scripts/build-css.js",
     "copy-dist": "node scripts/copy-dist.js",
     "postinstall": "npm run css && npm run copy-dist",
     "gulp": "npm run css"

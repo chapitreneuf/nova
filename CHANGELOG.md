@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.5.8 (2/07/2026)
+
+* Correction d'une erreur de la tâche `css` quand elle est lancée dans par `postinstall` après `npm install`.
+* L'exécution de LESS est déplacée dans `scripts/build-css.js`.
+
 ### 2.5.7 (2/07/2026)
 
 * Import automatique optionnel de `fonts.less` dans `site.less`.

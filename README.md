@@ -23,7 +23,7 @@ La version 2 de la maquette Nova améliore considérablement l'accessibilité de
 
 ## Documentation
 
-Les instructions pour installer, utiliser et maintenir la maquette Nova se trouvent dans [la documentation dédiée](DOC.md).
+Les instructions pour installer, utiliser et maintenir la maquette Nova se trouvent dans [la documentation dédiée](doc/index.md).
 
 ## Contribuer
 

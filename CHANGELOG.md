@@ -2,12 +2,17 @@
 
 ## Version 2.x
 
-### 2.5.8 (2/07/2026)
+### 2.5.9 (04/08/2026)
+
+* Correction du comportement de l'option REFERENCE_LINK="default".
+* Correction de paramètres manquants dans les fonctions PUBLICATION_LI_DOCUMENT et BASE_DOI.
+
+### 2.5.8 (02/07/2026)
 
 * Correction d'une erreur de la tâche `css` quand elle est lancée dans par `postinstall` après `npm install`.
 * L'exécution de LESS est déplacée dans `scripts/build-css.js`.
 
-### 2.5.7 (2/07/2026)
+### 2.5.7 (02/07/2026)
 
 * Import automatique optionnel de `fonts.less` dans `site.less`.
 * Ajout de la transpilation optionnelle de `pdf.less`vers `public/css/pdf.css` avec `npm run css`.

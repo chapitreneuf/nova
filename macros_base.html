@@ -674,7 +674,7 @@
  * @param {boolean} [no_label] - Si vrai, ne pas précéder le DOI de la mention "DOI".
  * @param {boolean} [raw] - Si vrai, retourne le DOI en texte brut.
  */
-<DEFFUNC NAME="BASE_DOI" OPTIONAL="NO_TAG, CLASSNAME, NO_LABEL, RAW">
+<DEFFUNC NAME="BASE_DOI" OPTIONAL="WRAP_TAG, CLASSNAME, NO_LABEL, RAW">
 	<IF COND="[%SHOW_DOI_FOR_TYPES] LIKE /([^,]+)/">
 		<LET VAR="showthistype"><LOOP NAME="foreach" ARRAY="[#MATCHES.1]"><IF COND="[#TYPE] EQ [#VALUE|trim]">1</IF></LOOP></LET>
 	</IF>

@@ -611,7 +611,7 @@
  * Référence électronique.
  */
 <DEFMACRO NAME="ARTICLE_REFERENCE_ELECTRONIQUE">
-	<LET VAR="refdoi"><FUNC NAME="BASE_DOI" WRAP_TAG="span" /></LET>
+	<LET VAR="refdoi"><FUNC NAME="BASE_DOI" RAW="1" /></LET>
 	<LET VAR="refurl">URL&nbsp;: <a href="[#SITEINFOS.URL]/[#ID|makeurlwithid]">[#SITEINFOS.URL]/[#ID|makeurlwithid]</a></LET>
 
 	<IF COND="[%REFERENCE_LINK] EQ 'url'">
@@ -619,7 +619,7 @@
 	<ELSEIF COND="[%REFERENCE_LINK] EQ 'doi'"/>
 		<LET VAR="reflink">[#REFDOI]</LET>
 	<ELSE/>
-		<LET VAR="reflink">[#REFDOI|defaultvalue([#REFURL])]</LET>
+		<LET VAR="reflink">[#REFDOI|trim|defaultvalue([#REFURL])]</LET>
 	</IF>
 
 	[%LISTE_AUTEURS]«&nbsp;[#TITRE|removenotes]&nbsp;», <FUNC NAME="BASE_PARU_DANS" CITATION="1" /><IF COND="[#NUMERODOCUMENT]">, [@DOCUMENT|strtolower] [#NUMERODOCUMENT]</IF>, [@MIS_EN_LIGNE_LE] [#DATEPUBLI|humandate], [@CONSULTE_LE] <?php echo strftime('%d %B %Y');?>. [#REFLINK]</a>

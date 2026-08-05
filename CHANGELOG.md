@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.5.10 (05/08/2026)
+
+* Support de l'affichage de liens partenaires sans logo.
+* Ajout de l'option PARTENAIRES_SHOW_DESCRIPTION pour afficher le texte de description des liens partenaires avant ou après la vignette (permet d'ajouter une mention "Avec le soutien de" avant un partenaire).
+
 ### 2.5.9 (04/08/2026)
 
 * Correction du comportement de l'option REFERENCE_LINK="default".

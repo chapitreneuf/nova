@@ -246,7 +246,7 @@ Les fichiers appelés sont les suivants :
 * icon-192.png (192x192)
 * icon-512.png (512x512)
 
-On peut trouver un exemple de favicons dans [`public/icons/`](/public/favicon/).
+On peut trouver un exemple de favicons dans [`public/favicon/`](/public/favicon/).
 
 La méthode d'inclusion utilisée est tirée de [ce billet](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs).
 

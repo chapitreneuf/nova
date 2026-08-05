@@ -85,13 +85,13 @@ Il est possible de modifier les options de la maquette en les redéclarant dans 
 </DEFMACRO>
 ```
 
-La liste des options disponibles et de leurs valeurs par défaut se trouve dans [le fichier `default_options.html`](./default_options.html). :warning: **Ce fichier ne doit jamais être directement modifié.**
+La liste des options disponibles et de leurs valeurs par défaut se trouve dans [le fichier `default_options.html`](/default_options.html). :warning: **Ce fichier ne doit jamais être directement modifié.**
 
 ### Personnalisation des styles
 
 Pour personnaliser les styles CSS d'un site, créer un fichier `custom.less` dans le répertoire `less/`. Toutes les surcharges CSS ou modifications de variables doivent être faites dans ce fichier.
 
-Il est ainsi possible de modifier les variables LESS définies dans [`less/inc/vars/less`](./less/inc/vars.less), de surcharger les déclarations de [`site.less`](./less/site.less) ou encore d'ajouter des déclarations CSS qui seront ajoutées à la suite des styles par défaut de la maquette Nova.
+Il est ainsi possible de modifier les variables LESS définies dans [`less/inc/vars/less`](/less/inc/vars.less), de surcharger les déclarations de [`site.less`](/less/site.less) ou encore d'ajouter des déclarations CSS qui seront ajoutées à la suite des styles par défaut de la maquette Nova.
 
 ### Ajout d'une police de texte
 
@@ -175,11 +175,11 @@ Définir les champs `portail_nom` et `portail_url` dans les [options-extra](http
 
 Ajouter un document de type "noticedesite" dans une collection avec l'identifiant "reseaux-sociaux" à la racine du site.
 
-L'icône affichée est déterminée par l'identifiant de la notice de site. Les icônes supportées par défaut sont consultables dans le répertoire [`public/icons/`](./public/icons/). Elles sont obligatoirement au format SVG.
+L'icône affichée est déterminée par l'identifiant de la notice de site. Les icônes supportées par défaut sont consultables dans le répertoire [`public/icons/`](/public/icons/). Elles sont obligatoirement au format SVG.
 
 Pour utiliser une icône personnalisée, deux méthodes sont possibles :
 
-* La méthode recommandée consiste à ajouter l'icône au format SVG dans le répertoire [`public/icons/`](./public/icons/) et de renseigner l'identifiant correspondant (sans l'extension SVG) dans la notice.
+* La méthode recommandée consiste à ajouter l'icône au format SVG dans le répertoire [`public/icons/`](/public/icons/) et de renseigner l'identifiant correspondant (sans l'extension SVG) dans la notice.
 * Il est également possible de renseigner le champ "vignette" de la notice avec une icône au format PNG.
 
 ### Ajout d'un fil Twitter en barre latérale
@@ -246,13 +246,13 @@ Les fichiers appelés sont les suivants :
 * icon-192.png (192x192)
 * icon-512.png (512x512)
 
-On peut trouver un exemple de favicons dans [`public/icons/`](./public/favicon/).
+On peut trouver un exemple de favicons dans [`public/icons/`](/public/favicon/).
 
 La méthode d'inclusion utilisée est tirée de [ce billet](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs).
 
 ### Webfonts
 
-Voir [la page dédiée à l'intégration des polices](./doc/webfonts).
+Voir [la page dédiée à l'intégration des polices](/doc/webfonts).
 
 ## Plugins
 
@@ -284,7 +284,7 @@ Voici une liste non-exhaustive de changements à prendre en compte :
 * Toute la feuille de styles `site.less` a été réécrite, il est donc probable que les surcharges de styles doivent être revues au cas par cas et réécrites si nécessaire.
 * Plusieurs macros ont été renommées et le markup a ponctuellement été modifié. Il est donc conseillé de vérifier la compatibilité de toutes les macros dans `macros_custom.html`.
 * Les variables de traductions doivent impérativement être mises à jour avec les nouveaux fichiers distribués.
-* Les options ont été déplacées dans [`default_options.html`](./default_options.html) et de nombreuses options ont été ajoutées.
+* Les options ont été déplacées dans [`default_options.html`](/default_options.html) et de nombreuses options ont été ajoutées.
 * Plusieurs interfaces et comportements anciens qui ont été supprimés peuvent être rétablis à l'aide d'options dédiées.
 * Le dossier de polices par défaut a été déplacé de `public/webfonts` vers `public/fonts`.
 * L'option `custom_script_path` de la Nova 1 a été remplacé par un hook avec la macro `HEAD_CUSTOM_JS` (voir explications plus haut).

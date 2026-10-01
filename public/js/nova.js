@@ -385,6 +385,17 @@ window.fnLoader = {
         // Set focus back to dropdown toggle
         $dropdown.find(".dropdown-toggle").focus();
       });
+    },
+
+    // Popover pour afficher les identifiants auteur
+    authorPopover: function() {
+      $(function () {
+        $("[data-toggle='popover']").popover({
+          html: true,
+          placement: "top",
+          trigger: "focus"
+        });
+      });
     }
   }
 };

@@ -2008,7 +2008,7 @@ table.texte td {
   margin: 0;
 }
 
-.article__person-idnos, .article__person-related {
+.article__person .person-idnos, .article__person-related {
   .font-size(m);
   margin-top: 1.5rem;
   padding-left: 1rem;
@@ -2020,23 +2020,23 @@ table.texte td {
   }
 }
 
-.article__person-idnos + .article__person-related {
+.person-idnos + .article__person-related {
   margin-top: 0;
   padding-top: 2rem;
 }
 
-.article__person-idnos-list {
+.person-idnos-list {
   list-style: none;
   padding: 0;
   display: flex;
   margin: 1rem 0 0 0;
 }
 
-.article__person-idno:not(:first-child) {
+.person-idno:not(:first-child) {
   margin-left: 1.5rem;
 }
 
-.article__person-idno-icon {
+.person-idno-icon {
   width: auto;
   height: 24px;
   filter: grayscale(1);
@@ -2044,7 +2044,7 @@ table.texte td {
   transition: filter linear .2s, opacity linear .2s;
 }
 
-.article__person-idno-icon:hover {
+.person-idno-icon:hover {
   opacity: 1;
   filter: grayscale(0);
 }
@@ -2055,6 +2055,37 @@ table.texte td {
 
 .article__person-related .toc__li {
   margin: 1rem 0;
+}
+
+// POPOVER INFOS AUTEUR
+// ====================
+
+.author-popover-btn {
+  padding: 0;
+  margin-left: .5ch;
+  vertical-align: 3px;
+  padding-bottom: 2px;
+
+  svg {
+    stroke: @color-link;
+  }
+
+  &:hover {
+    border-bottom: .5px solid @color-link-hover;
+  }
+
+  &:hover svg {
+    stroke: @color-link-hover;
+  }
+}
+
+.popover-body {
+  padding: 2rem;
+  font-size: 2rem;
+
+  h4 {
+    font-weight: bold;
+  }
 }
 
 // INDEXES

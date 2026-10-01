@@ -493,14 +493,14 @@
  * @param {string} [prepend] - Texte à afficher avant la liste de personnes.
  * @param {string} [append] - Texte à afficher après la liste de personnes.
  * @param {string} [href] - Lien à wrapper.
+ * @param {boolean} [popover] - Afficher la popover des identifiants de l'auteur.
  */
-<DEFFUNC NAME="BASE_LISTER_PERSONNES" REQUIRED="type" OPTIONAL="wrap_class, prepend, append, href">
+<DEFFUNC NAME="BASE_LISTER_PERSONNES" REQUIRED="type" OPTIONAL="wrap_class, prepend, append, href, popover">
 	<IF COND="[#HREF]">
 		<LET VAR="LIEN_DEBUT"><a href="[#HREF]"></LET>
 		<LET VAR="LIEN_FIN"></a></LET>
 	</IF>
-	<LOOP NAME="base_lister_personnes" TABLE="relations, persons" SELECT="g_firstname,g_familyname" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'" ORDER="degree">
-
+	<LOOP NAME="base_lister_personnes" TABLE="relations, persons" SELECT="g_firstname, g_familyname, persons.id AS idauteur" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = '[#TYPE]'" ORDER="degree">
 		<BEFORE>
 			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">
 				<IF COND="[#WRAP_ID]">
@@ -514,10 +514,10 @@
 			[#PREPEND]
 		</BEFORE>
 		<DOFIRST>
-			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span>
+			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span>
 		</DOFIRST>
-		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DO>
-		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]</span></DOLAST>
+		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span></DO>
+		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span></DOLAST>
 		<AFTER>
 			[#APPEND]
 			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">
@@ -525,6 +525,54 @@
 			</IF>
 		</AFTER>
 	</LOOP>
+</DEFFUNC>
+
+/**
+ * Affichage de la popover des auteurs.
+ */
+<DEFMACRO NAME="BASE_LISTER_PERSONNES_POPOVER">
+	<LOOP NAME="base_lister_personnes_popover" TABLE="auteurs" WHERE="id = '[#IDAUTEUR]' AND iddocument='[#ID]'">
+		<IF COND="[#IDREF] OR [#ORCID] OR [#ARK] OR [#HAL] OR [#ISNI]">
+			<button type="button" class="author-popover-btn btn" aria-label="[@RESSOURCES_AUTEUR_AUTRES_BASES]" data-toggle="popover" data-content='<MACRO NAME="BASE_AUTEUR_IDNO"/>'>
+				<FUNC NAME="BASE_ICON" ICON="circle-user-round" CLASSNAME="author-popover-icon" TITLE="[@RESSOURCES_AUTEUR_AUTRES_BASES]" INLINE="1" />
+			</button>
+		</IF>
+	</LOOP>
+</DEFMACRO>
+
+/**
+ * Identifiants de l'auteur dans d'autres bases.
+ */
+<DEFMACRO NAME="BASE_AUTEUR_IDNO">
+	<IF COND="[#IDREF] OR [#ORCID] OR [#HAL] OR [#ISNI] OR [#ARK]">
+		<div class="person-idnos">
+			<h4>[@RESSOURCES_AUTEUR_AUTRES_BASES]</h4>
+			<ul class="person-idnos-list">
+				<FUNC NAME="BASE_AUTEUR_IDNO_ITEM" TYPE="IDREF" URL="https://www.idref.fr/[#IDREF]" CONDITION="[#IDREF]" />
+				<FUNC NAME="BASE_AUTEUR_IDNO_ITEM" TYPE="ORCID" URL="http://orcid.org/[#ORCID]" CONDITION="[#ORCID]" />
+				<FUNC NAME="BASE_AUTEUR_IDNO_ITEM" TYPE="HAL" URL="https://cv.archives-ouvertes.fr/[#HAL]" CONDITION="[#HAL]" />
+				<FUNC NAME="BASE_AUTEUR_IDNO_ITEM" TYPE="ISNI" URL="http://www.isni.org/[#ISNI]" CONDITION="[#ISNI]" />
+				<!--[ BNF: https://www.bnf.fr/fr/lidentifiant-ark-archival-resource-key ]-->
+				<IF COND="[#ARK] LIKE /(?<=\/cb)[^\/%.-]{8}(?=.?$)/">
+					<FUNC NAME="BASE_AUTEUR_IDNO_ITEM" TYPE="BNF" CONDITION="1" URL="https://data.bnf.fr/fr/[#MATCHES.0.0]" />
+				</IF>
+			</ul>
+		</div>
+	</IF>
+</DEFMACRO>
+
+ /**
+ * Affichage de l'icone d'une base ou est reference l'auteur.
+ * @param {string} type - Type d'identifiant.
+ * @param {string} url - URL cible.
+ * @param {boolean} [condition] - Affiche l'icone seulement si true.
+ */
+<DEFFUNC NAME="BASE_AUTEUR_IDNO_ITEM" REQUIRED="type, url" OPTIONAL="condition">
+	<IF COND="[#CONDITION]">
+		<li class="person-idno">
+			<a href="[#URL]"><FUNC NAME="BASE_ICON" ICON="idno-[#TYPE|strtolower]" CLASSNAME="person-idno-icon" TITLE="[#TYPE]" EXTENSION="png" /></a>
+		</li>
+	</IF>
 </DEFFUNC>
 
 /**

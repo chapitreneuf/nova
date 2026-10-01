@@ -387,13 +387,46 @@ window.fnLoader = {
       });
     },
 
-    // Popover pour afficher les identifiants auteur
+    // Popover displaying authors identifiers
     authorPopover: function() {
       $(function () {
-        $("[data-toggle='popover']").popover({
-          html: true,
-          placement: "top",
-          trigger: "focus"
+        $("[data-toggle='popover']").each(function() {
+          var $parent = $(this).parent();
+          var $popoverBtn = $(this).popover({
+            html: true,
+            placement: "top",
+            trigger: "manual",
+            container: $parent.get(0)
+          });
+
+          // Toggle on click
+          $popoverBtn.on("click", function() {
+            $("[data-toggle='popover']").not(this).popover("hide");
+            $(this).popover("toggle");
+            // Focus first a
+            $(".popover-body a").get(0).focus({preventScroll: true});
+          });
+        });
+
+        // Close on blur
+        $(document).on("blur", ".popover-body a", function() {
+          // Wait the time focus changes
+          setTimeout(() => {
+            if($(".popover-body a:focus").length === 0) {
+              $("[data-toggle='popover']").popover("hide");
+            }
+          }, 100);
+        });
+
+        // Close with ESC key
+        $(document).on("keyup", function(e) {
+          if (e.key == "Escape") {
+            $focusedBtn = $(".popover-body a:focus").closest(".popover").prev(".author-popover-btn");
+            if ($focusedBtn > 0) {
+              $focusedBtn.get(0).focus({preventScroll: true});
+            }
+            $("[data-toggle='popover']").popover("hide");
+          };
         });
       });
     }

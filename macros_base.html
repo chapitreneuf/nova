@@ -514,10 +514,10 @@
 			[#PREPEND]
 		</BEFORE>
 		<DOFIRST>
-			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span>
+			<span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT]<span class="first-name">[#G_FIRSTNAME]</span> <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span>
 		</DOFIRST>
-		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span></DO>
-		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT][#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span></DOLAST>
+		<DO>, <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT]<span class="first-name">[#G_FIRSTNAME]</span> <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span></DO>
+		<DOLAST> [@AND] <span<IF COND="[#G_FIRSTNAME|text_is_rtl]"> dir="rtl"</IF>>[#LIEN_DEBUT]<span class="first-name">[#G_FIRSTNAME]</span> <span class="family-name">[#G_FAMILYNAME]</span>[#LIEN_FIN]<IF COND="[#POPOVER]"><MACRO NAME="BASE_LISTER_PERSONNES_POPOVER"/></IF></span></DOLAST>
 		<AFTER>
 			[#APPEND]
 			<IF COND="[#WRAP_ID] OR [#WRAP_CLASS]">

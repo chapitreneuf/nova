@@ -115,9 +115,9 @@
 				<DO>
 					<li class="index-list__item index-list__item--plat">
 						<IF COND="[#OPTIONS.OPTIONSAFFICHAGE.AFFICHAGEINDEXPERSONNES] EQ 'Surname; First name'">
-							<a href="[#ID|makeurlwithid]"><span class="family-name">[#G_FAMILYNAME]</span><IF COND="[#G_FIRSTNAME]">, [#G_FIRSTNAME]</IF></a> <MACRO NAME="PERSONNES_NOMBRE_ENTITES" />
+							<a href="[#ID|makeurlwithid]"><span class="family-name">[#G_FAMILYNAME]</span><IF COND="[#G_FIRSTNAME]">, <span class="first-name">[#G_FIRSTNAME]</span></IF></a> <MACRO NAME="PERSONNES_NOMBRE_ENTITES" />
 						<ELSE/>
-							<a href="[#ID|makeurlwithid]">[#G_FIRSTNAME] <span class="family-name">[#G_FAMILYNAME]</span></a> <MACRO NAME="PERSONNES_NOMBRE_ENTITES" />
+							<a href="[#ID|makeurlwithid]"><span class="first-name">[#G_FIRSTNAME]</span> <span class="family-name">[#G_FAMILYNAME]</span></a> <MACRO NAME="PERSONNES_NOMBRE_ENTITES" />
 						</IF>
 					</li>
 				</DO>

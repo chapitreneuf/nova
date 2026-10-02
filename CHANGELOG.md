@@ -2,6 +2,15 @@
 
 ## Version 2.x
 
+### 2.6.0 (02/10/2026)
+
+* Affichage des liens vers des bases de données tierces pour les directeurs de publication.
+* Ajout d'un span.first-name sur les noms de personnes.
+* Rupture de compatibilité avec les version précédentes :
+  * `ARTICLE_AUTEUR_IDNO` devient `BASE_AUTEUR_IDNO`.
+  * `.article__person-idnos` devient `.person-idnos`.
+  * Changements de styles pour `.person-idnos`.
+
 ### 2.5.10 (05/08/2026)
 
 * Support de l'affichage de liens partenaires sans logo.

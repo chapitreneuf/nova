@@ -125,8 +125,12 @@ function updatePage($sourceForm) {
   var query = $sourceInput.val();
   $(("input[name='query']")).not($sourceInput).val(query);
 
+  // Update page title
+  var newTitle = document.title.replace(/(&quot;|\").*(&quot;|\")/, "\"" + query + "\"");
+  document.title = newTitle;
+
   // Update history
-  history.pushState({ search: query }, "", "?page=search&query=" + query);
+  history.replaceState({ search: query }, "", "?page=search&query=" + query);
 }
 
 $(function() {

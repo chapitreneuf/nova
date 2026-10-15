@@ -3,7 +3,7 @@ var indexFieldsByPriority = ["title", "altertitle", "subtitle", "description", "
 var hiddenClassname = "d-none";
 
 function runSearch() {
-  var query = $("#main-container input[name='query']").val();
+  var query = $("#main-content input[name='query']").val();
 
   if (query.length < 3) {
     showNoResultMessage();
@@ -119,11 +119,22 @@ fetchPromise.then(function (response) {
   showNoResultMessage();
 });
 
+function updatePage($sourceForm) {
+  // Update all search inputs
+  var $sourceInput = $sourceForm.find("input[name='query']");
+  var query = $sourceInput.val();
+  $(("input[name='query']")).not($sourceInput).val(query);
+
+  // Update history
+  history.pushState({ search: query }, "", "?page=search&query=" + query);
+}
+
 $(function() {
   // Init submit button
-  $(".nav-search-form").on("submit", function(event) {
+  $(".search-form").on("submit", function(event) {
     event.preventDefault();
     clearResults();
+    updatePage($(this));
     runSearch();
   });
 });

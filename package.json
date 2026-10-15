@@ -20,6 +20,7 @@
     "build": "npm run css",
     "css": "node scripts/build-css.js",
     "copy-dist": "node scripts/copy-dist.js",
+    "index": "node scripts/build-index.js",
     "postinstall": "npm run css && npm run copy-dist",
     "gulp": "npm run css"
   },

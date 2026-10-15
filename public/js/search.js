@@ -95,27 +95,32 @@ var dataURL = "?page=search_data&token=" + window.jssearchURLToken;
 var fetchPromise = fetch(dataURL, {method: "GET", cache: "force-cache"});
 fetchPromise.then(function (response) {
   response.text().then(function(data) {
-    JSON.parse(data).forEach(function(item) {
-      // Create index
-      index.add({
-        id: item.id,
-        number: item.n,
-        title: item.t,
-        subtitle: item.st,
-        altertitle: item.at,
-        authors: item.au,
-        description: item.d,
-        lang: item.l,
-        dir: item.ld,
-        classname: item.c === "p" ? "publication" : "text"
+    try {
+      JSON.parse(data).forEach(function(item) {
+        // Create index
+        index.add({
+          id: item.id,
+          number: item.n,
+          title: item.t,
+          subtitle: item.st,
+          altertitle: item.at,
+          authors: item.au,
+          description: item.d,
+          lang: item.l,
+          dir: item.ld,
+          classname: item.c === "p" ? "publication" : "text"
+        });
       });
-    });
 
-    // Search
-    runSearch();
+      // Search
+      runSearch();
+    } catch (err) {
+      console.error(err);
+      showNoResultMessage();
+    }
   });
-}, function() {
-  console.error("Could not load JSON data");
+}, function(err) {
+  console.error(err);
   showNoResultMessage();
 });
 

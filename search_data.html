@@ -1,13 +1,22 @@
 <USE MACROFILE="macros_base.html" />
+<?php
+function clean_text($str) {
+	$str = textebrut($str);
+	$str = html_entity_decode($str);
+	$str = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+	$str = str_replace('"', '', $str);
+	return $str;
+}
+?>
 [
 <LOOP NAME="search_numeros" TABLE="publications" WHERE="type='numero'" SELECT="id, numero, datepublipapier, datepubli, creationdate, periode, titre, soustitre, altertitre, introduction, langue">
 	{
 		"id": [#ID],
 		<!--[ number ]--><IF COND="[#NUMERO]">"n": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
-		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ description ]--><IF COND="[#INTRODUCTION]">"d": "[#INTRODUCTION|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|clean_text]",</IF>
+		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|clean_text]",</IF>
+		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|clean_text]",</IF>
+		<!--[ description ]--><IF COND="[#INTRODUCTION]">"d": "[#INTRODUCTION|clean_text]",</IF>
 		<!--[ lang ]--><IF COND="[#LANGUE]">"l": "[#LANGUE]",
 		<!--[ lang direction ]-->"ld": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
 		<!--[ class ]-->"c": "p"
@@ -22,11 +31,11 @@
 	</LET>
 	{
 		"id": [#ID],
-		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ authors ]--><IF COND="[#AUTEURS]">"au": "[#AUTEURS|textebrut|html_entity_decode|replace('"', '')]",</IF>
-		<!--[ description ]--><IF COND="[#RESUME]">"d": "[#RESUME|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|clean_text]",</IF>
+		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|clean_text]",</IF>
+		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|clean_text]",</IF>
+		<!--[ authors ]--><IF COND="[#AUTEURS]">"au": "[#AUTEURS|clean_text]",</IF>
+		<!--[ description ]--><IF COND="[#RESUME]">"d": "[#RESUME|clean_text]",</IF>
 		<!--[ lang ]--><IF COND="[#LANGUE]">"l": "[#LANGUE]",
 		<!--[ lang direction ]-->"ld": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
 		<!--[ class ]-->"c": "t"

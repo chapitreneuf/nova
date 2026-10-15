@@ -390,6 +390,17 @@
 		};
 	</script>
 
+
+	<!--[ Flexsearch ]-->
+	<IF COND="[#PAGE] EQ 'search' AND [#SEARCH_ENGINE] NE 'lodel'">
+		<!--[ Génération d'un token pour éviter les problèmes liés au cache ]-->
+		<LOOP NAME="head_jssearch_url_token" TABLE="entities" WHERE="class='textes' OR (class='publications' AND type = 'numero')" SELECT="entities.upd" LIMIT="0,1" ORDER="upd DESC">
+			<script>window.jssearchURLToken = "[#UPD|reg_replace('/[^0-9]*/', '')]";</script>
+		</LOOP>
+		<script type="text/javascript" src="tpl/public/vendor/flexsearch/flexsearch.bundle.min.js"></script>
+		<script type="text/javascript" src="tpl/public/js/search.js"></script>
+	</IF>
+
 	<!--[ JS site ]-->
 	<script src="tpl/public/js/nova.js"></script>
 

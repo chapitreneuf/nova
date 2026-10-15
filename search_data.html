@@ -1,0 +1,35 @@
+<USE MACROFILE="macros_base.html" />
+[
+<LOOP NAME="search_numeros" TABLE="publications" WHERE="type='numero'" SELECT="id, numero, datepublipapier, datepubli, creationdate, periode, titre, soustitre, altertitre, introduction, langue">
+	{
+		"id": [#ID],
+		<!--[ number ]--><IF COND="[#NUMERO]">"n": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ description ]--><IF COND="[#INTRODUCTION]">"d": "[#INTRODUCTION|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ lang ]--><IF COND="[#LANGUE]">"l": "[#LANGUE]",
+		<!--[ lang direction ]-->"ld": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
+		<!--[ class ]-->"c": "p"
+	},
+</LOOP>
+<LOOP NAME="search_textes" TABLE="textes" SELECT="id, class, titre, soustitre, altertitre, resume, langue">
+	<LET VAR="auteurs">
+		<LOOP NAME="search_auteurs" SELECT="persons.id AS idperson" TABLE="relations, persons" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = 'auteur'">
+			<IF COND="[#COUNT] GT 1"><IF COND="[#COUNT] EQ [#NBRESULTS]"> [@AND] <ELSE />, </IF></IF>
+			<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
+		</LOOP>
+	</LET>
+	{
+		"id": [#ID],
+		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ authors ]--><IF COND="[#AUTEURS]">"au": "[#AUTEURS|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ description ]--><IF COND="[#RESUME]">"d": "[#RESUME|textebrut|html_entity_decode|replace('"', '')]",</IF>
+		<!--[ lang ]--><IF COND="[#LANGUE]">"l": "[#LANGUE]",
+		<!--[ lang direction ]-->"ld": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
+		<!--[ class ]-->"c": "t"
+	}<IF COND="[#COUNT] LT [#NBRESULTS]">,</IF>
+</LOOP>
+]

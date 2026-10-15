@@ -9,7 +9,7 @@ function runSearch() {
     showNoResultMessage();
     return;
   }
-  window.searchResults = search(query); // Global context to recall on user interaction
+  window.searchResults = search(query, { suggest: true }); // Global context to recall on user interaction
   if (!window.searchResults || Object.keys(window.searchResults).length === 0) {
     showNoResultMessage();
     return;

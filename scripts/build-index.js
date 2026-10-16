@@ -23,7 +23,7 @@ const config = {
   url,
   username,
   password,
-  dest: path.join(__dirname, "../public/data/")
+  dest: path.join(__dirname, "../public/index/")
 };
 
 async function fetchData({ url, username, password }) {

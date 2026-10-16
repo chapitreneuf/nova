@@ -9,7 +9,7 @@ jspm_packages/
 
 # Public
 public/css
-public/data
+public/index
 
 # Custom
 less/custom.less

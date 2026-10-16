@@ -15,13 +15,16 @@ if (args.length === 0) {
 // TODO: devrait être une option
 const indexFieldsByPriority = ["title", "altertitle", "subtitle", "description", "authors"];
 
-// TODO: remplacer login/password par https://user:password@url.com
+// Support de la syntaxe https://user:password@url.com
+const [, protocol,, username, password, rest ] = args[0].match(/^(https?):\/\/((.+):(.+)@)?(.*)/);
+const url = `${protocol}://${rest}`;
+
 const config = {
-  url: args[0],
-  dest: path.join(__dirname, "../public/data/"),
-  username: args[1],
-  password: args[2]
-}
+  url,
+  username,
+  password,
+  dest: path.join(__dirname, "../public/data/")
+};
 
 async function fetchData({ url, username, password }) {
   const auth = Buffer.from(`${username}:${password}`).toString("base64");

@@ -12,14 +12,14 @@ function clean_text($str) {
 <LOOP NAME="search_numeros" TABLE="publications" WHERE="type='numero'" SELECT="id, numero, datepublipapier, datepubli, creationdate, periode, titre, soustitre, altertitre, introduction, langue">
 	{
 		"id": [#ID],
-		<!--[ number ]--><IF COND="[#NUMERO]">"n": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
-		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|clean_text]",</IF>
-		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|clean_text]",</IF>
-		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|clean_text]",</IF>
-		<!--[ description ]--><IF COND="[#INTRODUCTION]">"d": "[#INTRODUCTION|clean_text]",</IF>
-		<!--[ lang ]--><IF COND="[#LANGUE]">"l": "[#LANGUE]",
-		<!--[ lang direction ]-->"ld": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
-		<!--[ class ]-->"c": "p"
+		<IF COND="[#NUMERO]">"num": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<IF COND="[#TITRE]">"tit": "[#TITRE|clean_text]",</IF>
+		<IF COND="[#SOUSTITRE]">"sub": "[#SOUSTITRE|clean_text]",</IF>
+		<IF COND="[#ALTERTITRE]">"alt": "[#ALTERTITRE|clean_text]",</IF>
+		<IF COND="[#INTRODUCTION]">"int": "[#INTRODUCTION|clean_text]",</IF>
+		<IF COND="[#LANGUE]">"lan": "[#LANGUE]",
+		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
+		"cla": "p"
 	},
 </LOOP>
 <LOOP NAME="search_textes" TABLE="textes" SELECT="id, class, titre, soustitre, altertitre, resume, langue">
@@ -31,14 +31,14 @@ function clean_text($str) {
 	</LET>
 	{
 		"id": [#ID],
-		<!--[ title ]--><IF COND="[#TITRE]">"t": "[#TITRE|clean_text]",</IF>
-		<!--[ subtitle ]--><IF COND="[#SOUSTITRE]">"st": "[#SOUSTITRE|clean_text]",</IF>
-		<!--[ altertitle ]--><IF COND="[#ALTERTITRE]">"at": "[#ALTERTITRE|clean_text]",</IF>
-		<!--[ authors ]--><IF COND="[#AUTEURS]">"au": "[#AUTEURS|clean_text]",</IF>
-		<!--[ description ]--><IF COND="[#RESUME]">"d": "[#RESUME|clean_text]",</IF>
-		<!--[ lang ]--><IF COND="[#LANGUE]">"l": "[#LANGUE]",
-		<!--[ lang direction ]-->"ld": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
-		<!--[ class ]-->"c": "t"
+		<IF COND="[#TITRE]">"tit": "[#TITRE|clean_text]",</IF>
+		<IF COND="[#SOUSTITRE]">"sub": "[#SOUSTITRE|clean_text]",</IF>
+		<IF COND="[#ALTERTITRE]">"alt": "[#ALTERTITRE|clean_text]",</IF>
+		<IF COND="[#AUTEURS]">"aut": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="[#RESUME]">"abs": "[#RESUME|clean_text]",</IF>
+		<IF COND="[#LANGUE]">"lan": "[#LANGUE]",
+		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
+		"cla": "t"
 	}<IF COND="[#COUNT] LT [#NBRESULTS]">,</IF>
 </LOOP>
 ]

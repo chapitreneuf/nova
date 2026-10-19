@@ -3,6 +3,7 @@
 
 const fs = require("node:fs/promises");
 const path = require("node:path");
+const util = require("node:util");
 
 const FlexSearch = require("flexsearch");
 
@@ -12,21 +13,57 @@ if (args.length === 0) {
   throw new Error("Argument url manquant.");
 }
 
-// TODO: devrait être une option
-const indexFieldsByPriority = ["title", "altertitle", "subtitle", "description", "authors"];
+// Options CLI
+// URL de la source en premier argument
+const src = args[0];
+// --check: test d'import à la fin pour vérifier l'intégrité de l'index généré
+const check = args.find(value => value === "--check") ? true : false;
 
-// Support de la syntaxe https://user:password@url.com
-const [, protocol,, username, password, rest ] = args[0].match(/^(https?):\/\/((.+):(.+)@)?(.*)/);
-const url = `${protocol}://${rest}`;
+const dest = path.join(__dirname, "../public/index/");
 
-const config = {
-  url,
-  username,
-  password,
-  dest: path.join(__dirname, "../public/index/")
+const searchConfig = {
+  layers: [
+    {
+      name: "minimal",
+      flexsearchConfig: {
+        tokenize: "forward",
+        document: {
+          id: "id",
+          index: ["title", "altertitle", "subtitle", "authors"],
+          store: ["number", "title", "subtitle", "authors", "classname", "lang", "dir"]
+        }
+      }
+    },
+    {
+      name: "metadata",
+      flexsearchConfig: {
+        tokenize: "strict",
+        document: {
+          id: "id",
+          index: ["keyword", "abstract", "doi", "introduction"],
+          store: false
+        }
+      }
+    },
+    {
+      name: "text",
+      flexsearchConfig: {
+        tokenize: "strict",
+        document: {
+          id: "id",
+          index: ["text", "appendix", "notes"],
+          store: false
+        }
+      }
+    }
+  ]
 };
 
-async function fetchData({ url, username, password }) {
+async function fetchData(src) {
+  // Support de la syntaxe https://user:password@url.com
+  const [, protocol,, username, password, rest ] = src.match(/^(https?):\/\/((.+):(.+)@)?(.*)/);
+  const url = `${protocol}://${rest}`;
+
   const auth = Buffer.from(`${username}:${password}`).toString("base64");
   const response = await fetch(url, {
     headers: {
@@ -39,77 +76,76 @@ async function fetchData({ url, username, password }) {
   return Buffer.from(await response.arrayBuffer());
 }
 
-function createIndex(data) {
-  const items = JSON.parse(data);
-
-  const index = new FlexSearch.Document({
-    tokenize: "strict",
-    charset: "latin:advanced",
-    cache: 100,
-    document: {
-      id: "id",
-      store: [
-        "id", "number", "title", "subtitle", "authors", "classname", "lang", "dir"
-      ],
-      index: indexFieldsByPriority
-    }
-  });
-
-  items.forEach(item => {
-    // Create index
-    index.add({
+function mapData(data) {
+  const obj = JSON.parse(data);
+  return obj.map(item => {
+    return {
       id: item.id,
-      number: item.n || "",
-      title: item.t || "",
-      subtitle: item.st || "",
-      altertitle: item.at || "",
-      authors: item.au || "",
-      description: item.d || "",
-      lang: item.l || "",
-      dir: item.ld || "",
-      classname: item.c === "p" ? "publication" : "text"
+      number: item.num,
+      title: item.tit,
+      subtitle: item.sub,
+      altertitle: item.alt,
+      authors: item.aut,
+      introduction: item.int,
+      abstract: item.abs,
+      lang: item.lan,
+      dir: item.dir,
+      classname: item.cla === "p" ? "p" : "t" // publication || text
+    };
+  });
+}
+
+function createIndexes(searchConfig) {
+  return searchConfig.layers.map(i => {
+    return Object.assign({
+      document: new FlexSearch.Document(i.flexsearchConfig)
+    }, i);
+  });
+}
+
+function populateIndexes(indexes, data) {
+  data.forEach(item => {
+    indexes.forEach(index => index.document.add(item));
+  });
+  return indexes;
+}
+
+async function writeIndexes(indexes, dest) {
+  for (const index of indexes) {
+    await index.document.export(async function(key, data){
+      await fs.writeFile(dest + index.name + "-" + key, data, "utf8");
     });
-  });
-  return index;
-}
-
-async function writeIndex(index, dest) {
-  await index.export(async function(key, data){
-    await fs.writeFile(dest + key, data, "utf8");
-  });
-}
-
-async function checkImport(config) {
-  // !! Meme config que plus haut
-  // TODO: il faut donc factoriser la config côté node et browser
-  const index = new FlexSearch.Document({
-    tokenize: "strict",
-    charset: "latin:advanced",
-    cache: 100,
-    document: {
-      id: "id",
-      store: [
-        "id", "number", "title", "subtitle", "authors", "classname", "lang", "dir"
-      ],
-      index: indexFieldsByPriority
-    }
-  });
-
-  const files = await fs.readdir(config.dest);
-  for(let i = 0; i < files.length; i++){
-    const data = await fs.readFile(path.join(config.dest, files[i]), "utf8");
-    await index.import(files[i], data);
   }
-  console.log(index);
 }
 
-async function main(config) {
-  const data = await fetchData(config);
-  const index = createIndex(data);
-  await writeIndex(index, config.dest);
-
-  // Test d'import pour vérifier l'intégrité de l'index
-  await checkImport(config);
+async function checkImport(searchConfig) {
+  const indexes = createIndexes(searchConfig);
+  const files = await fs.readdir(dest);
+  for (const file of files) {
+    if (file === ".keep") {
+      continue;
+    }
+    const [ indexName, assetName ] = file.split("-");
+    const relatedIndex = indexes.find(index => index.name === indexName);
+    if (!relatedIndex) {
+      throw new Error("Could not find index " + indexName);
+    }
+    const data = await fs.readFile(path.join(dest, file), "utf8");
+    await relatedIndex.document.import(assetName, data);
+  }
+  console.log(util.inspect(indexes, { depth: 5 }));
 }
 
-main(config);
+async function main() {
+  const data = await fetchData(src);
+  const mappedData = mapData(data);
+  const emptyIndexes = createIndexes(searchConfig);
+  const indexes = populateIndexes(emptyIndexes, mappedData);
+  await writeIndexes(indexes, dest);
+
+  if (check) {
+    await checkImport(searchConfig);
+  }
+}
+
+main();

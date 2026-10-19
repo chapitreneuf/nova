@@ -7,58 +7,6 @@ const util = require("node:util");
 
 const FlexSearch = require("flexsearch");
 
-const args = process.argv.slice(2);
-
-if (args.length === 0) {
-  throw new Error("Argument url manquant.");
-}
-
-// Options CLI
-// URL de la source en premier argument
-const src = args[0];
-// --check: test d'import à la fin pour vérifier l'intégrité de l'index généré
-const check = args.find(value => value === "--check") ? true : false;
-
-const dest = path.join(__dirname, "../public/index/");
-
-const searchConfig = {
-  layers: [
-    {
-      name: "minimal",
-      flexsearchConfig: {
-        tokenize: "forward",
-        document: {
-          id: "id",
-          index: ["title", "altertitle", "subtitle", "authors"],
-          store: ["number", "title", "subtitle", "authors", "classname", "lang", "dir"]
-        }
-      }
-    },
-    {
-      name: "metadata",
-      flexsearchConfig: {
-        tokenize: "strict",
-        document: {
-          id: "id",
-          index: ["keyword", "abstract", "doi", "introduction"],
-          store: false
-        }
-      }
-    },
-    {
-      name: "text",
-      flexsearchConfig: {
-        tokenize: "strict",
-        document: {
-          id: "id",
-          index: ["text", "appendix", "notes"],
-          store: false
-        }
-      }
-    }
-  ]
-};
-
 async function fetchData(src) {
   // Support de la syntaxe https://user:password@url.com
   const [, protocol,, username, password, rest ] = src.match(/^(https?):\/\/((.+):(.+)@)?(.*)/);
@@ -118,7 +66,7 @@ async function writeIndexes(indexes, dest) {
   }
 }
 
-async function checkImport(searchConfig) {
+async function checkImport(searchConfig, dest) {
   const indexes = createIndexes(searchConfig);
   const files = await fs.readdir(dest);
   for (const file of files) {
@@ -137,6 +85,26 @@ async function checkImport(searchConfig) {
 }
 
 async function main() {
+  const args = process.argv.slice(2);
+  if (args.length === 0) {
+    throw new Error("Argument url manquant.");
+  }
+
+  // Options CLI
+  // URL de la source en premier argument
+  const src = args[0];
+  // --check: test d'import à la fin pour vérifier l'intégrité de l'index généré
+  const check = args.find(value => value === "--check") ? true : false;
+
+  // Chemins
+  const dest = path.join(__dirname, "../public/index/");
+  const configPath = path.join(__dirname, "../public/js/search.config.json");
+
+  // Lecture de la configuration
+  const searchConfigData = await fs.readFile(configPath);
+  const searchConfig = JSON.parse(searchConfigData);
+
+  // Main logic
   const data = await fetchData(src);
   const mappedData = mapData(data);
   const emptyIndexes = createIndexes(searchConfig);
@@ -144,7 +112,7 @@ async function main() {
   await writeIndexes(indexes, dest);
 
   if (check) {
-    await checkImport(searchConfig);
+    await checkImport(searchConfig, dest);
   }
 }
 

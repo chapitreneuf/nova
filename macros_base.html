@@ -435,9 +435,9 @@
 			<LOOP NAME="base_titre_entite_numero" TABLE="publications"  SELECT="titre, numero, datepublipapier, datepubli" WHERE="identity = '[#ID]'">
 				<FUNC NAME="BASE_TITRE_PUBLICATION" SEPARATOR="&#8211;" />
 			</LOOP>
-		<ELSEIF COND="[#CLASS] EQ 'publications' OR [#CLASS] EQ 'textes'">
+		<ELSEIF COND="[#CLASS] EQ 'publications' OR [#CLASS] EQ 'textes' OR [#CLASS] EQ 'liens'">
 			<LOOP NAME="base_titre_entite_autres" SELECT="titre, altertitre" TABLE="#_TP_[#CLASS]" WHERE="identity = '[#ID]'">
-				<IF COND="[#TITREALTER] AND [#ALTERTITRE:#SITELANG] AND ([#TYPE] EQ 'informations' OR [#CLASS] EQ 'publications')">
+				<IF COND="[#TITREALTER] AND [#ALTERTITRE:#SITELANG] AND ([#TYPE] EQ 'informations' OR [#CLASS] EQ 'publications' OR [#CLASS] EQ 'liens')">
 					[#ALTERTITRE:#SITELANG|removenotes]
 				<ELSE/>
 					[#TITRE|removenotes]

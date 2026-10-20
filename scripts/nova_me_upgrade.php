@@ -4,7 +4,7 @@ if (PHP_SAPI != 'cli') die('cli only');         // php-cli only
 /*******************************************************************
 
    Description
-   - updatee OpenEdition editorial model to add Nova Specific fields
+   - update OpenEdition editorial model to add Nova Specific fields
    Install
    - copy or make a symbolic link of the file in the root directory
      of the Lodel install

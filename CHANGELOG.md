@@ -2,6 +2,11 @@
 
 ## Version 2.x
 
+### 2.6.1 (20/10/2026)
+
+* Support de l'affichage de rubriques pour structurer la collection partenaires.
+* Correction : affichage du titre traduit des liens insérés dans le menu principal.
+
 ### 2.6.0 (02/10/2026)
 
 * Affichage des liens vers des bases de données tierces pour les directeurs de publication.

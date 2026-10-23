@@ -7,6 +7,13 @@ const util = require("node:util");
 
 const FlexSearch = require("flexsearch");
 
+async function emptyDir(dirPath) {
+  for (const file of await fs.readdir(dirPath)) {
+    if (file === ".keep") continue;
+    await fs.unlink(path.join(dirPath, file));
+  }
+}
+
 async function fetchData(src) {
   // Support de la syntaxe https://user:password@url.com
   const [, protocol,, username, password, rest ] = src.match(/^(https?):\/\/((.+):(.+)@)?(.*)/);
@@ -88,6 +95,9 @@ async function main() {
     throw new Error("Could not load search config.");
   }
   const searchConfig = presets[use];
+
+  // Vider les anciens index
+  emptyDir(dest);
 
   // Main logic
   const str = await fetchData(src);

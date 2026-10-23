@@ -1,37 +1,59 @@
 {
-  "layers": [
-    {
-      "name": "minimal",
-      "flexsearchConfig": {
-        "tokenize": "forward",
-        "document": {
-          "id": "id",
-          "index": ["title", "altertitle", "subtitle", "authors"],
-          "store": ["number", "title", "subtitle", "authors", "classname", "lang", "dir"]
+  "use": "client",
+  "presets": {
+    "client": {
+      "fetch": false,
+      "layers": [
+        {
+          "name": "main",
+          "flexsearchConfig": {
+            "tokenize": "strict",
+            "document": {
+              "id": "id",
+              "index": ["title", "altertitle", "subtitle", "description", "authors"],
+              "store": ["id", "number", "title", "subtitle", "authors", "classname", "lang", "dir"]
+            }
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "metadata",
-      "flexsearchConfig": {
-        "tokenize": "strict",
-        "document": {
-          "id": "id",
-          "index": ["keyword", "abstract", "doi", "introduction"],
-          "store": false
+    "server": {
+      "fetch": "./tpl/public/index/",
+      "layers": [
+        {
+          "name": "minimal",
+          "flexsearchConfig": {
+            "tokenize": "forward",
+            "document": {
+              "id": "id",
+              "index": ["title", "altertitle", "subtitle", "authors"],
+              "store": ["number", "title", "subtitle", "authors", "classname", "lang", "dir"]
+            }
+          }
+        },
+        {
+          "name": "metadata",
+          "flexsearchConfig": {
+            "tokenize": "strict",
+            "document": {
+              "id": "id",
+              "index": ["keyword", "abstract", "doi", "introduction"],
+              "store": false
+            }
+          }
+        },
+        {
+          "name": "text",
+          "flexsearchConfig": {
+            "tokenize": "strict",
+            "document": {
+              "id": "id",
+              "index": ["text", "appendix", "notes"],
+              "store": false
+            }
+          }
         }
-      }
-    },
-    {
-      "name": "text",
-      "flexsearchConfig": {
-        "tokenize": "strict",
-        "document": {
-          "id": "id",
-          "index": ["text", "appendix", "notes"],
-          "store": false
-        }
-      }
+      ]
     }
-  ]
+  }
 }

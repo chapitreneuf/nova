@@ -24,25 +24,6 @@ async function fetchData(src) {
   return Buffer.from(await response.arrayBuffer());
 }
 
-function mapData(data) {
-  const obj = JSON.parse(data);
-  return obj.map(item => {
-    return {
-      id: item.id,
-      number: item.num,
-      title: item.tit,
-      subtitle: item.sub,
-      altertitle: item.alt,
-      authors: item.aut,
-      introduction: item.int,
-      abstract: item.abs,
-      lang: item.lan,
-      dir: item.dir,
-      classname: item.cla === "p" ? "p" : "t" // publication || text
-    };
-  });
-}
-
 function createIndexes(searchConfig) {
   return searchConfig.layers.map(i => {
     return Object.assign({
@@ -76,7 +57,7 @@ async function checkImport(searchConfig, dest) {
     const [ indexName, assetName ] = file.split("-");
     const relatedIndex = indexes.find(index => index.name === indexName);
     if (!relatedIndex) {
-      throw new Error("Could not find index " + indexName);
+      throw new Error(`Echec de la vérification : impossible de trouver l'index ${ indexName }.`);
     }
     const data = await fs.readFile(path.join(dest, file), "utf8");
     await relatedIndex.document.import(assetName, data);
@@ -101,14 +82,18 @@ async function main() {
   const configPath = path.join(__dirname, "../public/js/search.config.json");
 
   // Lecture de la configuration
-  const searchConfigData = await fs.readFile(configPath);
-  const searchConfig = JSON.parse(searchConfigData);
+  const searchConfigStr = await fs.readFile(configPath);
+  const { use, presets } = JSON.parse(searchConfigStr);
+  if (!presets || !presets[use]) {
+    throw new Error("Could not load search config.");
+  }
+  const searchConfig = presets[use];
 
   // Main logic
-  const data = await fetchData(src);
-  const mappedData = mapData(data);
+  const str = await fetchData(src);
+  const data = JSON.parse(str);
   const emptyIndexes = createIndexes(searchConfig);
-  const indexes = populateIndexes(emptyIndexes, mappedData);
+  const indexes = populateIndexes(emptyIndexes, data);
   await writeIndexes(indexes, dest);
 
   if (check) {

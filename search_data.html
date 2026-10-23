@@ -12,14 +12,14 @@ function clean_text($str) {
 <LOOP NAME="search_numeros" TABLE="publications" WHERE="type='numero'" SELECT="id, numero, datepublipapier, datepubli, creationdate, periode, titre, soustitre, altertitre, introduction, langue">
 	{
 		"id": [#ID],
-		<IF COND="[#NUMERO]">"num": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
-		<IF COND="[#TITRE]">"tit": "[#TITRE|clean_text]",</IF>
-		<IF COND="[#SOUSTITRE]">"sub": "[#SOUSTITRE|clean_text]",</IF>
-		<IF COND="[#ALTERTITRE]">"alt": "[#ALTERTITRE|clean_text]",</IF>
-		<IF COND="[#INTRODUCTION]">"int": "[#INTRODUCTION|clean_text]",</IF>
-		<IF COND="[#LANGUE]">"lan": "[#LANGUE]",
+		<IF COND="[#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<IF COND="[#TITRE]">"title": "[#TITRE|clean_text]",</IF>
+		<IF COND="[#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text]",</IF>
+		<IF COND="[#ALTERTITRE]">"altertitle": "[#ALTERTITRE|clean_text]",</IF>
+		<IF COND="[#INTRODUCTION]">"introduction": "[#INTRODUCTION|clean_text]",</IF>
+		<IF COND="[#LANGUE]">"lang": "[#LANGUE]",
 		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
-		"cla": "p"
+		"classname": "p"
 	},
 </LOOP>
 <LOOP NAME="search_textes" TABLE="textes" SELECT="id, class, titre, soustitre, altertitre, resume, langue">
@@ -31,14 +31,14 @@ function clean_text($str) {
 	</LET>
 	{
 		"id": [#ID],
-		<IF COND="[#TITRE]">"tit": "[#TITRE|clean_text]",</IF>
-		<IF COND="[#SOUSTITRE]">"sub": "[#SOUSTITRE|clean_text]",</IF>
-		<IF COND="[#ALTERTITRE]">"alt": "[#ALTERTITRE|clean_text]",</IF>
-		<IF COND="[#AUTEURS]">"aut": "[#AUTEURS|clean_text]",</IF>
-		<IF COND="[#RESUME]">"abs": "[#RESUME|clean_text]",</IF>
-		<IF COND="[#LANGUE]">"lan": "[#LANGUE]",
+		<IF COND="[#TITRE]">"title": "[#TITRE|clean_text]",</IF>
+		<IF COND="[#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text]",</IF>
+		<IF COND="[#ALTERTITRE]">"altertitle": "[#ALTERTITRE|clean_text]",</IF>
+		<IF COND="[#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="[#RESUME]">"abstract": "[#RESUME|clean_text]",</IF>
+		<IF COND="[#LANGUE]">"lang": "[#LANGUE]",
 		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
-		"cla": "t"
+		"classname": "t"
 	}<IF COND="[#COUNT] LT [#NBRESULTS]">,</IF>
 </LOOP>
 ]

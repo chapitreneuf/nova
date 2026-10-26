@@ -47,27 +47,30 @@ function populateIndexes(indexes, data) {
 }
 
 async function writeIndexes(indexes, dest) {
+  const list = {};
   for (const index of indexes) {
+    list[index.name] = [];
     await index.document.export(async function(key, data){
-      await fs.writeFile(dest + index.name + "-" + key, data, "utf8");
+      const fileName = index.name + "-" + key;
+      await fs.writeFile(dest + fileName, data, "utf8");
+      list[index.name].push(fileName);
     });
   }
+  const listData = JSON.stringify(list);
+  await fs.writeFile(dest + "indexlist.json", listData, "utf8");
 }
 
 async function checkImport(searchConfig, dest) {
   const indexes = createIndexes(searchConfig);
-  const files = await fs.readdir(dest);
-  for (const file of files) {
-    if (file === ".keep") {
-      continue;
+  const listStr = await fs.readFile(path.join(dest, "indexlist.json"));
+  const list = JSON.parse(listStr);
+  for (const index of indexes) {
+    const indexFiles = list[index.name];
+    for (const file of indexFiles) {
+      const data = await fs.readFile(path.join(dest, file), "utf8");
+      const [ , assetName ] = file.split("-");
+      await index.document.import(assetName, data);
     }
-    const [ indexName, assetName ] = file.split("-");
-    const relatedIndex = indexes.find(index => index.name === indexName);
-    if (!relatedIndex) {
-      throw new Error(`Echec de la vérification : impossible de trouver l'index ${ indexName }.`);
-    }
-    const data = await fs.readFile(path.join(dest, file), "utf8");
-    await relatedIndex.document.import(assetName, data);
   }
   console.log(util.inspect(indexes, { depth: 5 }));
 }

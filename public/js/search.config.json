@@ -10,8 +10,7 @@
             "tokenize": "strict",
             "document": {
               "id": "id",
-              "index": ["title", "altertitle", "subtitle", "description", "authors"],
-              "store": ["id", "number", "title", "subtitle", "authors", "classname", "lang", "dir"]
+              "index": ["title", "altertitle", "subtitle", "description", "authors"]
             }
           }
         }
@@ -26,8 +25,7 @@
             "tokenize": "forward",
             "document": {
               "id": "id",
-              "index": ["title", "altertitle", "subtitle", "authors"],
-              "store": ["number", "title", "subtitle", "authors", "classname", "lang", "dir"]
+              "index": ["title", "altertitle", "subtitle", "authors"]
             }
           }
         },
@@ -37,8 +35,7 @@
             "tokenize": "strict",
             "document": {
               "id": "id",
-              "index": ["keyword", "abstract", "doi", "introduction"],
-              "store": false
+              "index": ["keyword", "abstract", "doi", "introduction"]
             }
           }
         },
@@ -48,8 +45,7 @@
             "tokenize": "strict",
             "document": {
               "id": "id",
-              "index": ["text", "appendix", "notes"],
-              "store": false
+              "index": ["text", "appendix", "notes"]
             }
           }
         }

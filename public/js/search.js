@@ -3,9 +3,10 @@ const indexDirURL = "./tpl/public/index/";
 const { jssearchURLToken } = window;
 const hiddenClassname = "d-none";
 
-let searchIteration = 0;
 const indexes = new Map();
 const metadatas = new Map();
+let allDocuments = []; // only used with client generated indexes
+let searchIteration = 0;
 let searchResults = [];
 let displayCount = 0;
 let pages = 0;
@@ -63,6 +64,11 @@ async function search() {
 }
 
 async function getMetadatas(ids, fields) {
+  // If client generated indexes
+  if (allDocuments.length > 0) {
+    return allDocuments.filter(({id}) => ids.includes(id));
+  }
+  // If server generated indexes
   let url = "?page=get_documents";
   if (ids) {
     url += "&ids=" + ids.join(",");
@@ -156,6 +162,7 @@ $(async function() {
       const index = new FlexSearch.Document(flexsearchConfig);
       const url = "?page=get_documents&token=" + jssearchURLToken;
       const data = await fetchJSON(url, { cache: "force-cache" });
+      allDocuments = data;
       data.forEach(item => {
         index.add(item)
       });

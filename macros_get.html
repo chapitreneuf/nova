@@ -1,0 +1,73 @@
+<CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
+
+/**
+* Retourne un document JSON qui décrit les champs d'une liste de documents.
+* ?page=get_documents&fields=a,b,c&ids=1,2,3
+*/
+<DEFMACRO NAME="GET_DOCUMENTS">
+	<USE MACROFILE="macros_base.html" />
+	<?php
+	function clean_text($str) {
+		$str = textebrut($str);
+		$str = html_entity_decode($str);
+		$str = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+		$str = str_replace('"', '', $str);
+		return $str;
+	}
+	?>
+	<!--[ Validation des paramètres GET ]-->
+	<LET VAR="separator">,</LET>
+	<LET VAR="fields">[#FIELDS|reg_replace("/[^A-z0-9\,]/", "")]</LET>
+	<IF COND="[#FIELDS]">
+		<LET ARRAY="fields_array">[#SEPARATOR|explode([#FIELDS])]</LET>
+		<LET ARRAY="show" GLOBAL="1"></LET>
+		<LOOP NAME="foreach" ARRAY="[#FIELDS_ARRAY]">
+			<LET ARRAY="show.#VALUE" GLOBAL="1">1</LET>
+		</LOOP>
+	</IF>
+	<LET VAR="ids">[#IDS|reg_replace("/[^0-9\,]/", "")]</LET>
+	<IF COND="[#IDS]">
+		<LET VAR="where_clause">entities.id IN ([#IDS]) AND</LET>
+	<ELSE/>
+		<LET VAR="where_clause"></LET>
+	</IF>
+	[
+	<LOOP NAME="get_documents" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="[#WHERE_CLAUSE] class IN ('textes','publications') AND entities.idtype = types.id">
+		<IF COND="[#CLASS] EQ 'publications'">
+			<LOOP NAME="get_documents_publications" TABLE="publications" WHERE="id = '[#ID]'">
+				<MACRO NAME="GET_DOCUMENTS_ITEM"/>
+			</LOOP>
+		<ELSEIF COND="[#CLASS] EQ 'textes'">
+			<LET VAR="auteurs">
+				<LOOP NAME="search_auteurs" SELECT="persons.id AS idperson" TABLE="relations, persons" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = 'auteur'">
+					<IF COND="[#COUNT] GT 1"><IF COND="[#COUNT] EQ [#NBRESULTS]"> [@AND] <ELSE />, </IF></IF>
+					<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
+				</LOOP>
+			</LET>
+			<LOOP NAME="get_documents_textes" TABLE="textes" WHERE="id = '[#ID]'">
+				<MACRO NAME="GET_DOCUMENTS_ITEM"/>
+			</LOOP>
+		</IF>
+		<IF COND="[#COUNT] LT [#NBRESULTS]">,</IF>
+	</LOOP>
+	]
+</DEFMACRO>
+
+/**
+ * Affiche la description des champs de l'entité au format JSON.
+ */
+<DEFMACRO NAME="GET_DOCUMENTS_ITEM">
+	{
+		"id": [#ID],
+		<IF COND="[%SHOW.NUMBER] AND [#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<IF COND="[%SHOW.TITLE] AND [#TITRE]">"title": "[#TITRE|clean_text]",</IF>
+		<IF COND="[%SHOW.SUBTITLE] AND [#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text]",</IF>
+		<IF COND="[%SHOW.ALTERTITLE] AND [#ALTERTITRE]">"altertitle": "[#ALTERTITRE|clean_text]",</IF>
+		<IF COND="[%SHOW.INTRODUCTION] AND [#INTRODUCTION]">"introduction": "[#INTRODUCTION|clean_text]",</IF>
+		<IF COND="[%SHOW.AUTHORS] AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="[%SHOW.ABSTRACT] AND [#RESUME]">"abstract": "[#RESUME|clean_text]",</IF>
+		<IF COND="[%SHOW.LANG] AND [#LANGUE]">"lang": "[#LANGUE]",
+		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
+		"classname": "[#CLASS|substr(0,1)]"
+	}
+</DEFMACRO>

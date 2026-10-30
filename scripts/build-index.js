@@ -31,6 +31,7 @@ async function fetchData(src) {
   return Buffer.from(await response.arrayBuffer());
 }
 
+// TODO: harmoniser cette structure avec celle du client search.js. Ici l'index est stocké dans l'objet de config "layer", ce n'est pas clair.
 function createIndexes(searchConfig) {
   return searchConfig.layers.map(i => {
     return Object.assign({

@@ -59,14 +59,14 @@
 <DEFMACRO NAME="GET_DOCUMENTS_ITEM">
 	{
 		"id": [#ID],
-		<IF COND="[%SHOW.NUMBER] AND [#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
-		<IF COND="[%SHOW.TITLE] AND [#TITRE]">"title": "[#TITRE|clean_text]",</IF>
-		<IF COND="[%SHOW.SUBTITLE] AND [#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text]",</IF>
-		<IF COND="[%SHOW.ALTERTITLE] AND [#ALTERTITRE]">"altertitle": "[#ALTERTITRE|clean_text]",</IF>
-		<IF COND="[%SHOW.INTRODUCTION] AND [#INTRODUCTION]">"introduction": "[#INTRODUCTION|clean_text]",</IF>
-		<IF COND="[%SHOW.AUTHORS] AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
-		<IF COND="[%SHOW.ABSTRACT] AND [#RESUME]">"abstract": "[#RESUME|clean_text]",</IF>
-		<IF COND="[%SHOW.LANG] AND [#LANGUE]">"lang": "[#LANGUE]",
+		<IF COND="(![#FIELDS] OR [%SHOW.NUMBER]) AND [#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.TITLE]) AND [#TITRE]">"title": "[#TITRE|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.SUBTITLE]) AND [#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.ALTERTITLE]) AND [#ALTERTITRE]">"altertitle": "[#ALTERTITRE|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.INTRODUCTION]) AND [#INTRODUCTION]">"introduction": "[#INTRODUCTION|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.AUTHORS]) AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "[#RESUME|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.LANG]) AND [#LANGUE]">"lang": "[#LANGUE]",
 		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
 		"classname": "[#CLASS|substr(0,1)]"
 	}

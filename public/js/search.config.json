@@ -1,5 +1,5 @@
 {
-  "use": "server",
+  "use": "client",
   "presets": {
     "client": {
       "fetch": false,

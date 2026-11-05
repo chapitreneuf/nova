@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Copy macros_custom.dist.html to macros_custom.html is it doesn't already exists
 
-const fs = require("fs").promises;
-const constants = require("fs").constants;
+import fs from "node:fs/promises";
+import { constants } from "fs";
 
 (async function() {
   try {

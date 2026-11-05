@@ -93,10 +93,17 @@ async function main() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const dest = path.join(__dirname, "../public/index/");
-  const configPath = "../public/js/search.config.js";
+  const configPath = "../public/js/searchconfig.js";
+  const customConfigPath = "../public/js/searchconfig.custom.js";
 
-  // Lecture de la configuration
-  const { use, presets } = await import(configPath);
+  // Lecture de la configuration : user d'abord, defaut sinon.
+  let use, presets;
+  try {
+    ({ use, presets } = await import(customConfigPath));
+  } catch (error) {
+    ({ use, presets } = await import(configPath));
+  }
+
   if (!presets || !use) {
     throw new Error("Could not load search config.");
   }

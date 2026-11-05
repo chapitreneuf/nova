@@ -1,6 +1,7 @@
 import FlexSearch from "../vendor/flexsearch/flexsearch.bundle.module.min.js";
-import { use, presets } from "./search.config.js";
 
+const configPath = "./searchconfig.js";
+const customConfigPath = "./searchconfig.custom.js";
 const indexDirURL = "./tpl/public/index/";
 const { jssearchURLToken } = window;
 const hiddenClassname = "d-none";
@@ -147,6 +148,14 @@ function updatePage($sourceForm) {
 
 // Main
 $(async function() {
+  // Lecture de la configuration : user d'abord, defaut sinon.
+  let use, presets;
+  try {
+    ({ use, presets } = await import(customConfigPath));
+  } catch (error) {
+    ({ use, presets } = await import(configPath));
+  }
+
   if (!presets || !use) {
     throw new Error("Could not load search config.");
   }

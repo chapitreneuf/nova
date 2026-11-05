@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // Build Flexsearch Index
 
-const fs = require("node:fs/promises");
-const path = require("node:path");
-const util = require("node:util");
+import fs from "node:fs/promises";
+import path from "node:path";
+import util from "node:util";
+import { fileURLToPath } from "node:url";
 
-const FlexSearch = require("flexsearch");
+import FlexSearch from "flexsearch";
 
 async function emptyDir(dirPath) {
   for (const file of await fs.readdir(dirPath)) {
@@ -89,14 +90,18 @@ async function main() {
   const check = args.find(value => value === "--check") ? true : false;
 
   // Chemins
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
   const dest = path.join(__dirname, "../public/index/");
-  const configPath = path.join(__dirname, "../public/js/search.config.json");
+  const configPath = "../public/js/search.config.js";
 
   // Lecture de la configuration
-  const searchConfigStr = await fs.readFile(configPath);
-  const { use, presets } = JSON.parse(searchConfigStr);
-  if (!presets || !presets[use]) {
+  const { use, presets } = await import(configPath);
+  if (!presets || !use) {
     throw new Error("Could not load search config.");
+  }
+  if (!presets[use]) {
+    throw new Error(`Could not find search preset '${use}'.`);
   }
   const searchConfig = presets[use];
 
@@ -110,6 +115,7 @@ async function main() {
   const indexes = populateIndexes(emptyIndexes, data);
   await writeIndexes(indexes, dest);
 
+  // FIXME: le paramètre --check ne fonctionne pas quand on lance avec : npm run build-index
   if (check) {
     await checkImport(searchConfig, dest);
   }

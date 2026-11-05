@@ -1,10 +1,11 @@
-const configURL = "./tpl/public/js/search.config.json";
+import FlexSearch from "../vendor/flexsearch/flexsearch.bundle.module.min.js";
+import { use, presets } from "./search.config.js";
+
 const indexDirURL = "./tpl/public/index/";
 const { jssearchURLToken } = window;
 const hiddenClassname = "d-none";
 
 const indexes = new Map();
-const metadatas = new Map();
 let allDocuments = []; // only used with client generated indexes
 let searchIteration = 0;
 let searchResults = [];
@@ -146,9 +147,11 @@ function updatePage($sourceForm) {
 
 // Main
 $(async function() {
-  const { use, presets } = await fetchJSON(configURL);
-  if (!presets || !presets[use]) {
+  if (!presets || !use) {
     throw new Error("Could not load search config.");
+  }
+  if (!presets[use]) {
+    throw new Error(`Could not find search preset '${use}'.`);
   }
   const searchConfig = presets[use];
   const { layers } = searchConfig;

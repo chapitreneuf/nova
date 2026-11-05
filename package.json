@@ -3,6 +3,7 @@
   "version": "2.6.0",
   "description": "Maquette Nova pour Lodel, par le collectif Chapitre neuf",
   "main": "index.html",
+  "type": "module",
   "contributors": [
     {
       "name": "Thomas Brouard",
@@ -20,7 +21,7 @@
     "build": "npm run css",
     "css": "node scripts/build-css.js",
     "copy-dist": "node scripts/copy-dist.js",
-    "index": "node scripts/build-index.js",
+    "build-index": "node scripts/build-index.js",
     "postinstall": "npm run css && npm run copy-dist",
     "gulp": "npm run css"
   },

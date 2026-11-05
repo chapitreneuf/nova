@@ -16,6 +16,7 @@ less/custom.less
 less/fonts.less
 less/pdf.less
 macros_custom.html
+public/js/searchconfig.custom.js
 
 # VSCode
 .vscode/

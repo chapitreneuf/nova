@@ -1,11 +1,12 @@
-// Preset utilisé par la recherche
-export const use = "server";
+export default {
+  // Preset utilisé par la recherche
+  use: "server",
 
-// Preset utilisé en fallback, notamment si les index n'existent pas sur le serveur
-export const fallback = "client";
+  // Preset utilisé en fallback, notamment si les index n'existent pas sur le serveur
+  fallback: "client",
 
-// Liste des presets
-export const presets = {
+  // Liste des presets
+  presets: {
     client: {
       fetch: false,
       layers: [
@@ -57,3 +58,4 @@ export const presets = {
       ]
     }
   }
+};

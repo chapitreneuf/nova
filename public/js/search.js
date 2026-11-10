@@ -147,10 +147,10 @@ function updatePage($sourceForm) {
 }
 
 // Run search according to config
-async function run(searchConfig) {
-  const { layers } = searchConfig;
+async function run(preset) {
+  const { layers } = preset;
 
-  if (!searchConfig.fetch) {
+  if (!preset.fetch) {
     // Browser generated index
     // Create index
     // We only use the fist index in client mode
@@ -188,13 +188,16 @@ async function run(searchConfig) {
 // Main
 $(async function() {
   // Lecture de la configuration : user d'abord, defaut sinon.
-  let use, presets, fallback;
+  let config;
 
   try {
-    ({ use, fallback, presets } = await import(customConfigPath));
-  } catch (error) {
-    ({ use, fallback, presets } = await import(configPath));
+    config = await import(customConfigPath);
+  } catch (err) {
+    console.error(err);
+    console.info(`Failed to load ${ customConfigPath }. Loading default ${ configPath }.`);
+    config = await import(configPath);
   }
+  const { use, fallback, presets } = config.default;
 
   if (!presets || !use) {
     throw new Error("Could not load search config.");

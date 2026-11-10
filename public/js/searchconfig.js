@@ -57,5 +57,9 @@ export default {
         }
       ]
     }
+  },
+
+  extend: function(obj = {}) {
+    return Object.assign({}, this, obj);
   }
 };

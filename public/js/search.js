@@ -192,10 +192,12 @@ $(async function() {
 
   try {
     config = await import(customConfigPath);
+    console.info(`Loaded custom config ${ customConfigPath }.`);
   } catch (err) {
     console.error(err);
-    console.info(`Failed to load ${ customConfigPath }. Loading default ${ configPath }.`);
+    console.info(`Failed to load ${ customConfigPath }.`);
     config = await import(configPath);
+    console.info(`Loaded default config ${ configPath }.`);
   }
   const { use, fallback, presets } = config.default;
 

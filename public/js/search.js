@@ -146,14 +146,54 @@ function updatePage($sourceForm) {
   history.replaceState({ search: query }, "", "?page=search&query=" + query);
 }
 
+// Run search according to config
+async function run(searchConfig) {
+  const { layers } = searchConfig;
+
+  if (!searchConfig.fetch) {
+    // Browser generated index
+    // Create index
+    // We only use the fist index in client mode
+    const { name, flexsearchConfig } = layers[0];
+    const index = new FlexSearch.Document(flexsearchConfig);
+    const url = "?page=get_documents&token=" + jssearchURLToken;
+    const data = await fetchJSON(url, { cache: "force-cache" });
+    allDocuments = data;
+    data.forEach(item => {
+      index.add(item)
+    });
+    indexes.set(name, index);
+    search();
+  } else {
+    // Server generated index
+    // Get indexlist
+    const listUrl = indexDirURL + "indexlist.json";
+    const indexList = await fetchJSON(listUrl);
+    // Load indexes and rerun search every time a loading is completed
+    await Promise.allSettled(
+      layers.map(async layer => {
+        try {
+          const index = await loadIndex(layer, indexList);
+          indexes.set(layer.name, index);
+          console.info("Loaded index: ", layer.name);
+          await search();
+        } catch (err) {
+          console.error(`Index indisponible :`, err);
+        }
+      })
+    );
+  }
+}
+
 // Main
 $(async function() {
   // Lecture de la configuration : user d'abord, defaut sinon.
-  let use, presets;
+  let use, presets, fallback;
+
   try {
-    ({ use, presets } = await import(customConfigPath));
+    ({ use, fallback, presets } = await import(customConfigPath));
   } catch (error) {
-    ({ use, presets } = await import(configPath));
+    ({ use, fallback, presets } = await import(configPath));
   }
 
   if (!presets || !use) {
@@ -162,49 +202,21 @@ $(async function() {
   if (!presets[use]) {
     throw new Error(`Could not find search preset '${use}'.`);
   }
-  const searchConfig = presets[use];
-  const { layers } = searchConfig;
 
-  if (!searchConfig.fetch) {
-    // Browser generated index
-    try {
-      // Create index
-      // We only use the fist index in browser
-      const { name, flexsearchConfig } = layers[0];
-      const index = new FlexSearch.Document(flexsearchConfig);
-      const url = "?page=get_documents&token=" + jssearchURLToken;
-      const data = await fetchJSON(url, { cache: "force-cache" });
-      allDocuments = data;
-      data.forEach(item => {
-        index.add(item)
-      });
-      indexes.set(name, index);
-      search();
-    } catch (err) {
-      console.error(err);
-      showNoResultMessage();
-    }
-  } else {
-    // Server generated index
-    try {
-      // Get indexlist
-      const listUrl = indexDirURL + "indexlist.json";
-      const indexList = await fetchJSON(listUrl);
-      // Load indexes and rerun search every time a loading is completed
-      await Promise.allSettled(
-        layers.map(async layer => {
-          try {
-            const index = await loadIndex(layer, indexList);
-            indexes.set(layer.name, index);
-            console.info("Loaded index: ", layer.name);
-            await search();
-          } catch (err) {
-            console.error(`Index indisponible :`, err);
-          }
-        })
-      );
-    } catch (err) {
-      console.error(err);
+  try {
+    await run(presets[use]);
+  } catch (err) {
+    console.error(err);
+    // Run fallback preset in case of error (missing built index for instance)
+    if (fallback && presets[fallback]) {
+      try {
+        console.info(`Running preset '${fallback}' as fallback.`)
+        await run(presets[fallback]);
+      } catch (err) {
+        console.error(err);
+        showNoResultMessage();
+      }
+    } else {
       showNoResultMessage();
     }
   }

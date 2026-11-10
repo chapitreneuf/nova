@@ -1,5 +1,10 @@
+// Preset utilisé par la recherche
 export const use = "server";
 
+// Preset utilisé en fallback, notamment si les index n'existent pas sur le serveur
+export const fallback = "client";
+
+// Liste des presets
 export const presets = {
     client: {
       fetch: false,

@@ -7,14 +7,57 @@
 <DEFMACRO NAME="GET_DOCUMENTS">
 	<USE MACROFILE="macros_base.html" />
 	<?php
-	function clean_text($str) {
+	function removeStopwords($str, $lang) {
+		static $stopwords = null;
+
+		// Chargement du fichier JSON local une seule fois
+		if ($stopwords === null) {
+			$file = getcwd() . '/tpl/public/vendor/stopwords-json/stopwords-all.json';
+			if (!file_exists($file)) {
+				return $str;
+			}
+			$json = file_get_contents($file);
+			$stopwords = json_decode($json, true);
+			if (!is_array($stopwords)) {
+				return $str;
+			}
+		}
+
+		// Vérification de la langue
+		if (empty($stopwords[$lang]) || !is_array($stopwords[$lang])) {
+			return $str;
+		}
+
+		// Création du tableau de recherche
+		$words = array_fill_keys(
+			array_map('mb_strtolower', $stopwords[$lang]),
+			true
+		);
+
+		// Suppression des stopwords
+		$result = preg_replace_callback(
+			'/[\p{L}\p{M}\p{N}]+(?:[\'’][\p{L}\p{M}]+)*/u',
+			function ($matches) use ($words) {
+				$word = mb_strtolower($matches[0]);
+				return isset($words[$word]) ? '' : $matches[0];
+			},
+			$str
+		);
+		return trim($result);
+	}
+
+	function clean_text($str, $lang = null) {
 		$str = removenotes($str);
 		$str = cleanBadChars($str);
 		$str = textebrut($str);
 		$str = html_entity_decode($str);
 		$str = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
+		if ($lang) {
+			$str = removeStopwords($str, $lang);
+		}
 		$str = preg_replace('/\\\\?"/', '', $str);
-		$str = preg_replace('/\s\s+/', ' ', $str);
+		$str = preg_replace('/\s\s+/u', ' ', $str);
+		$str = preg_replace('/\s+([,.!?;:])/u', '$1', $str);
 		return $str;
 	}
 	?>
@@ -62,19 +105,33 @@
 <DEFMACRO NAME="GET_DOCUMENTS_ITEM">
 	{
 		"id": [#ID],
-		<IF COND="(![#FIELDS] OR [%SHOW.NUMBER]) AND [#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.TITLE]) AND [#TITRE]">"title": "[#TITRE|clean_text]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.SUBTITLE]) AND [#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.ALTERTITLE]) AND [#ALTERTITRE]">"altertitle": "[#ALTERTITRE|clean_text]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.INTRODUCTION]) AND [#INTRODUCTION]">"introduction": "[#INTRODUCTION|clean_text]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.AUTHORS]) AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "[#RESUME|clean_text]",</IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.LANG]) AND [#LANGUE]">"lang": "[#LANGUE]",
 		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
-		<IF COND="[#FULLTEXT] AND ([#TEXTE] OR [#CHAPO])">"text": "[#TEXTE|clean_text] [#CHAPO|clean_text]",</IF>
-		<IF COND="[#FULLTEXT] AND [#ANNEXE]">"appendix": "[#ANNEXE|clean_text]",</IF>
-		<IF COND="[#FULLTEXT] AND ([#NOTESBASPAGE] OR [#NOTEFIN])">"notes": "[#NOTESBASPAGE|clean_text] [#NOTEFIN|clean_text]",</IF>
-		<IF COND="[#FULLTEXT] AND [#BIBLIOGRAPHIE]">"bibliography": "[#BIBLIOGRAPHIE|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.NUMBER]) AND [#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.TITLE]) AND [#TITRE]">"title": "[#TITRE|clean_text([#LANGUE])]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.SUBTITLE]) AND [#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text([#LANGUE])]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.ALTERTITLE]) AND [#ALTERTITRE]">"altertitle": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#ALTERTITRE]" MAINLANG="[#LANGUE]" SEPARATOR="[#SEPARATOR]"/>",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.INTRODUCTION]) AND [#INTRODUCTION]">"introduction": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#INTRODUCTION]" MAINLANG="[#LANGUE]" SEPARATOR="[#SEPARATOR]"/>",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR="[#SEPARATOR]"/>",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.AUTHORS]) AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="[#FULLTEXT] AND ([#TEXTE] OR [#CHAPO])">"text": "[#TEXTE|clean_text([#LANGUE])] [#CHAPO|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#FULLTEXT] AND [#ANNEXE]">"appendix": "[#ANNEXE|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#FULLTEXT] AND ([#NOTESBASPAGE] OR [#NOTEFIN])">"notes": "[#NOTESBASPAGE|clean_text([#LANGUE])] [#NOTEFIN|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#FULLTEXT] AND [#BIBLIOGRAPHIE]">"bibliography": "[#BIBLIOGRAPHIE|clean_text([#LANGUE])]",</IF>
 		"classname": "[#CLASS|substr(0,1)]"
 	}
 </DEFMACRO>
+
+/**
+ * Affiche un champ multilingue.
+ * @param {string} contents - Contenu du champ.
+ * @param {string} [mainlang] - Langue par défaut.
+ * @param {string} [separator] - Séparateur.
+ */
+<DEFFUNC NAME="GET_DOCUMENTS_ITEM_ML" REQUIRED="contents" OPTIONAL="mainlang,separator">
+	<IF COND="[#CONTENTS] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
+		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">[#CONTENTS:#VALUE|clean_text([#VALUE])][#SEPARATOR]</LOOP>
+	<ELSE/>
+		[#CONTENTS|clean_text([#MAINLANG])]
+	</IF>
+</DEFFUNC>

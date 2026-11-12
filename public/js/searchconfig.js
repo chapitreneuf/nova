@@ -43,12 +43,12 @@ export default {
             tokenize: "strict",
             document: {
               id: "id",
-              index: ["keywords", "doi", "abstract", "introduction"]
+              index: ["keywords", "abstract", "introduction"]
             }
           }
         },
         {
-          name: "text",
+          name: "fulltext",
           flexsearchConfig: {
             tokenize: "strict",
             document: {

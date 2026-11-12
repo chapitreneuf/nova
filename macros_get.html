@@ -2,16 +2,19 @@
 
 /**
 * Retourne un document JSON qui décrit les champs d'une liste de documents.
-* ?page=get_documents&fields=a,b,c&ids=1,2,3
+* ?page=get_documents&fields=a,b,c&ids=1,2,3&fulltext=1
 */
 <DEFMACRO NAME="GET_DOCUMENTS">
 	<USE MACROFILE="macros_base.html" />
 	<?php
 	function clean_text($str) {
+		$str = removenotes($str);
+		$str = cleanBadChars($str);
 		$str = textebrut($str);
 		$str = html_entity_decode($str);
 		$str = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
-		$str = str_replace('"', '', $str);
+		$str = preg_replace('/\\\\?"/', '', $str);
+		$str = preg_replace('/\s\s+/', ' ', $str);
 		return $str;
 	}
 	?>
@@ -68,6 +71,10 @@
 		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "[#RESUME|clean_text]",</IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.LANG]) AND [#LANGUE]">"lang": "[#LANGUE]",
 		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
+		<IF COND="[#FULLTEXT] AND ([#TEXTE] OR [#CHAPO])">"text": "[#TEXTE|clean_text] [#CHAPO|clean_text]",</IF>
+		<IF COND="[#FULLTEXT] AND [#ANNEXE]">"appendix": "[#ANNEXE|clean_text]",</IF>
+		<IF COND="[#FULLTEXT] AND ([#NOTESBASPAGE] OR [#NOTEFIN])">"notes": "[#NOTESBASPAGE|clean_text] [#NOTEFIN|clean_text]",</IF>
+		<IF COND="[#FULLTEXT] AND [#BIBLIOGRAPHIE]">"bibliography": "[#BIBLIOGRAPHIE|clean_text]",</IF>
 		"classname": "[#CLASS|substr(0,1)]"
 	}
 </DEFMACRO>

@@ -115,9 +115,11 @@
 		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.KEYWORDS])"><MACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS"/></IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.AUTHORS]) AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.NOTICE]) AND [#NOTICEBIBLIO]">"notice": "[#NOTICEBIBLIO|clean_text]",</IF>
 		<IF COND="[#FULLTEXT] AND ([#TEXTE] OR [#CHAPO])">"text": "[#TEXTE|clean_text([#LANGUE])] [#CHAPO|clean_text([#LANGUE])]",</IF>
 		<IF COND="[#FULLTEXT] AND [#ANNEXE]">"appendix": "[#ANNEXE|clean_text([#LANGUE])]",</IF>
 		<IF COND="[#FULLTEXT] AND ([#NOTESBASPAGE] OR [#NOTEFIN])">"notes": "[#NOTESBASPAGE|clean_text([#LANGUE])] [#NOTEFIN|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#FULLTEXT] AND ([#NDLR] OR [#NDLA] OR [#ADDENDUM] OR [#DEDICACE] OR [#REMERCIEMENTS])">"addenda": "[#NDLR|clean_text([#LANGUE])] [#NDLA|clean_text([#LANGUE])] [#ADDENDUM|clean_text([#LANGUE])] [#DEDICACE|clean_text([#LANGUE])] [#REMERCIEMENTS|clean_text([#LANGUE])]",</IF>
 		<IF COND="[#FULLTEXT] AND [#BIBLIOGRAPHIE]">"bibliography": "[#BIBLIOGRAPHIE|clean_text([#LANGUE])]",</IF>
 		"classname": "[#CLASS|substr(0,1)]"
 	}

@@ -18,7 +18,7 @@ export default {
             tokenize: "strict",
             document: {
               id: "id",
-              index: ["title", "altertitle", "subtitle", "description", "authors", "keywords"]
+              index: ["title", "altertitle", "subtitle", "authors", "keywords"]
             }
           }
         }
@@ -43,7 +43,7 @@ export default {
             tokenize: "strict",
             document: {
               id: "id",
-              index: ["keywords", "abstract", "introduction"]
+              index: ["keywords", "abstract", "introduction", "notice"]
             }
           }
         },
@@ -53,7 +53,7 @@ export default {
             tokenize: "strict",
             document: {
               id: "id",
-              index: ["text", "appendix", "notes"]
+              index: ["text", "appendix", "notes", "addenda"]
             }
           }
         }

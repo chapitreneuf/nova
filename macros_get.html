@@ -113,6 +113,7 @@
 		<IF COND="(![#FIELDS] OR [%SHOW.ALTERTITLE]) AND [#ALTERTITRE]">"altertitle": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#ALTERTITRE]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.INTRODUCTION]) AND [#INTRODUCTION]">"introduction": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#INTRODUCTION]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<IF COND="(![#FIELDS] OR [%SHOW.KEYWORDS])"><MACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS"/></IF>
 		<IF COND="(![#FIELDS] OR [%SHOW.AUTHORS]) AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
 		<IF COND="[#FULLTEXT] AND ([#TEXTE] OR [#CHAPO])">"text": "[#TEXTE|clean_text([#LANGUE])] [#CHAPO|clean_text([#LANGUE])]",</IF>
 		<IF COND="[#FULLTEXT] AND [#ANNEXE]">"appendix": "[#ANNEXE|clean_text([#LANGUE])]",</IF>
@@ -135,3 +136,24 @@
 		[#CONTENTS|clean_text([#MAINLANG])]
 	</IF>
 </DEFFUNC>
+
+/**
+ * Affiche les index associés à un document, toutes langues confondues.
+ */
+<DEFMACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS">
+	<LET ARRAY="keywords_array" GLOBAL="1"></LET>
+	<LOOP NAME="get_documents_item_keywords"
+			TABLE="relations, entries, entrytypes"
+			SELECT="DISTINCT(idtype), title, altertitle, type AS entrytype"
+			WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes'"
+			ORDER="CASE WHEN type LIKE 'motscles%' THEN 0 ELSE 1 END, entrytypes.rank">
+				<LOOP NAME="get_documents_item_keywords_entries"
+				TABLE="entries" SELECT="id, g_name"
+				WHERE="idtype = '[#IDTYPE]' AND iddocument = '[#ID]'"
+				ORDER="degree">
+					<LET ARRAY="keywords_array[]" GLOBAL="1">[#G_NAME]</LET>
+				</LOOP>
+	</LOOP>
+	<LET VAR="keywords_string">[%KEYWORDS_ARRAY|join(',')]</LET>
+	<IF COND="[#KEYWORDS_STRING]">"keywords": "[#KEYWORDS_STRING]",</IF>
+</DEFMACRO>

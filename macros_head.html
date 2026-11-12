@@ -397,6 +397,11 @@
 		<LOOP NAME="head_jssearch_url_token" TABLE="entities" WHERE="class='textes' OR (class='publications' AND type = 'numero')" SELECT="entities.upd" LIMIT="0,1" ORDER="upd DESC">
 			<script>window.jssearchURLToken = "[#UPD|reg_replace('/[^0-9]*/', '')]";</script>
 		</LOOP>
+
+		<script src="[%DIR_VENDOR]/flexsearch/flexsearch.bundle.min.js"></script>
+		<script src="[%DIR_VENDOR]/flexsearch/lang/de.min.js"></script>
+		<script src="[%DIR_VENDOR]/flexsearch/lang/en.min.js"></script>
+		<script src="[%DIR_VENDOR]/flexsearch/lang/fr.min.js"></script>
 		<script type="module" src="[%DIR_PUBLIC]/js/search.js"></script>
 	</IF>
 

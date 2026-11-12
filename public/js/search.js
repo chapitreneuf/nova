@@ -1,4 +1,4 @@
-import FlexSearch from "../vendor/flexsearch/flexsearch.bundle.module.min.js";
+const FlexSearch = window.FlexSearch;
 
 const configPath = "./searchconfig.js";
 const customConfigPath = "./searchconfig.custom.js";
@@ -194,7 +194,7 @@ $(async function() {
     config = await import(customConfigPath);
     console.info(`Loaded custom config ${ customConfigPath }.`);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     console.info(`Failed to load ${ customConfigPath }.`);
     config = await import(configPath);
     console.info(`Loaded default config ${ configPath }.`);

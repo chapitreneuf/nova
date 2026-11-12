@@ -7,6 +7,15 @@ import util from "node:util";
 import { fileURLToPath } from "node:url";
 
 import FlexSearch from "flexsearch";
+import GermanPreset from "flexsearch/lang/de";
+import EnglishPreset from "flexsearch/lang/en";
+import FrenchPreset from "flexsearch/lang/fr";
+FlexSearch.Language = {
+  de: GermanPreset,
+  en: EnglishPreset,
+  fr: FrenchPreset
+};
+global.FlexSearch = FlexSearch;
 
 async function emptyDir(dirPath) {
   for (const file of await fs.readdir(dirPath)) {
@@ -96,13 +105,19 @@ async function main() {
   const configPath = "../public/js/searchconfig.js";
   const customConfigPath = "../public/js/searchconfig.custom.js";
 
-  // Lecture de la configuration : user d'abord, defaut sinon.
-  let use, presets;
+    // Lecture de la configuration : user d'abord, defaut sinon.
+  let config;
+
   try {
-    ({ use, presets } = await import(customConfigPath));
-  } catch (error) {
-    ({ use, presets } = await import(configPath));
+    config = await import(customConfigPath);
+    console.info(`Loaded custom config ${ customConfigPath }.`);
+  } catch (err) {
+    // console.error(err);
+    console.info(`Failed to load ${ customConfigPath }.`);
+    config = await import(configPath);
+    console.info(`Loaded default config ${ configPath }.`);
   }
+  const { use, presets } = config.default;
 
   if (!presets || !use) {
     throw new Error("Could not load search config.");

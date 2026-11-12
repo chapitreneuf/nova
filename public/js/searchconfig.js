@@ -1,3 +1,5 @@
+const FlexSearch = globalThis.FlexSearch;
+
 export default {
   // Preset utilisé par la recherche
   use: "server",

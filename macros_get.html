@@ -2,7 +2,7 @@
 
 /**
 * Retourne un document JSON qui décrit les champs d'une liste de documents.
-* ?page=get_documents&fields=a,b,c&ids=1,2,3&fulltext=1
+* ?page=get_documents&fulltext=1
 */
 <DEFMACRO NAME="GET_DOCUMENTS">
 	<USE MACROFILE="macros_base.html" />
@@ -61,24 +61,8 @@
 		return $str;
 	}
 	?>
-	<!--[ Validation des paramètres GET ]-->
-	<LET VAR="separator">,</LET>
-	<LET VAR="fields">[#FIELDS|reg_replace("/[^A-z0-9\,]/", "")]</LET>
-	<IF COND="[#FIELDS]">
-		<LET ARRAY="fields_array">[#SEPARATOR|explode([#FIELDS])]</LET>
-		<LET ARRAY="show" GLOBAL="1"></LET>
-		<LOOP NAME="foreach" ARRAY="[#FIELDS_ARRAY]">
-			<LET ARRAY="show.#VALUE" GLOBAL="1">1</LET>
-		</LOOP>
-	</IF>
-	<LET VAR="ids">[#IDS|reg_replace("/[^0-9\,]/", "")]</LET>
-	<IF COND="[#IDS]">
-		<LET VAR="where_clause">entities.id IN ([#IDS]) AND</LET>
-	<ELSE/>
-		<LET VAR="where_clause"></LET>
-	</IF>
 	[
-	<LOOP NAME="get_documents" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="[#WHERE_CLAUSE] class IN ('textes','publications') AND entities.idtype = types.id">
+	<LOOP NAME="get_documents" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id">
 		<IF COND="[#CLASS] EQ 'publications'">
 			<LOOP NAME="get_documents_publications" TABLE="publications" WHERE="id = '[#ID]'">
 				<MACRO NAME="GET_DOCUMENTS_ITEM"/>
@@ -105,22 +89,24 @@
 <DEFMACRO NAME="GET_DOCUMENTS_ITEM">
 	{
 		"id": [#ID],
-		<IF COND="(![#FIELDS] OR [%SHOW.LANG]) AND [#LANGUE]">"lang": "[#LANGUE]",
+		<IF COND="[#LANGUE]">"lang": "[#LANGUE]",
 		"dir": "<IF COND="[#LANGUE|lang_is_rtl]">rtl<ELSE />ltr</IF>",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.NUMBER]) AND [#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.TITLE]) AND [#TITRE]">"title": "[#TITRE|clean_text([#LANGUE])]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.SUBTITLE]) AND [#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text([#LANGUE])]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.ALTERTITLE]) AND [#ALTERTITRE]">"altertitle": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#ALTERTITRE]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.INTRODUCTION]) AND [#INTRODUCTION]">"introduction": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#INTRODUCTION]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.ABSTRACT]) AND [#RESUME]">"abstract": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.KEYWORDS])"><MACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS"/></IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.AUTHORS]) AND [#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
-		<IF COND="(![#FIELDS] OR [%SHOW.NOTICE]) AND [#NOTICEBIBLIO]">"notice": "[#NOTICEBIBLIO|clean_text]",</IF>
-		<IF COND="[#FULLTEXT] AND ([#TEXTE] OR [#CHAPO])">"text": "[#TEXTE|clean_text([#LANGUE])] [#CHAPO|clean_text([#LANGUE])]",</IF>
-		<IF COND="[#FULLTEXT] AND [#ANNEXE]">"appendix": "[#ANNEXE|clean_text([#LANGUE])]",</IF>
-		<IF COND="[#FULLTEXT] AND ([#NOTESBASPAGE] OR [#NOTEFIN])">"notes": "[#NOTESBASPAGE|clean_text([#LANGUE])] [#NOTEFIN|clean_text([#LANGUE])]",</IF>
-		<IF COND="[#FULLTEXT] AND ([#NDLR] OR [#NDLA] OR [#ADDENDUM] OR [#DEDICACE] OR [#REMERCIEMENTS])">"addenda": "[#NDLR|clean_text([#LANGUE])] [#NDLA|clean_text([#LANGUE])] [#ADDENDUM|clean_text([#LANGUE])] [#DEDICACE|clean_text([#LANGUE])] [#REMERCIEMENTS|clean_text([#LANGUE])]",</IF>
-		<IF COND="[#FULLTEXT] AND [#BIBLIOGRAPHIE]">"bibliography": "[#BIBLIOGRAPHIE|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
+		<IF COND="[#TITRE]">"title": "[#TITRE|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text([#LANGUE])]",</IF>
+		<IF COND="[#ALTERTITRE]">"altertitle": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#ALTERTITRE]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<IF COND="[#INTRODUCTION]">"introduction": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#INTRODUCTION]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<IF COND="[#RESUME]">"abstract": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<MACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS"/>
+		<IF COND="[#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
+		<IF COND="[#NOTICEBIBLIO]">"notice": "[#NOTICEBIBLIO|clean_text]",</IF>
+		<IF COND="[#FULLTEXT]">
+			<IF COND="[#TEXTE] OR [#CHAPO]">"text": "[#TEXTE|clean_text([#LANGUE])] [#CHAPO|clean_text([#LANGUE])]",</IF>
+			<IF COND="[#ANNEXE]">"appendix": "[#ANNEXE|clean_text([#LANGUE])]",</IF>
+			<IF COND="[#NOTESBASPAGE] OR [#NOTEFIN]">"notes": "[#NOTESBASPAGE|clean_text([#LANGUE])] [#NOTEFIN|clean_text([#LANGUE])]",</IF>
+			<IF COND="[#NDLR] OR [#NDLA] OR [#ADDENDUM] OR [#DEDICACE] OR [#REMERCIEMENTS]">"addenda": "[#NDLR|clean_text([#LANGUE])] [#NDLA|clean_text([#LANGUE])] [#ADDENDUM|clean_text([#LANGUE])] [#DEDICACE|clean_text([#LANGUE])] [#REMERCIEMENTS|clean_text([#LANGUE])]",</IF>
+			<IF COND="[#BIBLIOGRAPHIE]">"bibliography": "[#BIBLIOGRAPHIE|clean_text([#LANGUE])]",</IF>
+		</IF>
 		"classname": "[#CLASS|substr(0,1)]"
 	}
 </DEFMACRO>

@@ -63,17 +63,17 @@
 	?>
 	[
 	<LOOP NAME="get_searchdata" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id">
+		<LET VAR="auteurs">
+			<LOOP NAME="search_auteurs" SELECT="persons.id AS idperson" TABLE="relations, persons" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G'">
+				<IF COND="[#COUNT] GT 1"><IF COND="[#COUNT] EQ [#NBRESULTS]"> [@AND] <ELSE />, </IF></IF>
+				<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
+			</LOOP>
+		</LET>
 		<IF COND="[#CLASS] EQ 'publications'">
 			<LOOP NAME="get_searchdata_publications" TABLE="publications" WHERE="id = '[#ID]'">
 				<MACRO NAME="GET_SEARCHDATA_ITEM"/>
 			</LOOP>
 		<ELSEIF COND="[#CLASS] EQ 'textes'">
-			<LET VAR="auteurs">
-				<LOOP NAME="search_auteurs" SELECT="persons.id AS idperson" TABLE="relations, persons" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G' AND type = 'auteur'">
-					<IF COND="[#COUNT] GT 1"><IF COND="[#COUNT] EQ [#NBRESULTS]"> [@AND] <ELSE />, </IF></IF>
-					<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
-				</LOOP>
-			</LET>
 			<LOOP NAME="get_searchdata_textes" TABLE="textes" WHERE="id = '[#ID]'">
 				<MACRO NAME="GET_SEARCHDATA_ITEM"/>
 			</LOOP>

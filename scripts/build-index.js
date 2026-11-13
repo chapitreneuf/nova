@@ -94,7 +94,7 @@ async function main() {
 
   // Options CLI
   // URL de la source en premier argument
-  const src = args[0];
+  const siteURL = args[0].endsWith("\/") ? args[0] : args[0] + "\/";
   // --check: test d'import à la fin pour vérifier l'intégrité de l'index généré
   const check = args.find(value => value === "--check") ? true : false;
 
@@ -131,6 +131,8 @@ async function main() {
   emptyDir(dest);
 
   // Main logic
+  const src = new URL(searchConfig.source, siteURL).href;
+  console.info(`Building index from ${src}`);
   const str = await fetchData(src);
   const data = JSON.parse(str);
   const emptyIndexes = createIndexes(searchConfig);

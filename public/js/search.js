@@ -2,7 +2,6 @@ const FlexSearch = window.FlexSearch;
 
 const configPath = "./searchconfig.js";
 const customConfigPath = "./searchconfig.custom.js";
-const indexDirURL = "./tpl/public/index/";
 const { jssearchURLToken } = window;
 const hiddenClassname = "d-none";
 
@@ -22,7 +21,7 @@ async function fetchJSON(url, options = {}) {
 }
 
 // Return an index created from the provided layer
-async function loadIndex(layer, indexList) {
+async function loadIndex(indexDirURL, layer, indexList) {
   // Find index files list
   if (!indexList[layer.name]) throw new Error(`Index ${layer.name} is not referenced in indexlist.json`);
   const filesNames = indexList[layer.name];
@@ -132,13 +131,17 @@ function updatePage($sourceForm) {
 async function run(preset) {
   const { layers } = preset;
 
+  if (!preset.source) {
+    throw new Error("preset.source is not defined");
+  }
+
   if (!preset.fetch) {
     // Browser generated index
     // Create index
     // We only use the fist index in client mode
     const { name, flexsearchConfig } = layers[0];
     const index = new FlexSearch.Document(flexsearchConfig);
-    const url = "?page=get_searchdata&token=" + jssearchURLToken;
+    const url = preset.source + "&token=" + jssearchURLToken;
     const data = await fetchJSON(url, { cache: "force-cache" });
     allDocuments = data;
     data.forEach(item => {
@@ -149,13 +152,13 @@ async function run(preset) {
   } else {
     // Server generated index
     // Get indexlist
-    const listUrl = indexDirURL + "indexlist.json";
+    const listUrl = preset.fetch + "indexlist.json";
     const indexList = await fetchJSON(listUrl);
     // Load indexes and rerun search every time a loading is completed
     await Promise.allSettled(
       layers.map(async layer => {
         try {
-          const index = await loadIndex(layer, indexList);
+          const index = await loadIndex(preset.fetch, layer, indexList);
           indexes.set(layer.name, index);
           console.info("Loaded index: ", layer.name);
           await search();

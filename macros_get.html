@@ -2,9 +2,9 @@
 
 /**
 * Retourne un document JSON qui décrit les champs d'une liste de documents.
-* ?page=get_documents&fulltext=1
+* ?page=get_searchdata&fulltext=1
 */
-<DEFMACRO NAME="GET_DOCUMENTS">
+<DEFMACRO NAME="GET_SEARCHDATA">
 	<USE MACROFILE="macros_base.html" />
 	<?php
 	function removeStopwords($str, $lang) {
@@ -62,10 +62,10 @@
 	}
 	?>
 	[
-	<LOOP NAME="get_documents" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id">
+	<LOOP NAME="get_searchdata" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id">
 		<IF COND="[#CLASS] EQ 'publications'">
-			<LOOP NAME="get_documents_publications" TABLE="publications" WHERE="id = '[#ID]'">
-				<MACRO NAME="GET_DOCUMENTS_ITEM"/>
+			<LOOP NAME="get_searchdata_publications" TABLE="publications" WHERE="id = '[#ID]'">
+				<MACRO NAME="GET_SEARCHDATA_ITEM"/>
 			</LOOP>
 		<ELSEIF COND="[#CLASS] EQ 'textes'">
 			<LET VAR="auteurs">
@@ -74,8 +74,8 @@
 					<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
 				</LOOP>
 			</LET>
-			<LOOP NAME="get_documents_textes" TABLE="textes" WHERE="id = '[#ID]'">
-				<MACRO NAME="GET_DOCUMENTS_ITEM"/>
+			<LOOP NAME="get_searchdata_textes" TABLE="textes" WHERE="id = '[#ID]'">
+				<MACRO NAME="GET_SEARCHDATA_ITEM"/>
 			</LOOP>
 		</IF>
 		<IF COND="[#COUNT] LT [#NBRESULTS]">,</IF>
@@ -86,7 +86,7 @@
 /**
  * Affiche la description des champs de l'entité au format JSON.
  */
-<DEFMACRO NAME="GET_DOCUMENTS_ITEM">
+<DEFMACRO NAME="GET_SEARCHDATA_ITEM">
 	{
 		"id": [#ID],
 		<IF COND="[#LANGUE]">"lang": "[#LANGUE]",
@@ -94,10 +94,10 @@
 		<IF COND="[#NUMERO]">"number": "[#NUMERO]<FUNC NAME="BASE_PERIODE_PUBLI" PREPEND="&nbsp;|&nbsp;" />",</IF>
 		<IF COND="[#TITRE]">"title": "[#TITRE|clean_text([#LANGUE])]",</IF>
 		<IF COND="[#SOUSTITRE]">"subtitle": "[#SOUSTITRE|clean_text([#LANGUE])]",</IF>
-		<IF COND="[#ALTERTITRE]">"altertitle": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#ALTERTITRE]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
-		<IF COND="[#INTRODUCTION]">"introduction": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#INTRODUCTION]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
-		<IF COND="[#RESUME]">"abstract": "<FUNC NAME="GET_DOCUMENTS_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
-		<MACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS"/>
+		<IF COND="[#ALTERTITRE]">"altertitle": "<FUNC NAME="GET_SEARCHDATA_ITEM_ML" CONTENTS="[#ALTERTITRE]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<IF COND="[#INTRODUCTION]">"introduction": "<FUNC NAME="GET_SEARCHDATA_ITEM_ML" CONTENTS="[#INTRODUCTION]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<IF COND="[#RESUME]">"abstract": "<FUNC NAME="GET_SEARCHDATA_ITEM_ML" CONTENTS="[#RESUME]" MAINLANG="[#LANGUE]" SEPARATOR=" "/>",</IF>
+		<MACRO NAME="GET_SEARCHDATA_ITEM_KEYWORDS"/>
 		<IF COND="[#AUTEURS]">"authors": "[#AUTEURS|clean_text]",</IF>
 		<IF COND="[#NOTICEBIBLIO]">"notice": "[#NOTICEBIBLIO|clean_text]",</IF>
 		<IF COND="[#FULLTEXT]">
@@ -117,7 +117,7 @@
  * @param {string} [mainlang] - Langue par défaut.
  * @param {string} [separator] - Séparateur.
  */
-<DEFFUNC NAME="GET_DOCUMENTS_ITEM_ML" REQUIRED="contents" OPTIONAL="mainlang,separator">
+<DEFFUNC NAME="GET_SEARCHDATA_ITEM_ML" REQUIRED="contents" OPTIONAL="mainlang,separator">
 	<IF COND="[#CONTENTS] LIKE /<r2r:ml lang=\"([a-z]+)\"/">
 		<LOOP NAME="foreach" ARRAY="[#MATCHES.1]">[#CONTENTS:#VALUE|clean_text([#VALUE])][#SEPARATOR]</LOOP>
 	<ELSE/>
@@ -128,14 +128,14 @@
 /**
  * Affiche les index associés à un document, toutes langues confondues.
  */
-<DEFMACRO NAME="GET_DOCUMENTS_ITEM_KEYWORDS">
+<DEFMACRO NAME="GET_SEARCHDATA_ITEM_KEYWORDS">
 	<LET ARRAY="keywords_array" GLOBAL="1"></LET>
-	<LOOP NAME="get_documents_item_keywords"
+	<LOOP NAME="get_searchdata_item_keywords"
 			TABLE="relations, entries, entrytypes"
 			SELECT="DISTINCT(idtype), title, altertitle, type AS entrytype"
 			WHERE="id1 = '[#ID]' AND id2 = entries.id AND entries.idtype = entrytypes.id AND entrytypes.class = 'indexes'"
 			ORDER="CASE WHEN type LIKE 'motscles%' THEN 0 ELSE 1 END, entrytypes.rank">
-				<LOOP NAME="get_documents_item_keywords_entries"
+				<LOOP NAME="get_searchdata_item_keywords_entries"
 				TABLE="entries" SELECT="id, g_name"
 				WHERE="idtype = '[#IDTYPE]' AND iddocument = '[#ID]'"
 				ORDER="degree">

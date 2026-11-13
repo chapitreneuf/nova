@@ -71,7 +71,7 @@ async function getMetadatas(ids, fields) {
     return allDocuments.filter(({id}) => ids.includes(id));
   }
   // If server generated indexes
-  let url = "?page=get_documents";
+  let url = "?page=get_searchdata";
   if (ids) {
     url += "&ids=" + ids.join(",");
   }
@@ -156,7 +156,7 @@ async function run(preset) {
     // We only use the fist index in client mode
     const { name, flexsearchConfig } = layers[0];
     const index = new FlexSearch.Document(flexsearchConfig);
-    const url = "?page=get_documents&token=" + jssearchURLToken;
+    const url = "?page=get_searchdata&token=" + jssearchURLToken;
     const data = await fetchJSON(url, { cache: "force-cache" });
     allDocuments = data;
     data.forEach(item => {

@@ -344,7 +344,11 @@
 		<IF COND="[#LANGUE]">
 			<LET VAR="lang_attr">xml:lang="[#LANGUE]" lang="[#LANGUE]"</LET>
 		</IF>
-		<p class="toc__title" [#LANG_ATTR]>[#TITRE|removenotes]</p>
+		<IF COND="[#CLASS] EQ 'publications'">
+			<p class="toc__title" [#LANG_ATTR]><FUNC NAME="BASE_TITRE_PUBLICATION" CLIQUABLE="1" ML="1"/></p>
+		<ELSE/>
+			<p class="toc__title" [#LANG_ATTR]>[#TITRE|removenotes]</p>
+		</IF>
 
 		<!--[ Sous-titre ]-->
 		<IF COND="[#AFFICHER_SOUSTITRE] AND [#SOUSTITRE]">

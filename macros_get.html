@@ -1,7 +1,7 @@
 <CONTENT VERSION="1.0" LANG="fr" CHARSET="utf-8"/>
 
 /**
-* Retourne un document JSON qui décrit les champs d'une liste de documents.
+* Retourne un document JSON utilisé pour générer l'index de la recherche.
 * ?page=get_searchdata&fulltext=1
 */
 <DEFMACRO NAME="GET_SEARCHDATA">
@@ -144,4 +144,33 @@
 	</LOOP>
 	<LET VAR="keywords_string">[%KEYWORDS_ARRAY|join(',')]</LET>
 	<IF COND="[#KEYWORDS_STRING]">"keywords": "[#KEYWORDS_STRING]",</IF>
+</DEFMACRO>
+
+/**
+ * Retourne la table des matières au format HTML des documents demandés dans ids.
+ */
+<DEFMACRO NAME="GET_TOC">
+	<USE MACROFILE="macros_base.html" />
+	<USE MACROFILE="macros_publication.html" />
+	<LET VAR="ids">[#IDS|reg_replace("/[^0-9\,]/", "")]</LET>
+	<IF COND="[#IDS]">
+		<LOOP NAME="get_toc" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="entities.id IN ([#IDS]) AND class IN ('textes','publications') AND entities.idtype = types.id">
+			<IF COND="[#CLASS] EQ 'publications'">
+				<LOOP NAME="get_toc_publications" TABLE="publications" WHERE="id = '[#ID]'">
+					<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
+					<li class="toc__li toc__li--class-[#CLASS]" lang="[#LANGUE]" dir="[#DIR]">
+						<FUNC NAME="PUBLICATION_LI_DOCUMENT" />
+					</li>
+				</LOOP>
+			<ELSEIF COND="[#CLASS] EQ 'textes'">
+				<LOOP NAME="get_toc_textes" TABLE="textes" WHERE="id = '[#ID]'">
+					<LET VAR="dir"><FUNC NAME="BASE_GET_LANG_DIR" LANG="[#LANGUE]"/></LET>
+					<li class="toc__li toc__li--class-[#CLASS]" lang="[#LANGUE]" dir="[#DIR]">
+						<FUNC NAME="BASE_LISTER_PERSONNES" TYPE="auteur" WRAP_CLASS="toc__author" />
+						<FUNC NAME="PUBLICATION_LI_DOCUMENT" AFFICHER_SOUSTITRE="1"/>
+					</li>
+				</LOOP>
+			</IF>
+		</LOOP>
+	</IF>
 </DEFMACRO>

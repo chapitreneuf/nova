@@ -33,10 +33,14 @@ async function loadIndex(layer, indexList) {
   // Import files
   for (const fileName of filesNames) {
     const response = await fetch(indexDirURL + fileName);
-    if (!response.ok) throw new Error(`Could not load index ${fileName}`);
+    if (!response.ok) throw new Error(`Could not load index ${fileName}: ${response.status}`);
     const [ , assetName ] = fileName.split("-");
     const data = await response.text();
-    await index.import(assetName, data);
+    try {
+      await index.import(assetName, data);
+    } catch (err) {
+      console.error("Could not load index:", assetName, data);
+    }
   }
   return index;
 }
@@ -65,21 +69,13 @@ async function search() {
   if (iteration === searchIteration) await renderResults();
 }
 
-async function getMetadatas(ids, fields) {
-  // If client generated indexes
-  if (allDocuments.length > 0) {
-    return allDocuments.filter(({id}) => ids.includes(id));
-  }
-  // If server generated indexes
-  let url = "?page=get_searchdata";
-  if (ids) {
-    url += "&ids=" + ids.join(",");
-  }
-  if (fields) {
-    url += "&fields=" + fields.join(",");
-  }
-  const data = await fetchJSON(url);
-  return data;
+// Get toc HTML for ids
+async function getToc(ids) {
+  let url = "?page=get_toc&ids=" + ids.join(",");
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Could not load ${url}: ${response.status}`);
+  const html = await response.text();
+  return html;
 }
 
 // Render results
@@ -96,23 +92,9 @@ async function renderResults() {
   if (ids.length === 0) return;
 
   displayCount += ids.length;
-  const fields = ["title", "subtitle", "number", "authors", "lang"];
-  const items = await getMetadatas(ids, fields);
-
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    if (!item.id || !item.title) return;
-    const html = ["<li class='toc__li toc__li--class-" + item.classname + " lang-" + item.lang + " dir-" + item.dir + "' lang='" + item.lang + "'>"];
-    if (item.authors) html.push("<p class='toc__author'>" + item.authors + "</p>");
-    if (item.number) html.push("<p class='publi-number'>" + item.number + "</p>");
-    html.push("<p class='toc__title'><a href='" + item.id + "'>" + item.title + "</a></p>");
-    if (item.subtitle) html.push("<p class='toc__subtitle'>" + item.subtitle + "</p>");
-    html.push("</li>");
-
-    if (i === 0) $(".spinner").addClass(hiddenClassname);
-
-    $("#search-results-list").append(html.join(""));
-  }
+  const html = await getToc(ids);
+  $("#search-results-list").append(html);
+  $(".spinner").addClass(hiddenClassname);
   const flag = $(".toc__li").length >= searchResults.length;
   $("#search-more-link").toggleClass(hiddenClassname, flag);
 }
@@ -178,7 +160,7 @@ async function run(preset) {
           console.info("Loaded index: ", layer.name);
           await search();
         } catch (err) {
-          console.error(`Index indisponible :`, err);
+          console.error(`Index indisponible : ${layer.name}.`, err);
         }
       })
     );

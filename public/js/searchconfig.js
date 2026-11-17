@@ -11,7 +11,9 @@ export default {
   presets: {
     client: {
       fetch: false,
-      source: "?page=get_searchdata",
+      source: {
+        url: "?page=get_searchdata"
+      },
       layers: [
         {
           name: "main",
@@ -27,7 +29,10 @@ export default {
     },
     server: {
       fetch: "./tpl/public/index/",
-      source: "?page=get_searchdata&fulltext=1",
+      source: {
+        url: "?page=get_searchdata&fulltext=1",
+        split: 100
+      },
       layers: [
         {
           name: "minimal",

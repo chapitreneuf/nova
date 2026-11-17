@@ -130,11 +130,11 @@ function updatePage($sourceForm) {
 
 // Run search according to config
 async function run(preset) {
-  const { layers } = preset;
-
-  if (!preset.source) {
-    throw new Error("preset.source is not defined");
+  if (!preset.source || !preset.source.url) {
+    throw new Error("preset.source.url is not defined");
   }
+
+  const { layers } = preset;
 
   if (!preset.fetch) {
     // Browser generated index
@@ -142,7 +142,7 @@ async function run(preset) {
     // We only use the fist index in client mode
     const { name, flexsearchConfig } = layers[0];
     const index = new FlexSearch.Document(flexsearchConfig);
-    const url = preset.source + "&token=" + jssearchURLToken;
+    const url = preset.source.url + "&token=" + jssearchURLToken;
     const data = await fetchJSON(url, { cache: "force-cache" });
     allDocuments = data;
     data.forEach(item => {

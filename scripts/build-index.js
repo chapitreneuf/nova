@@ -24,26 +24,52 @@ async function emptyDir(dirPath) {
   }
 }
 
-async function fetchData(src) {
+async function fetchData(src, limit = 100) {
   // Support de la syntaxe https://user:password@url.com
   const [, protocol,, username, password, rest ] = src.match(/^(https?):\/\/((.+):(.+)@)?(.*)/);
   const url = `${protocol}://${rest}`;
 
   const auth = Buffer.from(`${username}:${password}`).toString("base64");
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Basic ${auth}`,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+
+  const results = [];
+  let offset = 0;
+
+  // On découpe en plusieurs requêtes avec offset
+  while (true) {
+    const separator = url.includes("?") ? "&" : "?";
+    const paginatedUrl = `${url}${separator}offset=${offset}&limit=${limit}`;
+
+    const response = await fetch(paginatedUrl, {
+      headers: {
+        Authorization: `Basic ${auth}`
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error ${paginatedUrl} ${response.status}: ${response.statusText}`);
+    }
+
+    try {
+      const data = await response.json();
+      if (!Array.isArray(data) || data.length === 0) {
+        break;
+      }
+      results.push(...data);
+      if (data.length < limit) {
+        break;
+      }
+      offset += limit;
+    } catch (err) {
+      throw new Error(`JSON Error ${paginatedUrl}`, err);
+    }
   }
-  return Buffer.from(await response.arrayBuffer());
+
+  return results;
 }
 
 // TODO: harmoniser cette structure avec celle du client search.js. Ici l'index est stocké dans l'objet de config "layer", ce n'est pas clair.
-function createIndexes(searchConfig) {
-  return searchConfig.layers.map(i => {
+function createIndexes(preset) {
+  return preset.layers.map(i => {
     return Object.assign({
       document: new FlexSearch.Document(i.flexsearchConfig)
     }, i);
@@ -71,8 +97,8 @@ async function writeIndexes(indexes, dest) {
   await fs.writeFile(dest + "indexlist.json", listData, "utf8");
 }
 
-async function checkImport(searchConfig, dest) {
-  const indexes = createIndexes(searchConfig);
+async function checkImport(preset, dest) {
+  const indexes = createIndexes(preset);
   const listStr = await fs.readFile(path.join(dest, "indexlist.json"));
   const list = JSON.parse(listStr);
   for (const index of indexes) {
@@ -83,7 +109,7 @@ async function checkImport(searchConfig, dest) {
       await index.document.import(assetName, data);
     }
   }
-  console.log(util.inspect(indexes, { depth: 5 }));
+  console.info(util.inspect(indexes, { depth: 5 }));
 }
 
 async function main() {
@@ -125,23 +151,28 @@ async function main() {
   if (!presets[use]) {
     throw new Error(`Could not find search preset '${use}'.`);
   }
-  const searchConfig = presets[use];
+  const preset = presets[use];
+
+  if (!preset.source || !preset.source.url) {
+    throw new Error("preset.source.url is not defined");
+  }
 
   // Vider les anciens index
   emptyDir(dest);
 
   // Main logic
-  const src = new URL(searchConfig.source, siteURL).href;
+  const { url, split } = preset.source;
+  const src = new URL(url, siteURL).href;
   console.info(`Building index from ${src}`);
-  const str = await fetchData(src);
-  const data = JSON.parse(str);
-  const emptyIndexes = createIndexes(searchConfig);
+  const data = await fetchData(src, split);
+  const emptyIndexes = createIndexes(preset);
   const indexes = populateIndexes(emptyIndexes, data);
   await writeIndexes(indexes, dest);
 
   // FIXME: le paramètre --check ne fonctionne pas quand on lance avec : npm run build-index
   if (check) {
-    await checkImport(searchConfig, dest);
+    await checkImport(preset, dest);
+    console.info(`Documents in index: ${data.length}`);
   }
 }
 

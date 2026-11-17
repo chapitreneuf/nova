@@ -45,7 +45,12 @@ export default {
             tokenize: "strict",
             document: {
               id: "id",
-              index: ["keywords", "abstract", "introduction", "notice"]
+              index: ["keywords", "abstract", "introduction", "notice",
+                {
+                  field: "isbn",
+                  encode: str => [str.replace(/-/g, "")]
+                }
+              ]
             }
           }
         },

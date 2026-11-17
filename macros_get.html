@@ -2,7 +2,7 @@
 
 /**
 * Retourne un document JSON utilisé pour générer l'index de la recherche.
-* ?page=get_searchdata&fulltext=1
+* ?page=get_searchdata&fulltext=1&limit=0,49
 */
 <DEFMACRO NAME="GET_SEARCHDATA">
 	<USE MACROFILE="macros_base.html" />
@@ -61,26 +61,38 @@
 		return $str;
 	}
 	?>
+	<LET VAR="limit">[#LIMIT|reg_replace("/[^0-9\,]/", "")]</LET>
 	[
-	<LOOP NAME="get_searchdata" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id">
-		<LET VAR="auteurs">
-			<LOOP NAME="search_auteurs" SELECT="persons.id AS idperson" TABLE="relations, persons" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G'">
-				<IF COND="[#COUNT] GT 1"><IF COND="[#COUNT] EQ [#NBRESULTS]"> [@AND] <ELSE />, </IF></IF>
-				<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
-			</LOOP>
-		</LET>
-		<IF COND="[#CLASS] EQ 'publications'">
-			<LOOP NAME="get_searchdata_publications" TABLE="publications" WHERE="id = '[#ID]'">
-				<MACRO NAME="GET_SEARCHDATA_ITEM"/>
-			</LOOP>
-		<ELSEIF COND="[#CLASS] EQ 'textes'">
-			<LOOP NAME="get_searchdata_textes" TABLE="textes" WHERE="id = '[#ID]'">
-				<MACRO NAME="GET_SEARCHDATA_ITEM"/>
-			</LOOP>
-		</IF>
-		<IF COND="[#COUNT] LT [#NBRESULTS]">,</IF>
+	<LOOP NAME="get_searchdata" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id" LIMIT="[#LIMIT]">
+		<DO>
+			<MACRO NAME="GET_SEARCHDATA_DO"/>,
+		</DO>
+		<DOLAST>
+			<MACRO NAME="GET_SEARCHDATA_DO"/>
+		</DOLAST>
 	</LOOP>
 	]
+</DEFMACRO>
+
+/**
+ * Contenu de la LOOP get_searchdata.
+ */
+<DEFMACRO NAME="GET_SEARCHDATA_DO">
+	<LET VAR="auteurs">
+		<LOOP NAME="search_auteurs" SELECT="persons.id AS idperson" TABLE="relations, persons" WHERE="id1 = '[#ID]' AND id2 = persons.id AND nature = 'G'">
+			<IF COND="[#COUNT] GT 1"><IF COND="[#COUNT] EQ [#NBRESULTS]"> [@AND] <ELSE />, </IF></IF>
+			<LOOP NAME="search_auteurs_text" SELECT="idperson, nomfamille, prenom" TABLE="auteurs" WHERE="id = '[#IDPERSON]' AND iddocument='[#ID]'">[#PRENOM] [#NOMFAMILLE]</LOOP>
+		</LOOP>
+	</LET>
+	<IF COND="[#CLASS] EQ 'publications'">
+		<LOOP NAME="get_searchdata_publications" TABLE="publications" WHERE="id = '[#ID]'">
+			<MACRO NAME="GET_SEARCHDATA_ITEM"/>
+		</LOOP>
+	<ELSEIF COND="[#CLASS] EQ 'textes'">
+		<LOOP NAME="get_searchdata_textes" TABLE="textes" WHERE="id = '[#ID]'">
+			<MACRO NAME="GET_SEARCHDATA_ITEM"/>
+		</LOOP>
+	</IF>
 </DEFMACRO>
 
 /**

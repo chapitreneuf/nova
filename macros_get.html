@@ -2,7 +2,7 @@
 
 /**
 * Retourne un document JSON utilisé pour générer l'index de la recherche.
-* ?page=get_searchdata&fulltext=1&limit=0,49
+* ?page=get_searchdata&fulltext=1&limit=100&offset=0
 */
 <DEFMACRO NAME="GET_SEARCHDATA">
 	<USE MACROFILE="macros_base.html" />
@@ -62,9 +62,13 @@
 		return $str;
 	}
 	?>
-	<LET VAR="limit">[#LIMIT|reg_replace("/[^0-9\,]/", "")]</LET>
+	<IF COND="[#LIMIT]">
+		<LET VAR="limit_clause">[#OFFSET|reg_replace("/[^0-9]/", "")|defaultvalue("0")],[#LIMIT|reg_replace("/[^0-9]/", "")]</LET>
+	<ELSE/>
+		<LET VAR="limit_clause">9999999999</LET>
+	</IF>
 	[
-	<LOOP NAME="get_searchdata" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id" LIMIT="[#LIMIT]">
+	<LOOP NAME="get_searchdata" TABLE="entities, types" SELECT="entities.id, class, type" WHERE="class IN ('textes','publications') AND entities.idtype = types.id" LIMIT="[#LIMIT_CLAUSE]">
 		<DO>
 			<MACRO NAME="GET_SEARCHDATA_DO"/>,
 		</DO>

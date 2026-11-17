@@ -108,7 +108,8 @@ function clearResults() {
   pages = 0;
 }
 
-function showNoResultMessage() {
+function showNoResultMessage(check = false) {
+  if (check && $("#search-results-list li").length > 0) return;
   $(".spinner").addClass(hiddenClassname);
   $("#search-no-result").removeClass(hiddenClassname);
 }
@@ -148,7 +149,8 @@ async function run(preset) {
       index.add(item)
     });
     indexes.set(name, index);
-    search();
+    await search();
+    showNoResultMessage();
   } else {
     // Server generated index
     // Get indexlist
@@ -167,6 +169,7 @@ async function run(preset) {
         }
       })
     );
+    showNoResultMessage(true);
   }
 }
 
@@ -212,11 +215,12 @@ $(async function() {
   }
 
   // Init submit button
-  $(".search-form").on("submit", function(event) {
+  $(".search-form").on("submit", async function(event) {
     event.preventDefault();
     clearResults();
     updatePage($(this));
-    search();
+    await search();
+    showNoResultMessage(true);
   });
 
   // Init more button

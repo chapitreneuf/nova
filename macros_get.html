@@ -55,6 +55,7 @@
 		if ($lang) {
 			$str = removeStopwords($str, $lang);
 		}
+		$str = preg_replace('/[<>]/', '', $str); // suppression des tags pour éviter les post traitements par HTMLPurifier
 		$str = preg_replace('/\\\\?"/', '', $str);
 		$str = preg_replace('/\s\s+/u', ' ', $str);
 		$str = preg_replace('/\s+([,.!?;:])/u', '$1', $str);

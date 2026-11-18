@@ -1,8 +1,6 @@
-const FlexSearch = window.FlexSearch;
-
+const { FlexSearch, jssearchURLToken } = window;
 const configPath = "./searchconfig.js";
 const customConfigPath = "./searchconfig.custom.js";
-const { jssearchURLToken } = window;
 const hiddenClassname = "d-none";
 
 const indexes = new Map();
@@ -12,12 +10,17 @@ let searchResults = [];
 let displayCount = 0;
 let pages = 0;
 
-// Fetch and parse a JSON file
-async function fetchJSON(url, options = {}) {
-  const fetchConfig = Object.assign({ method: "GET" }, options);
-  const response = await fetch(url, fetchConfig);
-  if (!response.ok) throw new Error(`Could not load ${url}`);
-  return response.json();
+// Fetch and store in cache until site content changes
+async function fetchAndCache(url) {
+  const options = { method: "GET" };
+  if (jssearchURLToken) {
+    options.cache = "force-cache";
+    const separator = url.includes("?") ? "&" : "?";
+    url = `${url}${separator}token=${jssearchURLToken}`;
+  }
+  const response = await fetch(url, options);
+  if (!response.ok) throw new Error(`Could not load ${url}: ${response.status} `);
+  return response;
 }
 
 // Return an index created from the provided layer
@@ -31,8 +34,7 @@ async function loadIndex(indexDirURL, layer, indexList) {
 
   // Import files
   for (const fileName of filesNames) {
-    const response = await fetch(indexDirURL + fileName);
-    if (!response.ok) throw new Error(`Could not load index ${fileName}: ${response.status}`);
+    const response = await fetchAndCache(indexDirURL + fileName);
     const [ , assetName ] = fileName.split("-");
     const data = await response.text();
     try {
@@ -142,8 +144,8 @@ async function run(preset) {
     // We only use the fist index in client mode
     const { name, flexsearchConfig } = layers[0];
     const index = new FlexSearch.Document(flexsearchConfig);
-    const url = preset.source.url + "&token=" + jssearchURLToken;
-    const data = await fetchJSON(url, { cache: "force-cache" });
+    const response = await fetchAndCache(preset.source.url);
+    const data = await response.json();
     allDocuments = data;
     data.forEach(item => {
       index.add(item)
@@ -155,7 +157,9 @@ async function run(preset) {
     // Server generated index
     // Get indexlist
     const listUrl = preset.fetch + "indexlist.json";
-    const indexList = await fetchJSON(listUrl);
+    const response = await fetchAndCache(listUrl);
+    const indexList = await response.json();
+
     // Load indexes and rerun search every time a loading is completed
     await Promise.allSettled(
       layers.map(async layer => {

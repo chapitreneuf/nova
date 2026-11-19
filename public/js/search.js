@@ -3,6 +3,9 @@ const configPath = "./searchconfig.js";
 const customConfigPath = "./searchconfig.custom.js";
 const hiddenClassname = "d-none";
 
+const params = new URLSearchParams(document.location.search);
+const clearCacheParam = params.get("clearcache");
+
 const indexes = new Map();
 let allDocuments = []; // only used with client generated indexes
 let searchIteration = 0;
@@ -13,7 +16,9 @@ let pages = 0;
 // Fetch and store in cache until site content changes
 async function fetchAndCache(url) {
   const options = { method: "GET" };
-  if (jssearchURLToken) {
+  if (clearCacheParam) {
+    options.cache = "no-cache";
+  } else if (jssearchURLToken) {
     options.cache = "force-cache";
     const separator = url.includes("?") ? "&" : "?";
     url = `${url}${separator}token=${jssearchURLToken}`;

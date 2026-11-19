@@ -37,7 +37,8 @@
 		<MACRO NAME="PAGE_DEV_MODE_INIT"/>
 		<MACRO NAME="HEAD_MAIN" />
 	</head>
-	<body class="[%BODY_CLASS]" data-sitelang="[#SITELANG]">
+	<LET VAR="usertag"><IF COND="[#LODELUSER.RIGHTS]">data-user="[#LODELUSER.RIGHTS]"</IF></LET>
+	<body class="[%BODY_CLASS]" data-sitelang="[#SITELANG]" [#USERTAG]>
 		<MACRO NAME="PAGE_DEV_MODE_WARNING"/>
 		<MACRO NAME="PAGE_ACCES"/>
 		<MACRO NAME="TOPBAR_MAIN" />

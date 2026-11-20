@@ -111,7 +111,7 @@ async function renderResults(indexId, indexLength) {
   const html = await getToc(ids);
   $("#search-results-list").append(html);
   if (pendingSearches === 0) {
-    $(".spinner").addClass(hiddenClassname);
+    $(".search-spinner").addClass(hiddenClassname);
   }
   const flag = $(".toc__li").length >= searchResults.length;
   $("#search-more-link").toggleClass(hiddenClassname, flag);
@@ -119,7 +119,7 @@ async function renderResults(indexId, indexLength) {
 
 function clearResults() {
   $("#search-results-list").empty();
-  $(".spinner").removeClass(hiddenClassname);
+  $(".search-spinner").removeClass(hiddenClassname);
   $("#search-more-link").addClass(hiddenClassname);
   $("#search-no-result").addClass(hiddenClassname);
   searchResults = [];
@@ -129,7 +129,7 @@ function clearResults() {
 
 function showNoResultMessage(check = false) {
   if (check && $("#search-results-list li").length > 0) return;
-  $(".spinner").addClass(hiddenClassname);
+  $(".search-spinner").addClass(hiddenClassname);
   $("#search-no-result").removeClass(hiddenClassname);
 }
 

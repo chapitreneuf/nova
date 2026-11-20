@@ -3,6 +3,7 @@ const configPath = "./searchconfig.js";
 const customConfigPath = "./searchconfig.custom.js";
 const hiddenClassname = "d-none";
 
+const lodelUser = $("body").data("user");
 const params = new URLSearchParams(document.location.search);
 const clearCacheParam = params.get("clearcache");
 
@@ -16,12 +17,20 @@ let pages = 0;
 // Fetch and store in cache until site content changes
 async function fetchAndCache(url) {
   const options = { method: "GET" };
-  if (clearCacheParam) {
+  let token;
+  if (lodelUser && clearCacheParam == "test") {
+    options.cache = "no-store";
+    token = Date.now();
+  } else if (lodelUser && clearCacheParam && jssearchURLToken) {
     options.cache = "no-cache";
+    token = jssearchURLToken;
   } else if (jssearchURLToken) {
     options.cache = "force-cache";
+    token = jssearchURLToken;
+  }
+  if (token) {
     const separator = url.includes("?") ? "&" : "?";
-    url = `${url}${separator}token=${jssearchURLToken}`;
+    url = `${url}${separator}token=${token}`;
   }
   const response = await fetch(url, options);
   if (!response.ok) throw new Error(`Could not load ${url}: ${response.status} `);

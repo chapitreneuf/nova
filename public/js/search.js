@@ -107,19 +107,27 @@ async function renderResults(indexId, indexLength) {
   const ids = searchResults.slice(start, end);
   if (ids.length === 0) return;
 
+  toggleSpinner(true);
   displayCount += ids.length;
   const html = await getToc(ids);
   $("#search-results-list").append(html);
-  if (pendingSearches === 0) {
-    $(".search-spinner").addClass(hiddenClassname);
+  const hasEmptySpace = $(".toc__li").length >= searchResults.length;
+  $("#search-more-link").toggleClass(hiddenClassname, hasEmptySpace);
+  if (!hasEmptySpace) {
+    toggleSpinner(false);
+  } else {
+    const stillSearching = pendingSearches > 0;
+    toggleSpinner(stillSearching);
   }
-  const flag = $(".toc__li").length >= searchResults.length;
-  $("#search-more-link").toggleClass(hiddenClassname, flag);
+}
+
+function toggleSpinner(flag = true) {
+  $(".search-spinner").toggleClass(hiddenClassname, !flag);
 }
 
 function clearResults() {
   $("#search-results-list").empty();
-  $(".search-spinner").removeClass(hiddenClassname);
+  toggleSpinner(false);
   $("#search-more-link").addClass(hiddenClassname);
   $("#search-no-result").addClass(hiddenClassname);
   searchResults = [];
@@ -129,7 +137,7 @@ function clearResults() {
 
 function showNoResultMessage(check = false) {
   if (check && $("#search-results-list li").length > 0) return;
-  $(".search-spinner").addClass(hiddenClassname);
+  toggleSpinner(false);
   $("#search-no-result").removeClass(hiddenClassname);
 }
 
@@ -200,7 +208,6 @@ async function run(preset) {
 $(async function() {
   // Lecture de la configuration : user d'abord, defaut sinon.
   let config;
-
   try {
     config = await import(customConfigPath);
     console.info(`Loaded custom config ${ customConfigPath }.`);
@@ -243,6 +250,7 @@ $(async function() {
     clearResults();
     updatePage($(this));
     pendingSearches = 1;
+    toggleSpinner(true);
     await search();
     showNoResultMessage(true);
   });

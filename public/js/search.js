@@ -10,6 +10,7 @@ const clearCacheParam = params.get("clearcache");
 const indexes = new Map();
 let allDocuments = []; // only used with client generated indexes
 let searchIteration = 0;
+let pendingSearches = 0;
 let searchResults = [];
 let displayCount = 0;
 let pages = 0;
@@ -66,8 +67,8 @@ async function search() {
   const iteration = ++searchIteration;
   searchResults = [];
 
-  // TODO: if (query.trim().length < minLengthInEncoderConfig ) {
   if (!query.trim()) {
+    pendingSearches = 0;
     renderResults();
     return;
   }
@@ -81,6 +82,7 @@ async function search() {
       }
     }
   }
+  pendingSearches--;
   if (iteration === searchIteration) await renderResults();
 }
 
@@ -94,8 +96,7 @@ async function getToc(ids) {
 }
 
 // Render results
-// TODO: le spinner doit sans doute continuer à tourner tant que la recherche est en cours
-async function renderResults() {
+async function renderResults(indexId, indexLength) {
   if (pages === 0) {
     pages = 1;
   }
@@ -109,7 +110,9 @@ async function renderResults() {
   displayCount += ids.length;
   const html = await getToc(ids);
   $("#search-results-list").append(html);
-  $(".spinner").addClass(hiddenClassname);
+  if (pendingSearches === 0) {
+    $(".spinner").addClass(hiddenClassname);
+  }
   const flag = $(".toc__li").length >= searchResults.length;
   $("#search-more-link").toggleClass(hiddenClassname, flag);
 }
@@ -165,6 +168,7 @@ async function run(preset) {
       index.add(item)
     });
     indexes.set(name, index);
+    pendingSearches = 1;
     await search();
     showNoResultMessage();
   } else {
@@ -175,6 +179,7 @@ async function run(preset) {
     const indexList = await response.json();
 
     // Load indexes and rerun search every time a loading is completed
+    pendingSearches = layers.length;
     await Promise.allSettled(
       layers.map(async layer => {
         try {
@@ -237,6 +242,7 @@ $(async function() {
     event.preventDefault();
     clearResults();
     updatePage($(this));
+    pendingSearches = 1;
     await search();
     showNoResultMessage(true);
   });
